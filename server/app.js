@@ -9,6 +9,7 @@ const { ApolloServer } = require("apollo-server-express");
 const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
+const http = require("http");
 
 client.config = config;
 
@@ -81,5 +82,31 @@ server.applyMiddleware({ app, path: "/api" });
 app.listen({ port: process.env.PORT || 8080 }, () =>
   console.log(`Server ready at ${server.graphqlPath}`)
 );
+
+function startKeepAlive() {
+  setInterval(function() {
+    var options = {
+      host: "lulu-discord-bot.herokuapp.com",
+      port: 80,
+      path: "/"
+    };
+    http
+      .get(options, function(res) {
+        res.on("data", function(chunk) {
+          try {
+            // optional logging... disable after it's working
+            console.log("HEROKU RESPONSE: " + chunk);
+          } catch (err) {
+            console.log(err.message);
+          }
+        });
+      })
+      .on("error", function(err) {
+        console.log("Error: " + err.message);
+      });
+  }, 5 * 60 * 1000); // load every 20 minutes
+}
+
+startKeepAlive();
 
 client.login(process.env.TOKEN);
