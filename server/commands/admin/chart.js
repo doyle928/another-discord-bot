@@ -11,8 +11,8 @@ exports.run = async (client, message, args) => {
 
     mongoose
       .connect(`${process.env.MONGODB_URI}${state}`, { useNewUrlParser: true })
-      .then(() => {
-        console.log("DB connected")
+      .then(async () => {
+        console.log("DB connected");
         let query = `{
       getUsers {
         user_id
@@ -27,10 +27,10 @@ exports.run = async (client, message, args) => {
         } catch (err) {
           console.error(err);
         }
-      }).then(() => mongoose.disconnect())
+      })
+      .then(() => mongoose.disconnect())
       .catch(error => console.log(error));
 
-   
     //     try {
     //       chartExporter.initPool();
     //       const chartDetails = {
