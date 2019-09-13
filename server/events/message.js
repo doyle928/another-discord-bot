@@ -6,14 +6,19 @@ module.exports = async (client, message) => {
     active: active
   };
 
+  //if (message.content.indexOf(client.config.prefix) !== 0) return;
+
   // Our standard argument/command name definition.
   const args = message.content
     //.slice(client.config.prefix.length)
     .trim()
     .split(/ +/g);
+
   const command = args.shift().toLowerCase();
-  //.replace(/([.])/g, "");
+  // .replace(/([.])/g, "");
   args.unshift(command);
+  console.log(args);
+
   if (
     message.author.id === "157673412561469440" &&
     message.channel.id === "542945080495833121" &&
@@ -21,6 +26,8 @@ module.exports = async (client, message) => {
   ) {
     args[0] = ".good";
   }
+
+  if (message.content.indexOf(client.config.prefix) !== 0) return;
 
   try {
     // Grab the command data from the client.commands Enmap
