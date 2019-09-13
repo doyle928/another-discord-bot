@@ -104,7 +104,7 @@ function startKeepAlive() {
       .on("error", function(err) {
         console.log("Error: " + err.message);
       });
-  }, 5 * 60 * 1000); // load every 20 minutes
+  }, 10 * 60 * 1000); // load every 10 minutes
 }
 
 startKeepAlive();

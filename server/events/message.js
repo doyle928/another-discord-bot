@@ -27,7 +27,8 @@ module.exports = async (client, message) => {
     args[0] = ".good";
   }
 
-  if (message.content.indexOf(client.config.prefix) !== 0) return;
+  if (args[0].indexOf(client.config.prefix) !== 0) return;
+  console.log(args);
 
   try {
     // Grab the command data from the client.commands Enmap
