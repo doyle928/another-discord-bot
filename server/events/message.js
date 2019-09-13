@@ -11,15 +11,15 @@ module.exports = async (client, message) => {
     //.slice(client.config.prefix.length)
     .trim()
     .split(/ +/g);
-  const command = args
-    .shift()
-    .toLowerCase()
-    .replace(/([.])/g, "");
+  const command = args.shift().toLowerCase();
+  //.replace(/([.])/g, "");
   args.unshift(command);
-  if (message.author.id == "157673412561469440") {
-    if (message.channel.id == "542945080495833121") {
-      args[0] = ".good";
-    }
+  if (
+    message.author.id === "157673412561469440" &&
+    message.channel.id === "542945080495833121" &&
+    args[0] === "good"
+  ) {
+    args[0] = ".good";
   }
 
   try {
