@@ -129,11 +129,7 @@ exports.run = async (client, message, args) => {
     }
   }
 
-  if (message.author.id == "159985870458322944") {
-    if (message.channel.id == "561401129296986112") {
-      member =
-        message.mentions.members.first() || message.guild.members.get(args[2]);
-      changeLevel(member);
-    }
-  }
+  member =
+    message.mentions.members.first() || message.guild.members.get(args[2]);
+  changeLevel(member);
 };
