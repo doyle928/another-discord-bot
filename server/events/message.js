@@ -23,8 +23,8 @@ module.exports = async (client, message) => {
   args.unshift(command);
 
   if (
-    message.author.id === "157673412561469440" &&
-    message.channel.id === "574945031455244306" &&
+    message.author.id === "159985870458322944" &&
+    message.channel.id === "561401129296986112" &&
     command === "ood"
   ) {
     command = "good";
