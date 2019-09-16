@@ -7,10 +7,12 @@ const mongoose = require("mongoose");
 exports.run = async (client, message, args) => {
   if (message.author.id == "157673412561469440") {
     let guildId = message.guild.id.toString();
-    state = `server_${guildId}`;
+    state = `${guildId}`;
 
     mongoose
-      .connect(`${process.env.MONGODB_URI}${state}`, { useNewUrlParser: true })
+      .connect(`${process.env.MONGODB_URI}server_${state}`, {
+        useNewUrlParser: true
+      })
       .then(async () => {
         console.log("DB connected");
         let query = `{

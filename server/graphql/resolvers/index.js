@@ -1,10 +1,13 @@
 const usersResolvers = require("./users");
+const countResolvers = require("./count");
 
 module.exports = {
   Query: {
-    ...usersResolvers.Query
+    ...usersResolvers.Query,
+    ...countResolvers.Query
   },
   Mutation: {
-    ...usersResolvers.Mutation
+    ...usersResolvers.Mutation,
+    ...countResolvers.Mutation
   }
 };

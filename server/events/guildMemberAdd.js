@@ -12,28 +12,13 @@ function checkMembers(guild) {
 }
 
 module.exports = async (client, member, guild) => {
-  let newMember = [
-    {
-      members: checkMembers(member.guild),
-      timestamp: Date.now()
-    }
-  ];
+  let guildId = member.guild.id.toString();
+  state = `${guildId}`;
 
-  axios({
-    url: "https://github.com/doyle928/member-tracker-json",
-    method: "get"
-  }).then(res => {
-    let json = JSON.parse(res);
-    json.push(...newMember);
-    axios({
-      url: "https://github.com/doyle928/member-tracker-json",
-      method: "post",
-      data: json
-    });
-  });
-
-  mongoose
-    .connect(`${process.env.MONGODB_URI}${state}`, { useNewUrlParser: true })
+  await mongoose
+    .connect(`${process.env.MONGODB_URI}server_${state}`, {
+      useNewUrlParser: true
+    })
     .then(async () => {
       console.log("DB connected");
 
@@ -55,6 +40,31 @@ module.exports = async (client, member, guild) => {
           console.error(err);
         }
       });
+    })
+    .then(() => mongoose.disconnect())
+    .catch(error => console.log(error));
+
+  mongoose
+    .connect(`${process.env.MONGODB_URI}stats_${state}`, {
+      useNewUrlParser: true
+    })
+    .then(async () => {
+      console.log("DB connected");
+
+      let query = `mutation {
+            addCount (members: ${checkMembers(
+              member.guild
+            )}, timestamp: "${Date.now()}") {
+              members timestamp
+            }
+          }`;
+      let url = "https://lulu-discord-bot.herokuapp.com/api";
+      try {
+        let res = await request(url, query);
+        console.log(res);
+      } catch (err) {
+        console.error(err);
+      }
     })
     .then(() => mongoose.disconnect())
     .catch(error => console.log(error));

@@ -4,10 +4,12 @@ const mongoose = require("mongoose");
 
 module.exports = async (client, guild) => {
   let guildId = guild.id.toString();
-  state = `server_${guildId}`;
+  state = `${guildId}`;
 
   mongoose
-    .connect(`${process.env.MONGODB_URI}${state}`, { useNewUrlParser: true })
+    .connect(`${process.env.MONGODB_URI}server_${state}`, {
+      useNewUrlParser: true
+    })
     .then(async () => {
       console.log("DB connected");
 
