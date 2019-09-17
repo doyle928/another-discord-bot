@@ -129,7 +129,6 @@ exports.run = async (client, message, args) => {
     }
   }
 
-  member =
-    message.mentions.members.first() || message.guild.members.get(args[2]);
+  member = message.mentions.members.first();
   changeLevel(member);
 };
