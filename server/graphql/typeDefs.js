@@ -17,6 +17,7 @@ module.exports = gql`
   }
   type Mutation {
     addUser(user_id: String!, join_date: String!, strikes: Int!): User!
+    addStrike(user_id: String!, strikes: Number!): User!
     addCount(members: Int!, timestamp: String!): Count!
   }
 `;

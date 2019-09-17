@@ -37,6 +37,16 @@ module.exports = {
       const res = await newUser.save();
 
       return res;
+    },
+    addStrike: async (_, { user_id, strikes }) => {
+      const res = await User.findOneAndUpdate(
+        {
+          user_id
+        },
+        strikes
+      );
+
+      return res;
     }
   }
 };
