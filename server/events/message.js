@@ -8,7 +8,7 @@ module.exports = async (client, message) => {
 
   if (
     message.content.indexOf(client.config.prefix) !== 0 &&
-    message.content.indexOf("good") !== 0
+    message.content.indexOf("Good") !== 0
   )
     return;
   // Our standard argument/command name definition.
