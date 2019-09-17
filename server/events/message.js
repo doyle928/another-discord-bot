@@ -28,6 +28,12 @@ module.exports = async (client, message) => {
     command === "ood"
   ) {
     command = "good";
+  } else if (
+    message.author.id === "157673412561469440" &&
+    message.channel.id === "574945031455244306" &&
+    command === "ood"
+  ) {
+    command = "good";
   }
 
   try {
