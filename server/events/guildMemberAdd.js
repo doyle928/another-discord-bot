@@ -11,6 +11,7 @@ function checkMembers(guild) {
 }
 
 module.exports = async (client, member, guild) => {
+
   let guildId = member.guild.id.toString();
   state = `${guildId}`;
 
@@ -20,20 +21,20 @@ module.exports = async (client, member, guild) => {
     })
     .then(async () => {
       console.log("DB connected");
-        let query = `mutation {
+      let query = `mutation {
             addUser(user_id: "${member.user.id}", join_date: "${
-          member.joinedTimestamp
-        }", strikes: ${0}) {
+        member.joinedTimestamp
+      }", strikes: ${0}) {
               user_id join_date strikes
             }
           }`;
-        let url = "https://lulu-discord-bot.herokuapp.com/api";
-        try {
-          let res = await request(url, query);
-          console.log(res);
-        } catch (err) {
-          console.error(err);
-        }
+      let url = "https://lulu-discord-bot.herokuapp.com/api";
+      try {
+        let res = await request(url, query);
+        console.log(res);
+      } catch (err) {
+        console.error(err);
+      }
     })
     .then(() => mongoose.connection.close().then(console.log("disconnected")))
     .catch(error => console.log(error));
