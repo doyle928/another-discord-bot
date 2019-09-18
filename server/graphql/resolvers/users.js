@@ -1,4 +1,4 @@
-const User = require("../models/users");
+const User = require(`../models/users`);
 
 module.exports = {
   Query: {
@@ -12,17 +12,26 @@ module.exports = {
       }
     },
     getUser: async (_, { user_id }) => {
-      try {
-        //  Find a user by ID
-        const user = await User.findById(user_id);
-        if (user) {
-          return user;
-        } else {
-          throw new Error("User not found");
-        }
-      } catch (err) {
-        throw new Error(err);
-      }
+      const user = await User.find(
+        { user_id: user_id },
+        "user_id join_date strikes"
+      );
+      return user[0];
+      // try {
+      //   //  Find a user
+      //   await User.find(
+      //     {
+      //       user_id: user_id
+      //     },
+      //     (err, user) => {
+      //       if (err) return handleError(err);
+      //       console.log("resolver", user);
+      //       return user;
+      //     }
+      // //   );
+      // } catch (err) {
+      //   throw new Error(err);
+      // }
     }
   },
   Mutation: {
@@ -41,11 +50,15 @@ module.exports = {
     addStrike: async (_, { user_id, strikes }) => {
       const res = await User.findOneAndUpdate(
         {
-          user_id
+          user_id: user_id
         },
-        strikes
+        {
+          strikes: strikes
+        },
+        {
+          new: true
+        }
       );
-
       return res;
     }
   }

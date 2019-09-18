@@ -32,6 +32,6 @@ module.exports = async (client, guild) => {
         }
       });
     })
-    .then(() => mongoose.disconnect())
+    .then(() => mongoose.connection.close().then(console.log("disconnected")))
     .catch(error => console.log(error));
 };

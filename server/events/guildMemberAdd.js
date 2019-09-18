@@ -1,7 +1,6 @@
 const { request } = require("graphql-request");
 const _ = require("lodash");
 const mongoose = require("mongoose");
-const axios = require("axios");
 
 function checkMembers(guild) {
   let memberCount = 0;
@@ -21,10 +20,6 @@ module.exports = async (client, member, guild) => {
     })
     .then(async () => {
       console.log("DB connected");
-
-      let members = await message.guild.fetchMembers();
-
-      members.members.map(async mem => {
         let query = `mutation {
             addUser(user_id: "${member.user.id}", join_date: "${
           member.joinedTimestamp
@@ -39,12 +34,11 @@ module.exports = async (client, member, guild) => {
         } catch (err) {
           console.error(err);
         }
-      });
     })
-    .then(() => mongoose.disconnect())
+    .then(() => mongoose.connection.close().then(console.log("disconnected")))
     .catch(error => console.log(error));
 
-  mongoose
+  await mongoose
     .connect(`${process.env.MONGODB_URI}stats_${state}`, {
       useNewUrlParser: true
     })
@@ -66,6 +60,6 @@ module.exports = async (client, member, guild) => {
         console.error(err);
       }
     })
-    .then(() => mongoose.disconnect())
+    .then(() => mongoose.connection.close().then(console.log("disconnected")))
     .catch(error => console.log(error));
 };

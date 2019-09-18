@@ -1,7 +1,6 @@
 const { request } = require("graphql-request");
 const _ = require("lodash");
 const mongoose = require("mongoose");
-const axios = require("axios");
 
 function checkMembers(guild) {
   let memberCount = 0;
@@ -37,6 +36,6 @@ module.exports = async (client, member, guild) => {
         console.error(err);
       }
     })
-    .then(() => mongoose.disconnect())
+    .then(() => mongoose.connection.close().then(console.log("disconnected")))
     .catch(error => console.log(error));
 };

@@ -11,7 +11,8 @@ exports.run = async (client, message, args) => {
 
     mongoose
       .connect(`${process.env.MONGODB_URI}server_${state}`, {
-        useNewUrlParser: true
+        useNewUrlParser: true,
+        useUnifiedTopology: true
       })
       .then(async () => {
         console.log("DB connected");
@@ -30,7 +31,7 @@ exports.run = async (client, message, args) => {
           console.error(err);
         }
       })
-      .then(() => mongoose.disconnect())
+      .then(() => mongoose.connection.close().then(console.log("disconnected")))
       .catch(error => console.log(error));
 
     //     try {
