@@ -10,14 +10,15 @@ exports.run = (client, message) => {
     }
   }).then(res => {
     let question = res.data.data.output[randomNumber(0, 200)];
-    message.channel.send(question);
-    channel
-      .setTopic(question)
-      .catch(() =>
-        message.channel.send(
-          "I failed at changing the topic of the channel... i'm sorry </3"
-        )
-      );
+    message.channel.send(question).then(() => {
+      message.channel
+        .setTopic(question)
+        .catch(() =>
+          message.channel.send(
+            "I failed at changing the topic of the channel... i'm sorry </3"
+          )
+        );
+    });
   });
 
   setTimeout(() => {
