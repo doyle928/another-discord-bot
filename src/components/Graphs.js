@@ -39,7 +39,7 @@ class Graphs extends React.Component {
 
   renderServers = async () => {
     let res = await axios.post(
-      "http://localhost:8080/api",
+      "lulu-discord-bot.herokuapp.com/api",
       {
         query: `query {
       getServers {
@@ -60,7 +60,7 @@ class Graphs extends React.Component {
 
   renderData = async () => {
     let res = await axios.post(
-      "http://localhost:8080/api",
+      "lulu-discord-bot.herokuapp.com/api",
       {
         query: `query {
       getCount {
