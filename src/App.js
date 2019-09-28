@@ -1,10 +1,17 @@
-import React from "react";
-import logo from "./logo.svg";
+import React, { Suspense } from "react";
 import "./App.css";
+import "../node_modules/react-vis/dist/style.css";
+import Graphs from "./components/Graphs";
 
 class App extends React.Component {
   render() {
-    return <div>React Front End &#60;3</div>;
+    return (
+      <div className="App">
+        <Suspense fallback={<div>Loading</div>}>
+          <Graphs />
+        </Suspense>
+      </div>
+    );
   }
 }
 

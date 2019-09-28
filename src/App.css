@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  background-color: rgb(23, 23, 23);
+  margin: 20px 0 0 0;
 }
 
 .App-logo {
@@ -23,11 +25,14 @@
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.graph {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.graph h2 {
+  color: #e3dac9;
+  opacity: 0.9;
+  font-size: 1.25em;
 }

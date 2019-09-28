@@ -10,6 +10,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
 const http = require("http");
+const mongoose = require("mongoose");
 
 client.config = config;
 
@@ -67,6 +68,14 @@ fs.readdir("./commands/levels/", (err, files) => {
     client.commands.set(commandName, props);
   });
 });
+
+mongoose
+  .connect(`${process.env.MONGODB_URI}`, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
+  .then(console.log("database connected"))
+  .catch(err => console.error(err));
 
 const server = new ApolloServer({
   typeDefs,

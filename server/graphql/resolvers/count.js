@@ -12,8 +12,9 @@ module.exports = {
     }
   },
   Mutation: {
-    addCount: async (_, { members, timestamp }) => {
+    addCount: async (_, { guild_id, members, timestamp }) => {
       const newCount = new Count({
+        guild_id,
         members,
         timestamp
       });

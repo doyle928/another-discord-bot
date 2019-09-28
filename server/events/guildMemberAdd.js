@@ -1,6 +1,4 @@
 const { request } = require("graphql-request");
-const _ = require("lodash");
-const mongoose = require("mongoose");
 
 function checkMembers(guild) {
   let memberCount = 0;
@@ -11,56 +9,35 @@ function checkMembers(guild) {
 }
 
 module.exports = async (client, member, guild) => {
-
-  let guildId = member.guild.id.toString();
-  state = `${guildId}`;
-
-  await mongoose
-    .connect(`${process.env.MONGODB_URI}server_${state}`, {
-      useNewUrlParser: true
-    })
-    .then(async () => {
-      console.log("DB connected");
-      let query = `mutation {
-            addUser(user_id: "${member.user.id}", join_date: "${
-        member.joinedTimestamp
-      }", strikes: ${0}) {
-              user_id join_date strikes
+  let query = `mutation {
+            addUser(guild_id: "${member.guild.id}", user_id: "${
+    member.user.id
+  }", join_date: "${member.joinedTimestamp}", strikes: ${0}) {
+              guild_id user_id join_date strikes
             }
           }`;
-      let url = "https://lulu-discord-bot.herokuapp.com/api";
-      try {
-        let res = await request(url, query);
-        console.log(res);
-      } catch (err) {
-        console.error(err);
-      }
-    })
-    .then(() => mongoose.connection.close().then(console.log("disconnected")))
-    .catch(error => console.log(error));
 
-  await mongoose
-    .connect(`${process.env.MONGODB_URI}stats_${state}`, {
-      useNewUrlParser: true
-    })
-    .then(async () => {
-      console.log("DB connected");
+  let url = "https://lulu-discord-bot.herokuapp.com/api";
 
-      let query = `mutation {
-            addCount (members: ${checkMembers(
-              member.guild
-            )}, timestamp: "${Date.now()}") {
-              members timestamp
+  try {
+    let res = await request(url, query);
+    console.log(res);
+  } catch (err) {
+    console.error(err);
+  }
+
+  query = `mutation {
+            addCount (guild_id: "${member.guild.id}", members: ${checkMembers(
+    member.guild
+  )}, timestamp: "${Date.now()}") {
+              guild_id members timestamp
             }
           }`;
-      let url = "https://lulu-discord-bot.herokuapp.com/api";
-      try {
-        let res = await request(url, query);
-        console.log(res);
-      } catch (err) {
-        console.error(err);
-      }
-    })
-    .then(() => mongoose.connection.close().then(console.log("disconnected")))
-    .catch(error => console.log(error));
+
+  try {
+    let res = await request(url, query);
+    console.log(res);
+  } catch (err) {
+    console.error(err);
+  }
 };

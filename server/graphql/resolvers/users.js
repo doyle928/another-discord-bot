@@ -11,11 +11,12 @@ module.exports = {
         throw new Error(err);
       }
     },
-    getUser: async (_, { user_id }) => {
+    getUser: async (_, { guild_id, user_id }) => {
       const user = await User.find(
-        { user_id: user_id },
-        "user_id join_date strikes"
+        { guild_id: guild_id, user_id: user_id },
+        "guild_id user_id join_date strikes"
       );
+      console.log("resolver", user[0]);
       return user[0];
       // try {
       //   //  Find a user
@@ -35,8 +36,9 @@ module.exports = {
     }
   },
   Mutation: {
-    addUser: async (_, { user_id, join_date, strikes }) => {
+    addUser: async (_, { guild_id, user_id, join_date, strikes }) => {
       const newUser = new User({
+        guild_id,
         user_id,
         join_date,
         strikes
@@ -47,9 +49,10 @@ module.exports = {
 
       return res;
     },
-    addStrike: async (_, { user_id, strikes }) => {
+    addStrike: async (_, { guild_id, user_id, strikes }) => {
       const res = await User.findOneAndUpdate(
         {
+          guild_id: guild_id,
           user_id: user_id
         },
         {
@@ -59,6 +62,8 @@ module.exports = {
           new: true
         }
       );
+
+      console.log("resolver", res);
       return res;
     }
   }
