@@ -30,22 +30,28 @@ exports.run = async (client, message, args) => {
         if (index == rects.length) return;
         nightmare
           .scrollTo(rects[index].y, 0)
-          .screenshot("./commands/info/chart.png", {
+          .screenshot({
             //60 is height of the top element which remains
             x: rects[index].x - 10,
             y: 60,
             width: rects[index].width + 30,
             height: rects[index].height + 60
           })
-          .then(function() {
-            if (fs.existsSync("./chart.png")) {
-              message.channel.send({
-                files: ["./chart.png"]
-              });
-            } else {
-              console.log("no file");
-            }
+          .end()
+          .then(buffer => {
+            message.channel.send({
+              files: [buffer]
+            });
           })
+          // .then(() {
+          //   if (fs.existsSync("./chart.png")) {
+          //     message.channel.send({
+          //       files: ["./chart.png"]
+          //     });
+          //   } else {
+          //     console.log("no file");
+          //   }
+          // })
           .catch(function(err) {
             console.log(err);
           });
