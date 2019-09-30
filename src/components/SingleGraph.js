@@ -53,10 +53,23 @@ function timeConverter(UNIX_timestamp) {
   return time;
 }
 
-class SingleGraph extends React.Component {
-  async componentDidMount() {
-    await this.props.fetchServer(this.props.match.params.id);
-    console.log(this.props);
+class SingleGraph extends React.PureComponent {
+  // static getDerivedStateFromProps(nextProps, prevState) {
+  //   if (nextProps.props.counts !== prevState.counts) {
+  //     return { counts: nextProps.counts };
+  //   } else {
+  //     return null;
+  //   }
+  // }
+  // async componentDidUpdate(prevProps, prevState) {
+  //   if (prevProps.counts !== this.state.counts) {
+  //     await this.props.fetchServer(this.props.match.params.id);
+  //   }
+  // }
+  async componentDidUpdate(prevProps) {
+    if (this.props.match.params.id !== prevProps.match.params.id) {
+      await this.props.fetchServer(this.props.match.params.id);
+    }
   }
 
   renderChartArray() {
