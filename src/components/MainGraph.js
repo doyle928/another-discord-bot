@@ -92,7 +92,7 @@ class MainGraph extends React.Component {
               style={{ stroke: "#e3dac9", opacity: 0.9 }}
               tickFormat={v => `${timeConverter(v)}`}
               tickLabelAngle={-45}
-              tickTotal={10}
+              tickTotal={7}
             />
             <YAxis
               title="Members"
