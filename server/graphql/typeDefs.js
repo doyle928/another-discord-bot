@@ -18,7 +18,8 @@ module.exports = gql`
   type Query {
     getUser(guild_id: String!, user_id: String!): User!
     getUsers: [User]
-    getCount: [Count]
+    getCount(guild_id: String!): [Count]
+    getCounts: [Count]
     getServers: [Server]
   }
   type Mutation {

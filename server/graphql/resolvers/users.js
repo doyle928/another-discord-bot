@@ -18,21 +18,6 @@ module.exports = {
       );
       console.log("resolver", user[0]);
       return user[0];
-      // try {
-      //   //  Find a user
-      //   await User.find(
-      //     {
-      //       user_id: user_id
-      //     },
-      //     (err, user) => {
-      //       if (err) return handleError(err);
-      //       console.log("resolver", user);
-      //       return user;
-      //     }
-      // //   );
-      // } catch (err) {
-      //   throw new Error(err);
-      // }
     }
   },
   Mutation: {

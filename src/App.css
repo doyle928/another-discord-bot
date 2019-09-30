@@ -1,7 +1,7 @@
 .App {
   text-align: center;
   background-color: rgb(23, 23, 23);
-  margin: 20px 0 0 0;
+  cursor: default;
 }
 
 .App-logo {
@@ -22,7 +22,37 @@
 }
 
 .App-link {
-  color: #61dafb;
+  color: #56a1c9;
+}
+
+.header {
+  color: #e3dac9;
+  margin: 30px 0 50px 0;
+}
+
+.server-buttons {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 33px 0 0;
+}
+
+.server-buttons .link {
+  padding: 14px 27px;
+  margin: 10px;
+  border: 3px solid #01acc2;
+  color: #e3dac9;
+  -webkit-transition: .25s;
+  transition: .25s;
+  background: #171717;
+  font-size: .9em;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.server-buttons .link:hover {
+  color: rgb(23, 23, 23);
+  background: #01acc2;
 }
 
 .graph {
