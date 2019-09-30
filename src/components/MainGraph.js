@@ -65,10 +65,11 @@ class MainGraph extends React.Component {
       this.props.counts.map(count => {
         data.push({
           //x: count.timestamp,
-          x: timeConverter(parseInt(count.timestamp)),
+          x: parseInt(count.timestamp),
           y: count.members
         });
       });
+      console.log(data);
       return data;
     }
   }
@@ -81,14 +82,17 @@ class MainGraph extends React.Component {
           <XYPlot
             height={400}
             width={600}
-            xType="ordinal"
-            margin={{ bottom: 100 }}
+            xType="linear"
+            margin={{ bottom: 100, left: 50, right: 50 }}
           >
             <HorizontalGridLines style={{ stroke: "#e3dac9", opacity: 0.5 }} />
+            <XAxis hideTicks />
             <XAxis
               title="Timestamp"
               style={{ stroke: "#e3dac9", opacity: 0.9 }}
+              tickFormat={v => `${timeConverter(v)}`}
               tickLabelAngle={-45}
+              tickTotal={10}
             />
             <YAxis
               title="Members"
