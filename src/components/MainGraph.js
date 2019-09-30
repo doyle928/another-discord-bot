@@ -83,7 +83,7 @@ class MainGraph extends React.Component {
             height={400}
             width={600}
             xType="linear"
-            margin={{ bottom: 100, left: 50, right: 50 }}
+            margin={{ bottom: 100, left: 60 }}
           >
             <HorizontalGridLines style={{ stroke: "#e3dac9", opacity: 0.5 }} />
             <XAxis hideTicks />
