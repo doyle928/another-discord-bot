@@ -1,5 +1,3 @@
-import servers from "../apis/servers";
-import history from "../history";
 import { FETCH_SERVERS, FETCH_SERVER } from "./types";
 import axios from "axios";
 
@@ -19,6 +17,7 @@ export const fetchServers = () => async dispatch => {
       }
     }
   );
+  console.log(res);
   dispatch({ type: FETCH_SERVERS, payload: res.data.data.getServers });
 };
 
@@ -38,5 +37,6 @@ export const fetchServer = id => async dispatch => {
       }
     }
   );
+  console.log(res);
   dispatch({ type: FETCH_SERVER, payload: res.data.data.getCount });
 };

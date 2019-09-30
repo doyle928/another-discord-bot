@@ -1,10 +1,8 @@
-import React, { Suspense } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { fetchServer } from "../actions";
-import axios from "axios";
 import {
   HorizontalGridLines,
-  VerticalGridLines,
   XAxis,
   XYPlot,
   YAxis,
@@ -58,6 +56,7 @@ function timeConverter(UNIX_timestamp) {
 class MainGraph extends React.Component {
   async componentDidMount() {
     await this.props.fetchServer("559560674246787087");
+    console.log(this.props);
   }
 
   renderChartArray() {
@@ -113,7 +112,7 @@ class MainGraph extends React.Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = state => {
   return {
     counts: state.counts.counts
   };

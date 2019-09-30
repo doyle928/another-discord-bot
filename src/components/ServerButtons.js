@@ -6,6 +6,7 @@ import { fetchServers } from "../actions";
 class ServerButtons extends React.Component {
   async componentDidMount() {
     await this.props.fetchServers();
+    console.log(this.props.servers);
   }
 
   renderButtons() {
