@@ -66,3 +66,11 @@
   opacity: 0.9;
   font-size: 1.25em;
 }
+
+.no-data h2 {
+  color: #e3dac9;
+  font-weight: 600;
+  font-size: 1.25em;
+  opacity: .9;
+  margin-top: 85px;
+}

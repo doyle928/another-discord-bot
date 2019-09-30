@@ -83,7 +83,7 @@ class MainGraph extends React.Component {
             height={400}
             width={600}
             xType="linear"
-            margin={{ bottom: 100, left: 60 }}
+            margin={{ bottom: 100, left: 70 }}
           >
             <HorizontalGridLines style={{ stroke: "#e3dac9", opacity: 0.5 }} />
             <XAxis hideTicks />
@@ -95,7 +95,7 @@ class MainGraph extends React.Component {
               tickTotal={7}
             />
             <YAxis
-              title="Members"
+              title="Membres"
               style={{ stroke: "#e3dac9", opacity: 0.9 }}
             />
             <LineSeries

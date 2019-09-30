@@ -89,38 +89,48 @@ class SingleGraph extends React.PureComponent {
 
   renderGraph() {
     if (this.props.counts) {
-      return (
-        <div className="graph">
-          <h2>{this.props.match.params.id}</h2>
-          <XYPlot
-            height={400}
-            width={600}
-            xType="linear"
-            margin={{ bottom: 100, left: 70 }}
-          >
-            <HorizontalGridLines style={{ stroke: "#e3dac9", opacity: 0.5 }} />
-            <XAxis hideTicks />
-            <XAxis
-              title="Timestamp"
-              style={{ stroke: "#e3dac9", opacity: 0.9 }}
-              tickFormat={v => `${timeConverter(v)}`}
-              tickLabelAngle={-45}
-              tickTotal={7}
-            />
-            <YAxis
-              title="Members"
-              style={{ stroke: "#e3dac9", opacity: 0.9 }}
-            />
-            <LineSeries
-              data={this.renderChartArray()}
-              style={{
-                stroke: randomColour[randomIntFromInterval(0, 8)],
-                strokeWidth: 3
-              }}
-            />
-          </XYPlot>
-        </div>
-      );
+      if (this.props.counts[0] !== undefined) {
+        return (
+          <div className="graph">
+            <h2>{this.props.match.params.id}</h2>
+            <XYPlot
+              height={400}
+              width={600}
+              xType="linear"
+              margin={{ bottom: 100, left: 70 }}
+            >
+              <HorizontalGridLines
+                style={{ stroke: "#e3dac9", opacity: 0.5 }}
+              />
+              <XAxis hideTicks />
+              <XAxis
+                title="Timestamp"
+                style={{ stroke: "#e3dac9", opacity: 0.9 }}
+                tickFormat={v => `${timeConverter(v)}`}
+                tickLabelAngle={-45}
+                tickTotal={7}
+              />
+              <YAxis
+                title="Membres"
+                style={{ stroke: "#e3dac9", opacity: 0.9 }}
+              />
+              <LineSeries
+                data={this.renderChartArray()}
+                style={{
+                  stroke: randomColour[randomIntFromInterval(0, 8)],
+                  strokeWidth: 3
+                }}
+              />
+            </XYPlot>
+          </div>
+        );
+      } else {
+        return (
+          <div className="no-data">
+            <h2>No Data</h2>
+          </div>
+        );
+      }
     }
   }
 
