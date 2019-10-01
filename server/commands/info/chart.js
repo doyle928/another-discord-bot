@@ -31,9 +31,9 @@ exports.run = async (client, message, args) => {
         nightmare
           .scrollTo(rects[index].y, 0)
           .screenshot({
-            //60 is height of the top element which remains
+            //109 is height of the top element which remains
             x: rects[index].x - 10,
-            y: 60,
+            y: 109,
             width: rects[index].width + 30,
             height: rects[index].height + 60
           })
@@ -72,7 +72,7 @@ exports.run = async (client, message, args) => {
         var rect = elements[ii].getBoundingClientRect();
         arr.push({
           x: r(rect.left),
-          y: r(rect.top + 10),
+          y: r(rect.top),
           width: r(rect.width),
           height: r(rect.height)
         });
