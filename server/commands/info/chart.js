@@ -72,7 +72,7 @@ exports.run = async (client, message, args) => {
         var rect = elements[ii].getBoundingClientRect();
         arr.push({
           x: r(rect.left),
-          y: r(rect.top),
+          y: r(rect.top + 10),
           width: r(rect.width),
           height: r(rect.height)
         });
