@@ -25,10 +25,11 @@ exports.run = async (client, message, args) => {
           message.guild.members.get(args[1]);
       }
 
-      if (!member.bannable)
-        return message.channel.send(
-          "I cannot ban this user! Do they have a higher role? Do I have ban permissions?"
-        );
+      if (!member.bannable) {
+        message.channel.send("I cannot ban this user!");
+        message.channel.send("<a:sataniacrying:575078717911597077>");
+        return;
+      }
       let reason = args.slice(1).join(" ");
       if (!reason) reason = "No reason provided";
       member
@@ -37,7 +38,7 @@ exports.run = async (client, message, args) => {
           let messageEmbed = new Discord.RichEmbed()
             .setColor("#fe6860")
             .setTitle(
-              `${member.user.tag} has been banned by ${message.author.tag} because: ${reason}`
+              `${member.user.tag} has been banned by ${message.author.tag}`
             )
             .addField("Reason", reason);
           message.channel.send(messageEmbed);
