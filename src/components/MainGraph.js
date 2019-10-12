@@ -49,7 +49,7 @@ function timeConverter(UNIX_timestamp) {
   if (min < 10) {
     min = `0${min}`;
   }
-  let time = `${date} ${month}, ${year} - ${hour}h${min}`;
+  let time = `${date} ${month}, ${year} - ${hour}:${min}`;
   return time;
 }
 
