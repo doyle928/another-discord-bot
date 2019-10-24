@@ -94,8 +94,8 @@ exports.run = async (client, message, args) => {
         msgIDsToDeleteUser.push(collected.first().id);
         name =
           collected.first().content.length < 150 ?
-          collected.first().content.length :
-          collected.first().content.length.substring(0, 150);
+          collected.first().content :
+          collected.first().content.substring(0, 150);
         message.channel.send("How many options ? (1-10)").then(msg => {
           msgIDsToDeleteBot.push(msg.id);
           message.channel

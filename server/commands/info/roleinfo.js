@@ -32,7 +32,8 @@ exports.run = async (client, message, args) => {
             .addField("Members", i, true)
             .addField("Colour", `#${Number(r.color).toString(16)}`, true)
             .addField("Hoist", r.hoist, true)
-            .addField("Mentionable", r.mentionable, true);
+            .addField("Mentionable", r.mentionable, true)
+            .setTimestamp();
 
           message.channel.send(messageEmbed);
           setTimeout(() => {

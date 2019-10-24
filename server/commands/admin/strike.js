@@ -2,7 +2,9 @@ const { request } = require("graphql-request");
 
 exports.run = async (client, message, args) => {
   if (!message.member.hasPermission("BAN_MEMBERS")) {
-    message.channel.send("You don't have the permissions to use this command!");
+    message.channel.send(
+      `How dare you ${message.author.username} !! You don't have the permissions to use this command!`
+    );
     message.channel.send("<a:02upset:538273249306345476>");
   } else {
     let url = "https://lulu-discord-bot.herokuapp.com/api";

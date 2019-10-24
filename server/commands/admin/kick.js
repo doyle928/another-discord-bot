@@ -2,7 +2,9 @@ const Discord = require("discord.js");
 
 exports.run = async (client, message, args) => {
   if (!message.member.hasPermission("KICK_MEMBERS")) {
-    message.channel.send("You don't have the permissions to use this command!");
+    message.channel.send(
+      `How dare you ${message.author.username} !! You don't have the permissions to use this command!`
+    );
     message.channel.send("<a:02upset:538273249306345476>");
   } else {
     if (!args[1]) {
@@ -36,7 +38,9 @@ exports.run = async (client, message, args) => {
             .setColor("#fe6860")
             .setTitle(
               `${member.user.tag} has been kicked by ${message.author.tag}`
-            );
+            )
+            .setTimestamp();
+
           message.channel.send(messageEmbed);
         })
         .catch(error => {

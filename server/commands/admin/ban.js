@@ -2,7 +2,9 @@ const Discord = require("discord.js");
 
 exports.run = async (client, message, args) => {
   if (!message.member.hasPermission("BAN_MEMBERS")) {
-    message.channel.send("You don't have the permissions to use this command!");
+    message.channel.send(
+      `How dare you ${message.author.username} !! You don't have the permissions to use this command!`
+    );
     message.channel.send("<a:02upset:538273249306345476>");
   } else {
     if (!args[1]) {
@@ -40,7 +42,9 @@ exports.run = async (client, message, args) => {
             .setTitle(
               `${member.user.tag} has been banned by ${message.author.tag}`
             )
-            .addField("Reason", reason);
+            .addField("Reason", reason)
+            .setTimestamp();
+
           message.channel.send(messageEmbed);
         })
         .catch(error => {

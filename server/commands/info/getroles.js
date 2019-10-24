@@ -31,7 +31,9 @@ exports.run = async (client, message, args) => {
       .setColor(randomColor())
       .setTitle(`${member.user.username}#${member.user.discriminator}`)
       .setThumbnail(member.user.displayAvatarURL)
-      .addField("Roles", rolesString);
+      .addField("Roles", rolesString)
+      .setTimestamp();
+
     message.channel.send(messageEmbed);
     setTimeout(() => {
       message

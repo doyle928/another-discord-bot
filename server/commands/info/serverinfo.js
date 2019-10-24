@@ -60,33 +60,36 @@ exports.run = async (client, message, args) => {
       guildId.members.map(member => memberArray.push(member));
       let memberUserOrBot = _.countBy(memberArray, "user.bot"); // false = user / true = bot
 
-      messageEmbed.setTitle(guildId.name);
-      messageEmbed.setThumbnail(guildId.iconURL);
-      messageEmbed.addField("ID", guildId.id, true);
-      messageEmbed.addField("Owner", guildId.owner, true);
-      messageEmbed.addField(
-        "Creation Date",
-        `${timeConverter(guildId.createdTimestamp)}\n${timeDifference(
-          guildId.createdTimestamp
-        )}`,
-        true
-      );
-      messageEmbed.addField("Region", guildId.region, true);
-      messageEmbed.addField(
-        "Member Count",
-        guildId.memberCount - memberUserOrBot.true,
-        true
-      );
-      messageEmbed.addField(
-        "Bot Count",
-        guildId.memberCount - memberUserOrBot.false,
-        true
-      );
-      messageEmbed.addField("Categories", channelCategory.category, true);
-      messageEmbed.addField("Text Channels", channelCategory.text, true);
-      messageEmbed.addField("Voice Channels", channelCategory.voice, true);
-      messageEmbed.addField("Emojis", emojiArray.length, true);
-      messageEmbed.addField("Roles", roleArray.length, true);
+      messageEmbed
+        .setTitle(guildId.name)
+        .setThumbnail(guildId.iconURL)
+        .addField("ID", guildId.id, true)
+        .addField("Owner", guildId.owner, true)
+        .addField(
+          "Creation Date",
+          `${timeConverter(guildId.createdTimestamp)}\n${timeDifference(
+            guildId.createdTimestamp
+          )}`,
+          true
+        )
+        .addField("Region", guildId.region, true)
+        .addField(
+          "Member Count",
+          guildId.memberCount - memberUserOrBot.true,
+          true
+        )
+        .addField(
+          "Bot Count",
+          guildId.memberCount - memberUserOrBot.false,
+          true
+        )
+        .addField("Categories", channelCategory.category, true)
+        .addField("Text Channels", channelCategory.text, true)
+        .addField("Voice Channels", channelCategory.voice, true)
+        .addField("Emojis", emojiArray.length, true)
+        .addField("Roles", roleArray.length, true)
+        .setTimestamp();
+
       embedFilled = true;
     } else {
       message.channel.send("I'm not a member of this server");

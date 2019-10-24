@@ -68,7 +68,9 @@ exports.run = async (client, message, args) => {
       )}`,
       true
     )
-    .addField("Roles", rolesString);
+    .addField("Roles", rolesString)
+    .setTimestamp();
+
   message.channel.send(messageEmbed);
   setTimeout(() => {
     message
