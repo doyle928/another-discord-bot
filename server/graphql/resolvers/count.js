@@ -8,6 +8,7 @@ module.exports = {
           { guild_id: guild_id },
           "members timestamp"
         );
+        console.log(counts);
         return counts;
       } catch (err) {
         throw new Error(err);

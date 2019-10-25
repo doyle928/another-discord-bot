@@ -13,7 +13,8 @@ exports.run = async (client, message, args) => {
     messageEmbed,
     msgIDsToDeleteBot = [],
     msgIDsToDeleteUser = [],
-    msgPollID;
+    msgPollID,
+    checkMsgSent = false;
 
   const checkEmoteSingle = async (emote, position) => {
     try {
@@ -181,12 +182,11 @@ exports.run = async (client, message, args) => {
                         .awaitMessages(
                           res => res.author.id === message.author.id, {
                             maxMatches: numberOfOptions,
-                            time: 60000,
+                            time: 300000,
                             errors: ["time"]
                           }
                         )
                         .then(collected => {
-                          let checkMsgSent = false;
                           collected.map(async msg => {
                             msgIDsToDeleteUser.push(msg.id);
                             let optionSplit;
@@ -237,7 +237,7 @@ exports.run = async (client, message, args) => {
                         .then(async () => {
                           messageEmbed = new Discord.RichEmbed()
                             .setColor(randomColor())
-                            .setTitle(name)
+                            .setTitle(`\n${name}\n`)
                             // .attachFiles(["../server/images/poll.png"])
                             // .setThumbnail("attachment://poll.png")
                             .setAuthor(
@@ -339,12 +339,16 @@ exports.run = async (client, message, args) => {
                               });
                           })
                         }).catch(error => {
+                          if (checkMsgSent === false) { 
                           message.channel.bulkDelete(msgIDsToDeleteBot)
                             .then(messages => console.log(`Bulk deleted ${messages.size} messages`))
                             .catch(console.error);
-                          // message.channel.send("something went wrong with the options you said !");
-                          // message.channel.send("<:deadinside:606350795881054216>");
+                          message.channel.send("something went wrong with the options you said !");
+                          message.channel.send("<:deadinside:606350795881054216>");
+                            checkMsgSent = true;
                           console.error(error);
+                          return;
+                          }
                         })
                     })
                     .catch(error => {
@@ -354,6 +358,7 @@ exports.run = async (client, message, args) => {
                       message.channel.send("Time ran out or something went wrong !");
                       message.channel.send("<:deadinside:606350795881054216>");
                       console.error(error);
+                      return;
                     });
                   setTimeout(() => {
                     message.channel
@@ -378,6 +383,7 @@ exports.run = async (client, message, args) => {
                 .catch(console.error);
               message.channel.send("Time ran out or something went wrong !");
               message.channel.send("<:deadinside:606350795881054216>");
+              return;
             });
         });
       })
@@ -388,6 +394,7 @@ exports.run = async (client, message, args) => {
           .catch(console.error);
         message.channel.send("Time ran out or something went wrong !");
         message.channel.send("<:deadinside:606350795881054216>");
+        return;
       });
   });
 };

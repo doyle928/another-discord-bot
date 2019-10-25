@@ -15,12 +15,19 @@ module.exports = gql`
   type Server {
     guild_id: String!
   }
+  type Default {
+    guild_id: String!
+    channel_id: String!
+    mod_channel_id: String!
+    user_id: String!
+  }
   type Query {
     getUser(guild_id: String!, user_id: String!): User!
     getUsers: [User]
     getCount(guild_id: String!): [Count]
     getCounts: [Count]
     getServers: [Server]
+    getDefaults: [Default]
   }
   type Mutation {
     addUser(
@@ -32,5 +39,11 @@ module.exports = gql`
     addStrike(guild_id: String!, user_id: String!, strikes: Int): User!
     addCount(guild_id: String!, members: Int!, timestamp: String!): Count!
     addServer(guild_id: String!): Server!
+    setDefault(
+      guild_id: String!
+      channel_id: String!
+      mod_channel_id: String!
+      user_id: String!
+    ): Default
   }
 `;
