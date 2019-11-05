@@ -32,7 +32,7 @@ exports.run = async (client, message, args) => {
         message.channel.send("<a:sataniacrying:575078717911597077>");
         return;
       }
-      let reason = args.slice(1).join(" ");
+      let reason = args.slice(2).join(" ");
       if (!reason) reason = "No reason provided";
       member
         .ban(reason)

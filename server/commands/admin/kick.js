@@ -31,6 +31,8 @@ exports.run = async (client, message, args) => {
         return message.channel.send(
           "I cannot kick this user! Do they have a higher role? Do I have kick permissions?"
         );
+      let reason = args.slice(2).join(" ");
+      if (!reason) reason = "No reason provided";
       member
         .kick()
         .then(() => {
@@ -39,6 +41,7 @@ exports.run = async (client, message, args) => {
             .setTitle(
               `${member.user.tag} has been kicked by ${message.author.tag}`
             )
+            .setDescription(`Reason: ${reason}`)
             .setTimestamp();
 
           message.channel.send(messageEmbed);

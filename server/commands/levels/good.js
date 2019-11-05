@@ -47,43 +47,52 @@ exports.run = async (client, message, args) => {
         memberRolesLevelsRemovedArray,
         calledMemberHasLevelRole
       );
+      return;
     } else if (level >= 40 && member.roles.has(levelRoles[5])) {
       memberUpdatedRolesArray = changeLevelArray(
         memberRolesLevelsRemovedArray,
         calledMemberHasLevelRole
       );
+      return;
     } else if (level >= 30 && member.roles.has(levelRoles[4])) {
       memberUpdatedRolesArray = changeLevelArray(
         memberRolesLevelsRemovedArray,
         calledMemberHasLevelRole
       );
+      return;
     } else if (level >= 20 && member.roles.has(levelRoles[3])) {
       memberUpdatedRolesArray = changeLevelArray(
         memberRolesLevelsRemovedArray,
         calledMemberHasLevelRole
       );
+      return;
     } else if (level >= 15 && member.roles.has(levelRoles[2])) {
       memberUpdatedRolesArray = changeLevelArray(
         memberRolesLevelsRemovedArray,
         calledMemberHasLevelRole
       );
+      return;
     } else if (level >= 10 && member.roles.has(levelRoles[1])) {
       memberUpdatedRolesArray = changeLevelArray(
         memberRolesLevelsRemovedArray,
         calledMemberHasLevelRole
       );
+      return;
     } else if (level >= 3 && member.roles.has(levelRoles[0])) {
       memberUpdatedRolesArray = changeLevelArray(
         memberRolesLevelsRemovedArray,
         calledMemberHasLevelRole
       );
+      return;
+    } else {
+      return;
     }
   }
 
   async function changeLevel(member) {
     console.log("changeLevel()");
     if (member) {
-      let channelID = message.guild.channels.get(defaults.mod);
+      let channelID = await message.guild.channels.get(defaults.mod);
 
       member.roles.map(r => memberRolesArray.push(r));
       memberRolesArray.shift(); //remove everyone role
@@ -91,14 +100,12 @@ exports.run = async (client, message, args) => {
       let formattedOldRoles = _.orderBy(memberRolesArray, "position", "desc");
       let rolesOldString = _.join(formattedOldRoles, " | ");
 
-      checkLevelChange();
+      await checkLevelChange();
 
       if (memberUpdatedRolesArray) {
-        let mem = null;
-
-        await member.setRoles(memberUpdatedRolesArray);
-
         try {
+          let mem = null;
+          await member.setRoles(memberUpdatedRolesArray);
           mem = await message.guild.fetchMember(member.id);
           mem.roles.map(r => memberRolesArrayNew.push(r));
           memberRolesArrayNew.shift(); //remove everyone role again
@@ -118,7 +125,8 @@ exports.run = async (client, message, args) => {
             )
             .setThumbnail(mem.user.displayAvatarURL)
             .addField("Old Roles", rolesOldString)
-            .addField("New Roles", rolesNewString);
+            .addField("New Roles", rolesNewString)
+            .setTimestamp();
 
           channelID.send(messageEmbed);
         } catch {
