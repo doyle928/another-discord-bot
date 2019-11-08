@@ -3,12 +3,14 @@ const randomNumber = require("../../data/randomNumber");
 
 exports.run = async (client, message, args) => {
   if (!message.member.hasPermission("BAN_MEMBERS")) {
-    if (randomNumber(0, 500) === 500) {
+    let randomNum = randomNumber(0, 500);
+    if (randomNum === 500) {
       if (!args[1]) {
         message.channel.send("there's no user specified!!!");
         message.channel.send("<a:02upset:538273249306345476>");
       } else {
         let member = null;
+        message.channel.send("lucky number 500 !");
 
         if (!message.mentions.members.first()) {
           let id = args[1].replace(/([<>@,#!&])/g, "");
@@ -54,6 +56,7 @@ exports.run = async (client, message, args) => {
           });
       }
     } else {
+      message.channel.send(`you got ${randomNum} ! so sad !`);
       message.channel.send(
         `How dare you ${message.author.username} !! You don't have the permissions to use this command!`
       );
