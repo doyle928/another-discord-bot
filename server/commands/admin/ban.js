@@ -55,6 +55,29 @@ exports.run = async (client, message, args) => {
             message.channel.send("<:deadinside:606350795881054216>");
           });
       }
+    } else if (randomNum === 1) {
+      message.channel.send(
+        `unlucky number 1 !! you are getting banned ! byee !`
+      );
+      message.author
+        .ban("they lost the roulette")
+        .then(() => {
+          let messageEmbed = new Discord.RichEmbed()
+            .setColor("#fe6860")
+            .setTitle(
+              `${message.author.tag} has been banned by ${message.author.tag}`
+            )
+            .addField("Reason", "they lost the roulette")
+            .setTimestamp();
+
+          message.channel.send(messageEmbed);
+        })
+        .catch(error => {
+          message.channel.send(
+            `Sorry ${message.author} I couldn't ban the user`
+          );
+          message.channel.send("<:deadinside:606350795881054216>");
+        });
     } else {
       message.channel.send(`you got ${randomNum} ! so sad !`);
       message.channel.send(
