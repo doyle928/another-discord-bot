@@ -1,3 +1,4 @@
+const Discord = require("discord.js");
 const { request } = require("graphql-request");
 const defaults = require("../../data/defaults");
 
