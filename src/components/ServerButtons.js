@@ -28,7 +28,7 @@ class ServerButtons extends React.Component {
   render() {
     return (
       <div className="header">
-        <h2>Plus de serveurs</h2>
+        <h2>Plusieurs Serveurs</h2>
         <div className="server-buttons">{this.renderButtons()}</div>
       </div>
     );
@@ -41,7 +41,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  { fetchServers }
-)(ServerButtons);
+export default connect(mapStateToProps, { fetchServers })(ServerButtons);

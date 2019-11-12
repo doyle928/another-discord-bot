@@ -54,19 +54,21 @@ function timeConverter(UNIX_timestamp) {
 }
 
 class SingleGraph extends React.PureComponent {
-  // static getDerivedStateFromProps(nextProps, prevState) {
-  //   if (nextProps.props.counts !== prevState.counts) {
-  //     return { counts: nextProps.counts };
-  //   } else {
-  //     return null;
-  //   }
-  // }
-  // async componentDidUpdate(prevProps, prevState) {
-  //   if (prevProps.counts !== this.state.counts) {
-  //     await this.props.fetchServer(this.props.match.params.id);
-  //   }
-  // }
+  constructor(props) {
+    super(props);
+    console.dir(props);
+    this.state = {
+      id: props.match.params.id
+    };
+    console.log(this.state);
+  }
+
+  async componentDidMount() {
+    await this.props.fetchServer(this.state.id);
+  }
+
   async componentDidUpdate(prevProps) {
+    console.log("prevProps", prevProps);
     if (this.props.match.params.id !== prevProps.match.params.id) {
       await this.props.fetchServer(this.props.match.params.id);
     }
@@ -77,7 +79,6 @@ class SingleGraph extends React.PureComponent {
       let data = [];
       this.props.counts.map(count => {
         data.push({
-          //x: count.timestamp,
           x: parseInt(count.timestamp),
           y: count.members
         });
@@ -145,7 +146,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  { fetchServer }
-)(SingleGraph);
+export default connect(mapStateToProps, { fetchServer })(SingleGraph);

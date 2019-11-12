@@ -15,7 +15,10 @@ const App = () => {
           <div>
             <ServerButtons />
             <Route path="/" exact component={MainGraph} />
-            <Route path="/server/:id" exact component={SingleGraph} />
+            <Route
+              path="/server/:id"
+              render={props => <SingleGraph {...props} />}
+            />
           </div>
         </Router>
       </Suspense>
