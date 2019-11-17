@@ -46,8 +46,13 @@ exports.run = async (client, message, args) => {
       let response_objects = JSON.parse(responsetext);
 
       top_15_gifs = response_objects["results"];
-
-      sendMessage(top_15_gifs[randomNumber(0, 14)].media[0].gif.url);
+      if (top_15_gifs.length >= 14) {
+        sendMessage(top_15_gifs[randomNumber(0, 14)].media[0].gif.url);
+      } else {
+        sendMessage(
+          top_15_gifs[randomNumber(0, top_15_gifs.length - 1)].media[0].gif.url
+        );
+      }
 
       return;
     }

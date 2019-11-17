@@ -6,14 +6,12 @@ exports.run = async (client, message, args) => {
     message.channel.send("<a:02upset:538273249306345476>");
   } else {
     let id = args[1].match(/([0-9])\d+/g);
-    console.log(id);
 
     if (!id || id[0].length !== 18) {
       message.channel.send("Please tell me what role !!");
       message.channel.send("<a:02upset:538273249306345476>");
       return;
     }
-    console.log(message.guild.roles);
     if (message.guild.roles.has(id[0])) {
       let i = 0;
 

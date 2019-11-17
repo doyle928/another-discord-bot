@@ -11,7 +11,6 @@ exports.run = async (client, message, args) => {
             }`;
     try {
       let res = await request(url, query);
-      console.log(res);
       let guild_id = res.getDefaults[0].guild_id;
       let channel_id = res.getDefaults[0].channel_id;
 

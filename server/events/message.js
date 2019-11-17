@@ -4,52 +4,65 @@ let messageCounter = require("../data/messageCounter");
 const timeConverterDMY = require("../data/timeConverterDMY");
 
 module.exports = async (client, message) => {
-  let a = new Date();
-  timeConverterDMY(a);
-  let found = false;
+  console.log(`${message.author.username}: ${message.content}`);
+  if (message.guild.id) {
+    let a = new Date();
+    timeConverterDMY(a);
+    let found = false;
 
-  for (let i = 0; i < messageCounter.counts.length; i++) {
-    if (messageCounter.counts[i].hasOwnProperty(message.guild.id)) {
-      if (
-        messageCounter.counts[i][message.guild.id].hasOwnProperty(
-          message.channel.id
-        )
-      ) {
+    for (let i = 0; i < messageCounter.counts.length; i++) {
+      if (messageCounter.counts[i].hasOwnProperty(message.guild.id)) {
         if (
-          messageCounter.counts[i][message.guild.id].day === timeConverterDMY(a)
+          messageCounter.counts[i][message.guild.id].hasOwnProperty(
+            message.channel.id
+          )
         ) {
-          messageCounter.addCount(
-            message.guild.id,
-            message.channel.id,
-            message.channel.name,
-            timeConverterDMY(a),
-            i
-          );
+          if (
+            messageCounter.counts[i][message.guild.id].day ===
+            timeConverterDMY(a)
+          ) {
+            messageCounter.addCount(
+              message.guild.id,
+              message.channel.id,
+              message.channel.name,
+              timeConverterDMY(a),
+              i
+            );
+          } else {
+            //reset count and new day entry
+            let oldDay = timeConverterDMY(a).split(" ");
+            oldDay[0] = parseInt(oldday[0]) - 1;
+            oldDay = `${oldDay[0]} ${oldDay[1]} ${oldDay[2]}`;
+            messageCounter.newDay(
+              message.guild.id,
+              message.channel.id,
+              message.channel.name,
+              oldDay,
+              timeConverterDMY(a),
+              i
+            );
+          }
         } else {
-          //reset count and new day entry
-          let oldDay = timeConverterDMY(a).split(" ");
-          oldDay[0] = parseInt(oldday[0]) - 1;
-          oldDay = `${oldDay[0]} ${oldDay[1]} ${oldDay[2]}`;
-          messageCounter.newDay(
+          messageCounter.addChannel(
             message.guild.id,
             message.channel.id,
             message.channel.name,
-            oldDay,
             timeConverterDMY(a),
             i
           );
         }
-      } else {
-        messageCounter.addChannel(
+        found = true;
+      } else if (!found && i === messageCounter.counts.length - 1) {
+        messageCounter.addGuild(
           message.guild.id,
           message.channel.id,
           message.channel.name,
-          timeConverterDMY(a),
-          i
+          timeConverterDMY(a)
         );
       }
-      found = true;
-    } else if (!found && i === messageCounter.counts.length - 1) {
+    }
+
+    if (messageCounter.counts.length === 0) {
       messageCounter.addGuild(
         message.guild.id,
         message.channel.id,
@@ -57,15 +70,6 @@ module.exports = async (client, message) => {
         timeConverterDMY(a)
       );
     }
-  }
-
-  if (messageCounter.counts.length === 0) {
-    messageCounter.addGuild(
-      message.guild.id,
-      message.channel.id,
-      message.channel.name,
-      timeConverterDMY(a)
-    );
   }
 
   let ops = {
@@ -100,7 +104,9 @@ module.exports = async (client, message) => {
   ) {
     command = "good";
   }
-  console.log(command, args);
+  console.log(
+    `message.author: ${mmessage.author.username} | command: ${command} | args: ${args}`
+  );
 
   try {
     // Grab the command data from the client.commands Enmap

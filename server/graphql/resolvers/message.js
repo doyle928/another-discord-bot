@@ -19,7 +19,6 @@ module.exports = {
         { guild_id: guild_id, channel_id: channel_id, day: day },
         "guild_id channel_id channel_name message_count day"
       );
-      console.log("resolver", message[0]);
       return message[0];
     }
   },
@@ -60,7 +59,6 @@ module.exports = {
         }
       );
 
-      console.log("resolver", res);
       return res;
     }
   }

@@ -16,7 +16,6 @@ module.exports = async (client, guild) => {
           }`;
     try {
       let res = await request(url, query);
-      console.log(res);
     } catch (err) {
       console.error(err);
     }
@@ -29,7 +28,6 @@ module.exports = async (client, guild) => {
           }`;
   try {
     let res = await request(url, query);
-    console.log(res);
   } catch (err) {
     console.error(err);
   }
