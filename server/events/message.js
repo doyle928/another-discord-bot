@@ -105,7 +105,7 @@ module.exports = async (client, message) => {
     command = "good";
   }
   console.log(
-    `message.author: ${mmessage.author.username} | command: ${command} | args: ${args}`
+    `message.author: ${message.author.username} | command: ${command} | args: ${args}`
   );
 
   try {
