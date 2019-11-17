@@ -16,6 +16,7 @@ exports.run = async (client, message, args) => {
           .wait(`.server-${message.guild.id}`)
           .click(`.server-${message.guild.id}`)
           .wait("svg")
+          .wait(1000) //add timer for graph to update
           .scrollTo(rects[index].y, 0)
           .screenshot({
             //109 is height of the top element which remains
