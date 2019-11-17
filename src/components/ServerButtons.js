@@ -15,7 +15,10 @@ class ServerButtons extends React.Component {
         <div>
           {this.props.servers.map(server => {
             return (
-              <Link className="link" to={`/server/${server.guild_id}`}>
+              <Link
+                className={`link server-${server.guild_id}`}
+                to={`/server/${server.guild_id}`}
+              >
                 {server.guild_id}
               </Link>
             );

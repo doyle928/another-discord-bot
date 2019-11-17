@@ -1,22 +1,6 @@
-const { request } = require("graphql-request");
-const mongoose = require("mongoose");
 const Nightmare = require("nightmare");
-const vo = require("vo");
-const screenshotSelector = require("nightmare-screenshot-selector");
-const fs = require("fs");
 
 exports.run = async (client, message, args) => {
-  // const outputImagePath = "./test.png";
-
-  // const nightmare = new Nightmare(); // Create the Nightmare instance.
-  // return nightmare
-  //   .goto("http://localhost:8080/") // Point the browser at the web server we just started.
-  //   .wait("svg") // Wait until the chart appears on screen.
-  //   .scrollTo(150, 0)
-  //   .screenshot(outputImagePath) // Capture a screenshot to an image file.
-  //   .end() // End the Nightmare session. Any queued operations are completed and the headless browser is terminated.
-  //   .then(() => console.log("done"));
-  //----------------------
   const nightmare = Nightmare();
 
   await nightmare
@@ -29,6 +13,9 @@ exports.run = async (client, message, args) => {
       function getScreenshot(rects, index) {
         if (index == rects.length) return;
         nightmare
+          .wait(`.server-${message.guild.id}`)
+          .click(`.server-${message.guild.id}`)
+          .wait("svg")
           .scrollTo(rects[index].y, 0)
           .screenshot({
             //109 is height of the top element which remains
@@ -74,37 +61,4 @@ exports.run = async (client, message, args) => {
     }
     return null;
   }
-
-  //----------------------------
-  // function* run() {
-  //   const nightmare = new Nightmare({
-  //     show: false,
-  //     frame: false,
-  //     maxHeight: 16384,
-  //     maxWidth: 16384,
-  //     width: 1200,
-  //     height: 1024
-  //   });
-  //   const dimensions = yield nightmare
-  //     .goto("http://localhost:8080/")
-  //     .wait(".rv-xy-plot ")
-  //     .evaluate(function() {
-  //       let body = document.querySelector(".rv-xy-plot");
-  //       return {
-  //         width: body.scrollWidth,
-  //         height: body.scrollHeight
-  //       };
-  //     });
-
-  //   console.log(dimensions);
-  //   yield nightmare
-  //     .viewport(dimensions.width, dimensions.height)
-  //     .wait(1000)
-  //     .screenshot("sample.png");
-  //   yield nightmare.end();
-  // }
-
-  // vo(run)(function() {
-  //   console.log("done");
-  // });
 };
