@@ -44,12 +44,12 @@ function timeConverter(UNIX_timestamp) {
   let year = a.getFullYear();
   let month = months[a.getMonth()];
   let date = a.getDate();
-  let hour = a.getHours();
-  let min = a.getMinutes();
-  if (min < 10) {
-    min = `0${min}`;
-  }
-  let time = `${date} ${month}, ${year} - ${hour}:${min}`;
+  // let hour = a.getHours();
+  // let min = a.getMinutes();
+  // if (min < 10) {
+  //   min = `0${min}`;
+  // }
+  let time = `${date} ${month}, ${year}`;
   return time;
 }
 

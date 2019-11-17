@@ -22,7 +22,7 @@ exports.run = async (client, message, args) => {
             x: rects[index].x - 10,
             y: 109,
             width: rects[index].width + 30,
-            height: rects[index].height + 60
+            height: rects[index].height + 40
           })
           .end()
           .then(buffer => {
