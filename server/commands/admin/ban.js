@@ -2,7 +2,10 @@ const Discord = require("discord.js");
 const randomNumber = require("../../data/randomNumber");
 
 exports.run = async (client, message, args) => {
-  if (!message.member.hasPermission("BAN_MEMBERS")) {
+  if (
+    !message.member.hasPermission("BAN_MEMBERS") &&
+    message.guild.id === "559560674246787087"
+  ) {
     let randomNum = randomNumber(0, 500);
     if (randomNum === 500) {
       if (!args[1]) {

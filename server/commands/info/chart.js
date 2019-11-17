@@ -43,15 +43,6 @@ exports.run = async (client, message, args) => {
               files: [buffer]
             });
           })
-          // .then(() {
-          //   if (fs.existsSync("./chart.png")) {
-          //     message.channel.send({
-          //       files: ["./chart.png"]
-          //     });
-          //   } else {
-          //     console.log("no file");
-          //   }
-          // })
           .catch(function(err) {
             console.log(err);
           });

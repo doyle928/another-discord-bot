@@ -5,7 +5,10 @@ const defaults = require("../../data/defaults");
 exports.run = async (client, message, args) => {
   let url = "https://lulu-discord-bot.herokuapp.com/api";
 
-  if (!message.member.hasPermission("BAN_MEMBERS")) {
+  if (
+    !message.member.hasPermission("BAN_MEMBERS") &&
+    message.guild.id === "559560674246787087"
+  ) {
     if (message.author.id === "137935136036487168") {
       let messageEmbed = new Discord.RichEmbed().setColor("#fe6860");
       let channelID = await message.guild.channels.get(defaults.mod);
@@ -19,9 +22,7 @@ exports.run = async (client, message, args) => {
           strikes = -parseInt(args[2]);
           if (isNaN(strikes)) {
             message.channel.send(
-              `Excuse me ${message.author}! where you put "**${
-                args[2]
-              }**", it should be a number not whatever you put there!`
+              `Excuse me ${message.author}! where you put "**${args[2]}**", it should be a number not whatever you put there!`
             );
             message.channel.send("<a:02upset:538273249306345476>");
 
@@ -192,9 +193,7 @@ exports.run = async (client, message, args) => {
         strikes = -parseInt(args[2]);
         if (isNaN(strikes)) {
           message.channel.send(
-            `Excuse me ${message.author}! where you put "**${
-              args[2]
-            }**", it should be a number not whatever you put there!`
+            `Excuse me ${message.author}! where you put "**${args[2]}**", it should be a number not whatever you put there!`
           );
           message.channel.send("<a:02upset:538273249306345476>");
 
