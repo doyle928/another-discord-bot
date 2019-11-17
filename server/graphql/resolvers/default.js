@@ -31,7 +31,6 @@ module.exports = {
         }
       );
 
-      console.log("resolver", res);
       return res;
     }
   }

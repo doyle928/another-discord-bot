@@ -16,7 +16,6 @@ module.exports = {
         { guild_id: guild_id, user_id: user_id },
         "guild_id user_id join_date strikes"
       );
-      console.log("resolver", user[0]);
       return user[0];
     }
   },
@@ -48,7 +47,6 @@ module.exports = {
         }
       );
 
-      console.log("resolver", res);
       return res;
     }
   }

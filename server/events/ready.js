@@ -3,5 +3,7 @@ module.exports = client => {
 
   client.user.setStatus("idle");
 
-  client.user.setActivity("my son pls no touch");
+  client.user.setActivity("mon fils stp pas toucher", {
+    type: 3
+  });
 };
