@@ -21,6 +21,13 @@ module.exports = gql`
     mod_channel_id: String!
     user_id: String!
   }
+  type Message {
+    guild_id: String!
+    channel_id: String!
+    channel_name: String!
+    message_count: Int!
+    day: String!
+  }
   type Query {
     getUser(guild_id: String!, user_id: String!): User!
     getUsers: [User]
@@ -28,6 +35,8 @@ module.exports = gql`
     getCounts: [Count]
     getServers: [Server]
     getDefaults: [Default]
+    getMessages(guild_id: String!): [Message]
+    getMessage(guild_id: String!, channel_id: String!, day: String!): Message!
   }
   type Mutation {
     addUser(
@@ -45,5 +54,19 @@ module.exports = gql`
       mod_channel_id: String!
       user_id: String!
     ): Default
+    addMessage(
+      guild_id: String!
+      channel_id: String!
+      channel_name: String!
+      message_count: Int!
+      day: String!
+    ): Message!
+    updateMessage(
+      guild_id: String!
+      channel_id: String!
+      channel_name: String!
+      message_count: Int
+      day: String!
+    ): Message!
   }
 `;
