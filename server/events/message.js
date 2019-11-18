@@ -31,7 +31,7 @@ module.exports = async (client, message) => {
           } else {
             //reset count and new day entry
             let oldDay = timeConverterDMY(a).split(" ");
-            oldDay[0] = parseInt(oldday[0]) - 1;
+            oldDay[0] = parseInt(oldDay[0]) - 1;
             oldDay = `${oldDay[0]} ${oldDay[1]} ${oldDay[2]}`;
             messageCounter.newDay(
               message.guild.id,
