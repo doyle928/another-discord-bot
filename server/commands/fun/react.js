@@ -50,7 +50,7 @@ exports.run = async (client, message, args) => {
         message.channel.send(`There was no gifs for « ${query} !! »`);
       } else if (top_15_gifs.length >= 14) {
         let randNum = randomNumber(0, 14);
-        if (top_15_gifs[randNum].media[0].gif.url === undefined) {
+        if (top_15_gifs[randNum].media[0].gif.url !== undefined) {
           sendMessage(top_15_gifs[randNum].media[0].gif.url);
         } else {
           message.channel.send("Something went wrong !");
@@ -58,7 +58,7 @@ exports.run = async (client, message, args) => {
         }
       } else {
         let randNum = randomNumber(0, top_15_gifs.length - 1);
-        if (top_15_gifs[randNum].media[0].gif.url === undefined) {
+        if (top_15_gifs[randNum].media[0].gif.url !== undefined) {
           sendMessage(top_15_gifs[randNum].media[0].gif.url);
         } else {
           message.channel.send("Something went wrong !");
