@@ -46,7 +46,9 @@ exports.run = async (client, message, args) => {
       let response_objects = JSON.parse(responsetext);
 
       top_15_gifs = response_objects["results"];
-      if (top_15_gifs.length >= 14) {
+      if (top_15_gifs.length === 0) {
+        message.channel.send(`There was no gifs for « ${query} !! »`);
+      } else if (top_15_gifs.length >= 14) {
         sendMessage(top_15_gifs[randomNumber(0, 14)].media[0].gif.url);
       } else {
         sendMessage(
