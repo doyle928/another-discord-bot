@@ -49,11 +49,21 @@ exports.run = async (client, message, args) => {
       if (top_15_gifs.length === 0) {
         message.channel.send(`There was no gifs for « ${query} !! »`);
       } else if (top_15_gifs.length >= 14) {
-        sendMessage(top_15_gifs[randomNumber(0, 14)].media[0].gif.url);
+        let randNum = randomNumber(0, 14);
+        if (top_15_gifs[randNum].media[0].gif.url === undefined) {
+          sendMessage(top_15_gifs[randNum].media[0].gif.url);
+        } else {
+          message.channel.send("Something went wrong !");
+          message.channel.send("<:deadinside:606350795881054216>");
+        }
       } else {
-        sendMessage(
-          top_15_gifs[randomNumber(0, top_15_gifs.length - 1)].media[0].gif.url
-        );
+        let randNum = randomNumber(0, top_15_gifs.length - 1);
+        if (top_15_gifs[randNum].media[0].gif.url === undefined) {
+          sendMessage(top_15_gifs[randNum].media[0].gif.url);
+        } else {
+          message.channel.send("Something went wrong !");
+          message.channel.send("<:deadinside:606350795881054216>");
+        }
       }
 
       return;
