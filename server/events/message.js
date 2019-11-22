@@ -78,7 +78,7 @@ module.exports = async (client, message) => {
           messageSplit[i].toLowerCase() === "faggot" ||
           messageSplit[i].toLowerCase() === "nigger"
         ) {
-          message.author.ban();
+          message.author.ban().catch(() => message.delete());
         }
       }
       if (
@@ -86,7 +86,7 @@ module.exports = async (client, message) => {
         message.content.toLowerCase().indexOf("f a g g o t") >= 0 ||
         message.content.toLowerCase().indexOf("n i g g e r") >= 0
       ) {
-        message.author.ban();
+        message.author.ban().catch(() => message.delete());
       }
     }
   }
