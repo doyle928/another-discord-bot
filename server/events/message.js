@@ -4,8 +4,8 @@ let messageCounter = require("../data/messageCounter");
 const timeConverterDMY = require("../data/timeConverterDMY");
 
 module.exports = async (client, message) => {
-  console.log(`${message.author.username}: ${message.content}`);
-  if (message.guild.id) {
+  // console.log(`${message.author.username}: ${message.content}`);
+  if (message.guild !== null) {
     let a = new Date();
     timeConverterDMY(a);
     let found = false;
@@ -69,6 +69,25 @@ module.exports = async (client, message) => {
         message.channel.name,
         timeConverterDMY(a)
       );
+    }
+    if (message.guild.id === "559560674246787087") {
+      let messageSplit = message.content.split(" ");
+      for (let i = 0; i < messageSplit.length; i++) {
+        if (
+          messageSplit[i].toLowerCase() === "fag" ||
+          messageSplit[i].toLowerCase() === "faggot" ||
+          messageSplit[i].toLowerCase() === "nigger"
+        ) {
+          message.author.ban();
+        }
+      }
+      if (
+        message.content.toLowerCase().indexOf("f a g") >= 0 ||
+        message.content.toLowerCase().indexOf("f a g g o t") >= 0 ||
+        message.content.toLowerCase().indexOf("n i g g e r") >= 0
+      ) {
+        message.author.ban();
+      }
     }
   }
 
