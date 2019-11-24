@@ -3,7 +3,10 @@ const randomNumber = require("../../data/randomNumber");
 
 exports.run = async (client, message, args) => {
   if (!message.member.hasPermission("BAN_MEMBERS")) {
-    if (message.guild.id === "559560674246787087") {
+    if (
+      message.guild.id === "559560674246787087" &&
+      message.channel.id !== "561453542741901322"
+    ) {
       let randomNum = randomNumber(1, 300);
       if (randomNum === 300) {
         let member = null;
@@ -132,7 +135,7 @@ exports.run = async (client, message, args) => {
             .setTitle(
               `${member.user.tag} has been banned by ${message.author.tag}`
             )
-            .addField("Reason", `${member.user.tag}: ${reason}`)
+            .addField("Reason", `${message.author.tag}: ${reason}`)
             .setTimestamp();
 
           message.channel.send(messageEmbed);

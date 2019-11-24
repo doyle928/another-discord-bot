@@ -91,6 +91,32 @@ module.exports = async (client, message) => {
     }
   }
 
+  if (message.guild.id === "559560674246787087") {
+    let msgCheckId = message.content.toLowerCase().replace(/([<>@,.#!&])/g, "");
+    if (
+      msgCheckId.indexOf("157673412561469440") >= 0 &&
+      message.author.id !== "326608951107911682"
+    ) {
+      setTimeout(() => {
+        message.delete();
+      }, 225);
+      if (msgCheckId.indexOf("avatar") >= 0) {
+        message.channel
+          .awaitMessages(res => res.author.bot === true, {
+            max: 1,
+            time: 7000,
+            errors: ["time"]
+          })
+          .then(collected => {
+            setTimeout(() => {
+              collected.first().delete();
+            }, 225);
+          })
+          .catch(err => console.error(err));
+      }
+    }
+  }
+
   let ops = {
     active: active
   };
