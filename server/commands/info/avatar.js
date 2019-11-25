@@ -1,3 +1,6 @@
+const Discord = require("discord.js");
+const randomColor = require("../../data/randomColor");
+
 exports.run = async (client, message, args) => {
   if (!args[1]) {
     message.channel.send("there's no user specified!!!");
@@ -14,11 +17,19 @@ exports.run = async (client, message, args) => {
       }
     } else {
       member =
-        message.mentions.members.first() ||
-        message.guild.members.get(args[1]) ||
-        message.member;
+        message.mentions.members.first() || message.guild.members.get(args[1]);
     }
-    message.channel.send(member.user.displayAvatarURL);
+    // message.channel.send(member.user.displayAvatarURL);
+
+    let messageEmbed = new Discord.RichEmbed()
+      .setColor(randomColor())
+      .setTitle(
+        `${message.author.username} wanted to see the avatar of ${member.user.username} !!`
+      )
+      .setImage(member.user.displayAvatarURL)
+      .setTimestamp();
+
+    message.channel.send(messageEmbed);
     setTimeout(() => {
       message
         .delete()

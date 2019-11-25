@@ -87,17 +87,22 @@ exports.run = async (client, message, args) => {
             });
         }, 10000);
       } else {
-        message.channel.send(`you got ${randomNum} ! so sad !`);
+        message.channel.send(`you got ${randomNum} ! how lame !`);
         // message.channel.send(
         //   `How dare you ${message.author.username} !! You don't have the permissions to use this command!`
         // );
-        message.channel.send("<a:02upset:538273249306345476>");
+        message.channel.send("<:natsukiMad:646210751417286656>");
       }
     } else {
-      message.channel.send(
-        `How dare you ${message.author.username} !! You don't have the permissions to use this command!`
-      );
-      message.channel.send("<a:02upset:538273249306345476>");
+      if (message.channel.id === "561453542741901322") {
+        message.channel.send(`please use me in a different channel !`);
+        message.channel.send("<:natsukiMad:646210751417286656>");
+      } else {
+        message.channel.send(
+          `How dare you ${message.author.username} !! You don't have the permissions to use this command!`
+        );
+        message.channel.send("<a:02upset:538273249306345476>");
+      }
     }
   } else {
     if (!args[1]) {

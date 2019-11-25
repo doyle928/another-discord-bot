@@ -92,7 +92,7 @@ module.exports = async (client, message) => {
   }
 
   if (message.guild.id === "559560674246787087") {
-    let msgCheckId = message.content.toLowerCase().replace(/([<>@,.#!&])/g, "");
+    let msgCheckId = message.content.toLowerCase().replace(/([^a-z^0-9])/g, "");
     if (
       msgCheckId.indexOf("157673412561469440") >= 0 &&
       message.author.id !== "326608951107911682"
@@ -113,6 +113,18 @@ module.exports = async (client, message) => {
             }, 225);
           })
           .catch(err => console.error(err));
+      }
+    }
+    if (
+      message.content
+        .toLowerCase()
+        .replace(/([^a-z])/g, "")
+        .indexOf("lulu") >= 0
+    ) {
+      if (message.author.id !== "326608951107911682") {
+        setTimeout(() => {
+          message.delete();
+        }, 225);
       }
     }
   }
