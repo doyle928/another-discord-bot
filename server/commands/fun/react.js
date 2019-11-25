@@ -112,7 +112,53 @@ exports.run = async (client, message, args) => {
         .setImage(url)
         .setTimestamp()
         .setFooter(showQuery);
-      message.channel.send(messageEmbed);
+      message.channel.send(messageEmbed).then(msg => {
+        const filter = m =>
+          m.content
+            .toLowerCase()
+            .replace(/([^a-z])/g)
+            .indexOf("wrong") >= 0 ||
+          m.content
+            .toLowerCase()
+            .replace(/([^a-z])/g)
+            .indexOf("bad bot") >= 0 ||
+          m.content
+            .toLowerCase()
+            .replace(/([^a-z])/g)
+            .indexOf("what") >= 0 ||
+          m.content
+            .toLowerCase()
+            .replace(/([^a-z])/g)
+            .indexOf("not right") >= 0;
+        message.channel
+          .awaitMessages(filter, {
+            max: 2,
+            time: 20000,
+            errors: ["time"]
+          })
+          .then(collected => {
+            let foundNo = false;
+            collected.map(msg => {
+              let msgSplit = msg.toLowerCase().split(" ");
+              for (let i = 0; i < msgSplit.length; i++) {
+                if (
+                  msgSplit[i].replace(/([^a-z])/g).replace(/([o])/g, "") ===
+                    "n" ||
+                  msgSplit[i].replace(/([^a-z])/g).replace(/([o])/g, "") ===
+                    "npe"
+                ) {
+                  foundNo = true;
+                }
+              }
+            });
+            if (foundNo) {
+              message.channel.send(
+                `do you want to get banned ${message.author.tag} ??`
+              );
+            }
+          })
+          .catch(err => console.error(err));
+      });
     }
 
     grab_data();

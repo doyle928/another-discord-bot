@@ -96,7 +96,36 @@ exports.run = async (client, message, args) => {
     } else {
       if (message.channel.id === "561453542741901322") {
         message.channel.send(`please use me in a different channel !`);
-        message.channel.send("<:natsukiMad:646210751417286656>");
+        message.channel.send("<:natsukiMad:646210751417286656>").then(msg => {
+          message.channel
+            .awaitMessages(res => res.author.id === message.author.id, {
+              max: 2,
+              time: 20000,
+              errors: ["time"]
+            })
+            .then(collected => {
+              let foundNo = false;
+              collected.map(msg => {
+                let msgSplit = msg.toLowerCase().split(" ");
+                for (let i = 0; i < msgSplit.length; i++) {
+                  if (
+                    msgSplit[i].replace(/([^a-z])/g).replace(/([o])/g, "") ===
+                      "n" ||
+                    msgSplit[i].replace(/([^a-z])/g).replace(/([o])/g, "") ===
+                      "npe"
+                  ) {
+                    foundNo = true;
+                  }
+                }
+              });
+              if (foundNo) {
+                message.channel.send(
+                  `do you want to get banned ${message.author.tag} ??`
+                );
+              }
+            })
+            .catch(err => console.error(err));
+        });
       } else {
         message.channel.send(
           `How dare you ${message.author.username} !! You don't have the permissions to use this command!`
