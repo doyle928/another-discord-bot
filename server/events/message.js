@@ -119,7 +119,23 @@ module.exports = async (client, message) => {
       message.content
         .toLowerCase()
         .replace(/([^a-z])/g, "")
-        .indexOf("lulu") >= 0
+        .indexOf("lulu") >= 0 ||
+      message.content
+        .toLowerCase()
+        .replace(/([^a-z])/g, "")
+        .indexOf("lewlew") >= 0 ||
+      message.content
+        .toLowerCase()
+        .replace(/([^a-z])/g, "")
+        .indexOf("lewdlewd") >= 0 ||
+      message.content
+        .toLowerCase()
+        .replace(/([^a-z])/g, "")
+        .indexOf("lewlewd") >= 0 ||
+      message.content
+        .toLowerCase()
+        .replace(/([^a-z])/g, "")
+        .indexOf("lewdlew") >= 0
     ) {
       if (message.author.id !== "326608951107911682") {
         setTimeout(() => {
