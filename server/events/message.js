@@ -115,42 +115,42 @@ module.exports = async (client, message) => {
           .catch(err => console.error(err));
       }
     }
-    if (
-      message.content
-        .toLowerCase()
-        .replace(/([^a-z])/g, "")
-        .indexOf("lulu") >= 0 ||
-      message.content
-        .toLowerCase()
-        .replace(/([^a-z])/g, "")
-        .indexOf("lewlew") >= 0 ||
-      message.content
-        .toLowerCase()
-        .replace(/([^a-z])/g, "")
-        .indexOf("lewdlewd") >= 0 ||
-      message.content
-        .toLowerCase()
-        .replace(/([^a-z])/g, "")
-        .indexOf("lewlewd") >= 0 ||
-      message.content
-        .toLowerCase()
-        .replace(/([^a-z])/g, "")
-        .indexOf("luul") >= 0 ||
-      message.content
-        .toLowerCase()
-        .replace(/([^a-z])/g, "")
-        .indexOf("loolo") >= 0 ||
-      message.content
-        .toLowerCase()
-        .replace(/([^a-z])/g, "")
-        .indexOf("lullu") >= 0
-    ) {
-      if (message.author.id !== "326608951107911682") {
-        setTimeout(() => {
-          message.delete();
-        }, 225);
-      }
-    }
+    // if (
+    //   message.content
+    //     .toLowerCase()
+    //     .replace(/([^a-z])/g, "")
+    //     .indexOf("lulu") >= 0 ||
+    //   message.content
+    //     .toLowerCase()
+    //     .replace(/([^a-z])/g, "")
+    //     .indexOf("lewlew") >= 0 ||
+    //   message.content
+    //     .toLowerCase()
+    //     .replace(/([^a-z])/g, "")
+    //     .indexOf("lewdlewd") >= 0 ||
+    //   message.content
+    //     .toLowerCase()
+    //     .replace(/([^a-z])/g, "")
+    //     .indexOf("lewlewd") >= 0 ||
+    //   message.content
+    //     .toLowerCase()
+    //     .replace(/([^a-z])/g, "")
+    //     .indexOf("luul") >= 0 ||
+    //   message.content
+    //     .toLowerCase()
+    //     .replace(/([^a-z])/g, "")
+    //     .indexOf("loolo") >= 0 ||
+    //   message.content
+    //     .toLowerCase()
+    //     .replace(/([^a-z])/g, "")
+    //     .indexOf("lullu") >= 0
+    // ) {
+    //   if (message.author.id !== "326608951107911682") {
+    //     setTimeout(() => {
+    //       message.delete();
+    //     }, 225);
+    //   }
+    // }
   }
 
   let ops = {
