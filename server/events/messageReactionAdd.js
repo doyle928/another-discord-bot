@@ -14,7 +14,7 @@ module.exports = async (client, messageReaction, user) => {
     }
     messageReaction.message.reactions.map(async r => {
       if (r._emoji.name === "⭐") {
-        if (r.count >= 1) {
+        if (r.count >= 3) {
           const starChannel = messageReaction.message.channel.guild.channels.find(
             channel => channel.name == "starboard"
           );
@@ -87,7 +87,7 @@ module.exports = async (client, messageReaction, user) => {
                 messageReaction.message.author.displayAvatarURL
               )
               .setTimestamp(new Date())
-              .setFooter(`⭐ 1 | ${messageReaction.message.id}`)
+              .setFooter(`⭐ 3 | ${messageReaction.message.id}`)
               .setImage(image);
             await starChannel.send({ embed });
           }

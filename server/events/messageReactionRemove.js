@@ -45,7 +45,7 @@ module.exports = async (client, messageReaction, user) => {
         .setImage(image);
       const starMsg = await starChannel.fetchMessage(stars.id);
       await starMsg.edit({ embed });
-      if (parseInt(star[1]) - 1 <= 0) return starMsg.delete(250);
+      if (parseInt(star[1]) - 1 <= 3) return starMsg.delete(250);
     }
     //   }
     // });
