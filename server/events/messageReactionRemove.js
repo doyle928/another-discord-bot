@@ -41,7 +41,7 @@ module.exports = async (client, messageReaction, user) => {
         .setColor(foundStar.color)
         .setDescription(foundStar.description)
         .setAuthor(
-          messageReaction.message.author.tag,
+          `${messageReaction.message.author.username} (${messageReaction.message.channel.name})`,
           messageReaction.message.author.displayAvatarURL
         )
         .setTimestamp()
