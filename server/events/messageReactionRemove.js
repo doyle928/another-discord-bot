@@ -3,13 +3,19 @@ const randomColor = require("../data/randomColor");
 
 module.exports = async (client, messageReaction, user) => {
   if (messageReaction._emoji.name === "⭐") {
-    const starChannel = messageReaction.message.channel.guild.channels.find(
+    let starChannel = messageReaction.message.channel.guild.channels.find(
       channel => channel.name == "starboard"
     );
-    if (!starChannel)
-      return messageReaction.message.channel.send(
-        `you do not have a starboard channel ! please make a channel and name it exactly « starboard »`
+    if (!starChannel) {
+      starChannel = messageReaction.message.channel.guild.channels.find(
+        channel => channel.name == "memories"
       );
+      if (!starChannel) {
+        return messageReaction.message.channel.send(
+          `you do not have a starboard channel ! please make a channel and name it exactly « starboard » ou « memories »`
+        );
+      }
+    }
 
     const fetch = await starChannel.fetchMessages({ limit: 100 });
     const stars = fetch.find(
@@ -47,8 +53,6 @@ module.exports = async (client, messageReaction, user) => {
       await starMsg.edit({ embed });
       if (parseInt(star[1]) - 1 <= 3) return starMsg.delete(250);
     }
-    //   }
-    // });
   }
   function extension(messageReaction, attachment) {
     const imageLink = attachment.split(".");

@@ -15,14 +15,19 @@ module.exports = async (client, messageReaction, user) => {
     messageReaction.message.reactions.map(async r => {
       if (r._emoji.name === "⭐") {
         if (r.count >= 3) {
-          const starChannel = messageReaction.message.channel.guild.channels.find(
+          let starChannel = messageReaction.message.channel.guild.channels.find(
             channel => channel.name == "starboard"
           );
-          if (!starChannel)
-            return messageReaction.message.channel.send(
-              `you do not have a starboard channel ! please make a text channel and name it exactly « starboard »`
+          if (!starChannel) {
+            starChannel = messageReaction.message.channel.guild.channels.find(
+              channel => channel.name == "memories"
             );
-
+            if (!starChannel) {
+              return messageReaction.message.channel.send(
+                `you do not have a starboard channel ! please make a channel and name it exactly « starboard » ou « memories »`
+              );
+            }
+          }
           const fetch = await starChannel.fetchMessages({ limit: 100 });
 
           const stars = fetch.find(
@@ -80,10 +85,10 @@ module.exports = async (client, messageReaction, user) => {
             const embed = new Discord.RichEmbed()
               .setColor(randomColor())
               .setDescription(
-                `**[Go to Message ->](https://discordapp.com/channels/${messageReaction.message.channel.guild.id}/${messageReaction.message.channel.id}/${messageReaction.message.id})**\n\n${messageReaction.message.cleanContent}`
+                `**[► Original Message](https://discordapp.com/channels/${messageReaction.message.channel.guild.id}/${messageReaction.message.channel.id}/${messageReaction.message.id})**\n${messageReaction.message.cleanContent}`
               )
               .setAuthor(
-                messageReaction.message.author.tag,
+                `${messageReaction.message.author.username} (${messageReaction.message.channel.name})`,
                 messageReaction.message.author.displayAvatarURL
               )
               .setTimestamp(new Date())
