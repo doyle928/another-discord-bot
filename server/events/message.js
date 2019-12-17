@@ -97,9 +97,9 @@ module.exports = async (client, message) => {
       msgCheckId.indexOf("157673412561469440") >= 0 &&
       message.author.id !== "326608951107911682"
     ) {
-      setTimeout(() => {
-        message.delete();
-      }, 225);
+      // setTimeout(() => {
+      //   message.delete();
+      // }, 225);
       if (msgCheckId.indexOf("avatar") >= 0) {
         message.channel
           .awaitMessages(res => res.author.bot === true, {
