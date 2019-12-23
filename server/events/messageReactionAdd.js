@@ -77,7 +77,7 @@ module.exports = async (client, messageReaction, user) => {
                     messageReaction.message.attachments.array()[0].url
                   )
                 : "";
-            if (image === "" && messageReaction.message.cleanContent.length < 1)
+            if (image === "" && messageReaction.message.content.length < 1)
               return messageReaction.message.channel.send(
                 `${user}, you cannot star an empty message.`
               );
@@ -85,7 +85,7 @@ module.exports = async (client, messageReaction, user) => {
             const embed = new Discord.RichEmbed()
               .setColor(randomColor())
               .setDescription(
-                `**[► Original Message](https://discordapp.com/channels/${messageReaction.message.channel.guild.id}/${messageReaction.message.channel.id}/${messageReaction.message.id})**\n${messageReaction.message.cleanContent}`
+                `**[► Original Message](https://discordapp.com/channels/${messageReaction.message.channel.guild.id}/${messageReaction.message.channel.id}/${messageReaction.message.id})**\n${messageReaction.message.content}`
               )
               .setAuthor(
                 `${messageReaction.message.author.username} (${messageReaction.message.channel.name})`,
