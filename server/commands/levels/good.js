@@ -5,6 +5,8 @@ const defaults = require("../../data/defaults");
 const levelRoles = require("../../data/levelRoles");
 
 exports.run = async (client, message, args) => {
+  const waitFor = ms => new Promise(r => setTimeout(r, ms));
+
   if (message.guild.id === "559560674246787087") {
     console.log("good command called");
     let member = null;
@@ -107,6 +109,8 @@ exports.run = async (client, message, args) => {
           try {
             let mem = null;
             await member.setRoles(memberUpdatedRolesArray);
+            await waitFor(1000);
+
             mem = await message.guild.fetchMember(member.id);
             mem.roles.map(r => memberRolesArrayNew.push(r));
             memberRolesArrayNew.shift(); //remove everyone role again
