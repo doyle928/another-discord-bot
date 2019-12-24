@@ -153,6 +153,33 @@ module.exports = async (client, message) => {
     // }
   }
 
+  if (
+    message.channel.type === "dm" &&
+    message.channel.id !== "646193696936689694" &&
+    message.author.id !== "606563939429515287"
+  ) {
+    let s = await client.guilds.get("542945080495833119");
+    let me = await s.fetchMember("157673412561469440");
+    me.send(`${message.author.username} - ${message.content}`);
+    if (message.author.id !== "326608951107911682") {
+      if (message.content.toLowerCase().replace(/([^a-z])/g, "") === "pong") {
+        message.author.send("good bot");
+        message.author.send("<a:pat:658917218452635658>");
+      } else if (
+        message.content
+          .toLowerCase()
+          .replace(/([^a-z])/g, "")
+          .indexOf("iloveyou") > 0 ||
+        message.content.toLowerCase().replace(/([^a-z])/g, "") === "ily"
+      ) {
+        message.author.send("i love you too !");
+        message.author.send("<a:numberHeart:658916574132043776>");
+      } else {
+        message.author.send("i said ping !!");
+      }
+    }
+  }
+
   let ops = {
     active: active
   };
