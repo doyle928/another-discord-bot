@@ -171,7 +171,7 @@ module.exports = async (client, message) => {
         message.content
           .toLowerCase()
           .replace(/([^a-z])/g, "")
-          .indexOf("iloveyou") > 0 ||
+          .indexOf("iloveyou") >= 0 ||
         message.content.toLowerCase().replace(/([^a-z])/g, "") === "ily"
       ) {
         message.author.send("i love you too !");
