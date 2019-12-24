@@ -176,6 +176,13 @@ module.exports = async (client, message) => {
       ) {
         message.author.send("i love you too !");
         message.author.send("<a:numberHeart:658916574132043776>");
+      } else if (
+        message.content
+          .toLowerCase()
+          .replace(/([^a-z])/g, "")
+          .indexOf("ihateyou") >= 0
+      ) {
+        message.author.send("i am telling my owner !!");
       } else {
         message.author.send("i said ping !!");
       }
