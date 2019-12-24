@@ -155,8 +155,9 @@ module.exports = async (client, message) => {
 
   if (
     message.channel.type === "dm" &&
-    message.channel.id !== "646193696936689694" &&
-    message.author.id !== "606563939429515287"
+    message.channel.id !== "644786761511206912" &&
+    message.author.id !== "601825955572350976" &&
+    message.author.id !== "157673412561469440"
   ) {
     let s = await client.guilds.get("542945080495833119");
     let me = await s.fetchMember("157673412561469440");
