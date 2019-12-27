@@ -28,8 +28,14 @@ exports.run = async (client, message, args) => {
       try {
         member = await message.guild.fetchMember(id);
       } catch {
-        message.channel.send("I don't think this member exists in the guild");
-        message.channel.send("<:kanna_confused:607077674099277828>");
+        message.channel.send("I dont know who this is but FBI open up !!");
+        message.channel.send("<:gunKanna_police:606353675560157194> 🚔");
+        let messageEmbed = new Discord.RichEmbed()
+          .setColor(randomColor())
+          .setImage(imageArray[randomNumber(0, 6)]);
+
+        message.channel.send(messageEmbed);
+        return;
       }
     } else {
       member =
