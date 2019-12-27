@@ -5,7 +5,9 @@ const Canvas = require("canvas");
 const path = require("path");
 const request = require("snekfetch");
 const GIFEncoder = require("gif-encoder-2");
-const { writeFile } = require("fs");
+const {
+  writeFile
+} = require("fs");
 
 module.exports = async (client, messageReaction, user) => {
   if (messageReaction._emoji.name === "⭐") {
@@ -34,15 +36,17 @@ module.exports = async (client, messageReaction, user) => {
               );
             }
           }
-          const fetch = await starChannel.fetchMessages({ limit: 100 });
+          const fetch = await starChannel.fetchMessages({
+            limit: 100
+          });
 
           const stars = fetch.find(
             m =>
-              m.embeds.length !== 0 &&
-              "footer" in m.embeds[0] &&
-              "text" in m.embeds[0].footer &&
-              m.embeds[0].footer.text.startsWith("⭐") &&
-              m.embeds[0].footer.text.endsWith(messageReaction.message.id)
+            m.embeds.length !== 0 &&
+            "footer" in m.embeds[0] &&
+            "text" in m.embeds[0].footer &&
+            m.embeds[0].footer.text.startsWith("⭐") &&
+            m.embeds[0].footer.text.endsWith(messageReaction.message.id)
           );
           if (stars) {
             const star = /^\⭐\s([0-9]{1,3})\s\|\s([0-9]{17,20})/.exec(
@@ -51,12 +55,12 @@ module.exports = async (client, messageReaction, user) => {
             const foundStar = stars.embeds[0];
             const image =
               messageReaction.message.attachments.array().length > 0 &&
-              messageReaction.message.attachments.array()[0].filesize > 0
-                ? await extension(
-                    messageReaction,
-                    messageReaction.message.attachments.array()[0].url
-                  )
-                : "";
+              messageReaction.message.attachments.array()[0].filesize > 0 ?
+              await extension(
+                messageReaction,
+                messageReaction.message.attachments.array()[0].url
+              ) :
+              "";
 
             const embed = new Discord.RichEmbed()
               .setColor(foundStar.color)
@@ -71,18 +75,20 @@ module.exports = async (client, messageReaction, user) => {
               )
               .setImage(image);
             const starMsg = await starChannel.fetchMessage(stars.id);
-            await starMsg.edit({ embed });
+            await starMsg.edit({
+              embed
+            });
           } else {
             console.log(messageReaction.message.attachments.array());
 
             const image =
               messageReaction.message.attachments.array().length > 0 &&
-              messageReaction.message.attachments.array()[0].filesize > 0
-                ? await extension(
-                    messageReaction,
-                    messageReaction.message.attachments.array()[0].url
-                  )
-                : "";
+              messageReaction.message.attachments.array()[0].filesize > 0 ?
+              await extension(
+                messageReaction,
+                messageReaction.message.attachments.array()[0].url
+              ) :
+              "";
             if (image === "" && messageReaction.message.content.length < 1)
               return messageReaction.message.channel.send(
                 `${user}, you cannot star an empty message.`
@@ -100,7 +106,9 @@ module.exports = async (client, messageReaction, user) => {
               .setTimestamp(new Date())
               .setFooter(`⭐ 3 | ${messageReaction.message.id}`)
               .setImage(image);
-            await starChannel.send({ embed });
+            await starChannel.send({
+              embed
+            });
           }
         }
       }
@@ -159,7 +167,9 @@ module.exports = async (client, messageReaction, user) => {
               // Clip off the region you drew on
               ctxFrame1.clip();
 
-              const { body: bufferFrame1 } = await request.get(
+              const {
+                body: bufferFrame1
+              } = await request.get(
                 mem.user.displayAvatarURL
               );
               const avatarFrame1 = await Canvas.loadImage(bufferFrame1);
@@ -193,7 +203,9 @@ module.exports = async (client, messageReaction, user) => {
               // Clip off the region you drew on
               ctxFrame2.clip();
 
-              const { body: bufferFrame2 } = await request.get(
+              const {
+                body: bufferFrame2
+              } = await request.get(
                 mem.user.displayAvatarURL
               );
               const avatarFrame2 = await Canvas.loadImage(bufferFrame2);
@@ -211,19 +223,17 @@ module.exports = async (client, messageReaction, user) => {
                     buffer,
                     "welcome-image.gif"
                   );
-                                let rolesC = await client.guilds
-                .get("559560674246787087")
-                .channels.get("561423217709940770");
-                                                let introC = await client.guilds
-                .get("559560674246787087")
-                .channels.get("559576694235725825");
-
+                  let rolesC = await client.guilds
+                    .get("559560674246787087")
+                    .channels.get("561423217709940770");
+                  let introC = await client.guilds
+                    .get("559560674246787087")
+                    .channels.get("559576694235725825");
 
                   c.send(attachment);
-                                    c.send(
-                                      `~ ${mem} ~\nWelcome to the **Our Home** !\nMake sure you to get some roles in ${rolesC} and tell us a little about yourself in ${introC} !\n<:softheart:575053165804912652>`
-                                    ).catch(err=>console.error(err))
-
+                  c.send(
+                    `~ ${mem} ~\nWelcome to the **Our Home** !\nMake sure you to get some roles in ${rolesC} and tell us a little about yourself in ${introC} !\n<:softheart:575053165804912652>`
+                  ).catch(err => console.error(err))
                   // gif drawn or error
                 }
               );
@@ -236,10 +246,11 @@ module.exports = async (client, messageReaction, user) => {
           m.send(
             `${user.username} reacted but i failed to give them the new role`
           )
-        ).catch((err)=>console.error(err));
+        ).catch((err) => console.error(err));
       }
     }
   }
+
   function extension(messageReaction, attachment) {
     const imageLink = attachment.split(".");
     const typeOfImage = imageLink[imageLink.length - 1];
