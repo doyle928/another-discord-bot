@@ -215,6 +215,12 @@ module.exports = async (client, messageReaction, user) => {
               //--------------------------------------------------------- frame 2
               encoder.finish();
               const buffer = encoder.out.getData();
+              let rolesC = await client.guilds
+                .get("559560674246787087")
+                .channels.get("561423217709940770");
+              let introC = await client.guilds
+                .get("559560674246787087")
+                .channels.get("559576694235725825");
               writeFile(
                 path.join(__dirname, "output", "welcome.gif"),
                 buffer,
@@ -223,12 +229,7 @@ module.exports = async (client, messageReaction, user) => {
                     buffer,
                     "welcome-image.gif"
                   );
-                  let rolesC = await client.guilds
-                    .get("559560674246787087")
-                    .channels.get("561423217709940770");
-                  let introC = await client.guilds
-                    .get("559560674246787087")
-                    .channels.get("559576694235725825");
+                  
 
                   c.send(attachment);
                   c.send(
