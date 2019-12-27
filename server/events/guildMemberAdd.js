@@ -34,8 +34,20 @@ module.exports = async (client, member, guild) => {
           }`;
 
   try {
-    let res = await request(url, query);
+    await request(url, query);
   } catch (err) {
     console.error(err);
+  }
+
+  if (member.guild.id === "559560674246787087") {
+    let c = await member.guild.channels.get("561372938474094603");
+    member
+      .addRole("596016686331723785")
+      .then(() => c.send(`${member.user.username} has joined the server !`))
+      .catch(() =>
+        c.send(
+          `${member.user.username} has joined the server but i failed to give them the welcome to serveur role !`
+        )
+      );
   }
 };
