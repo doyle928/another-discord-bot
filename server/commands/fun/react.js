@@ -55,8 +55,8 @@ exports.run = async (client, message, args) => {
     top_15_gifs = response_objects["results"];
     if (top_15_gifs.length === 0) {
       message.channel.send(`There was no gifs for « ${query} !! »`);
-    } else if (top_15_gifs.length >= 14) {
-      let randNum = randomNumber(0, 14);
+    } else if (top_15_gifs.length >= 6) {
+      let randNum = randomNumber(0, 6);
       if (top_15_gifs[randNum].media[0].gif.url !== undefined) {
         sendMessage(top_15_gifs[randNum].media[0].gif.url);
       } else {
@@ -80,7 +80,7 @@ exports.run = async (client, message, args) => {
   function grab_data() {
     // set the apikey and limit
     let apikey = process.env.TENOR_KEY;
-    let lmt = 15;
+    let lmt = 7;
 
     // test search term
     let search_term = query;
