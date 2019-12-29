@@ -226,10 +226,11 @@ module.exports = async (client, messageReaction, user) => {
                     "welcome-image.gif"
                   );
 
-                  c.send(attachment);
-                  c.send(
-                    `~ ${mem} ~\nWelcome to the **Our Home** !\nMake sure you to get some roles in ${rolesC} and tell us a little about yourself in ${introC} ! <:softheart:575053165804912652>`
-                  ).catch(err => console.error(err));
+                  c.send(attachment).then(() => {
+                    c.send(
+                      `~ ${mem} ~\nWelcome to the **Our Home** !\nMake sure you to get some roles in ${rolesC} and tell us a little about yourself in ${introC} ! <:softheart:575053165804912652>`
+                    ).catch(err => console.error(err));
+                  });
                   // gif drawn or error
                 }
               );
@@ -264,34 +265,37 @@ module.exports = async (client, messageReaction, user) => {
                       user_id ship_id timestamp
                     }
                   }`;
-              try {
-                let res = await request(url, query);
-                let m1 = await messageReaction.message.guild.fetchMember(
-                  msg.member_one_id
-                );
-                let m2 = await messageReaction.message.guild.fetchMember(
-                  msg.member_two_id
-                );
-                messageReaction.message.channel.send(
-                  `congrats ${m1} and ${m2} you are now shipped ! <:softheart:575053165804912652>`
-                );
-                console.log(res);
-                query = `mutation {
+              if (!msg.confirmed_ship) {
+                try {
+                  let res = await request(url, query);
+                  let m1 = await messageReaction.message.guild.fetchMember(
+                    msg.member_one_id
+                  );
+                  let m2 = await messageReaction.message.guild.fetchMember(
+                    msg.member_two_id
+                  );
+                  messageReaction.message.channel.send(
+                    `congrats ${m1} and ${m2} you are now shipped ! <:softheart:575053165804912652>`
+                  );
+                  console.log(res);
+                  query = `mutation {
                     addShip(guild_id: "${
                       messageReaction.message.guild.id
                     }", user_id: "${msg.member_two_id}", ship_id: "${
-                  msg.member_one_id
-                }", timestamp: "${Date.now()}") {
+                    msg.member_one_id
+                  }", timestamp: "${Date.now()}") {
                       user_id ship_id timestamp
                     }
                   }`;
-                try {
-                  let res = await request(url, query);
+                  try {
+                    let res = await request(url, query);
+                  } catch (err) {
+                    console.error(err);
+                  }
                 } catch (err) {
                   console.error(err);
                 }
-              } catch (err) {
-                console.error(err);
+                msg.confirmed_ship = true;
               }
             } else if (r.count >= 3) {
               let userArray = [];
@@ -311,36 +315,39 @@ module.exports = async (client, messageReaction, user) => {
                       user_id ship_id timestamp
                     }
                   }`;
-                try {
-                  let res = await request(url, query);
-                  let m1 = await messageReaction.message.guild.fetchMember(
-                    msg.member_one_id
-                  );
-                  let m2 = await messageReaction.message.guild.fetchMember(
-                    msg.member_two_id
-                  );
-                  messageReaction.message.channel.send(
-                    `congrats ${m1} and ${m2} you are now shipped ! <:softheart:575053165804912652>`
-                  );
+                if (!msg.confirmed_ship) {
+                  try {
+                    let res = await request(url, query);
+                    let m1 = await messageReaction.message.guild.fetchMember(
+                      msg.member_one_id
+                    );
+                    let m2 = await messageReaction.message.guild.fetchMember(
+                      msg.member_two_id
+                    );
+                    messageReaction.message.channel.send(
+                      `congrats ${m1} and ${m2} you are now shipped ! <:softheart:575053165804912652>`
+                    );
 
-                  query = `mutation {
+                    query = `mutation {
                     addShip(guild_id: "${
                       messageReaction.message.guild.id
                     }", user_id: "${msg.member_two_id}", ship_id: "${
-                    msg.member_one_id
-                  }", timestamp: "${Date.now()}") {
+                      msg.member_one_id
+                    }", timestamp: "${Date.now()}") {
                       user_id ship_id timestamp
                     }
                   }`;
-                  try {
-                    let res = await request(url, query);
+                    try {
+                      let res = await request(url, query);
+                    } catch (err) {
+                      console.error(err);
+                    }
+
+                    console.log(res);
+                    msg.confirmed_ship = true;
                   } catch (err) {
                     console.error(err);
                   }
-
-                  console.log(res);
-                } catch (err) {
-                  console.error(err);
                 }
               }
             }

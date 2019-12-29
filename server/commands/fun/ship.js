@@ -166,7 +166,7 @@ exports.run = async (client, message, args) => {
         console.log(res);
         if (res.getShip === null) {
           let query = `{
-            getShip(guild_id: "${message.guild.id}", user_id: "${memberArray[0].user.id}") {
+            getShip(guild_id: "${message.guild.id}", user_id: "${memberArray[1].user.id}") {
               user_id ship_id timestamp
             }
           }`;
@@ -230,25 +230,39 @@ exports.run = async (client, message, args) => {
     //remove ship
     let url = "https://lulu-discord-bot.herokuapp.com/api";
     let query = `{
-            getShip(guild_id: "${message.guild.id}", user_id: "${memberArray[0].user.id}") {
+            getShip(guild_id: "${message.guild.id}", user_id: "${member.author.id}") {
               user_id ship_id timestamp
             }
           }`;
     try {
       let res = await request(url, query);
-      if (res !== null) {
+      if (res.getShip !== null) {
         let query = `mutation{
             deleteShip(guild_id: "${message.guild.id}", user_id: "${message.author.id}") {
               user_id
             }
           }`;
         try {
-          let res = await request(url, query);
-          messageShipId.deleteMessageIds(message.author.id);
-          message.channel.send(`${message.author} you are free !`);
-          console.log(res);
+          await request(url, query);
+          query = `mutation{
+            deleteShip(guild_id: "${message.guild.id}", user_id: "${res.getShip.ship_id}") {
+              user_id
+            }
+          }`;
+          try {
+            await request(url, query);
+            messageShipId.deleteMessageIds(message.author.id);
+            message.channel.send(`${message.author} you are free !`);
+            console.log(res);
+          } catch (err) {
+            console.error(err);
+            message.channel.send("i broke something");
+            return message.channel.send("<:deadinside:606350795881054216>");
+          }
         } catch (err) {
           console.error(err);
+          message.channel.send("i broke something");
+          return message.channel.send("<:deadinside:606350795881054216>");
         }
       } else {
         message.channel.send(

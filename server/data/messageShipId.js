@@ -4,7 +4,8 @@ let messageShipId = (module.exports = {
     let obj = {
       message_id: messageId,
       member_one_id: memberOneId,
-      member_two_id: memberTwoId
+      member_two_id: memberTwoId,
+      confirmed_ship: false
     };
     messageShipId.messageIds.push(obj);
     console.log(messageShipId.messageIds);
