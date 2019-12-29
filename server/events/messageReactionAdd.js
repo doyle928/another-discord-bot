@@ -272,7 +272,7 @@ module.exports = async (client, messageReaction, user) => {
                 let m2 = await messageReaction.message.guild.fetchMember(
                   msg.member_two_id
                 );
-                message.channel.send(
+                messageReaction.message.channel.send(
                   `congrats ${m1} and ${m2} you are now shipped ! <:softheart:575053165804912652>`
                 );
                 console.log(res);
@@ -319,7 +319,7 @@ module.exports = async (client, messageReaction, user) => {
                   let m2 = await messageReaction.message.guild.fetchMember(
                     msg.member_two_id
                   );
-                  message.channel.send(
+                  messageReaction.message.channel.send(
                     `congrats ${m1} and ${m2} you are now shipped ! <:softheart:575053165804912652>`
                   );
 
