@@ -276,6 +276,20 @@ module.exports = async (client, messageReaction, user) => {
                   `congrats ${m1} and ${m2} you are now shipped ! <:softheart:575053165804912652>`
                 );
                 console.log(res);
+                query = `mutation {
+                    addShip(guild_id: "${
+                      messageReaction.message.guild.id
+                    }", user_id: "${msg.member_two_id}", ship_id: "${
+                  msg.member_one_id
+                }", timestamp: "${Date.now()}") {
+                      user_id ship_id timestamp
+                    }
+                  }`;
+                try {
+                  let res = await request(url, query);
+                } catch (err) {
+                  console.error(err);
+                }
               } catch (err) {
                 console.error(err);
               }
@@ -308,6 +322,22 @@ module.exports = async (client, messageReaction, user) => {
                   message.channel.send(
                     `congrats ${m1} and ${m2} you are now shipped ! <:softheart:575053165804912652>`
                   );
+
+                  query = `mutation {
+                    addShip(guild_id: "${
+                      messageReaction.message.guild.id
+                    }", user_id: "${msg.member_two_id}", ship_id: "${
+                    msg.member_one_id
+                  }", timestamp: "${Date.now()}") {
+                      user_id ship_id timestamp
+                    }
+                  }`;
+                  try {
+                    let res = await request(url, query);
+                  } catch (err) {
+                    console.error(err);
+                  }
+
                   console.log(res);
                 } catch (err) {
                   console.error(err);
