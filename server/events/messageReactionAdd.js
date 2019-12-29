@@ -3,9 +3,11 @@ const randomColor = require("../data/randomColor");
 const _ = require("lodash");
 const Canvas = require("canvas");
 const path = require("path");
-const request = require("snekfetch");
+const snekfetch = require("snekfetch");
 const GIFEncoder = require("gif-encoder-2");
 const { writeFile } = require("fs");
+let messageShipId = require("../data/messageShipId");
+const { request } = require("graphql-request");
 
 module.exports = async (client, messageReaction, user) => {
   if (messageReaction._emoji.name === "⭐") {
@@ -165,7 +167,7 @@ module.exports = async (client, messageReaction, user) => {
               // Clip off the region you drew on
               ctxFrame1.clip();
 
-              const { body: bufferFrame1 } = await request.get(
+              const { body: bufferFrame1 } = await snekfetch.get(
                 mem.user.displayAvatarURL
               );
               const avatarFrame1 = await Canvas.loadImage(bufferFrame1);
@@ -199,7 +201,7 @@ module.exports = async (client, messageReaction, user) => {
               // Clip off the region you drew on
               ctxFrame2.clip();
 
-              const { body: bufferFrame2 } = await request.get(
+              const { body: bufferFrame2 } = await snekfetch.get(
                 mem.user.displayAvatarURL
               );
               const avatarFrame2 = await Canvas.loadImage(bufferFrame2);
@@ -245,6 +247,77 @@ module.exports = async (client, messageReaction, user) => {
           .catch(err => console.error(err));
       }
     }
+  } else if (messageReaction._emoji.name === "softheart") {
+    messageShipId.messageIds.map(msg => {
+      if (messageReaction.message.id === msg.message_id) {
+        messageReaction.message.reactions.map(async r => {
+          if (r._emoji.name === "softheart") {
+            if (r.count >= 5) {
+              let url = "http://localhost:8080/api";
+
+              let query = `mutation {
+                    addShip(guild_id: "${
+                      messageReaction.message.guild.id
+                    }", user_id: "${msg.member_one_id}", ship_id: "${
+                msg.member_two_id
+              }", timestamp: "${Date.now()}") {
+                      user_id ship_id timestamp
+                    }
+                  }`;
+              try {
+                let res = await request(url, query);
+                let m1 = await messageReaction.message.guild.fetchMember(
+                  msg.member_one_id
+                );
+                let m2 = await messageReaction.message.guild.fetchMember(
+                  msg.member_two_id
+                );
+                message.channel.send(
+                  `congrats ${m1} and ${m2} you are now shipped ! <:softheart:575053165804912652>`
+                );
+                console.log(res);
+              } catch (err) {
+                console.error(err);
+              }
+            } else if (r.count >= 3) {
+              let userArray = [];
+              r.users.map(u => userArray.push(u.id));
+              if (
+                _.includes(userArray, msg.member_one_id) &&
+                _.includes(userArray, msg.member_two_id)
+              ) {
+                let url = "https://lulu-discord-bot.herokuapp.com/api";
+
+                let query = `mutation {
+                    addShip(guild_id: "${
+                      messageReaction.message.guild.id
+                    }", user_id: "${msg.member_one_id}", ship_id: "${
+                  msg.member_two_id
+                }", timestamp: "${Date.now()}") {
+                      user_id ship_id timestamp
+                    }
+                  }`;
+                try {
+                  let res = await request(url, query);
+                  let m1 = await messageReaction.message.guild.fetchMember(
+                    msg.member_one_id
+                  );
+                  let m2 = await messageReaction.message.guild.fetchMember(
+                    msg.member_two_id
+                  );
+                  message.channel.send(
+                    `congrats ${m1} and ${m2} you are now shipped ! <:softheart:575053165804912652>`
+                  );
+                  console.log(res);
+                } catch (err) {
+                  console.error(err);
+                }
+              }
+            }
+          }
+        });
+      }
+    });
   }
 
   function extension(messageReaction, attachment) {
