@@ -230,7 +230,7 @@ exports.run = async (client, message, args) => {
     //remove ship
     let url = "https://lulu-discord-bot.herokuapp.com/api";
     let query = `{
-            getShip(guild_id: "${message.guild.id}", user_id: "${member.author.id}") {
+            getShip(guild_id: "${message.guild.id}", user_id: "${message.author.id}") {
               user_id ship_id timestamp
             }
           }`;
