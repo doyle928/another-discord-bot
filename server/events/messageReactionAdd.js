@@ -253,7 +253,7 @@ module.exports = async (client, messageReaction, user) => {
         messageReaction.message.reactions.map(async r => {
           if (r._emoji.name === "softheart") {
             if (r.count >= 5) {
-              let url = "http://localhost:8080/api";
+              let url = "https://lulu-discord-bot.herokuapp.com/api";
 
               let query = `mutation {
                     addShip(guild_id: "${

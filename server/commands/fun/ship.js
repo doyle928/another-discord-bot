@@ -33,7 +33,7 @@ exports.run = async (client, message, args) => {
   } else if (_.size(message.mentions.members) === 1) {
     console.log(message.mentions.members.first().user.username);
     //get ship status
-    if (message.mentions.members.first().user.id === "606563939429515287") {
+    if (message.mentions.members.first().user.id === "601825955572350976") {
       message.channel.send("i'm a bot, i dont need a boy");
       return message.channel.send("<:scared:658963912099758080>");
     }
@@ -139,8 +139,8 @@ exports.run = async (client, message, args) => {
     let memberArray = [];
     message.mentions.members.map(m => memberArray.push(m));
     if (
-      memberArray[0].user.id === "606563939429515287" ||
-      memberArray[1].user.id === "606563939429515287"
+      memberArray[0].user.id === "601825955572350976" ||
+      memberArray[1].user.id === "601825955572350976"
     ) {
       if (
         message.author.id === memberArray[0].user.id ||
@@ -228,6 +228,7 @@ exports.run = async (client, message, args) => {
     args[1].toLowerCase() === "end"
   ) {
     //remove ship
+    let url = "https://lulu-discord-bot.herokuapp.com/api";
     let query = `{
             getShip(guild_id: "${message.guild.id}", user_id: "${memberArray[0].user.id}") {
               user_id ship_id timestamp
