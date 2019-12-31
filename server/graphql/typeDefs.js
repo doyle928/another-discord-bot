@@ -81,7 +81,7 @@ module.exports = gql`
       user_id: String!
       ship_id: String!
       timestamp: String!
-    ): Ship!
+    ): Ship
     deleteShip(guild_id: String!, user_id: String!): Ship
   }
 `;

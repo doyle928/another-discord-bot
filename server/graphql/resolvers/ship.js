@@ -38,13 +38,17 @@ module.exports = {
       }
     },
     deleteShip: async (_, { guild_id, user_id }) => {
-      const res = await Ship.deleteOne({
-        guild_id: guild_id,
-        user_id: user_id
-      });
+      try {
+        const res = await Ship.findOneAndRemove({
+          guild_id: guild_id,
+          user_id: user_id
+        });
 
-      console.log("resolver", res);
-      return res;
+        console.log("resolver", res);
+        return res;
+      } catch (err) {
+        console.log(err);
+      }
     }
   }
 };

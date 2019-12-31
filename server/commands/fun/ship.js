@@ -239,14 +239,14 @@ exports.run = async (client, message, args) => {
       if (res.getShip !== null) {
         query = `mutation{
             deleteShip(guild_id: "${message.guild.id}", user_id: "${message.author.id}") {
-              user_id
+              guild_id
             }
           }`;
         try {
           await request(url, query);
           query = `mutation{
             deleteShip(guild_id: "${message.guild.id}", user_id: "${res.getShip.ship_id}") {
-              user_id
+              guild_id
             }
           }`;
           try {
