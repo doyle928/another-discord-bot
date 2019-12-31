@@ -237,7 +237,7 @@ exports.run = async (client, message, args) => {
     try {
       let res = await request(url, query);
       if (res.getShip !== null) {
-        let query = `mutation{
+        query = `mutation{
             deleteShip(guild_id: "${message.guild.id}", user_id: "${message.author.id}") {
               user_id
             }
@@ -252,8 +252,9 @@ exports.run = async (client, message, args) => {
           try {
             await request(url, query);
             messageShipId.deleteMessageIds(message.author.id);
+            messageShipId.deleteMessageIds(res.getShip.ship_id);
             message.channel.send(`${message.author} you are free !`);
-            console.log(res);
+            return console.log(res);
           } catch (err) {
             console.error(err);
             message.channel.send("i broke something");
