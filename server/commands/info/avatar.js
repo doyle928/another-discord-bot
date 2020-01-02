@@ -30,14 +30,14 @@ exports.run = async (client, message, args) => {
       .setTimestamp();
 
     message.channel.send(messageEmbed);
-    setTimeout(() => {
-      message
-        .delete()
-        .catch(() =>
-          message.channel.send(
-            "I dont have the permission to delete the command message!"
-          )
-        );
-    }, 200);
+    // setTimeout(() => {
+    //   message
+    //     .delete()
+    //     .catch(() =>
+    //       message.channel.send(
+    //         "I dont have the permission to delete the command message!"
+    //       )
+    //     );
+    // }, 200);
   }
 };

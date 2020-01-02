@@ -244,10 +244,32 @@ module.exports = async (client, message) => {
 
       // Adds the user to the set so that they can't talk for a minute
       talkedRecently.add(message.author.id);
+
+      // let roleArray = [];
+      // message.guild
+      //   .fetchMember(message.author.id)
+      //   .then(m => roleArray.push(m._roles));
+      // let foundRole = false;
+      // for (let j = 0; j < roleArray.length; j++) {
+      //   if (
+      //     roleArray[j] === "561306625571553280" ||
+      //     roleArray[j] === "559562042907033651" ||
+      //     roleArray[j] === "590575697773330434"
+      //   ) {
+      //     foundRole = true;
+      //   }
+      // }
+      // if (foundRole) {
       setTimeout(() => {
         // Removes the user from the set after a minute
         talkedRecently.delete(message.author.id);
       }, 1500);
+      // } else {
+      //   setTimeout(() => {
+      //     // Removes the user from the set after a minute
+      //     talkedRecently.delete(message.author.id);
+      //   }, 45000);
+      // }
     }
   } catch (err) {
     console.error(err);
