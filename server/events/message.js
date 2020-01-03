@@ -183,9 +183,10 @@ module.exports = async (client, message) => {
           .indexOf("ihateyou") >= 0
       ) {
         message.author.send("i am telling my owner !!");
-      } else {
-        message.author.send("i said ping !!");
       }
+      // } else {
+      //   message.author.send("i said ping !!");
+      // }
     }
   }
 
