@@ -2,9 +2,16 @@ const Discord = require("discord.js");
 const randomColor = require("../../data/randomColor");
 
 exports.run = async (client, message, args) => {
+  let messageEmbed = new Discord.RichEmbed()
+    .setColor(randomColor())
+    .setTimestamp();
+
   if (!args[1]) {
-    message.channel.send("there's no user specified!!!");
-    message.channel.send("<a:02upset:538273249306345476>");
+    messageEmbed
+      .setTitle(`Here is your avatar ${message.author.username} !!`)
+      .setImage(message.author.displayAvatarURL);
+
+    message.channel.send(messageEmbed);
   } else {
     let member = null;
     if (!message.mentions.members.first()) {
@@ -14,6 +21,7 @@ exports.run = async (client, message, args) => {
       } catch {
         message.channel.send("I don't think this member exists in the guild");
         message.channel.send("<:kanna_confused:607077674099277828>");
+        return;
       }
     } else {
       member =
@@ -21,13 +29,11 @@ exports.run = async (client, message, args) => {
     }
     // message.channel.send(member.user.displayAvatarURL);
 
-    let messageEmbed = new Discord.RichEmbed()
-      .setColor(randomColor())
+    messageEmbed
       .setTitle(
         `${message.author.username} wanted to see the avatar of ${member.user.username} !!`
       )
-      .setImage(member.user.displayAvatarURL)
-      .setTimestamp();
+      .setImage(member.user.displayAvatarURL);
 
     message.channel.send(messageEmbed);
     // setTimeout(() => {

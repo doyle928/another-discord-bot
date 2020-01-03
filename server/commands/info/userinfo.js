@@ -51,6 +51,7 @@ exports.run = async (client, message, args) => {
 
   const formatDateDiff = dateObj => {
     let string = "il y a ";
+
     if (dateObj.years !== 0) {
       string += `${dateObj.years} ans `;
     }
@@ -59,6 +60,17 @@ exports.run = async (client, message, args) => {
     }
     if (dateObj.days !== 0) {
       string += `${dateObj.days} jours `;
+    }
+    if (dateObj.years === 0 && dateObj.months === 0 && dateObj.days === 0) {
+      if (dateObj.hours !== 0) {
+        string += `${dateObj.hours} heures `;
+      }
+      if (dateObj.minutes !== 0) {
+        string += `${dateObj.minutes} minutes `;
+      }
+      if (dateObj.seconds !== 0) {
+        string += `${dateObj.seconds} secondes `;
+      }
     }
     return string;
   };

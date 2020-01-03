@@ -53,15 +53,20 @@ module.exports = async (client, member, guild) => {
           `Hey ! Thanks for joining Our Home ! Unfortunately we require discord accounts to have an avatar photo, sorry it is just to help keep bots from joining !\nYou can get a photo and try again though !!`
         )
         .then(() => {
-          member.kick();
+          member.kick("no avatar photo !!");
         });
       return;
     }
   }
   if (join_age) {
+    // if (
+    //   discordJoinDateDiff._data.days < 7 &&
+    //   discordJoinDateDiff._data.months < 1 &&
+    //   discordJoinDateDiff._data.years < 1
+    // ) {
     if (
-      discordJoinDateDiff._data.days < 7 &&
-      discordJoinDateDiff._data.months < 1 &&
+      discordJoinDateDiff._data.days < 28 &&
+      discordJoinDateDiff._data.months < 3 &&
       discordJoinDateDiff._data.years < 1
     ) {
       console.log("kicking");
@@ -70,7 +75,7 @@ module.exports = async (client, member, guild) => {
           `Hey ! Thanks for joining Our Home ! Unfortunately we require discord accounts that are 7 days or older.\nYour account is was created on ${discordJoinDate} !`
         )
         .then(() => {
-          member.kick();
+          member.kick("account was too young !!");
         });
       return;
     }
