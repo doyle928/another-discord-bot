@@ -31,14 +31,10 @@ module.exports = async (client, member, guild) => {
     }`;
   try {
     let res = await request(url, query);
-    console.log(res);
     res.getServers.map(async s => {
-      console.log(s);
-
       if (s.guild_id === member.guild.id) {
         blank_avatar = s.blank_avatar;
         join_age = s.join_age;
-        console.log(blank_avatar, join_age);
       }
     });
   } catch (err) {
@@ -47,7 +43,6 @@ module.exports = async (client, member, guild) => {
 
   if (blank_avatar) {
     if (member.user.avatarURL === null) {
-      console.log("kicking");
       member
         .send(
           `Hey ! Thanks for joining Our Home ! Unfortunately we require discord accounts to have an avatar photo, sorry it is just to help keep bots from joining !\nYou can get a photo and try again though !!`
@@ -59,17 +54,11 @@ module.exports = async (client, member, guild) => {
     }
   }
   if (join_age) {
-    // if (
-    //   discordJoinDateDiff._data.days < 7 &&
-    //   discordJoinDateDiff._data.months < 1 &&
-    //   discordJoinDateDiff._data.years < 1
-    // ) {
     if (
-      discordJoinDateDiff._data.days < 28 &&
-      discordJoinDateDiff._data.months < 3 &&
+      discordJoinDateDiff._data.days < 7 &&
+      discordJoinDateDiff._data.months < 1 &&
       discordJoinDateDiff._data.years < 1
     ) {
-      console.log("kicking");
       member
         .send(
           `Hey ! Thanks for joining Our Home ! Unfortunately we require discord accounts that are 7 days or older.\nYour account is was created on ${discordJoinDate} !`
@@ -82,7 +71,6 @@ module.exports = async (client, member, guild) => {
   }
 
   if (member.guild.id === "559560674246787087") {
-    console.log("giving roles");
     let c = await member.guild.channels.get("561372938474094603");
     member
       .addRole("596016686331723785")
@@ -104,7 +92,7 @@ module.exports = async (client, member, guild) => {
           }`;
 
   try {
-    let res = await request(url, query);
+    await request(url, query);
   } catch (err) {
     console.error(err);
   }
