@@ -20,6 +20,8 @@ module.exports = async (client, member, guild) => {
     new Date(member.user.createdTimestamp).toISOString()
   ).format("D MMM YYYY [at] H:mm");
 
+  let blank_avatar = false,
+    join_age = false;
   let url = "https://lulu-discord-bot.herokuapp.com/api";
 
   let query = `query {
@@ -31,70 +33,51 @@ module.exports = async (client, member, guild) => {
     let res = await request(url, query);
     res.getServers.map(async s => {
       if (s.guild_id === member.guild.id) {
-        if (s.join_age) {
-          if (
-            discordJoinDateDiff._data.days >= 7 ||
-            discordJoinDateDiff._data.months >= 1 ||
-            discordJoinDateDiff._data.years >= 1
-          ) {
-            if (member) {
-              let c = await member.guild.channels.get("561372938474094603");
-              member
-                .addRole("596016686331723785")
-                .then(() =>
-                  c.send(`**${member.user.username}** has joined the server !`)
-                )
-                .catch(() =>
-                  c.send(
-                    `**${member.user.username}** has joined the server but i failed to give them the welcome to serveur role !`
-                  )
-                );
-              member.addRole("585353865575137281");
-            }
-            return;
-          } else {
-            member
-              .send(
-                `Hey ! Thanks for joining Our Home ! Unfortunately we require discord accounts that are 7 days or older.\nYour account is was created on ${discordJoinDate} !`
-              )
-              .then(() => {
-                member.kick();
-              });
-            return;
-          }
-        }
-        if (s.blank_avatar) {
-          if (member.user.avatarURL !== null) {
-            if (member) {
-              let c = await member.guild.channels.get("561372938474094603");
-              member
-                .addRole("596016686331723785")
-                .then(() =>
-                  c.send(`**${member.user.username}** has joined the server !`)
-                )
-                .catch(() =>
-                  c.send(
-                    `**${member.user.username}** has joined the server but i failed to give them the welcome to serveur role !`
-                  )
-                );
-              member.addRole("585353865575137281");
-            }
-            return;
-          } else {
-            member
-              .send(
-                `Hey ! Thanks for joining Our Home ! Unfortunately we require discord accounts to have an avatar photo, sorry it is just to help keep bots from joining !\nYou can get a photo and try again though !!`
-              )
-              .then(() => {
-                member.kick();
-              });
-            return;
-          }
-        }
+        blank_avatar = s.blank_avatar;
+        join_age = s.join_age;
       }
     });
   } catch (err) {
     console.error(err);
+  }
+
+  if (blank_avatar) {
+    if (member.user.avatarURL === null) {
+      member
+        .send(
+          `Hey ! Thanks for joining Our Home ! Unfortunately we require discord accounts to have an avatar photo, sorry it is just to help keep bots from joining !\nYou can get a photo and try again though !!`
+        )
+        .then(() => {
+          member.kick();
+        });
+      return;
+    }
+  } else if (join_age) {
+    if (
+      discordJoinDateDiff._data.days < 7 &&
+      discordJoinDateDiff._data.months < 1 &&
+      discordJoinDateDiff._data.years < 1
+    ) {
+      member
+        .send(
+          `Hey ! Thanks for joining Our Home ! Unfortunately we require discord accounts that are 7 days or older.\nYour account is was created on ${discordJoinDate} !`
+        )
+        .then(() => {
+          member.kick();
+        });
+      return;
+    }
+  } else {
+    let c = await member.guild.channels.get("561372938474094603");
+    member
+      .addRole("596016686331723785")
+      .then(() => c.send(`**${member.user.username}** has joined the server !`))
+      .catch(() =>
+        c.send(
+          `**${member.user.username}** has joined the server but i failed to give them the welcome to serveur role !`
+        )
+      );
+    member.addRole("585353865575137281");
   }
 
   query = `mutation {
