@@ -1,8 +1,9 @@
 const Discord = require("discord.js");
 const _ = require("lodash");
-const timeConverter = require("../../data/timeConverter");
-const timeDifference = require("../../data/timeDifference");
+// const timeConverter = require("../../data/timeConverter");
+// const timeDifference = require("../../data/timeDifference");
 const randomColor = require("../../data/randomColor");
+const moment = require("moment");
 
 exports.run = async (client, message, args) => {
   let member = null;
@@ -29,6 +30,38 @@ exports.run = async (client, message, args) => {
         message.member;
     }
   }
+  moment.locale("fr");
+  let serverJoinDateDiff = moment.duration(
+    moment(new Date().toISOString()).diff(
+      moment(new Date(member.joinedTimestamp).toISOString())
+    )
+  );
+  let discordJoinDateDiff = moment.duration(
+    moment(new Date().toISOString()).diff(
+      moment(new Date(member.user.createdTimestamp).toISOString())
+    )
+  );
+  let serverJoinDate = moment(
+    new Date(member.joinedTimestamp).toISOString()
+  ).format("D MMM YYYY [at] H:mm");
+
+  let discordJoinDate = moment(
+    new Date(member.user.createdTimestamp).toISOString()
+  ).format("D MMM YYYY [at] H:mm");
+
+  const formatDateDiff = dateObj => {
+    let string = "il y a ";
+    if (dateObj.years !== 0) {
+      string += `${dateObj.years} ans `;
+    }
+    if (dateObj.months !== 0) {
+      string += `${dateObj.months} mois `;
+    }
+    if (dateObj.days !== 0) {
+      string += `${dateObj.days} jours `;
+    }
+    return string;
+  };
 
   let rolesArray = [];
   member.roles.map(r => rolesArray.push(r));
@@ -44,16 +77,12 @@ exports.run = async (client, message, args) => {
     .addField("Presence", member.presence.status, true)
     .addField(
       "Account Creation",
-      `${timeConverter(member.user.createdTimestamp)}\n${timeDifference(
-        member.user.createdTimestamp
-      )}`,
+      `${discordJoinDate}\n${formatDateDiff(discordJoinDateDiff._data)}`,
       true
     )
     .addField(
       "Server Join Date",
-      `${timeConverter(member.joinedTimestamp)}\n${timeDifference(
-        member.joinedTimestamp
-      )}`,
+      `${serverJoinDate}\n${formatDateDiff(serverJoinDateDiff._data)}`,
       true
     )
     .addField(
@@ -63,22 +92,21 @@ exports.run = async (client, message, args) => {
     )
     .addField(
       "Last Seen",
-      `${member.user.lastMessage.channel}\n${timeConverter(
-        member.user.lastMessage.createdTimestamp
-      )}`,
+      `${member.user.lastMessage.channel}\n${moment(
+        new Date(member.user.lastMessage.createdTimestamp).toISOString()
+      ).format("D MMM YYYY [at] H:mm")}`,
       true
     )
     .addField("Roles", rolesString)
     .setTimestamp();
-
   message.channel.send(messageEmbed);
-  setTimeout(() => {
-    message
-      .delete()
-      .catch(() =>
-        message.channel.send(
-          "I dont have the permission to delete the command message!"
-        )
-      );
-  }, 200);
+  // setTimeout(() => {
+  //   message
+  //     .delete()
+  //     .catch(() =>
+  //       message.channel.send(
+  //         "I dont have the permission to delete the command message!"
+  //       )
+  //     );
+  // }, 200);
 };

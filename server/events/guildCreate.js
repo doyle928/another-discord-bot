@@ -22,7 +22,9 @@ module.exports = async (client, guild) => {
   });
 
   let query = `mutation {
-            addServer(guild_id: "${guild.id}") {
+            addServer(guild_id: "${
+              guild.id
+            }", blank_avatar: ${false}, join_age: ${false}) {
               guild_id
             }
           }`;

@@ -21,6 +21,36 @@ module.exports = {
       const res = await newServer.save();
 
       return res;
+    },
+    setJoinAge: async (_, { guild_id, join_age }) => {
+      const res = await Server.findOneAndUpdate(
+        {
+          guild_id: guild_id
+        },
+        {
+          join_age: join_age
+        },
+        {
+          new: true
+        }
+      );
+
+      return res;
+    },
+    setBlankAvatar: async (_, { guild_id, blank_avatar }) => {
+      const res = await Server.findOneAndUpdate(
+        {
+          guild_id: guild_id
+        },
+        {
+          blank_avatar: blank_avatar
+        },
+        {
+          new: true
+        }
+      );
+
+      return res;
     }
   }
 };

@@ -1,8 +1,9 @@
 const Discord = require("discord.js");
 const _ = require("lodash");
-const timeConverter = require("../../data/timeConverter");
-const timeDifference = require("../../data/timeDifference");
+// const timeConverter = require("../../data/timeConverter");
+// const timeDifference = require("../../data/timeDifference");
 const randomColor = require("../../data/randomColor");
+const moment = require("moment");
 
 exports.run = async (client, message, args) => {
   let messageEmbed = new Discord.RichEmbed().setColor(randomColor());
@@ -13,6 +14,30 @@ exports.run = async (client, message, args) => {
     emojiArray = [],
     roleArray = [],
     memberArray = [];
+
+  moment.locale("fr");
+  let serverCreationDateDiff = moment.duration(
+    moment(new Date().toISOString()).diff(
+      moment(new Date(message.guild.createdTimestamp).toISOString())
+    )
+  );
+  let serverCreationDate = moment(
+    new Date(message.guild.createdTimestamp).toISOString()
+  ).format("D MMM YYYY [at] H:mm");
+
+  const formatDateDiff = dateObj => {
+    let string = "il y a ";
+    if (dateObj.years !== 0) {
+      string += `${dateObj.years} ans `;
+    }
+    if (dateObj.months !== 0) {
+      string += `${dateObj.months} mois `;
+    }
+    if (dateObj.days !== 0) {
+      string += `${dateObj.days} jours `;
+    }
+    return string;
+  };
 
   if (!args[1]) {
     message.guild.channels.map(chan => channelArray.push(chan));
@@ -28,9 +53,7 @@ exports.run = async (client, message, args) => {
     messageEmbed.addField("Owner", message.guild.owner, true);
     messageEmbed.addField(
       "Creation Date",
-      `${timeConverter(message.guild.createdTimestamp)}\n${timeDifference(
-        message.guild.createdTimestamp
-      )}`,
+      `${serverCreationDate}\n${formatDateDiff(serverCreationDateDiff._data)}`,
       true
     );
     messageEmbed.addField("Region", message.guild.region, true);
@@ -60,36 +83,36 @@ exports.run = async (client, message, args) => {
       guildId.members.map(member => memberArray.push(member));
       let memberUserOrBot = _.countBy(memberArray, "user.bot"); // false = user / true = bot
 
-      messageEmbed
-        .setTitle(guildId.name)
-        .setThumbnail(guildId.iconURL)
-        .addField("ID", guildId.id, true)
-        .addField("Owner", guildId.owner, true)
-        .addField(
+      messageEmbed.setTitle(guildId.name);
+      messageEmbed.setThumbnail(guildId.iconURL);
+      messageEmbed.addField("ID", guildId.id, true);
+      messageEmbed.addField("Owner", guildId.owner, true);
+      messageEmbed.addField(
+        "Creation Date",
+        messageEmbed.addField(
           "Creation Date",
-          `${timeConverter(guildId.createdTimestamp)}\n${timeDifference(
-            guildId.createdTimestamp
+          `${serverCreationDate}\nil y a ${formatDateDiff(
+            serverCreationDateDiff
           )}`,
           true
         )
-        .addField("Region", guildId.region, true)
-        .addField(
-          "Member Count",
-          guildId.memberCount - memberUserOrBot.true,
-          true
-        )
-        .addField(
-          "Bot Count",
-          guildId.memberCount - memberUserOrBot.false,
-          true
-        )
-        .addField("Categories", channelCategory.category, true)
-        .addField("Text Channels", channelCategory.text, true)
-        .addField("Voice Channels", channelCategory.voice, true)
-        .addField("Emojis", emojiArray.length, true)
-        .addField("Roles", roleArray.length, true)
-        .setTimestamp();
-
+      );
+      messageEmbed.addField("Region", guildId.region, true);
+      messageEmbed.addField(
+        "Member Count",
+        guildId.memberCount - memberUserOrBot.true,
+        true
+      );
+      messageEmbed.addField(
+        "Bot Count",
+        guildId.memberCount - memberUserOrBot.false,
+        true
+      );
+      messageEmbed.addField("Categories", channelCategory.category, true);
+      messageEmbed.addField("Text Channels", channelCategory.text, true);
+      messageEmbed.addField("Voice Channels", channelCategory.voice, true);
+      messageEmbed.addField("Emojis", emojiArray.length, true);
+      messageEmbed.addField("Roles", roleArray.length, true);
       embedFilled = true;
     } else {
       message.channel.send("I'm not a member of this server");
@@ -101,13 +124,13 @@ exports.run = async (client, message, args) => {
     message.channel.send(messageEmbed);
   }
 
-  setTimeout(() => {
-    message
-      .delete()
-      .catch(() =>
-        message.channel.send(
-          "I dont have the permission to delete the command message!"
-        )
-      );
-  }, 200);
+  // setTimeout(() => {
+  //   message
+  //     .delete()
+  //     .catch(() =>
+  //       message.channel.send(
+  //         "I dont have the permission to delete the command message!"
+  //       )
+  //     );
+  // }, 200);
 };
