@@ -14,8 +14,8 @@ module.exports = gql`
   }
   type Server {
     guild_id: String!
-    blank_avatar: Boolean!
-    join_age: Boolean!
+    blank_avatar: Boolean
+    join_age: Boolean
   }
   type Default {
     guild_id: String!
@@ -62,8 +62,8 @@ module.exports = gql`
       blank_avatar: Boolean!
       join_age: Boolean!
     ): Server!
-    setJoinAge(guild_id: String!, join_age: Boolean!): Server!
-    setBlankAvatar(guild_id: String!, blank_avatar: Boolean!): Server!
+    setJoinAge(guild_id: String!, join_age: Boolean): Server
+    setBlankAvatar(guild_id: String!, blank_avatar: Boolean): Server
     setDefault(
       guild_id: String!
       channel_id: String!

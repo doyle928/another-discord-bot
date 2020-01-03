@@ -10,15 +10,16 @@ exports.run = async (client, message, args) => {
         }`;
     try {
       let res = await request(url, query);
+      console.log(res);
       res.getServers.map(async s => {
         if (s.guild_id === message.guild.id) {
           if (s.blank_avatar === false) {
             message.channel.send(
-              "current setting is false to kicking for blank avatars, changing it to true !\nAccounts without avatars will now be kicked !!"
+              "current setting is **false** to kicking accounts without avatars, **changing it to true** !\nAccounts without avatars will now be kicked !!"
             );
           } else {
             message.channel.send(
-              "current setting is true to kicking for blank avatars, changing it to false !\nAccounts without avatars will not be kicked !!"
+              "current setting is **true** to kicking accounts without avatars, **changing it to false** !\nAccounts without avatars will not be kicked !!"
             );
           }
           query = `mutation{

@@ -10,6 +10,7 @@ exports.run = async (client, message, args) => {
         }`;
     try {
       let res = await request(url, query);
+      console.log(res);
       res.getServers.map(async s => {
         if (s.guild_id === message.guild.id) {
           if (s.blank_avatar === false) {
@@ -24,7 +25,7 @@ exports.run = async (client, message, args) => {
           query = `mutation{
                 setJoinAge(guild_id: "${
                   message.guild.id
-                }", blank_avatar: ${!s.join_age}){
+                }", join_age: ${!s.join_age}){
                     guild_id
                 }
             }`;
