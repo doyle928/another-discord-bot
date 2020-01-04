@@ -68,14 +68,14 @@ exports.run = async (client, message, args) => {
       }
     }
     //get ship status
-    if (message.mentions.members.first().user.id === "606563939429515287") {
+    if (message.mentions.members.first().user.id === "601825955572350976") {
       message.channel.send("i'm a bot, i dont need a boy");
       return message.channel.send("<:scared:658963912099758080>");
     }
     let query = `{
             getShip(guild_id: "${message.guild.id}", user_id: "${
       message.mentions.members.first().id
-      }") {
+    }") {
               user_id ship_id timestamp
             }
           }`;
@@ -84,7 +84,7 @@ exports.run = async (client, message, args) => {
       if (res.getShip === null) {
         message.channel.send(
           `${
-          message.mentions.members.first().user.username
+            message.mentions.members.first().user.username
           } is not shipped with anyone !\nwe should find them someone !!`
         );
         message.channel.send("<:natsukiExcited:646210701110804481>");
@@ -158,13 +158,13 @@ exports.run = async (client, message, args) => {
         if (m) {
           message.channel.send(
             `sorry but ${
-            message.mentions.members.first().user.username
+              message.mentions.members.first().user.username
             } is already shipped with ${m} !`
           );
         } else {
           message.channel.send(
             `sorry but ${
-            message.mentions.members.first().user.username
+              message.mentions.members.first().user.username
             } is already shipped with someone else !`
           );
         }
@@ -179,8 +179,8 @@ exports.run = async (client, message, args) => {
     let memberArray = [];
     message.mentions.members.map(m => memberArray.push(m));
     if (
-      memberArray[0].user.id === "606563939429515287" ||
-      memberArray[1].user.id === "606563939429515287"
+      memberArray[0].user.id === "601825955572350976" ||
+      memberArray[1].user.id === "601825955572350976"
     ) {
       if (
         message.author.id === memberArray[0].user.id ||
@@ -193,6 +193,9 @@ exports.run = async (client, message, args) => {
         return setTimeout(() => {
           message.author.send("<:yes:660599155378618371>");
         }, 1500);
+      } else {
+        message.channel.send("i'm a bot, i dont need a boy");
+        return message.channel.send("<:scared:658963912099758080>");
       }
     } else {
       //check if both can be shipped
