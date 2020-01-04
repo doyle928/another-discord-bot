@@ -10,6 +10,7 @@ let messageShipId = require("../data/messageShipId");
 const { request } = require("graphql-request");
 
 module.exports = async (client, messageReaction, user) => {
+  console.log(messageReaction._emoji.name, messageReaction.message.id);
   if (messageReaction._emoji.name === "⭐") {
     if (messageReaction.message.author.id === user.id) {
       let oriMsg = await messageReaction.message.channel.fetchMessage(
@@ -115,6 +116,7 @@ module.exports = async (client, messageReaction, user) => {
     });
   } else if (messageReaction._emoji.name === "check") {
     if (messageReaction.message.id === "662982653074472960") {
+      console.log("checked rules");
       let memberRolesIdArray = [];
       let mem = await messageReaction.message.guild.fetchMember(user.id);
       if (mem) {
