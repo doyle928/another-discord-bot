@@ -1,6 +1,6 @@
 const { request } = require("graphql-request");
-const snekfetch = require("snekfetch");
 const Discord = require("discord.js");
+const randomColor = require("../../data/randomColor");
 
 exports.run = async (client, message, args) => {
   if (message.author.id == "157673412561469440") {
@@ -19,9 +19,13 @@ exports.run = async (client, message, args) => {
       let chan = await client.guilds.get(guild_id).channels.get(channel_id);
 
       if (chan) {
-        const { body: buffer } = await snekfetch.get(args[1]);
-        const attachment = new Discord.Attachment(buffer, "image.png");
-        chan.send(attachment);
+        let messageEmbed = new Discord.RichEmbed()
+          .setColor(randomColor())
+          .setImage(args[1]);
+        chan.send(messageEmbed);
+        setTimeout(() => {
+          message.delete();
+        }, 200);
       }
     } catch (err) {
       console.error(err);
