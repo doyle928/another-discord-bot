@@ -113,8 +113,8 @@ module.exports = async (client, messageReaction, user) => {
         }
       }
     });
-  } else if (messageReaction._emoji.name === "✅") {
-    if (messageReaction.message.id === "596040210559664139") {
+  } else if (messageReaction._emoji.name === "check") {
+    if (messageReaction.message.id === "662982653074472960") {
       let memberRolesIdArray = [];
       let mem = await messageReaction.message.guild.fetchMember(user.id);
       if (mem) {
@@ -258,10 +258,10 @@ module.exports = async (client, messageReaction, user) => {
 
               let query = `mutation {
                     addShip(guild_id: "${
-                messageReaction.message.guild.id
-                }", user_id: "${msg.member_one_id}", ship_id: "${
+                      messageReaction.message.guild.id
+                    }", user_id: "${msg.member_one_id}", ship_id: "${
                 msg.member_two_id
-                }", timestamp: "${Date.now()}") {
+              }", timestamp: "${Date.now()}") {
                       user_id ship_id timestamp
                     }
                   }`;
@@ -269,10 +269,10 @@ module.exports = async (client, messageReaction, user) => {
                 let res = await request(url, query);
                 query = `mutation {
                     addShip(guild_id: "${
-                  messageReaction.message.guild.id
-                  }", user_id: "${msg.member_two_id}", ship_id: "${
+                      messageReaction.message.guild.id
+                    }", user_id: "${msg.member_two_id}", ship_id: "${
                   msg.member_one_id
-                  }", timestamp: "${Date.now()}") {
+                }", timestamp: "${Date.now()}") {
                       user_id ship_id timestamp
                     }
                   }`;
@@ -324,10 +324,10 @@ module.exports = async (client, messageReaction, user) => {
 
                 let query = `mutation {
                     addShip(guild_id: "${
-                  messageReaction.message.guild.id
-                  }", user_id: "${msg.member_one_id}", ship_id: "${
+                      messageReaction.message.guild.id
+                    }", user_id: "${msg.member_one_id}", ship_id: "${
                   msg.member_two_id
-                  }", timestamp: "${Date.now()}") {
+                }", timestamp: "${Date.now()}") {
                       user_id ship_id timestamp
                     }
                   }`;
@@ -335,10 +335,10 @@ module.exports = async (client, messageReaction, user) => {
                   let res = await request(url, query);
                   query = `mutation {
                     addShip(guild_id: "${
-                    messageReaction.message.guild.id
+                      messageReaction.message.guild.id
                     }", user_id: "${msg.member_two_id}", ship_id: "${
                     msg.member_one_id
-                    }", timestamp: "${Date.now()}") {
+                  }", timestamp: "${Date.now()}") {
                       user_id ship_id timestamp
                     }
                   }`;
@@ -448,5 +448,4 @@ module.exports = async (client, messageReaction, user) => {
 
     return canvas.toBuffer();
   }
-
 };
