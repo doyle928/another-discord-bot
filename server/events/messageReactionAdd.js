@@ -258,44 +258,60 @@ module.exports = async (client, messageReaction, user) => {
 
               let query = `mutation {
                     addShip(guild_id: "${
-                      messageReaction.message.guild.id
-                    }", user_id: "${msg.member_one_id}", ship_id: "${
+                messageReaction.message.guild.id
+                }", user_id: "${msg.member_one_id}", ship_id: "${
                 msg.member_two_id
-              }", timestamp: "${Date.now()}") {
+                }", timestamp: "${Date.now()}") {
                       user_id ship_id timestamp
                     }
                   }`;
-              if (!msg.confirmed_ship) {
+              try {
+                let res = await request(url, query);
+                query = `mutation {
+                    addShip(guild_id: "${
+                  messageReaction.message.guild.id
+                  }", user_id: "${msg.member_two_id}", ship_id: "${
+                  msg.member_one_id
+                  }", timestamp: "${Date.now()}") {
+                      user_id ship_id timestamp
+                    }
+                  }`;
                 try {
-                  let res = await request(url, query);
+                  res = await request(url, query);
                   let m1 = await messageReaction.message.guild.fetchMember(
                     msg.member_one_id
                   );
                   let m2 = await messageReaction.message.guild.fetchMember(
                     msg.member_two_id
                   );
-                  messageReaction.message.channel.send(
-                    `congrats ${m1} and ${m2} you are now shipped ! <:softheart:575053165804912652>`
+                  // message.channel.send(
+                  //   `congrats ${m1} and ${m2} you are now shipped ! <:softheart:575053165804912652>`
+                  // );
+                  let img = await makeCanvasImage(
+                    m1.user.avatarURL,
+                    m2.user.avatarURL,
+                    m1.user.username,
+                    m2.user.username
                   );
-                  console.log(res);
-                  query = `mutation {
-                    addShip(guild_id: "${
-                      messageReaction.message.guild.id
-                    }", user_id: "${msg.member_two_id}", ship_id: "${
-                    msg.member_one_id
-                  }", timestamp: "${Date.now()}") {
-                      user_id ship_id timestamp
-                    }
-                  }`;
-                  try {
-                    let res = await request(url, query);
-                  } catch (err) {
-                    console.error(err);
-                  }
+                  const attachment = new Discord.Attachment(img, "ship.png");
+                  messageReaction.message.channel
+                    .send(attachment)
+                    .then(() => {
+                      messageReaction.message.channel.send(
+                        `<a:star:662881975530422274>  **Congrats**  <a:star:662881975530422274>\n\n${m1} and ${m2} you are now shipped !`
+                      );
+                      messageShipId.deleteMessageIds(m1.id);
+                    })
+                    .catch(err => {
+                      console.error(err);
+                      return message.channel.send("help i broke something !!");
+                    });
                 } catch (err) {
                   console.error(err);
                 }
-                msg.confirmed_ship = true;
+                console.log(res);
+              } catch (err) {
+                console.error(err);
               }
             } else if (r.count >= 3) {
               let userArray = [];
@@ -308,46 +324,62 @@ module.exports = async (client, messageReaction, user) => {
 
                 let query = `mutation {
                     addShip(guild_id: "${
-                      messageReaction.message.guild.id
-                    }", user_id: "${msg.member_one_id}", ship_id: "${
+                  messageReaction.message.guild.id
+                  }", user_id: "${msg.member_one_id}", ship_id: "${
                   msg.member_two_id
-                }", timestamp: "${Date.now()}") {
+                  }", timestamp: "${Date.now()}") {
                       user_id ship_id timestamp
                     }
                   }`;
-                if (!msg.confirmed_ship) {
+                try {
+                  let res = await request(url, query);
+                  query = `mutation {
+                    addShip(guild_id: "${
+                    messageReaction.message.guild.id
+                    }", user_id: "${msg.member_two_id}", ship_id: "${
+                    msg.member_one_id
+                    }", timestamp: "${Date.now()}") {
+                      user_id ship_id timestamp
+                    }
+                  }`;
                   try {
-                    let res = await request(url, query);
+                    res = await request(url, query);
                     let m1 = await messageReaction.message.guild.fetchMember(
                       msg.member_one_id
                     );
                     let m2 = await messageReaction.message.guild.fetchMember(
                       msg.member_two_id
                     );
-                    messageReaction.message.channel.send(
-                      `congrats ${m1} and ${m2} you are now shipped ! <:softheart:575053165804912652>`
+                    // message.channel.send(
+                    //   `congrats ${m1} and ${m2} you are now shipped ! <:softheart:575053165804912652>`
+                    // );
+                    let img = await makeCanvasImage(
+                      m1.user.avatarURL,
+                      m2.user.avatarURL,
+                      m1.user.username,
+                      m2.user.username
                     );
-
-                    query = `mutation {
-                    addShip(guild_id: "${
-                      messageReaction.message.guild.id
-                    }", user_id: "${msg.member_two_id}", ship_id: "${
-                      msg.member_one_id
-                    }", timestamp: "${Date.now()}") {
-                      user_id ship_id timestamp
-                    }
-                  }`;
-                    try {
-                      let res = await request(url, query);
-                    } catch (err) {
-                      console.error(err);
-                    }
-
-                    console.log(res);
-                    msg.confirmed_ship = true;
+                    const attachment = new Discord.Attachment(img, "ship.png");
+                    messageReaction.message.channel
+                      .send(attachment)
+                      .then(() => {
+                        messageReaction.message.channel.send(
+                          `<a:star:662881975530422274>  **Congrats**  <a:star:662881975530422274>\n\n${m1} and ${m2} you are now shipped !`
+                        );
+                        messageShipId.deleteMessageIds(m1.id);
+                      })
+                      .catch(err => {
+                        console.error(err);
+                        return message.channel.send(
+                          "help i broke something !!"
+                        );
+                      });
                   } catch (err) {
-                    console.error(err);
+                    console.error(error);
                   }
+                  console.log(res);
+                } catch (err) {
+                  console.error(err);
                 }
               }
             }
@@ -364,4 +396,57 @@ module.exports = async (client, messageReaction, user) => {
     if (!image) return "";
     return attachment;
   }
+
+  async function makeCanvasImage(avatarURL1, avatarURL2, username1, username2) {
+    const canvas = Canvas.createCanvas(450, 259);
+
+    const ctx = canvas.getContext("2d");
+
+    let txt = `${username1.replace(/([^A-Za-z])/g, "")}  &  ${username2.replace(
+      /([^A-Za-z])/g,
+      ""
+    )}`;
+
+    let ttfPath = path.join(__dirname, "../fonts/birds.ttf");
+
+    Canvas.registerFont(ttfPath, { family: "birds" });
+    ctx.textAlign = "center";
+
+    ctx.font = "30px birds";
+    ctx.lineWidth = 3;
+    ctx.fillStyle = "black";
+    ctx.strokeStyle = "white";
+    let txtWidth = ctx.measureText(txt).width;
+    console.log(txt, txtWidth, 225 - Number(txtWidth));
+    console.log(txt);
+
+    let reqPath = path.join(__dirname, "../images/ship_finish.png");
+    const background = await Canvas.loadImage(reqPath);
+    ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+
+    ctx.beginPath();
+    ctx.arc(140, 79, 58, 0, Math.PI * 2, true);
+    ctx.closePath();
+    ctx.arc(259, 113, 58, 0, Math.PI * 2, true);
+    ctx.closePath();
+    ctx.strokeText(`${txt}`, 225, 245);
+    ctx.fillText(`${txt}`, 225, 245);
+    ctx.clip();
+
+    // let shipFont = await opentype.loadSync(ttfPath);
+
+    const { body: buffer1 } = await snekfetch.get(avatarURL1);
+    const avatar1 = await Canvas.loadImage(buffer1);
+    await ctx.drawImage(avatar1, 82, 21, 115, 115);
+
+    const { body: buffer2 } = await snekfetch.get(avatarURL2);
+    const avatar2 = await Canvas.loadImage(buffer2);
+    await ctx.drawImage(avatar2, 201, 55, 115, 115);
+    console.log(avatarURL1, avatarURL2);
+    // let fontPath = shipFont.getPath(txt, 0, 200, 26);
+    // fontPath.draw(ctx);
+
+    return canvas.toBuffer();
+  }
+
 };

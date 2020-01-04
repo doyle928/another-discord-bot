@@ -4,11 +4,9 @@ let messageShipId = (module.exports = {
     let obj = {
       message_id: messageId,
       member_one_id: memberOneId,
-      member_two_id: memberTwoId,
-      confirmed_ship: false
+      member_two_id: memberTwoId
     };
     messageShipId.messageIds.push(obj);
-    console.log(messageShipId.messageIds);
   },
   deleteMessageIds: async memberId => {
     for (let i = 0; i < messageShipId.messageIds.length; i++) {
@@ -19,6 +17,5 @@ let messageShipId = (module.exports = {
         messageShipId.messageIds.splice(i, 1);
       }
     }
-    console.log(messageShipId.messageIds);
   }
 });

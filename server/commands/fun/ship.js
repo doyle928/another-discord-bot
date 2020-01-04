@@ -1,5 +1,3 @@
-const randomNumber = require("../../data/randomNumber");
-const randomColor = require("../../data/randomColor");
 const Discord = require("discord.js");
 const _ = require("lodash");
 const { request } = require("graphql-request");
@@ -9,10 +7,14 @@ const path = require("path");
 const snekfetch = require("snekfetch");
 
 exports.run = async (client, message, args) => {
-  console.log(message.content, _.size(message.mentions.members));
+  let member = null;
   let url = "https://lulu-discord-bot.herokuapp.com/api";
 
-  if (args.length === 1) {
+  if (
+    args.length === 1 ||
+    args[1].toLowerCase() === "list" ||
+    args[1].toLowerCase() === "lists"
+  ) {
     let query = `{
             getShips(guild_id: "${message.guild.id}") {
               user_id ship_id timestamp
@@ -23,7 +25,29 @@ exports.run = async (client, message, args) => {
       if (res.getShips === null || res.getShips === []) {
         message.channel.send("there are no ships in the serveur !");
       } else {
-        console.log(res.getShips);
+        let msgBase = "**Current Ships**\n";
+        // await res.getShips.map(async ship => {
+        //   console.log(ship);
+        //   let m1 = await message.guild.fetchMember(ship.user_id);
+        //   let m2 = await message.guild.fetchMember(ship.ship_id);
+        //   console.log(msgBase.indexOf(m1.user.username));
+        //   if (msgBase.indexOf(m1.user.username) === -1) {
+        //     msgBase += `${m1.user.username} + ${m2.user.username}\n`;
+        //   }
+        // });
+
+        await Promise.all(
+          _.map(res.getShips, async ship => {
+            let m1 = await message.guild.fetchMember(ship.user_id);
+            let m2 = await message.guild.fetchMember(ship.ship_id);
+            if (msgBase.indexOf(m1.user.username) === -1) {
+              return (msgBase += `${m1.user.username} + ${m2.user.username}\n`);
+            }
+            return;
+          })
+        );
+
+        return message.channel.send(msgBase);
       }
     } catch (err) {
       console.error(err);
@@ -31,32 +55,39 @@ exports.run = async (client, message, args) => {
       return message.channel.send("<:deadinside:606350795881054216>");
     }
   } else if (_.size(message.mentions.members) === 1) {
-    console.log(message.mentions.members.first().user.username);
+    if (args.length !== new Set(args).size) {
+      if (message.author.id === message.mentions.members.first().user.id) {
+        message.channel.send(
+          "why are you trying to ship you with yourself weirdo !!"
+        );
+        return message.channel.send("<:monoeil:658912400996827146>");
+      } else {
+        return message.channel.send(
+          "you cannot ship a person with themselves !! that is weird !"
+        );
+      }
+    }
     //get ship status
-    if (message.mentions.members.first().user.id === "601825955572350976") {
+    if (message.mentions.members.first().user.id === "606563939429515287") {
       message.channel.send("i'm a bot, i dont need a boy");
       return message.channel.send("<:scared:658963912099758080>");
     }
     let query = `{
             getShip(guild_id: "${message.guild.id}", user_id: "${
       message.mentions.members.first().id
-    }") {
+      }") {
               user_id ship_id timestamp
             }
           }`;
     try {
       let res = await request(url, query);
-      console.log(res);
       if (res.getShip === null) {
         message.channel.send(
           `${
-            message.mentions.members.first().user.username
-          } is not shipped with anyone ! `
+          message.mentions.members.first().user.username
+          } is not shipped with anyone !\nwe should find them someone !!`
         );
-        setTimeout(() => {
-          message.channel.send(`maybe you should ask them ! `);
-          message.channel.send("<:winkNue:660603639542579232>");
-        }, 800);
+        message.channel.send("<:natsukiExcited:646210701110804481>");
         // message.channel
         //   .send(`${message.mentions.members.first().user.username} is not shipped with anyone !\ndo you want to ship them with someone ?`)
         //   .then(m => {
@@ -123,12 +154,21 @@ exports.run = async (client, message, args) => {
         //       });
         //   });
       } else {
-        return message.channel.send(
-          `sorry but ${
+        let m = await message.guild.fetchMember(res.getShip.ship_id);
+        if (m) {
+          message.channel.send(
+            `sorry but ${
             message.mentions.members.first().user.username
-          } is already shipped with someone else !`
-        );
-        console.log(res.getShip);
+            } is already shipped with ${m} !`
+          );
+        } else {
+          message.channel.send(
+            `sorry but ${
+            message.mentions.members.first().user.username
+            } is already shipped with someone else !`
+          );
+        }
+        return console.log(res.getShip);
       }
     } catch (err) {
       console.error(err);
@@ -139,8 +179,8 @@ exports.run = async (client, message, args) => {
     let memberArray = [];
     message.mentions.members.map(m => memberArray.push(m));
     if (
-      memberArray[0].user.id === "601825955572350976" ||
-      memberArray[1].user.id === "601825955572350976"
+      memberArray[0].user.id === "606563939429515287" ||
+      memberArray[1].user.id === "606563939429515287"
     ) {
       if (
         message.author.id === memberArray[0].user.id ||
@@ -166,7 +206,7 @@ exports.run = async (client, message, args) => {
         console.log(res);
         if (res.getShip === null) {
           let query = `{
-            getShip(guild_id: "${message.guild.id}", user_id: "${memberArray[1].user.id}") {
+            getShip(guild_id: "${message.guild.id}", user_id: "${memberArray[0].user.id}") {
               user_id ship_id timestamp
             }
           }`;
@@ -180,19 +220,20 @@ exports.run = async (client, message, args) => {
                   memberArray[1].user.avatarURL
                 );
                 const attachment = new Discord.Attachment(img, "ship.png");
-                message.channel
-                  .send(
-                    `__**New Ship**__ 🚢\n\n**${memberArray[0]}** <:softheart:575053165804912652> **${memberArray[1]}**\n\nBoth people please click the heart reaction below to confirm ship\n- or -\n5 people in the server can react with the heart to confirm ship`,
-                    attachment
-                  )
-                  .then(m => {
-                    m.react("575053165804912652");
-                    messageShipId.addMessageId(
-                      m.id,
-                      memberArray[0].user.id,
-                      memberArray[1].user.id
-                    );
-                  });
+                message.channel.send(attachment).then(() => {
+                  message.channel
+                    .send(
+                      `🚢  **New Ship**  🚢\n\n**${memberArray[0]}** <:softheart:575053165804912652> **${memberArray[1]}**\n\nBoth people please click the heart reaction below to confirm ship\n- or -\n5 people in the server can react with the heart to confirm ship`
+                    )
+                    .then(m => {
+                      m.react("575053165804912652");
+                      messageShipId.addMessageId(
+                        m.id,
+                        memberArray[0].user.id,
+                        memberArray[1].user.id
+                      );
+                    });
+                });
               }
             } else {
               //list current ship status, like with who and when
@@ -228,7 +269,6 @@ exports.run = async (client, message, args) => {
     args[1].toLowerCase() === "end"
   ) {
     //remove ship
-    let url = "https://lulu-discord-bot.herokuapp.com/api";
     let query = `{
             getShip(guild_id: "${message.guild.id}", user_id: "${message.author.id}") {
               user_id ship_id timestamp
@@ -252,8 +292,15 @@ exports.run = async (client, message, args) => {
           try {
             await request(url, query);
             messageShipId.deleteMessageIds(message.author.id);
-            messageShipId.deleteMessageIds(res.getShip.ship_id);
-            message.channel.send(`${message.author} you are free !`);
+            message.channel.send(
+              `${message.author} you are free ! have fun !!`
+            );
+            message.guild.fetchMember(res.getShip.ship_id).then(m => {
+              m.send(
+                `${message.author.username} ended the ship with you ! i'm sorry !!`
+              );
+              m.send("<a:crying:661358360091688980>");
+            });
             return console.log(res);
           } catch (err) {
             console.error(err);

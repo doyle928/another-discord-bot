@@ -31,10 +31,10 @@ module.exports = gql`
     day: String!
   }
   type Ship {
-    guild_id: String!
-    user_id: String!
-    ship_id: String!
-    timestamp: String!
+    guild_id: String
+    user_id: String
+    ship_id: String
+    timestamp: String
   }
   type Query {
     getUser(guild_id: String!, user_id: String!): User!
@@ -85,11 +85,11 @@ module.exports = gql`
       day: String!
     ): Message!
     addShip(
-      guild_id: String!
-      user_id: String!
-      ship_id: String!
-      timestamp: String!
+      guild_id: String
+      user_id: String
+      ship_id: String
+      timestamp: String
     ): Ship
-    deleteShip(guild_id: String!, user_id: String!): Ship
+    deleteShip(guild_id: String, user_id: String): Ship
   }
 `;
