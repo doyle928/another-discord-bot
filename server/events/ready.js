@@ -16,90 +16,90 @@ module.exports = async client => {
   await s.channels
     .get("561423217709940770")
     .fetchMessage("663149701687672862")
-    .then(msg => {
+    .then(async msg => {
       //age
       if (_.size(msg.reactions) === 0) {
-        msg.react("1️⃣");
-        msg.react("2️⃣");
-        msg.react("3️⃣");
-        msg.react("4️⃣");
-        msg.react("5️⃣");
+        await msg.react("1️⃣");
+        await msg.react("2️⃣");
+        await msg.react("3️⃣");
+        await msg.react("4️⃣");
+        await msg.react("5️⃣");
       }
     });
   await s.channels
     .get("561423217709940770")
     .fetchMessage("663150060904644608")
-    .then(msg => {
+    .then(async msg => {
       //personality
       if (_.size(msg.reactions) === 0) {
-        msg.react("🤐");
-        msg.react("🥳");
-        msg.react("😜");
+        await msg.react("🤐");
+        await msg.react("🥳");
+        await msg.react("😜");
       }
     });
   await s.channels
     .get("561423217709940770")
     .fetchMessage("663150398458167306")
-    .then(msg => {
+    .then(async msg => {
       //gaming
       if (_.size(msg.reactions) === 0) {
-        msg.react("🅿");
-        msg.react("❎");
-        msg.react("🍄");
-        msg.react("🖥");
-        msg.react("📱");
+        await msg.react("🅿");
+        await msg.react("❎");
+        await msg.react("🍄");
+        await msg.react("🖥");
+        await msg.react("📱");
       }
     });
   await s.channels
     .get("561423217709940770")
     .fetchMessage("663150874184646713")
-    .then(msg => {
+    .then(async msg => {
       //relationship
       if (_.size(msg.reactions) === 0) {
-        msg.react("💁‍♀️");
-        msg.react("❤");
-        msg.react("🙊");
+        await msg.react("💁‍♀️");
+        await msg.react("❤");
+        await msg.react("🙊");
       }
     });
   await s.channels
     .get("561423217709940770")
     .fetchMessage("663151089054646315")
-    .then(msg => {
+    .then(async msg => {
       //dm
       if (_.size(msg.reactions) === 0) {
-        msg.react("✅");
-        msg.react("❌");
-        msg.react("❓");
+        await msg.react("✅");
+        await msg.react("❌");
+        await msg.react("❓");
       }
     });
   await s.channels
     .get("561423217709940770")
     .fetchMessage("663151396727554059")
-    .then(msg => {
+    .then(async msg => {
       //interests
       if (_.size(msg.reactions) === 0) {
-        msg.react("🍲");
-        msg.react("🐕");
-        msg.react("🌄");
-        msg.react("⚽");
-        msg.react("🎵");
-        msg.react("🚗");
-        msg.react("📚");
-        msg.react("📺");
-        msg.react("💻");
-        msg.react("🌺");
-        msg.react("🖌️");
-        msg.react("🎮");
-        msg.react("👗");
+        await msg.react("🍲");
+        await msg.react("🐕");
+        await msg.react("🌄");
+        await msg.react("⚽");
+        await msg.react("🎵");
+        await msg.react("🚗");
+        await msg.react("📚");
+        await msg.react("📺");
+        await msg.react("💻");
+        await msg.react("🌺");
+        await msg.react("🖌️");
+        await msg.react("🎮");
+        await msg.react("👗");
       }
     });
   await s.channels
     .get("561423217709940770")
     .fetchMessage("663153065565618190")
-    .then(msg => {
+    .then(async msg => {
       //voicechat
       if (_.size(msg.reactions) === 0) {
-        msg.react("🎙️");
+        await msg.react("🎙️");
       }
     });
 };

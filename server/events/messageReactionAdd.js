@@ -389,156 +389,158 @@ module.exports = async (client, messageReaction, user) => {
         });
       }
     });
-  } else if (messageReaction.message.id === "663149701687672862") {
-    //age roles
-    let removeArray = [
-      {
-        id: "561441866525048842",
-        name: "1️⃣"
-      },
-      {
-        id: "561441985236434945",
-        name: "2️⃣"
-      },
-      {
-        id: "561442059567890442",
-        name: "3️⃣"
-      },
-      {
-        id: "561442124592054292",
-        name: "4️⃣"
-      },
-      {
-        id: "561442214572589077",
-        name: "5️⃣"
+  } else if (user.id !== "601825955572350976") {
+    if (messageReaction.message.id === "663149701687672862") {
+      //age roles
+      let removeArray = [
+        {
+          id: "561441866525048842",
+          name: "1️⃣"
+        },
+        {
+          id: "561441985236434945",
+          name: "2️⃣"
+        },
+        {
+          id: "561442059567890442",
+          name: "3️⃣"
+        },
+        {
+          id: "561442124592054292",
+          name: "4️⃣"
+        },
+        {
+          id: "561442214572589077",
+          name: "5️⃣"
+        }
+      ];
+      if (messageReaction._emoji.name === "1️⃣") {
+        addRoleRemoveOthers(removeArray, "561441866525048842");
+      } else if (messageReaction._emoji.name === "2️⃣") {
+        addRoleRemoveOthers(removeArray, "561441985236434945");
+      } else if (messageReaction._emoji.name === "3️⃣") {
+        addRoleRemoveOthers(removeArray, "561442059567890442");
+      } else if (messageReaction._emoji.name === "4️⃣") {
+        addRoleRemoveOthers(removeArray, "561442124592054292");
+      } else if (messageReaction._emoji.name === "5️⃣") {
+        addRoleRemoveOthers(removeArray, "561442214572589077");
       }
-    ];
-    if (messageReaction._emoji.name === "1️⃣") {
-      addRoleRemoveOthers(removeArray, "561441866525048842");
-    } else if (messageReaction._emoji.name === "2️⃣") {
-      addRoleRemoveOthers(removeArray, "561441985236434945");
-    } else if (messageReaction._emoji.name === "3️⃣") {
-      addRoleRemoveOthers(removeArray, "561442059567890442");
-    } else if (messageReaction._emoji.name === "4️⃣") {
-      addRoleRemoveOthers(removeArray, "561442124592054292");
-    } else if (messageReaction._emoji.name === "5️⃣") {
-      addRoleRemoveOthers(removeArray, "561442214572589077");
-    }
-  } else if (messageReaction.message.id === "663150060904644608") {
-    //personality roles
-    let removeArray = [
-      {
-        id: "561443343842934806",
-        name: "🤐"
-      },
-      {
-        id: "561443427107995660",
-        name: "🥳"
-      },
-      {
-        id: "561443500491800578",
-        name: "😜"
+    } else if (messageReaction.message.id === "663150060904644608") {
+      //personality roles
+      let removeArray = [
+        {
+          id: "561443343842934806",
+          name: "🤐"
+        },
+        {
+          id: "561443427107995660",
+          name: "🥳"
+        },
+        {
+          id: "561443500491800578",
+          name: "😜"
+        }
+      ];
+      if (messageReaction._emoji.name === "🤐") {
+        addRoleRemoveOthers(removeArray, "561443343842934806");
+      } else if (messageReaction._emoji.name === "🥳") {
+        addRoleRemoveOthers(removeArray, "561443427107995660");
+      } else if (messageReaction._emoji.name === "😜") {
+        addRoleRemoveOthers(removeArray, "561443500491800578");
       }
-    ];
-    if (messageReaction._emoji.name === "🤐") {
-      addRoleRemoveOthers(removeArray, "561443343842934806");
-    } else if (messageReaction._emoji.name === "🥳") {
-      addRoleRemoveOthers(removeArray, "561443427107995660");
-    } else if (messageReaction._emoji.name === "😜") {
-      addRoleRemoveOthers(removeArray, "561443500491800578");
-    }
-  } else if (messageReaction.message.id === "663150398458167306") {
-    //gaming
-    if (messageReaction._emoji.name === "🅿") {
-      addRole("561443526617989129");
-    } else if (messageReaction._emoji.name === "❎") {
-      addRole("561443723330846722");
-    } else if (messageReaction._emoji.name === "🍄") {
-      addRole("561443758487371776");
-    } else if (messageReaction._emoji.name === "🖥") {
-      addRole("561443809712537625");
-    } else if (messageReaction._emoji.name === "📱") {
-      addRole("561443842688155658");
-    }
-  } else if (messageReaction.message.id === "663150874184646713") {
-    //relationship roles
-    let removeArray = [
-      {
-        id: "561444125476651009",
-        name: "💁‍♀️"
-      },
-      {
-        id: "561444242778750978",
-        name: "❤"
-      },
-      {
-        id: "561444283400454146",
-        name: "🙊"
+    } else if (messageReaction.message.id === "663150398458167306") {
+      //gaming
+      if (messageReaction._emoji.name === "🅿") {
+        addRole("561443526617989129");
+      } else if (messageReaction._emoji.name === "❎") {
+        addRole("561443723330846722");
+      } else if (messageReaction._emoji.name === "🍄") {
+        addRole("561443758487371776");
+      } else if (messageReaction._emoji.name === "🖥") {
+        addRole("561443809712537625");
+      } else if (messageReaction._emoji.name === "📱") {
+        addRole("561443842688155658");
       }
-    ];
-    if (messageReaction._emoji.name === "💁‍♀️") {
-      addRoleRemoveOthers(removeArray, "561444125476651009");
-    } else if (messageReaction._emoji.name === "❤") {
-      addRoleRemoveOthers(removeArray, "561444242778750978");
-    } else if (messageReaction._emoji.name === "🙊") {
-      addRoleRemoveOthers(removeArray, "561444283400454146");
-    }
-  } else if (messageReaction.message.id === "663151089054646315") {
-    //dm roles
-    let removeArray = [
-      {
-        id: "561443898266746893",
-        name: "✅"
-      },
-      {
-        id: "561444015472377876",
-        name: "❌"
-      },
-      {
-        id: "561444049828184074",
-        name: "❓"
+    } else if (messageReaction.message.id === "663150874184646713") {
+      //relationship roles
+      let removeArray = [
+        {
+          id: "561444125476651009",
+          name: "💁‍♀️"
+        },
+        {
+          id: "561444242778750978",
+          name: "❤"
+        },
+        {
+          id: "561444283400454146",
+          name: "🙊"
+        }
+      ];
+      if (messageReaction._emoji.name === "💁‍♀️") {
+        addRoleRemoveOthers(removeArray, "561444125476651009");
+      } else if (messageReaction._emoji.name === "❤") {
+        addRoleRemoveOthers(removeArray, "561444242778750978");
+      } else if (messageReaction._emoji.name === "🙊") {
+        addRoleRemoveOthers(removeArray, "561444283400454146");
       }
-    ];
-    if (messageReaction._emoji.name === "✔") {
-      addRoleRemoveOthers(removeArray, "561443898266746893");
-    } else if (messageReaction._emoji.name === "❌") {
-      addRoleRemoveOthers(removeArray, "561444015472377876");
-    } else if (messageReaction._emoji.name === "❓") {
-      addRoleRemoveOthers(removeArray, "561444049828184074");
-    }
-  } else if (messageReaction.message.id === "663151396727554059") {
-    //interests
-    if (messageReaction._emoji.name === "🍲") {
-      addRole("561442784272318485");
-    } else if (messageReaction._emoji.name === "🐕") {
-      addRole("561442865457135626");
-    } else if (messageReaction._emoji.name === "🌄") {
-      addRole("561442912211042309");
-    } else if (messageReaction._emoji.name === "⚽") {
-      addRole("561442956532514826");
-    } else if (messageReaction._emoji.name === "🎵") {
-      addRole("561443003617509396");
-    } else if (messageReaction._emoji.name === "🚗") {
-      addRole("561443031983587331");
-    } else if (messageReaction._emoji.name === "📚") {
-      addRole("561443068927148034");
-    } else if (messageReaction._emoji.name === "📺") {
-      addRole("561443115869798423");
-    } else if (messageReaction._emoji.name === "💻") {
-      addRole("561443156642627611");
-    } else if (messageReaction._emoji.name === "🌺") {
-      addRole("561443189123448842");
-    } else if (messageReaction._emoji.name === "🖌️") {
-      addRole("561443216528769024");
-    } else if (messageReaction._emoji.name === "🎮") {
-      addRole("561443255821271040");
-    } else if (messageReaction._emoji.name === "👗") {
-      addRole("561443309667745805");
-    }
-  } else if (messageReaction.message.id === "663153065565618190") {
-    //vc role
-    if (messageReaction._emoji.name === "🎙️") {
-      addRole("663148896046022707");
+    } else if (messageReaction.message.id === "663151089054646315") {
+      //dm roles
+      let removeArray = [
+        {
+          id: "561443898266746893",
+          name: "✅"
+        },
+        {
+          id: "561444015472377876",
+          name: "❌"
+        },
+        {
+          id: "561444049828184074",
+          name: "❓"
+        }
+      ];
+      if (messageReaction._emoji.name === "✔") {
+        addRoleRemoveOthers(removeArray, "561443898266746893");
+      } else if (messageReaction._emoji.name === "❌") {
+        addRoleRemoveOthers(removeArray, "561444015472377876");
+      } else if (messageReaction._emoji.name === "❓") {
+        addRoleRemoveOthers(removeArray, "561444049828184074");
+      }
+    } else if (messageReaction.message.id === "663151396727554059") {
+      //interests
+      if (messageReaction._emoji.name === "🍲") {
+        addRole("561442784272318485");
+      } else if (messageReaction._emoji.name === "🐕") {
+        addRole("561442865457135626");
+      } else if (messageReaction._emoji.name === "🌄") {
+        addRole("561442912211042309");
+      } else if (messageReaction._emoji.name === "⚽") {
+        addRole("561442956532514826");
+      } else if (messageReaction._emoji.name === "🎵") {
+        addRole("561443003617509396");
+      } else if (messageReaction._emoji.name === "🚗") {
+        addRole("561443031983587331");
+      } else if (messageReaction._emoji.name === "📚") {
+        addRole("561443068927148034");
+      } else if (messageReaction._emoji.name === "📺") {
+        addRole("561443115869798423");
+      } else if (messageReaction._emoji.name === "💻") {
+        addRole("561443156642627611");
+      } else if (messageReaction._emoji.name === "🌺") {
+        addRole("561443189123448842");
+      } else if (messageReaction._emoji.name === "🖌️") {
+        addRole("561443216528769024");
+      } else if (messageReaction._emoji.name === "🎮") {
+        addRole("561443255821271040");
+      } else if (messageReaction._emoji.name === "👗") {
+        addRole("561443309667745805");
+      }
+    } else if (messageReaction.message.id === "663153065565618190") {
+      //vc role
+      if (messageReaction._emoji.name === "🎙️") {
+        addRole("663148896046022707");
+      }
     }
   }
 
