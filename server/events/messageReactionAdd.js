@@ -394,34 +394,34 @@ module.exports = async (client, messageReaction, user) => {
     let removeArray = [
       {
         id: "561441866525048842",
-        name: "regional_indicator_a"
+        name: "1️⃣"
       },
       {
         id: "561441985236434945",
-        name: "regional_indicator_b"
+        name: "2️⃣"
       },
       {
         id: "561442059567890442",
-        name: "regional_indicator_c"
+        name: "3️⃣"
       },
       {
         id: "561442124592054292",
-        name: "regional_indicator_d"
+        name: "4️⃣"
       },
       {
         id: "561442214572589077",
-        name: "regional_indicator_e"
+        name: "5️⃣"
       }
     ];
-    if (messageReaction._emoji.name === "regional_indicator_a") {
+    if (messageReaction._emoji.name === "1️⃣") {
       addRoleRemoveOthers(removeArray, "561441866525048842");
-    } else if (messageReaction._emoji.name === "regional_indicator_b") {
+    } else if (messageReaction._emoji.name === "2️⃣") {
       addRoleRemoveOthers(removeArray, "561441985236434945");
-    } else if (messageReaction._emoji.name === "regional_indicator_c") {
+    } else if (messageReaction._emoji.name === "3️⃣") {
       addRoleRemoveOthers(removeArray, "561442059567890442");
-    } else if (messageReaction._emoji.name === "regional_indicator_d") {
+    } else if (messageReaction._emoji.name === "4️⃣") {
       addRoleRemoveOthers(removeArray, "561442124592054292");
-    } else if (messageReaction._emoji.name === "regional_indicator_e") {
+    } else if (messageReaction._emoji.name === "5️⃣") {
       addRoleRemoveOthers(removeArray, "561442214572589077");
     }
   } else if (messageReaction.message.id === "663150060904644608") {
@@ -429,38 +429,35 @@ module.exports = async (client, messageReaction, user) => {
     let removeArray = [
       {
         id: "561443343842934806",
-        name: "regional_indicator_i"
+        name: "🤐"
       },
       {
         id: "561443427107995660",
-        name: "regional_indicator_e"
+        name: "🥳"
       },
       {
         id: "561443500491800578",
-        name: "regional_indicator_a"
+        name: "😜"
       }
     ];
-    if (messageReaction._emoji.name === "regional_indicator_i") {
+    if (messageReaction._emoji.name === "🤐") {
       addRoleRemoveOthers(removeArray, "561443343842934806");
-    } else if (messageReaction._emoji.name === "regional_indicator_r") {
+    } else if (messageReaction._emoji.name === "🥳") {
       addRoleRemoveOthers(removeArray, "561443427107995660");
-    } else if (messageReaction._emoji.name === "regional_indicator_a") {
+    } else if (messageReaction._emoji.name === "😜") {
       addRoleRemoveOthers(removeArray, "561443500491800578");
     }
   } else if (messageReaction.message.id === "663150398458167306") {
     //gaming
-    if (messageReaction._emoji.name === "regional_indicator_p") {
+    if (messageReaction._emoji.name === "🅿") {
       addRole("561443526617989129");
-    } else if (messageReaction._emoji.name === "regional_indicator_x") {
+    } else if (messageReaction._emoji.name === "❎") {
       addRole("561443723330846722");
-    } else if (messageReaction._emoji.name === "regional_indicator_s") {
+    } else if (messageReaction._emoji.name === "🍄") {
       addRole("561443758487371776");
-    } else if (
-      messageReaction._emoji.name === "desktop" ||
-      messageReaction._emoji.name === "desktop_computer"
-    ) {
+    } else if (messageReaction._emoji.name === "🖥") {
       addRole("561443809712537625");
-    } else if (messageReaction._emoji.name === "iphone") {
+    } else if (messageReaction._emoji.name === "📱") {
       addRole("561443842688155658");
     }
   } else if (messageReaction.message.id === "663150874184646713") {
@@ -468,22 +465,22 @@ module.exports = async (client, messageReaction, user) => {
     let removeArray = [
       {
         id: "561444125476651009",
-        name: "woman_tipping_hand"
+        name: "💁‍♀️"
       },
       {
         id: "561444242778750978",
-        name: "heart"
+        name: "❤"
       },
       {
         id: "561444283400454146",
-        name: "speak_no_evil"
+        name: "🙊"
       }
     ];
-    if (messageReaction._emoji.name === "woman_tipping_hand") {
+    if (messageReaction._emoji.name === "💁‍♀️") {
       addRoleRemoveOthers(removeArray, "561444125476651009");
-    } else if (messageReaction._emoji.name === "heart") {
+    } else if (messageReaction._emoji.name === "❤") {
       addRoleRemoveOthers(removeArray, "561444242778750978");
-    } else if (messageReaction._emoji.name === "speak_no_evil") {
+    } else if (messageReaction._emoji.name === "🙊") {
       addRoleRemoveOthers(removeArray, "561444283400454146");
     }
   } else if (messageReaction.message.id === "663151089054646315") {
@@ -491,56 +488,56 @@ module.exports = async (client, messageReaction, user) => {
     let removeArray = [
       {
         id: "561443898266746893",
-        name: "white_check_mark"
+        name: "✔"
       },
       {
         id: "561444015472377876",
-        name: "x"
+        name: "❌"
       },
       {
         id: "561444049828184074",
-        name: "question"
+        name: "❓"
       }
     ];
-    if (messageReaction._emoji.name === "white_check_mark") {
+    if (messageReaction._emoji.name === "✔") {
       addRoleRemoveOthers(removeArray, "561443898266746893");
-    } else if (messageReaction._emoji.name === "x") {
+    } else if (messageReaction._emoji.name === "❌") {
       addRoleRemoveOthers(removeArray, "561444015472377876");
-    } else if (messageReaction._emoji.name === "question") {
+    } else if (messageReaction._emoji.name === "❓") {
       addRoleRemoveOthers(removeArray, "561444049828184074");
     }
   } else if (messageReaction.message.id === "663151396727554059") {
     //interests
     if (messageReaction._emoji.name === "shallow_pan_of_food") {
       addRole("561442784272318485");
-    } else if (messageReaction._emoji.name === "🐶") {
+    } else if (messageReaction._emoji.name === "🍲") {
       addRole("561442865457135626");
-    } else if (messageReaction._emoji.name === "sunrise_over_mountains") {
+    } else if (messageReaction._emoji.name === "🌄") {
       addRole("561442912211042309");
-    } else if (messageReaction._emoji.name === "soccer") {
+    } else if (messageReaction._emoji.name === "⚽") {
       addRole("561442956532514826");
-    } else if (messageReaction._emoji.name === "musical_note") {
+    } else if (messageReaction._emoji.name === "🎵") {
       addRole("561443003617509396");
-    } else if (messageReaction._emoji.name === "blue_car") {
+    } else if (messageReaction._emoji.name === "🚗") {
       addRole("561443031983587331");
-    } else if (messageReaction._emoji.name === "books") {
+    } else if (messageReaction._emoji.name === "📚") {
       addRole("561443068927148034");
-    } else if (messageReaction._emoji.name === "tv") {
+    } else if (messageReaction._emoji.name === "📺") {
       addRole("561443115869798423");
-    } else if (messageReaction._emoji.name === "computer") {
+    } else if (messageReaction._emoji.name === "💻") {
       addRole("561443156642627611");
-    } else if (messageReaction._emoji.name === "hibiscus") {
+    } else if (messageReaction._emoji.name === "🌺") {
       addRole("561443189123448842");
-    } else if (messageReaction._emoji.name === "paintbrush") {
+    } else if (messageReaction._emoji.name === "🖌️") {
       addRole("561443216528769024");
-    } else if (messageReaction._emoji.name === "video_game") {
+    } else if (messageReaction._emoji.name === "🎮") {
       addRole("561443255821271040");
-    } else if (messageReaction._emoji.name === "womans_clothes") {
+    } else if (messageReaction._emoji.name === "👗") {
       addRole("561443309667745805");
     }
   } else if (messageReaction.message.id === "663153065565618190") {
     //vc role
-    if (messageReaction._emoji.name === "microphone2") {
+    if (messageReaction._emoji.name === "🎙️") {
       addRole("663148896046022707");
     }
   }
