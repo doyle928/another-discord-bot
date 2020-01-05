@@ -500,7 +500,7 @@ module.exports = async (client, messageReaction, user) => {
           name: "❓"
         }
       ];
-      if (messageReaction._emoji.name === "✔") {
+      if (messageReaction._emoji.name === "✅") {
         addRoleRemoveOthers(removeArray, "561443898266746893");
       } else if (messageReaction._emoji.name === "❌") {
         addRoleRemoveOthers(removeArray, "561444015472377876");
@@ -606,10 +606,10 @@ module.exports = async (client, messageReaction, user) => {
 
   async function removeReaction(base, messageId, emoteName) {
     let oriMsg = await messageReaction.message.channel.fetchMessage(messageId);
-    oriMsg.reactions.map(r => {
-      r.message.reactions.forEach(reaction => {
+    await oriMsg.reactions.map(r => {
+      r.message.reactions.forEach(async reaction => {
         if (reaction._emoji.name === emoteName) {
-          reaction.remove(user.id);
+          await reaction.remove(user.id);
         }
       });
     });
@@ -620,14 +620,14 @@ module.exports = async (client, messageReaction, user) => {
     let memberRolesIdArray = [];
     let mem = await messageReaction.message.guild.fetchMember(user.id);
     if (mem) {
-      mem.roles.map(r => {
+      await mem.roles.map(r => {
         memberRolesIdArray.push(r.id);
       });
       for (let i = 0; i < memberRolesIdArray.length; i++) {
         for (let j = 0; j < removeArray.length; j++) {
           if (memberRolesIdArray[i] === removeArray[j].id) {
             memberRolesIdArray.splice(i, 1);
-            removeReaction(
+            await removeReaction(
               messageReaction,
               messageReaction.message.id,
               removeArray[j].name
@@ -636,18 +636,16 @@ module.exports = async (client, messageReaction, user) => {
         }
       }
       memberRolesIdArray.push(roleToAdd);
-      mem.setRoles(memberRolesIdArray);
+      await mem.addRole(roleToAdd);
+
+      // mem.setRoles(memberRolesIdArray);
     }
   }
   async function addRole(roleToAdd) {
     let memberRolesIdArray = [];
     let mem = await messageReaction.message.guild.fetchMember(user.id);
     if (mem) {
-      mem.roles.map(r => {
-        memberRolesIdArray.push(r.id);
-      });
-      memberRolesIdArray.push(roleToAdd);
-      mem.setRoles(memberRolesIdArray);
+      await mem.addRole(roleToAdd);
     }
   }
 };

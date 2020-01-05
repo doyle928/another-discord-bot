@@ -102,9 +102,9 @@ module.exports = async (client, messageReaction, user) => {
       removeRole("561444049828184074");
     }
   } else if (messageReaction.message.id === "663151396727554059") {
-    if (messageReaction._emoji.name === "shallow_pan_of_food") {
+    if (messageReaction._emoji.name === "🍲") {
       removeRole("561442784272318485");
-    } else if (messageReaction._emoji.name === "🍲") {
+    } else if (messageReaction._emoji.name === "🐕") {
       removeRole("561442865457135626");
     } else if (messageReaction._emoji.name === "🌄") {
       removeRole("561442912211042309");
