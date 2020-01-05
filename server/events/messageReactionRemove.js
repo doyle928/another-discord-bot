@@ -94,7 +94,7 @@ module.exports = async (client, messageReaction, user) => {
       removeRole("561444283400454146");
     }
   } else if (messageReaction.message.id === "663151089054646315") {
-    if (messageReaction._emoji.name === "✔") {
+    if (messageReaction._emoji.name === "✅") {
       removeRole("561443898266746893");
     } else if (messageReaction._emoji.name === "❌") {
       removeRole("561444015472377876");

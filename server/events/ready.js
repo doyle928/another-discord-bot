@@ -20,7 +20,7 @@ module.exports = async client => {
       msg.react("2️⃣");
       msg.react("3️⃣");
       msg.react("4️⃣");
-      msg.react("5️⃣ ");
+      msg.react("5️⃣");
     });
   await s.channels
     .get("561423217709940770")
@@ -56,7 +56,7 @@ module.exports = async client => {
     .fetchMessage("663151089054646315")
     .then(msg => {
       //dm
-      msg.react("✔");
+      msg.react("✅");
       msg.react("❌");
       msg.react("❓");
     });

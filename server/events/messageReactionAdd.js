@@ -488,7 +488,7 @@ module.exports = async (client, messageReaction, user) => {
     let removeArray = [
       {
         id: "561443898266746893",
-        name: "✔"
+        name: "✅"
       },
       {
         id: "561444015472377876",
@@ -508,9 +508,9 @@ module.exports = async (client, messageReaction, user) => {
     }
   } else if (messageReaction.message.id === "663151396727554059") {
     //interests
-    if (messageReaction._emoji.name === "shallow_pan_of_food") {
+    if (messageReaction._emoji.name === "🍲") {
       addRole("561442784272318485");
-    } else if (messageReaction._emoji.name === "🍲") {
+    } else if (messageReaction._emoji.name === "🐕") {
       addRole("561442865457135626");
     } else if (messageReaction._emoji.name === "🌄") {
       addRole("561442912211042309");
@@ -606,7 +606,7 @@ module.exports = async (client, messageReaction, user) => {
     let oriMsg = await messageReaction.message.channel.fetchMessage(messageId);
     oriMsg.reactions.map(r => {
       r.message.reactions.forEach(reaction => {
-        if (reaction.name === emoteName) {
+        if (reaction._emoji.name === emoteName) {
           reaction.remove(user.id);
         }
       });
@@ -622,7 +622,7 @@ module.exports = async (client, messageReaction, user) => {
         memberRolesIdArray.push(r.id);
       });
       for (let i = 0; i < memberRolesIdArray.length; i++) {
-        for (let j = 0; j < removeArray; j++) {
+        for (let j = 0; j < removeArray.length; j++) {
           if (memberRolesIdArray[i] === removeArray[j].id) {
             memberRolesIdArray.splice(i, 1);
             removeReaction(
