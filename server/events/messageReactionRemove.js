@@ -54,6 +54,22 @@ module.exports = async (client, messageReaction, user) => {
       if (parseInt(star[1]) - 1 <= 3) return starMsg.delete(250);
     }
   }
+  // for (let i = 0; i < memberRolesIdArray.length; i++) {
+  //   if (memberRolesIdArray[i] === "561443500491800578") {
+  //     memberRolesIdArray.splice(i, 1);
+  //     for (let j = 0; j < memberRolesIdArray.length; j++) {
+  //       if (memberRolesIdArray[j] === "561443343842934806") {
+  //         //introvert
+  //         memberRolesIdArray.splice(j, 1);
+  //         removeReaction(messageReaction, messageReaction.message.id, "regional_indicator_i");
+  //       }
+  //       if (memberRolesIdArray[j] === "561443427107995660") {
+  //         //40+
+  //         memberRolesIdArray.splice(j, 1);
+  //         removeReaction(messageReaction, messageReaction.message.id, "regional_indicator_e");
+  //       }
+  //     }
+
   function extension(messageReaction, attachment) {
     const imageLink = attachment.split(".");
     const typeOfImage = imageLink[imageLink.length - 1];

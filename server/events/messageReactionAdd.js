@@ -389,6 +389,160 @@ module.exports = async (client, messageReaction, user) => {
         });
       }
     });
+  } else if (messageReaction.message.id === "663149701687672862") {
+    //age roles
+    let removeArray = [
+      {
+        id: "561441866525048842",
+        name: "regional_indicator_a"
+      },
+      {
+        id: "561441985236434945",
+        name: "regional_indicator_b"
+      },
+      {
+        id: "561442059567890442",
+        name: "regional_indicator_c"
+      },
+      {
+        id: "561442124592054292",
+        name: "regional_indicator_d"
+      },
+      {
+        id: "561442214572589077",
+        name: "regional_indicator_e"
+      }
+    ];
+    if (messageReaction._emoji.name === "regional_indicator_a") {
+      addRoleRemoveOthers(removeArray, "561441866525048842");
+    } else if (messageReaction._emoji.name === "regional_indicator_b") {
+      addRoleRemoveOthers(removeArray, "561441985236434945");
+    } else if (messageReaction._emoji.name === "regional_indicator_c") {
+      addRoleRemoveOthers(removeArray, "561442059567890442");
+    } else if (messageReaction._emoji.name === "regional_indicator_d") {
+      addRoleRemoveOthers(removeArray, "561442124592054292");
+    } else if (messageReaction._emoji.name === "regional_indicator_e") {
+      addRoleRemoveOthers(removeArray, "561442214572589077");
+    }
+  } else if (messageReaction.message.id === "663150060904644608") {
+    //personality roles
+    let removeArray = [
+      {
+        id: "561443343842934806",
+        name: "regional_indicator_i"
+      },
+      {
+        id: "561443427107995660",
+        name: "regional_indicator_e"
+      },
+      {
+        id: "561443500491800578",
+        name: "regional_indicator_a"
+      }
+    ];
+    if (messageReaction._emoji.name === "regional_indicator_i") {
+      addRoleRemoveOthers(removeArray, "561443343842934806");
+    } else if (messageReaction._emoji.name === "regional_indicator_r") {
+      addRoleRemoveOthers(removeArray, "561443427107995660");
+    } else if (messageReaction._emoji.name === "regional_indicator_a") {
+      addRoleRemoveOthers(removeArray, "561443500491800578");
+    }
+  } else if (messageReaction.message.id === "663150398458167306") {
+    //gaming
+    if (messageReaction._emoji.name === "regional_indicator_p") {
+      addRole("561443526617989129");
+    } else if (messageReaction._emoji.name === "regional_indicator_x") {
+      addRole("561443723330846722");
+    } else if (messageReaction._emoji.name === "regional_indicator_s") {
+      addRole("561443758487371776");
+    } else if (
+      messageReaction._emoji.name === "desktop" ||
+      messageReaction._emoji.name === "desktop_computer"
+    ) {
+      addRole("561443809712537625");
+    } else if (messageReaction._emoji.name === "iphone") {
+      addRole("561443842688155658");
+    }
+  } else if (messageReaction.message.id === "663150874184646713") {
+    //relationship roles
+    let removeArray = [
+      {
+        id: "561444125476651009",
+        name: "woman_tipping_hand"
+      },
+      {
+        id: "561444242778750978",
+        name: "heart"
+      },
+      {
+        id: "561444283400454146",
+        name: "speak_no_evil"
+      }
+    ];
+    if (messageReaction._emoji.name === "woman_tipping_hand") {
+      addRoleRemoveOthers(removeArray, "561444125476651009");
+    } else if (messageReaction._emoji.name === "heart") {
+      addRoleRemoveOthers(removeArray, "561444242778750978");
+    } else if (messageReaction._emoji.name === "speak_no_evil") {
+      addRoleRemoveOthers(removeArray, "561444283400454146");
+    }
+  } else if (messageReaction.message.id === "663151089054646315") {
+    //dm roles
+    let removeArray = [
+      {
+        id: "561443898266746893",
+        name: "white_check_mark"
+      },
+      {
+        id: "561444015472377876",
+        name: "x"
+      },
+      {
+        id: "561444049828184074",
+        name: "question"
+      }
+    ];
+    if (messageReaction._emoji.name === "white_check_mark") {
+      addRoleRemoveOthers(removeArray, "561443898266746893");
+    } else if (messageReaction._emoji.name === "x") {
+      addRoleRemoveOthers(removeArray, "561444015472377876");
+    } else if (messageReaction._emoji.name === "question") {
+      addRoleRemoveOthers(removeArray, "561444049828184074");
+    }
+  } else if (messageReaction.message.id === "663151396727554059") {
+    //interests
+    if (messageReaction._emoji.name === "shallow_pan_of_food") {
+      addRole("561442784272318485");
+    } else if (messageReaction._emoji.name === "🐶") {
+      addRole("561442865457135626");
+    } else if (messageReaction._emoji.name === "sunrise_over_mountains") {
+      addRole("561442912211042309");
+    } else if (messageReaction._emoji.name === "soccer") {
+      addRole("561442956532514826");
+    } else if (messageReaction._emoji.name === "musical_note") {
+      addRole("561443003617509396");
+    } else if (messageReaction._emoji.name === "blue_car") {
+      addRole("561443031983587331");
+    } else if (messageReaction._emoji.name === "books") {
+      addRole("561443068927148034");
+    } else if (messageReaction._emoji.name === "tv") {
+      addRole("561443115869798423");
+    } else if (messageReaction._emoji.name === "computer") {
+      addRole("561443156642627611");
+    } else if (messageReaction._emoji.name === "hibiscus") {
+      addRole("561443189123448842");
+    } else if (messageReaction._emoji.name === "paintbrush") {
+      addRole("561443216528769024");
+    } else if (messageReaction._emoji.name === "video_game") {
+      addRole("561443255821271040");
+    } else if (messageReaction._emoji.name === "womans_clothes") {
+      addRole("561443309667745805");
+    }
+  } else if (messageReaction.message.id === "663153065565618190") {
+    //vc role
+    if (messageReaction._emoji.name === "microphone2") {
+      addRole("663148896046022707");
+    }
   }
 
   function extension(messageReaction, attachment) {
@@ -449,5 +603,52 @@ module.exports = async (client, messageReaction, user) => {
     // fontPath.draw(ctx);
 
     return canvas.toBuffer();
+  }
+
+  async function removeReaction(base, messageId, emoteName) {
+    let oriMsg = await messageReaction.message.channel.fetchMessage(messageId);
+    oriMsg.reactions.map(r => {
+      r.message.reactions.forEach(reaction => {
+        if (reaction.name === emoteName) {
+          reaction.remove(user.id);
+        }
+      });
+    });
+    return;
+  }
+
+  async function addRoleRemoveOthers(removeArray, roleToAdd) {
+    let memberRolesIdArray = [];
+    let mem = await messageReaction.message.guild.fetchMember(user.id);
+    if (mem) {
+      mem.roles.map(r => {
+        memberRolesIdArray.push(r.id);
+      });
+      for (let i = 0; i < memberRolesIdArray.length; i++) {
+        for (let j = 0; j < removeArray; j++) {
+          if (memberRolesIdArray[i] === removeArray[j].id) {
+            memberRolesIdArray.splice(i, 1);
+            removeReaction(
+              messageReaction,
+              messageReaction.message.id,
+              removeArray[j].name
+            );
+          }
+        }
+      }
+      memberRolesIdArray.push(roleToAdd);
+      mem.setRoles(memberRolesIdArray);
+    }
+  }
+  async function addRole(roleToAdd) {
+    let memberRolesIdArray = [];
+    let mem = await messageReaction.message.guild.fetchMember(user.id);
+    if (mem) {
+      mem.roles.map(r => {
+        memberRolesIdArray.push(r.id);
+      });
+      memberRolesIdArray.push(roleToAdd);
+      mem.setRoles(memberRolesIdArray);
+    }
   }
 };
