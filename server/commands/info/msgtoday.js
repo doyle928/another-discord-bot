@@ -1,9 +1,6 @@
-const { request } = require("graphql-request");
-const mongoose = require("mongoose");
 const Nightmare = require("nightmare");
-const vo = require("vo");
-const screenshotSelector = require("nightmare-screenshot-selector");
-const fs = require("fs");
+const Discord = require("discord.js");
+const randomColor = require("../../data/randomColor");
 
 exports.run = async (client, message, args) => {
   const nightmare = Nightmare();
@@ -15,7 +12,12 @@ exports.run = async (client, message, args) => {
     .evaluate(getInnerHTML, "messages-24h")
     .then(value => {
       console.log(`${value} messages in the last 24 hours !!`);
-      message.channel.send(`${value} messages in the last 24 hours !!`);
+      // message.channel.send(`${value} messages in the last 24 hours !!`);
+      let messageEmbed = new Discord.RichEmbed()
+        .setColor(randomColor())
+        .setAuthor("Message count")
+        .setDescription(`${value} messages in the last 24 hours !`);
+      message.channel.send(messageEmbed);
     })
     .end()
     .catch(function(err) {

@@ -5,6 +5,7 @@ let messageShipId = require("../../data/messageShipId");
 const Canvas = require("canvas");
 const path = require("path");
 const snekfetch = require("snekfetch");
+const randomColor = require("../../data/randomColor");
 
 exports.run = async (client, message, args) => {
   let member = null;
@@ -25,7 +26,7 @@ exports.run = async (client, message, args) => {
       if (res.getShips === null || res.getShips === []) {
         message.channel.send("there are no ships in the serveur !");
       } else {
-        let msgBase = "**Current Ships**\n";
+        let msgBase = "";
         // await res.getShips.map(async ship => {
         //   console.log(ship);
         //   let m1 = await message.guild.fetchMember(ship.user_id);
@@ -46,8 +47,12 @@ exports.run = async (client, message, args) => {
             return;
           })
         );
+      let messageEmbed = new Discord.RichEmbed()
+        .setColor(randomColor())
+        .setAuthor("Ship list")
+        .setDescription(msgBase);
 
-        return message.channel.send(msgBase);
+        return message.channel.send(messageEmbed);
       }
     } catch (err) {
       console.error(err);

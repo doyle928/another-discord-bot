@@ -1,5 +1,6 @@
 const { request } = require("graphql-request");
 const moment = require("moment");
+const Discord = require("discord.js");
 
 function checkMembers(guild) {
   let memberCount = 0;
@@ -40,16 +41,19 @@ module.exports = async (client, member, guild) => {
   } catch (err) {
     console.error(err);
   }
+  let messageEmbed = new Discord.RichEmbed().setColor("#202225");
 
   if (blank_avatar) {
     if (member.user.avatarURL === null) {
-      member
-        .send(
-          `Hey ! Thanks for joining Our Home ! Unfortunately we require discord accounts to have an avatar photo, sorry it is just to help keep bots from joining !\nYou can get a photo and try again though !!`
-        )
-        .then(() => {
-          member.kick("no avatar photo !!");
-        });
+      messageEmbed
+        .setAuthor("Notice")
+        .setDescription(
+          `Thanks for joining Our Home !\nUnfortunately we require discord accounts to have an avatar photo, sorry it is just to help keep bots from joining !\n\nYou can get a photo and try again though !!`
+        );
+
+      member.send(messageEmbed).then(() => {
+        member.kick("no avatar photo !!");
+      });
       return;
     }
   }
@@ -59,27 +63,37 @@ module.exports = async (client, member, guild) => {
       discordJoinDateDiff._data.months < 1 &&
       discordJoinDateDiff._data.years < 1
     ) {
-      member
-        .send(
-          `Hey ! Thanks for joining Our Home ! Unfortunately we require discord accounts that are 7 days or older.\nYour account is was created on ${discordJoinDate} !`
-        )
-        .then(() => {
-          member.kick("account was too young !!");
-        });
+      messageEmbed
+        .setAuthor("Notice")
+        .setDescription(
+          `Thanks for joining Our Home !\nUnfortunately we require discord accounts that are 7 days or older.\nYour account is was created on ${discordJoinDate} !`
+        );
+
+      member.send(messageEmbed).then(() => {
+        member.kick("account was too young !!");
+      });
       return;
     }
   }
 
   if (member.guild.id === "559560674246787087") {
     let c = await member.guild.channels.get("561372938474094603");
+    messageEmbed
+      .setAuthor("New Member")
+      .setDescription(`**${member.user.username}** joined !`);
+
     member
       .addRole("596016686331723785")
-      .then(() => c.send(`**${member.user.username}** has joined the server !`))
-      .catch(() =>
-        c.send(
-          `**${member.user.username}** has joined the server but i failed to give them the welcome to serveur role !`
-        )
-      );
+      .then(() => c.send(messageEmbed))
+      .catch(() => {
+        messageEmbed
+          .setAuthor("New Member")
+          .setDescription(
+            `**${member.user.username}** has joined the server but i failed to give them the welcome to serveur role !`
+          );
+
+        c.send(messageEmbed);
+      });
     member.addRole("585353865575137281");
   }
 

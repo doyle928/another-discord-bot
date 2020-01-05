@@ -1,10 +1,5 @@
-const { request } = require("graphql-request");
 const Discord = require("discord.js");
-const mongoose = require("mongoose");
 const Nightmare = require("nightmare");
-const vo = require("vo");
-const screenshotSelector = require("nightmare-screenshot-selector");
-const fs = require("fs");
 
 exports.run = async (client, message, args) => {
   const nightmare = Nightmare({ width: 1080, height: 800 });
