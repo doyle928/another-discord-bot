@@ -53,7 +53,7 @@ module.exports = async (client, messageReaction, user) => {
       await starMsg.edit({ embed });
       if (parseInt(star[1]) - 1 <= 3) return starMsg.delete(250);
     }
-  } else if (messageReaction.message.id === "663149701687672862") {
+  } else if (messageReaction.message.id === "663887669939535903") {
     if (messageReaction._emoji.name === "1️⃣") {
       removeRole("561441866525048842");
     } else if (messageReaction._emoji.name === "2️⃣") {
@@ -65,7 +65,21 @@ module.exports = async (client, messageReaction, user) => {
     } else if (messageReaction._emoji.name === "5️⃣") {
       removeRole("561442214572589077");
     }
-  } else if (messageReaction.message.id === "663150060904644608") {
+  } else if (messageReaction.message.id === "663887880153989181") {
+    if (messageReaction._emoji.name === "❤️") {
+      removeRole("663686604904464384");
+    } else if (messageReaction._emoji.name === "💙") {
+      removeRole("663686449303912468");
+    } else if (messageReaction._emoji.name === "trans") {
+      removeRole("663686632548859914");
+    } else if (messageReaction._emoji.name === "nonbinary") {
+      removeRole("663686679466606592");
+    } else if (messageReaction._emoji.name === "cory") {
+      removeRole("663864213373976589");
+    } else if (messageReaction._emoji.name === "🍓") {
+      removeRole("663864211667025962");
+    }
+  } else if (messageReaction.message.id === "663888106998464544") {
     if (messageReaction._emoji.name === "🤐") {
       removeRole("561443343842934806");
     } else if (messageReaction._emoji.name === "🥳") {
@@ -73,7 +87,7 @@ module.exports = async (client, messageReaction, user) => {
     } else if (messageReaction._emoji.name === "😜") {
       removeRole("561443500491800578");
     }
-  } else if (messageReaction.message.id === "663150398458167306") {
+  } else if (messageReaction.message.id === "663888254017470483") {
     if (messageReaction._emoji.name === "🅿") {
       removeRole("561443526617989129");
     } else if (messageReaction._emoji.name === "❎") {
@@ -85,7 +99,7 @@ module.exports = async (client, messageReaction, user) => {
     } else if (messageReaction._emoji.name === "📱") {
       removeRole("561443842688155658");
     }
-  } else if (messageReaction.message.id === "663150874184646713") {
+  } else if (messageReaction.message.id === "663888532959657988") {
     if (messageReaction._emoji.name === "💁‍♀️") {
       removeRole("561444125476651009");
     } else if (messageReaction._emoji.name === "❤") {
@@ -93,7 +107,7 @@ module.exports = async (client, messageReaction, user) => {
     } else if (messageReaction._emoji.name === "🙊") {
       removeRole("561444283400454146");
     }
-  } else if (messageReaction.message.id === "663151089054646315") {
+  } else if (messageReaction.message.id === "663888692573765634") {
     if (messageReaction._emoji.name === "✅") {
       removeRole("561443898266746893");
     } else if (messageReaction._emoji.name === "❌") {
@@ -101,7 +115,7 @@ module.exports = async (client, messageReaction, user) => {
     } else if (messageReaction._emoji.name === "❓") {
       removeRole("561444049828184074");
     }
-  } else if (messageReaction.message.id === "663151396727554059") {
+  } else if (messageReaction.message.id === "663888853203157004") {
     if (messageReaction._emoji.name === "🍲") {
       removeRole("561442784272318485");
     } else if (messageReaction._emoji.name === "🐕") {
@@ -129,7 +143,7 @@ module.exports = async (client, messageReaction, user) => {
     } else if (messageReaction._emoji.name === "👗") {
       removeRole("561443309667745805");
     }
-  } else if (messageReaction.message.id === "663153065565618190") {
+  } else if (messageReaction.message.id === "663889028315217935") {
     if (messageReaction._emoji.name === "🎙️") {
       removeRole("663148896046022707");
     }

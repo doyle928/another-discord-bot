@@ -5,7 +5,6 @@ let messageShipId = require("../../data/messageShipId");
 const Canvas = require("canvas");
 const path = require("path");
 const snekfetch = require("snekfetch");
-const randomColor = require("../../data/randomColor");
 
 exports.run = async (client, message, args) => {
   let member = null;
@@ -48,7 +47,7 @@ exports.run = async (client, message, args) => {
           })
         );
         let messageEmbed = new Discord.RichEmbed()
-          .setColor(randomColor())
+          .setColor("#202225")
           .setAuthor("Ship list")
           .setDescription(msgBase);
 

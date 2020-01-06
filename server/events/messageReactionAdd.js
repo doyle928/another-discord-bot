@@ -390,7 +390,7 @@ module.exports = async (client, messageReaction, user) => {
       }
     });
   } else if (user.id !== "601825955572350976") {
-    if (messageReaction.message.id === "663149701687672862") {
+    if (messageReaction.message.id === "663887669939535903") {
       //age roles
       let removeArray = [
         {
@@ -425,7 +425,48 @@ module.exports = async (client, messageReaction, user) => {
       } else if (messageReaction._emoji.name === "5️⃣") {
         await addRoleRemoveOthers(removeArray, "561442214572589077");
       }
-    } else if (messageReaction.message.id === "663150060904644608") {
+    } else if (messageReaction.message.id === "663887880153989181") {
+      //gender roles
+      let removeArray = [
+        {
+          id: "663686604904464384", //girl
+          name: "❤️"
+        },
+        {
+          id: "663686449303912468", //boy
+          name: "💙"
+        },
+        {
+          id: "663686632548859914", //trans
+          name: "trans"
+        },
+        {
+          id: "663686679466606592", //non-binary
+          name: "nonbinary"
+        },
+        {
+          id: "663864213373976589", //cory
+          name: "cory"
+        },
+        {
+          id: "663864211667025962", //fruit
+          name: "🍓"
+        }
+      ];
+      if (messageReaction._emoji.name === "❤️") {
+        await addRoleRemoveOthers(removeArray, "663686604904464384"); //girl
+      } else if (messageReaction._emoji.name === "💙") {
+        await addRoleRemoveOthers(removeArray, "663686449303912468"); //boy
+      } else if (messageReaction._emoji.name === "trans") {
+        await addRoleRemoveOthers(removeArray, "663686632548859914"); //trans
+      } else if (messageReaction._emoji.name === "nonbinary") {
+        await addRoleRemoveOthers(removeArray, "663686679466606592"); //non-binary
+      } else if (messageReaction._emoji.name === "cory") {
+        await addRoleRemoveOthers(removeArray, "663864213373976589"); //cory
+      } else if (messageReaction._emoji.name === "🍓") {
+        await addRoleRemoveOthers(removeArray, "663864211667025962"); //fruit
+      }
+    } else if (messageReaction.message.id === "663888106998464544") {
       //personality roles
       let removeArray = [
         {
@@ -448,7 +489,7 @@ module.exports = async (client, messageReaction, user) => {
       } else if (messageReaction._emoji.name === "😜") {
         await addRoleRemoveOthers(removeArray, "561443500491800578");
       }
-    } else if (messageReaction.message.id === "663150398458167306") {
+    } else if (messageReaction.message.id === "663888254017470483") {
       //gaming
       if (messageReaction._emoji.name === "🅿") {
         await addRole("561443526617989129");
@@ -461,7 +502,7 @@ module.exports = async (client, messageReaction, user) => {
       } else if (messageReaction._emoji.name === "📱") {
         await addRole("561443842688155658");
       }
-    } else if (messageReaction.message.id === "663150874184646713") {
+    } else if (messageReaction.message.id === "663888532959657988") {
       //relationship roles
       let removeArray = [
         {
@@ -484,7 +525,7 @@ module.exports = async (client, messageReaction, user) => {
       } else if (messageReaction._emoji.name === "🙊") {
         await addRoleRemoveOthers(removeArray, "561444283400454146");
       }
-    } else if (messageReaction.message.id === "663151089054646315") {
+    } else if (messageReaction.message.id === "663888692573765634") {
       //dm roles
       let removeArray = [
         {
@@ -507,7 +548,7 @@ module.exports = async (client, messageReaction, user) => {
       } else if (messageReaction._emoji.name === "❓") {
         await addRoleRemoveOthers(removeArray, "561444049828184074");
       }
-    } else if (messageReaction.message.id === "663151396727554059") {
+    } else if (messageReaction.message.id === "663888853203157004") {
       //interests
       if (messageReaction._emoji.name === "🍲") {
         await addRole("561442784272318485");
@@ -536,7 +577,7 @@ module.exports = async (client, messageReaction, user) => {
       } else if (messageReaction._emoji.name === "👗") {
         await addRole("561443309667745805");
       }
-    } else if (messageReaction.message.id === "663153065565618190") {
+    } else if (messageReaction.message.id === "663889028315217935") {
       //vc role
       if (messageReaction._emoji.name === "🎙️") {
         await addRole("663148896046022707");
