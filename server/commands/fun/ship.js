@@ -210,10 +210,10 @@ exports.run = async (client, message, args) => {
             }
           }`;
       try {
-        let res = await request(url, query);
-        console.log(res);
-        if (res.getShip === null) {
-          let query = `{
+        let res1 = await request(url, query);
+        console.log(res1);
+        if (res1.getShip === null) {
+          query = `{
             getShip(guild_id: "${message.guild.id}", user_id: "${memberArray[0].user.id}") {
               user_id ship_id timestamp
             }
@@ -257,7 +257,8 @@ exports.run = async (client, message, args) => {
           }
         } else {
           //list current ship status, like with who and when
-          console.log(res.getShip);
+          console.log(res1.getShip);
+          
           return message.channel.send(
             `sorry but ${memberArray[0].user.username} is already shipped with someone else !`
           );

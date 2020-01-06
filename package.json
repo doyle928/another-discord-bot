@@ -55,7 +55,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "server": "cd server && node app.js",
-    "dev": "concurrently \"npm install --only=dev\" \"npm run build\" \"npm run server\""
+    "dev": "concurrently \"npm install --only=dev  --no-shrinkwrap\" \"npm run build\" \"npm run server\"",
+    "heroku": "npm run server && cd .. bin/boot"
   },
   "engines": {
     "node": "12.4.0",
