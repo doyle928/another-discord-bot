@@ -20,8 +20,41 @@ module.exports = async (client, member, guild) => {
   let url = "https://lulu-discord-bot.herokuapp.com/api";
 
   try {
-    let res = await request(url, query);
+    await request(url, query);
   } catch (err) {
     console.error(err);
+  }
+
+  query = `{
+            getShip(guild_id: "${member.guild.id}", user_id: "${member.user.id}") {
+              user_id ship_id timestamp
+            }
+          }`;
+  try {
+    let res = await request(url, query);
+    if (res.getShip !== null) {
+      query = `mutation{
+            deleteShip(guild_id: "${member.guild.id}", user_id: "${member.user.id}") {
+              guild_id
+            }
+          }`;
+      try {
+        await request(url, query);
+        query = `mutation{
+            deleteShip(guild_id: "${member.guild.id}", user_id: "${res.getShip.ship_id}") {
+              guild_id
+            }
+          }`;
+        try {
+          await request(url, query);
+        } catch (err) {
+          return console.error(err);
+        }
+      } catch (err) {
+        return console.error(err);
+      }
+    }
+  } catch (err) {
+    return console.error(err);
   }
 };

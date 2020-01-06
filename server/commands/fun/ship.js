@@ -47,10 +47,10 @@ exports.run = async (client, message, args) => {
             return;
           })
         );
-      let messageEmbed = new Discord.RichEmbed()
-        .setColor(randomColor())
-        .setAuthor("Ship list")
-        .setDescription(msgBase);
+        let messageEmbed = new Discord.RichEmbed()
+          .setColor(randomColor())
+          .setAuthor("Ship list")
+          .setDescription(msgBase);
 
         return message.channel.send(messageEmbed);
       }
@@ -219,9 +219,9 @@ exports.run = async (client, message, args) => {
             }
           }`;
           try {
-            res = await request(url, query);
-            console.log(res);
-            if (res.getShip === null) {
+            let res2 = await request(url, query);
+            console.log(res2);
+            if (res2.getShip === null) {
               if (memberArray.length === 2) {
                 let img = await makeCanvasImage(
                   memberArray[0].user.avatarURL,
@@ -245,10 +245,18 @@ exports.run = async (client, message, args) => {
               }
             } else {
               //list current ship status, like with who and when
-              console.log(res.getShip);
-              return message.channel.send(
-                `sorry but ${memberArray[1].user.username} is already shipped with someone else !`
-              );
+              console.log(res2.getShip);
+              let m = await message.guild.fetchMember(res2.getShip.ship_id);
+              if (m) {
+                message.channel.send(
+                  `sorry but ${memberArray[1].user.username} is already shipped with ${m} !`
+                );
+              } else {
+                message.channel.send(
+                  `sorry but ${memberArray[1].user.username} is already shipped with someone else !`
+                );
+              }
+              return console.log(res2.getShip);
             }
           } catch (err) {
             console.error(err);
@@ -257,11 +265,17 @@ exports.run = async (client, message, args) => {
           }
         } else {
           //list current ship status, like with who and when
-          console.log(res1.getShip);
-          
-          return message.channel.send(
-            `sorry but ${memberArray[0].user.username} is already shipped with someone else !`
-          );
+          let m = await message.guild.fetchMember(res1.getShip.ship_id);
+          if (m) {
+            message.channel.send(
+              `sorry but ${memberArray[0].user.username} is already shipped with ${m} !`
+            );
+          } else {
+            message.channel.send(
+              `sorry but ${memberArray[0].user.username} is already shipped with someone else !`
+            );
+          }
+          return console.log(res1.getShip);
         }
       } catch (err) {
         console.error(err);
