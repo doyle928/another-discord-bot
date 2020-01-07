@@ -1,6 +1,5 @@
 const Nightmare = require("nightmare");
 const Discord = require("discord.js");
-const randomColor = require("../../data/randomColor");
 
 exports.run = async (client, message, args) => {
   const nightmare = Nightmare();
@@ -14,7 +13,7 @@ exports.run = async (client, message, args) => {
       console.log(`${value} messages in the last 24 hours !!`);
       // message.channel.send(`${value} messages in the last 24 hours !!`);
       let messageEmbed = new Discord.RichEmbed()
-        .setColor(randomColor())
+        .setColor("#202225")
         .setAuthor("Message count")
         .setDescription(`${value} messages in the last 24 hours !`);
       message.channel.send(messageEmbed);

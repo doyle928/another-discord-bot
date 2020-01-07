@@ -10,7 +10,6 @@ let messageShipId = require("../data/messageShipId");
 const { request } = require("graphql-request");
 
 module.exports = async (client, messageReaction, user) => {
-  console.log(messageReaction._emoji.name, messageReaction.message.id);
   if (messageReaction._emoji.name === "⭐") {
     if (messageReaction.message.author.id === user.id) {
       let oriMsg = await messageReaction.message.channel.fetchMessage(
@@ -80,8 +79,6 @@ module.exports = async (client, messageReaction, user) => {
               embed
             });
           } else {
-            console.log(messageReaction.message.attachments.array());
-
             const image =
               messageReaction.message.attachments.array().length > 0 &&
               messageReaction.message.attachments.array()[0].filesize > 0
@@ -613,8 +610,6 @@ module.exports = async (client, messageReaction, user) => {
     ctx.fillStyle = "black";
     ctx.strokeStyle = "white";
     let txtWidth = ctx.measureText(txt).width;
-    console.log(txt, txtWidth, 225 - Number(txtWidth));
-    console.log(txt);
 
     let reqPath = path.join(__dirname, "../images/ship_finish.png");
     const background = await Canvas.loadImage(reqPath);
@@ -638,7 +633,6 @@ module.exports = async (client, messageReaction, user) => {
     const { body: buffer2 } = await snekfetch.get(avatarURL2);
     const avatar2 = await Canvas.loadImage(buffer2);
     await ctx.drawImage(avatar2, 201, 55, 115, 115);
-    console.log(avatarURL1, avatarURL2);
     // let fontPath = shipFont.getPath(txt, 0, 200, 26);
     // fontPath.draw(ctx);
 

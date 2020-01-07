@@ -26,7 +26,7 @@ exports.run = async (client, message, args) => {
             //109 is height of the top element which remains
             x: 320,
             y: 115,
-            width: 670,
+            width: 720,
             height: 433
           })
           .end()

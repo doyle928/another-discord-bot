@@ -20,8 +20,8 @@ exports.run = async (client, message, args) => {
           .screenshot({
             //109 is height of the top element which remains
             x: 320,
-            y: 280,
-            width: 670,
+            y: 330,
+            width: 720,
             height: 433
           })
           .end()

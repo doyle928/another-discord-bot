@@ -3,8 +3,8 @@ const Discord = require("discord.js");
 module.exports = async (client, memberOld, memberNew) => {
   console.log(memberOld.guild.id, memberNew._roles);
   if (memberNew.guild.id === "559560674246787087") {
-    if (memberOld._roles.indexOf("594325820172926977") === -1) {
-      if (memberNew._roles.indexOf("594325820172926977") > -1) {
+    if (!memberOld._roles.includes("594325820172926977")) {
+      if (memberNew._roles.includes("594325820172926977")) {
         let s = client.guilds
           .get("559560674246787087")
           .channels.get("663920241990172692");
