@@ -38,10 +38,15 @@ exports.run = async (client, message, args) => {
 
         await Promise.all(
           _.map(res.getShips, async ship => {
-            let m1 = await message.guild.fetchMember(ship.user_id);
-            let m2 = await message.guild.fetchMember(ship.ship_id);
-            if (msgBase.indexOf(m1.user.username) === -1) {
-              return (msgBase += `${m1.user.username} + ${m2.user.username}\n`);
+            if (
+              message.guild.member(ship.user_id) &&
+              message.guild.member(ship.ship_id)
+            ) {
+              let m1 = await message.guild.fetchMember(ship.user_id);
+              let m2 = await message.guild.fetchMember(ship.ship_id);
+              if (msgBase.indexOf(m1.user.username) === -1) {
+                return (msgBase += `${m1.user.username} + ${m2.user.username}\n`);
+              }
             }
             return;
           })
