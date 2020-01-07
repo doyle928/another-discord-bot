@@ -7,7 +7,7 @@ const screenshotSelector = require("nightmare-screenshot-selector");
 const fs = require("fs");
 
 exports.run = async (client, message, args) => {
-  const nightmare = Nightmare({ show: true, width: 1080, height: 800 });
+  const nightmare = Nightmare({ width: 1080, height: 800 });
 
   await nightmare
     .goto("https://yagpdb.xyz/public/559560674246787087/stats")
