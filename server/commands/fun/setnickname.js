@@ -72,7 +72,7 @@ exports.run = async (client, message, args) => {
         nickname += `${args[i]} `;
       }
       if (nickname === "") {
-        nickname = message.author.user.username;
+        nickname = message.author.username;
       }
       if (nickname.length > 32) {
         message.channel.send(
