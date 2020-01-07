@@ -1,1 +1,1 @@
-web: DEBUG=* xvfb-run --server-args="-screen 0 1080x800x24 -ac +extension GLX +render" npm run heroku
+web: npm run heroku
