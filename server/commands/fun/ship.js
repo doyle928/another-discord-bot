@@ -5,6 +5,7 @@ let messageShipId = require("../../data/messageShipId");
 const Canvas = require("canvas");
 const path = require("path");
 const snekfetch = require("snekfetch");
+const moment = require("moment");
 
 exports.run = async (client, message, args) => {
   let member = null;
@@ -45,7 +46,10 @@ exports.run = async (client, message, args) => {
               let m1 = await message.guild.fetchMember(ship.user_id);
               let m2 = await message.guild.fetchMember(ship.ship_id);
               if (msgBase.indexOf(m1.user.username) === -1) {
-                return (msgBase += `${m1.user.username} + ${m2.user.username}\n`);
+                let shipDate = moment(
+                  new Date(ship.timestamp).toISOString()
+                ).format("D MMM YYYY");
+                return (msgBase += `${m1.user.username} + ${m2.user.username} (${shipDate})\n`);
               }
             }
             return;
