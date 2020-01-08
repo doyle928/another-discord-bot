@@ -3,7 +3,7 @@ const _ = require("lodash");
 let memberListHelper = (module.exports = {
   memberList: [],
   addMemberList: async (messageId, memberlist) => {
-    memberListHelper.addMemberList = [];
+    memberListHelper.memberList = [];
     memberListHelper.memberList.push(messageId);
     memberListHelper.memberList.push(memberlist);
     let pageObj = {
