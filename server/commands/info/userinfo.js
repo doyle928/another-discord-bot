@@ -102,15 +102,19 @@ exports.run = async (client, message, args) => {
       member.nickname ? member.nickname : "No nickname set",
       true
     )
-    .addField(
+    .setTimestamp();
+
+  if (member.user.lastMessage) {
+    messageEmbed.addField(
       "Last Seen",
       `${member.user.lastMessage.channel}\n${moment(
         new Date(member.user.lastMessage.createdTimestamp).toISOString()
       ).format("D MMM YYYY [at] H:mm")}`,
       true
-    )
-    .addField("Roles", rolesString)
-    .setTimestamp();
+    );
+  }
+  messageEmbed.addField("Roles", rolesString);
+
   message.channel.send(messageEmbed);
   // setTimeout(() => {
   //   message
