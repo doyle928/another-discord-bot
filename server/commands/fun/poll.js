@@ -144,7 +144,7 @@ exports.run = async (client, message, args) => {
                     message.channel.send(
                       "Please use a number 1-10 ! now you have to start over !"
                     );
-                    message.channel.send("<a:02upset:538273249306345476>");
+                    message.channel.send("<:natsukiMad:646210751417286656>");
                     return;
                 }
               } else {
@@ -160,7 +160,7 @@ exports.run = async (client, message, args) => {
                   return;
                 } else if (numberOfOptions <= 1) {
                   message.channel.send("why do you need a poll ??");
-                  message.channel.send("<a:02upset:538273249306345476>");
+                  message.channel.send("<:natsukiMad:646210751417286656>");
                   message.channel.bulkDelete(msgIDsToDeleteBot)
                     .then(messages => console.log(`Bulk deleted ${messages.size} messages`))
                     .catch(console.error);

@@ -13,7 +13,7 @@ exports.run = async (client, message, args) => {
   } else {
     if (!args[1]) {
       message.channel.send("there's no search term specified!!!");
-      message.channel.send("<a:02upset:538273249306345476>");
+      message.channel.send("<:natsukiMad:646210751417286656>");
     } else {
       let baseURL = "http://images.google.com/search?";
 

@@ -8,6 +8,8 @@ const GIFEncoder = require("gif-encoder-2");
 const { writeFile } = require("fs");
 let messageShipId = require("../data/messageShipId");
 const { request } = require("graphql-request");
+const memberListHelper = require("../data/memberListHelper");
+const moment = require("moment");
 
 module.exports = async (client, messageReaction, user) => {
   if (messageReaction._emoji.name === "⭐") {
@@ -580,6 +582,104 @@ module.exports = async (client, messageReaction, user) => {
         await addRole("663148896046022707");
       }
     }
+  } else if (
+    messageReaction._emoji.name === "➡️" &&
+    user.id !== "601825955572350976"
+  ) {
+    if (messageReaction.message.id === memberListHelper.memberList[0]) {
+      messageReaction.message.reactions.map(r => {
+        r.message.reactions.forEach(reaction => reaction.remove(user.id));
+      });
+
+      if (
+        memberListHelper.memberList[2].currentPage <
+        memberListHelper.memberList[2].maxPage
+      ) {
+        let footerEnd = messageReaction.message.embeds[0].footer.text;
+        footerEnd = footerEnd.substring(
+          footerEnd.indexOf("/"),
+          footerEnd.lenth
+        );
+
+        let newEmb = new Discord.RichEmbed().setAuthor(
+          messageReaction.message.embeds[0].author.name
+        );
+
+        let memArray = memberListHelper.memberList[1];
+        let newMemArray = _.takeRight(
+          memArray,
+          memArray.length - memberListHelper.memberList[2].currentPage * 25
+        );
+
+        if (_.size(newMemArray) > 25) {
+          newMemArray = _.take(newMemArray, 25);
+        }
+
+        let strg = "";
+        for (i in newMemArray) {
+          strg += `${newMemArray[i].username} - ${formatDate(
+            newMemArray[i].joinedTimestamp
+          )}\n`;
+        }
+        newEmb.setDescription(strg);
+        newEmb.setFooter(
+          `Page ${memberListHelper.memberList[2].currentPage + 1} ${footerEnd}`
+        );
+        // const star = /^\⭐\s([0-9]{1,3})\s\|\s([0-9]{17,20})/.exec(
+        //           stars.embeds[0].footer.text
+        //         );
+        messageReaction.message.edit(newEmb);
+        memberListHelper.changePage(1);
+      }
+    }
+  } else if (
+    messageReaction._emoji.name === "⬅️" &&
+    user.id !== "601825955572350976"
+  ) {
+    if (messageReaction.message.id === memberListHelper.memberList[0]) {
+      messageReaction.message.reactions.map(r => {
+        r.message.reactions.forEach(reaction => reaction.remove(user.id));
+      });
+
+      if (memberListHelper.memberList[2].currentPage > 1) {
+        let footerEnd = messageReaction.message.embeds[0].footer.text;
+        footerEnd = footerEnd.substring(
+          footerEnd.indexOf("/"),
+          footerEnd.lenth
+        );
+
+        let newEmb = new Discord.RichEmbed().setAuthor(
+          messageReaction.message.embeds[0].author.name
+        );
+
+        let memArray = memberListHelper.memberList[1];
+
+        let newMemArray = _.takeRight(
+          memArray,
+          memArray.length -
+            (memberListHelper.memberList[2].currentPage - 2) * 25
+        );
+
+        newMemArray = _.take(newMemArray, 25);
+        // console.log(newMemArray);
+
+        let strg = "";
+        for (i in newMemArray) {
+          strg += `${newMemArray[i].username} - ${formatDate(
+            newMemArray[i].joinedTimestamp
+          )}\n`;
+        }
+        newEmb.setDescription(strg);
+        newEmb.setFooter(
+          `Page ${memberListHelper.memberList[2].currentPage - 1} ${footerEnd}`
+        );
+        // const star = /^\⭐\s([0-9]{1,3})\s\|\s([0-9]{17,20})/.exec(
+        //           stars.embeds[0].footer.text
+        //         );
+        messageReaction.message.edit(newEmb);
+        memberListHelper.changePage(-1);
+      }
+    }
   }
 
   function extension(messageReaction, attachment) {
@@ -681,5 +781,9 @@ module.exports = async (client, messageReaction, user) => {
     if (mem) {
       return await mem.addRole(roleToAdd);
     }
+  }
+  function formatDate(date) {
+    moment.locale("fr");
+    return moment(new Date(Number(date)).toISOString()).format("D MMM YYYY");
   }
 };

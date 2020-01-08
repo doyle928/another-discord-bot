@@ -46,10 +46,11 @@ exports.run = async (client, message, args) => {
               let m1 = await message.guild.fetchMember(ship.user_id);
               let m2 = await message.guild.fetchMember(ship.ship_id);
               if (msgBase.indexOf(m1.user.username) === -1) {
+                moment.locale("fr");
                 let shipDate = moment(
-                  new Date(ship.timestamp).toISOString()
+                  new Date(Number(ship.timestamp)).toISOString()
                 ).format("D MMM YYYY");
-                return (msgBase += `${m1.user.username} + ${m2.user.username} (${shipDate})\n`);
+                return (msgBase += `${m1.user.username} + ${m2.user.username} - ${shipDate}\n`);
               }
             }
             return;

@@ -6,11 +6,11 @@ exports.run = async (client, message, args) => {
       message.channel.send(
         `How dare you ${message.author.username} !! You don't have the permissions to use this command!`
       );
-      message.channel.send("<a:02upset:538273249306345476>");
+      message.channel.send("<:natsukiMad:646210751417286656>");
     } else {
       if (!args[1]) {
         message.channel.send("there's no user specified!!!");
-        message.channel.send("<a:02upset:538273249306345476>");
+        message.channel.send("<:natsukiMad:646210751417286656>");
       } else {
         let member = null;
 

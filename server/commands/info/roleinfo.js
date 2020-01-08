@@ -3,13 +3,13 @@ const Discord = require("discord.js");
 exports.run = async (client, message, args) => {
   if (!args[1]) {
     message.channel.send("there's no role specified!!!");
-    message.channel.send("<a:02upset:538273249306345476>");
+    message.channel.send("<:natsukiMad:646210751417286656>");
   } else {
     let id = args[1].match(/([0-9])\d+/g);
 
     if (!id || id[0].length !== 18) {
       message.channel.send("Please tell me what role !!");
-      message.channel.send("<a:02upset:538273249306345476>");
+      message.channel.send("<:natsukiMad:646210751417286656>");
       return;
     }
     if (message.guild.roles.has(id[0])) {

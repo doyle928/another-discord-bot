@@ -5,7 +5,7 @@ const randomColor = require("../../data/randomColor");
 exports.run = async (client, message, args) => {
   if (!args[1]) {
     message.channel.send("there's no user specified!!!");
-    message.channel.send("<a:02upset:538273249306345476>");
+    message.channel.send("<:natsukiMad:646210751417286656>");
   } else {
     let member = null;
     if (!message.mentions.members.first()) {

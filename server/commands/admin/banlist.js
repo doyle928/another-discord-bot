@@ -8,7 +8,7 @@ exports.run = async (client, message, args) => {
       message.channel.send(
         "You don't have the permissions to use this command!"
       );
-      message.channel.send("<a:02upset:538273249306345476>");
+      message.channel.send("<:natsukiMad:646210751417286656>");
     } else {
       message.guild.fetchBans(true).then(bans => {
         let messageEmbed = new Discord.RichEmbed()

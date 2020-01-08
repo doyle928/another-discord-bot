@@ -24,7 +24,7 @@ exports.run = async (client, message, args) => {
             message.channel.send(
               `Excuse me ${message.author}! where you put "**${args[2]}**", it should be a number not whatever you put there!`
             );
-            message.channel.send("<a:02upset:538273249306345476>");
+            message.channel.send("<:natsukiMad:646210751417286656>");
 
             return;
           }
@@ -65,7 +65,7 @@ exports.run = async (client, message, args) => {
           message.channel.send(
             `Excuse me ${message.author}! ${member.user.tag} has 0 strikes, what are you doing!?`
           );
-          message.channel.send("<a:02upset:538273249306345476>");
+          message.channel.send("<:natsukiMad:646210751417286656>");
         } else {
           if (args[1] === "remove") {
             strikes = -1;
@@ -180,7 +180,7 @@ exports.run = async (client, message, args) => {
       message.channel.send(
         `How dare you ${message.author.username} !! You don't have the permissions to use this command!`
       );
-      message.channel.send("<a:02upset:538273249306345476>");
+      message.channel.send("<:natsukiMad:646210751417286656>");
     }
   } else {
     let argsInt = 1;
@@ -195,7 +195,7 @@ exports.run = async (client, message, args) => {
           message.channel.send(
             `Excuse me ${message.author}! where you put "**${args[2]}**", it should be a number not whatever you put there!`
           );
-          message.channel.send("<a:02upset:538273249306345476>");
+          message.channel.send("<:natsukiMad:646210751417286656>");
 
           return;
         }
@@ -230,7 +230,7 @@ exports.run = async (client, message, args) => {
         message.channel.send(
           `Excuse me ${message.author}! ${member.user.tag} has 0 strikes, what are you doing!?`
         );
-        message.channel.send("<a:02upset:538273249306345476>");
+        message.channel.send("<:natsukiMad:646210751417286656>");
       } else {
         if (currentStrikes + strikes >= 5) {
           member
