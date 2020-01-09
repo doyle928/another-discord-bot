@@ -7,11 +7,11 @@ const levelRoles = require("../../data/levelRoles");
 exports.run = async (client, message, args) => {
   const waitFor = ms => new Promise(r => setTimeout(r, ms));
 
-  if (message.guild.id === "559560674246787087") {
-    console.log("good command called");
+  if (message.guild.id === "664351758344257537") {
+    console.log("hey command called");
     let member = null;
 
-    let level = parseInt(args[7]);
+    let level = parseInt(args[8]);
 
     let memberRolesIdArray = [],
       memberRolesArray = [],
@@ -20,7 +20,10 @@ exports.run = async (client, message, args) => {
 
     function changeLevelArray(memberRolesLevelsRemovedArray, levelInt) {
       console.log("changeLevelArray()");
-      return _.concat(memberRolesLevelsRemovedArray, levelRoles.ourHome[levelInt + 1]);
+      return _.concat(
+        memberRolesLevelsRemovedArray,
+        levelRoles.losersClub[levelInt + 1]
+      );
     }
 
     function checkLevelChange() {
@@ -29,8 +32,8 @@ exports.run = async (client, message, args) => {
       member.roles.map(r => memberRolesIdArray.push(r.id));
 
       let memberHasLevelRole = () => {
-        for (let i = 0; i <= levelRoles.ourHome.length; i++) {
-          if (memberRolesIdArray.indexOf(levelRoles.ourHome[i]) != -1) {
+        for (let i = 0; i <= levelRoles.losersClub.length; i++) {
+          if (memberRolesIdArray.indexOf(levelRoles.losersClub[i]) != -1) {
             //lodash _.findIndex works funky had to remove
             return i;
           }
@@ -41,47 +44,53 @@ exports.run = async (client, message, args) => {
       //remove id from array
       let memberRolesLevelsRemovedArray = _.pull(
         memberRolesIdArray,
-        levelRoles.ourHome[calledMemberHasLevelRole]
+        levelRoles.losersClub[calledMemberHasLevelRole]
       );
 
       // switch (level) { switch slower than if
-      if (level >= 50 && member.roles.has(levelRoles.ourHome[6])) {
+      if (level >= 90 && member.roles.has(levelRoles.losersClub[7])) {
         memberUpdatedRolesArray = changeLevelArray(
           memberRolesLevelsRemovedArray,
           calledMemberHasLevelRole
         );
         return;
-      } else if (level >= 40 && member.roles.has(levelRoles.ourHome[5])) {
+      } else if (level >= 70 && member.roles.has(levelRoles.losersClub[6])) {
         memberUpdatedRolesArray = changeLevelArray(
           memberRolesLevelsRemovedArray,
           calledMemberHasLevelRole
         );
         return;
-      } else if (level >= 30 && member.roles.has(levelRoles.ourHome[4])) {
+      } else if (level >= 55 && member.roles.has(levelRoles.losersClub[5])) {
         memberUpdatedRolesArray = changeLevelArray(
           memberRolesLevelsRemovedArray,
           calledMemberHasLevelRole
         );
         return;
-      } else if (level >= 20 && member.roles.has(levelRoles.ourHome[3])) {
+      } else if (level >= 45 && member.roles.has(levelRoles.losersClub[4])) {
         memberUpdatedRolesArray = changeLevelArray(
           memberRolesLevelsRemovedArray,
           calledMemberHasLevelRole
         );
         return;
-      } else if (level >= 15 && member.roles.has(levelRoles.ourHome[2])) {
+      } else if (level >= 35 && member.roles.has(levelRoles.losersClub[3])) {
         memberUpdatedRolesArray = changeLevelArray(
           memberRolesLevelsRemovedArray,
           calledMemberHasLevelRole
         );
         return;
-      } else if (level >= 10 && member.roles.has(levelRoles.ourHome[1])) {
+      } else if (level >= 25 && member.roles.has(levelRoles.losersClub[2])) {
         memberUpdatedRolesArray = changeLevelArray(
           memberRolesLevelsRemovedArray,
           calledMemberHasLevelRole
         );
         return;
-      } else if (level >= 3 && member.roles.has(levelRoles.ourHome[0])) {
+      } else if (level >= 15 && member.roles.has(levelRoles.losersClub[1])) {
+        memberUpdatedRolesArray = changeLevelArray(
+          memberRolesLevelsRemovedArray,
+          calledMemberHasLevelRole
+        );
+        return;
+      } else if (level >= 5 && member.roles.has(levelRoles.losersClub[0])) {
         memberUpdatedRolesArray = changeLevelArray(
           memberRolesLevelsRemovedArray,
           calledMemberHasLevelRole
@@ -95,7 +104,10 @@ exports.run = async (client, message, args) => {
     async function changeLevel(member) {
       console.log("changeLevel()");
       if (member) {
-        let channelID = await message.guild.channels.get(defaults.ourHome.mod);
+        console.log(defaults.losersClub);
+        let channelID = await message.guild.channels.get(
+          defaults.losersClub.mod
+        );
 
         member.roles.map(r => memberRolesArray.push(r));
         memberRolesArray.shift(); //remove everyone role

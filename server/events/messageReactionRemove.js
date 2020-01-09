@@ -4,15 +4,15 @@ const randomColor = require("../data/randomColor");
 module.exports = async (client, messageReaction, user) => {
   if (messageReaction._emoji.name === "⭐") {
     let starChannel = messageReaction.message.channel.guild.channels.find(
-      channel => channel.name == "starboard"
+      channel => channel.name === "⭐memories"
     );
     if (!starChannel) {
       starChannel = messageReaction.message.channel.guild.channels.find(
-        channel => channel.name == "memories"
+        channel => channel.name === "memories"
       );
       if (!starChannel) {
         return messageReaction.message.channel.send(
-          `you do not have a starboard channel ! please make a channel and name it exactly « starboard » ou « memories »`
+          `you do not have a starboard channel ! please make a channel and name it exactly « ⭐memories » ou « memories »`
         );
       }
     }
@@ -146,6 +146,94 @@ module.exports = async (client, messageReaction, user) => {
   } else if (messageReaction.message.id === "663889028315217935") {
     if (messageReaction._emoji.name === "🎙️") {
       removeRole("663148896046022707");
+    }
+  }
+  //----------------------------- losers club below
+  else if (messageReaction.message.id === "664779018481958943") {
+    if (messageReaction._emoji.name === "1️⃣") {
+      removeRole("664369050180386816");
+    } else if (messageReaction._emoji.name === "2️⃣") {
+      removeRole("664369352908341258");
+    } else if (messageReaction._emoji.name === "3️⃣") {
+      removeRole("664369247660670986");
+    } else if (messageReaction._emoji.name === "4️⃣") {
+      removeRole("664369323170856980");
+    }
+  } else if (messageReaction.message.id === "664779140892983316") {
+    if (messageReaction._emoji.name === "❤️") {
+      removeRole("664368375669063690");
+    } else if (messageReaction._emoji.name === "💙") {
+      removeRole("664368512042795037");
+    } else if (messageReaction._emoji.name === "trans") {
+      removeRole("664368600446009344");
+    } else if (messageReaction._emoji.name === "nonbinary") {
+      removeRole("664368700673228800");
+    }
+  } else if (messageReaction.message.id === "664779339035836417") {
+    if (messageReaction._emoji.name === "1️⃣") {
+      removeRole("664374338950135829");
+    } else if (messageReaction._emoji.name === "2️⃣") {
+      removeRole("664374615979720704");
+    } else if (messageReaction._emoji.name === "3️⃣") {
+      removeRole("664374744816287764");
+    } else if (messageReaction._emoji.name === "4️⃣") {
+      removeRole("664374774939516928");
+    } else if (messageReaction._emoji.name === "5️⃣") {
+      removeRole("664374807353229313");
+    } else if (messageReaction._emoji.name === "6️⃣") {
+      removeRole("664374834591039488");
+    } else if (messageReaction._emoji.name === "7️⃣") {
+      removeRole("664374884666703882");
+    }
+  } else if (messageReaction.message.id === "664781016879333397") {
+    if (messageReaction._emoji.name === "❤") {
+      removeRole("664372807219675136");
+    } else if (messageReaction._emoji.name === "💘") {
+      removeRole("664372855668080642");
+    } else if (messageReaction._emoji.name === "🖤") {
+      removeRole("664374507904958515");
+    }
+  } else if (messageReaction.message.id === "664781128594620416") {
+    if (messageReaction._emoji.name === "⭕") {
+      removeRole("664372172856360980");
+    } else if (messageReaction._emoji.name === "❌") {
+      removeRole("664372471331291168");
+    } else if (messageReaction._emoji.name === "🚫") {
+      removeRole("664372530848727040");
+    }
+  } else if (messageReaction.message.id === "664781295624126484") {
+    if (messageReaction._emoji.name === "💢") {
+      removeRole("664370131941720064");
+    } else if (messageReaction._emoji.name === "📚") {
+      removeRole("664370960668950529");
+    } else if (messageReaction._emoji.name === "🐶") {
+      removeRole("664370501489262609");
+    } else if (messageReaction._emoji.name === "🎨") {
+      removeRole("664371305445064705");
+    } else if (messageReaction._emoji.name === "🎥") {
+      removeRole("664371984272064514");
+    } else if (messageReaction._emoji.name === "💪") {
+      removeRole("664370804305166347");
+    } else if (messageReaction._emoji.name === "🎮") {
+      removeRole("664370890737319950");
+    } else if (messageReaction._emoji.name === "💤") {
+      removeRole("664371616754565120");
+    } else if (messageReaction._emoji.name === "👀") {
+      removeRole("664371158304686080");
+    } else if (messageReaction._emoji.name === "🎵") {
+      removeRole("664371041635663902");
+    } else if (messageReaction._emoji.name === "🌺") {
+      removeRole("664370715813740554");
+    } else if (messageReaction._emoji.name === "💾") {
+      removeRole("664370841173229579");
+    }
+  } else if (messageReaction.message.id === "664781416764014604") {
+    if (messageReaction._emoji.name === "🎙️") {
+      removeRole("664372929982627850");
+    }
+  } else if (messageReaction.message.id === "664781943019143172") {
+    if (messageReaction._emoji.name === "🔞") {
+      removeRole("664392387367272460");
     }
   }
 

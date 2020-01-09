@@ -45,16 +45,28 @@ module.exports = async (client, member, guild) => {
 
   if (blank_avatar) {
     if (member.user.avatarURL === null) {
-      messageEmbed
-        .setAuthor("Notice")
-        .setDescription(
-          `Thanks for joining Our Home !\nUnfortunately we require discord accounts to have an avatar photo, sorry it is just to help keep bots from joining !\n\nYou can get a photo and try again though !!`
-        );
+      if (member.guild.id === "559560674246787087") {
+        messageEmbed
+          .setAuthor("Notice")
+          .setDescription(
+            `Thanks for joining Our Home !\nUnfortunately we require discord accounts to have an avatar photo, sorry it is just to help keep bots from joining !\n\nYou can get a photo and try again though !!`
+          );
 
-      member.send(messageEmbed).then(() => {
-        member.kick("no avatar photo !!");
-      });
-      return;
+        member.send(messageEmbed).then(() => {
+          member.kick("no avatar photo !!");
+        });
+        return;
+      } else if (member.guild.id === "559560674246787087") {
+        messageEmbed
+          .setAuthor("Notice")
+          .setDescription(
+            `Thanks for joining Losers Club !\nUnfortunately we require discord accounts to have an avatar photo, sorry it is just to help keep bots from joining !\n\nYou can get a photo and try again though !!`
+          );
+        member.send(messageEmbed).then(() => {
+          member.kick("no avatar photo !!");
+        });
+        return;
+      }
     }
   }
   if (join_age) {
@@ -63,16 +75,28 @@ module.exports = async (client, member, guild) => {
       discordJoinDateDiff._data.months < 1 &&
       discordJoinDateDiff._data.years < 1
     ) {
-      messageEmbed
-        .setAuthor("Notice")
-        .setDescription(
-          `Thanks for joining Our Home !\nUnfortunately we require discord accounts that are 7 days or older.\nYour account is was created on ${discordJoinDate} !`
-        );
+      if (member.guild.id === "559560674246787087") {
+        messageEmbed
+          .setAuthor("Notice")
+          .setDescription(
+            `Thanks for joining Our Home !\nUnfortunately we require discord accounts that are 7 days or older.\n\nYour account is was created on ${discordJoinDate} !`
+          );
 
-      member.send(messageEmbed).then(() => {
-        member.kick("account was too young !!");
-      });
-      return;
+        member.send(messageEmbed).then(() => {
+          member.kick("account was too young !!");
+        });
+        return;
+      } else if (member.guild.id === "664351758344257537") {
+        messageEmbed
+          .setAuthor("Notice")
+          .setDescription(
+            `Thanks for joining Losers Club !\nUnfortunately we require discord accounts that are 7 days or older.\n\nYour account is was created on ${discordJoinDate} !`
+          );
+        member.send(messageEmbed).then(() => {
+          member.kick("no avatar photo !!");
+        });
+        return;
+      }
     }
   }
 
@@ -95,6 +119,24 @@ module.exports = async (client, member, guild) => {
         c.send(messageEmbed);
       });
     member.addRole("585353865575137281");
+  } else if (member.guild.id === "664351758344257537") {
+    let c = await member.guild.channels.get("664364035386507274");
+    messageEmbed
+      .setAuthor("New Member")
+      .setDescription(`**${member.user.username}** joined !`);
+
+    member
+      .addRole("664383363901030400")
+      .then(() => c.send(messageEmbed))
+      .catch(() => {
+        messageEmbed
+          .setAuthor("New Member")
+          .setDescription(
+            `**${member.user.username}** has joined the server but i failed to give them the welcome to serveur role !`
+          );
+
+        c.send(messageEmbed);
+      });
   }
 
   query = `mutation {

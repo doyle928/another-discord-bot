@@ -222,6 +222,19 @@ module.exports = async (client, message) => {
   ) {
     command = "good";
   }
+  if (
+    message.author.id === "159985870458322944" &&
+    message.channel.id === "664359168140115979" &&
+    command === "ey"
+  ) {
+    command = "hey";
+  } else if (
+    message.author.id === "157673412561469440" &&
+    message.channel.id === "664359168140115979" &&
+    command === "ey"
+  ) {
+    command = "hey";
+  }
   console.log(
     `message.author: ${message.author.username} | command: ${command} | args: ${args}`
   );

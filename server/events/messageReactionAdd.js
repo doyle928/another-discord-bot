@@ -26,15 +26,15 @@ module.exports = async (client, messageReaction, user) => {
       if (r._emoji.name === "⭐") {
         if (r.count >= 3) {
           let starChannel = messageReaction.message.channel.guild.channels.find(
-            channel => channel.name == "starboard"
+            channel => channel.name === "⭐memories"
           );
           if (!starChannel) {
             starChannel = messageReaction.message.channel.guild.channels.find(
-              channel => channel.name == "memories"
+              channel => channel.name === "memories"
             );
             if (!starChannel) {
               return messageReaction.message.channel.send(
-                `you do not have a starboard channel ! please make a channel and name it exactly « starboard » ou « memories »`
+                `you do not have a starboard channel ! please make a channel and name it exactly « ⭐memories » ou « memories »`
               );
             }
           }
@@ -241,6 +241,57 @@ module.exports = async (client, messageReaction, user) => {
       } else {
         let s = await client.guilds.get("559560674246787087");
         s.fetchMember("157673412561469440")
+          .then(m =>
+            m.send(
+              `${user.username} reacted but i failed to give them the new role`
+            )
+          )
+          .catch(err => console.error(err));
+      }
+    } else if (messageReaction.message.id === "664398194431754242") {
+      console.log("checked rules");
+      let memberRolesIdArray = [];
+      let mem = await messageReaction.message.guild.fetchMember(user.id);
+      if (mem) {
+        mem.roles.map(r => {
+          memberRolesIdArray.push(r.id);
+        });
+        for (let i = 0; i < memberRolesIdArray.length; i++) {
+          if (memberRolesIdArray[i] === "664383363901030400") {
+            memberRolesIdArray.splice(i, 1);
+            memberRolesIdArray.push("664379969438482432");
+            mem.setRoles(memberRolesIdArray).then(async () => {
+              let c = await client.guilds
+                .get("664351758344257537")
+                .channels.get("664354657010843648");
+
+              let img = await canvasLosersClubWelcome(
+                mem.user.username,
+                mem.user.avatarURL
+              );
+              const attachment = new Discord.Attachment(img, "welcome.png");
+              c.send(attachment)
+                .then(async () => {
+                  let rolesC = await client.guilds
+                    .get("664351758344257537")
+                    .channels.get("664362973980000296");
+                  let introC = await client.guilds
+                    .get("664351758344257537")
+                    .channels.get("664363153802657792");
+                  c.send(
+                    `Thank you for joining ${mem} ! <:softheart:575053165804912652>\nyou can get roles in ${rolesC} and make sure to do an intro in ${introC} !`
+                  );
+                })
+                .catch(err => {
+                  console.error(err);
+                  return message.channel.send("help i broke something !!");
+                });
+            });
+          }
+        }
+      } else {
+        let s = await client.guilds.get("664351758344257537");
+        s.fetchMember("664364035386507274")
           .then(m =>
             m.send(
               `${user.username} reacted but i failed to give them the new role`
@@ -680,6 +731,214 @@ module.exports = async (client, messageReaction, user) => {
         await addRole("663148896046022707");
       }
     }
+    //--------------------------------------------------- losers club below
+    else if (messageReaction.message.id === "664779018481958943") {
+      //age roles losers club
+      let removeArray = [
+        {
+          id: "664369050180386816",
+          name: "1️⃣"
+        },
+        {
+          id: "664369352908341258",
+          name: "2️⃣"
+        },
+        {
+          id: "664369247660670986",
+          name: "3️⃣"
+        },
+        {
+          id: "664369323170856980",
+          name: "4️⃣"
+        }
+      ];
+      if (messageReaction._emoji.name === "1️⃣") {
+        await addRoleRemoveOthers(removeArray, "664369050180386816");
+      } else if (messageReaction._emoji.name === "2️⃣") {
+        await addRoleRemoveOthers(removeArray, "664369352908341258");
+      } else if (messageReaction._emoji.name === "3️⃣") {
+        await addRoleRemoveOthers(removeArray, "664369247660670986");
+      } else if (messageReaction._emoji.name === "4️⃣") {
+        await addRoleRemoveOthers(removeArray, "664369323170856980");
+      }
+    } else if (messageReaction.message.id === "664779140892983316") {
+      //gender roles
+      let removeArray = [
+        {
+          id: "664368375669063690", //girl
+          name: "❤️"
+        },
+        {
+          id: "664368512042795037", //boy
+          name: "💙"
+        },
+        {
+          id: "664368600446009344", //trans
+          name: "trans"
+        },
+        {
+          id: "664368700673228800", //non-binary
+          name: "nonbinary"
+        }
+      ];
+      if (messageReaction._emoji.name === "❤️") {
+        await addRoleRemoveOthers(removeArray, "664368375669063690"); //girl
+      } else if (messageReaction._emoji.name === "💙") {
+        await addRoleRemoveOthers(removeArray, "664368512042795037"); //boy
+      } else if (messageReaction._emoji.name === "trans") {
+        await addRoleRemoveOthers(removeArray, "664368600446009344"); //trans
+      } else if (messageReaction._emoji.name === "nonbinary") {
+        await addRoleRemoveOthers(removeArray, "664368700673228800"); //non-binary
+      }
+    } else if (messageReaction.message.id === "664779339035836417") {
+      //age roles losers club
+      let removeArray = [
+        {
+          id: "664374338950135829",
+          name: "1️⃣"
+        },
+        {
+          id: "664374615979720704",
+          name: "2️⃣"
+        },
+        {
+          id: "664374744816287764",
+          name: "3️⃣"
+        },
+        {
+          id: "664374774939516928",
+          name: "4️⃣"
+        },
+        {
+          id: "664374807353229313",
+          name: "5️⃣"
+        },
+        {
+          id: "664374834591039488",
+          name: "6️⃣"
+        },
+        {
+          id: "664374884666703882",
+          name: "7️⃣"
+        }
+      ];
+      if (messageReaction._emoji.name === "1️⃣") {
+        await addRoleRemoveOthers(removeArray, "664374338950135829");
+      } else if (messageReaction._emoji.name === "2️⃣") {
+        await addRoleRemoveOthers(removeArray, "664374615979720704");
+      } else if (messageReaction._emoji.name === "3️⃣") {
+        await addRoleRemoveOthers(removeArray, "664374744816287764");
+      } else if (messageReaction._emoji.name === "4️⃣") {
+        await addRoleRemoveOthers(removeArray, "664374774939516928");
+      } else if (messageReaction._emoji.name === "5️⃣") {
+        await addRoleRemoveOthers(removeArray, "664374807353229313");
+      } else if (messageReaction._emoji.name === "6️⃣") {
+        await addRoleRemoveOthers(removeArray, "664374834591039488");
+      } else if (messageReaction._emoji.name === "7️⃣") {
+        await addRoleRemoveOthers(removeArray, "664374884666703882");
+      }
+    } else if (messageReaction.message.id === "664781016879333397") {
+      //relationship roles
+      let removeArray = [
+        {
+          id: "664372807219675136",
+          name: "❤"
+        },
+        {
+          id: "664372855668080642",
+          name: "💘"
+        },
+        {
+          id: "664374507904958515",
+          name: "🖤"
+        }
+      ];
+      if (messageReaction._emoji.name === "💁‍♀️") {
+        await addRoleRemoveOthers(removeArray, "664372807219675136");
+      } else if (messageReaction._emoji.name === "❤") {
+        await addRoleRemoveOthers(removeArray, "664372855668080642");
+      } else if (messageReaction._emoji.name === "🙊") {
+        await addRoleRemoveOthers(removeArray, "664374507904958515");
+      }
+    } else if (messageReaction.message.id === "664781128594620416") {
+      //dm roles
+      let removeArray = [
+        {
+          id: "664372172856360980",
+          name: "⭕"
+        },
+        {
+          id: "664372471331291168",
+          name: "❌"
+        },
+        {
+          id: "664372530848727040",
+          name: "🚫"
+        }
+      ];
+      if (messageReaction._emoji.name === "⭕") {
+        await addRoleRemoveOthers(removeArray, "664372172856360980");
+      } else if (messageReaction._emoji.name === "❌") {
+        await addRoleRemoveOthers(removeArray, "664372471331291168");
+      } else if (messageReaction._emoji.name === "🚫") {
+        await addRoleRemoveOthers(removeArray, "664372530848727040");
+      }
+    } else if (messageReaction.message.id === "664781295624126484") {
+      //interests 💢📚🐶🎨🎥💪🎮💤👀🎵🌺💾
+      if (messageReaction._emoji.name === "💢") {
+        await addRole("664370131941720064");
+      } else if (messageReaction._emoji.name === "📚") {
+        await addRole("664370960668950529");
+      } else if (messageReaction._emoji.name === "🐶") {
+        await addRole("664370501489262609");
+      } else if (messageReaction._emoji.name === "🎨") {
+        await addRole("664371305445064705");
+      } else if (messageReaction._emoji.name === "🎥") {
+        await addRole("664371984272064514");
+      } else if (messageReaction._emoji.name === "💪") {
+        await addRole("664370804305166347");
+      } else if (messageReaction._emoji.name === "🎮") {
+        await addRole("664370890737319950");
+      } else if (messageReaction._emoji.name === "💤") {
+        await addRole("664371616754565120");
+      } else if (messageReaction._emoji.name === "👀") {
+        await addRole("664371158304686080");
+      } else if (messageReaction._emoji.name === "🎵") {
+        await addRole("664371041635663902");
+      } else if (messageReaction._emoji.name === "🌺") {
+        await addRole("664370715813740554");
+      } else if (messageReaction._emoji.name === "💾") {
+        await addRole("664370841173229579");
+      }
+    } else if (messageReaction.message.id === "664781416764014604") {
+      //vc role
+      if (messageReaction._emoji.name === "🎙️") {
+        await addRole("664372929982627850");
+      }
+    } else if (messageReaction.message.id === "664781943019143172") {
+      //vc role
+      if (messageReaction._emoji.name === "🔞") {
+        let memberRolesIdArray = [];
+        let mem = await messageReaction.message.guild.fetchMember(user.id);
+        if (mem) {
+          mem.roles.map(r => {
+            memberRolesIdArray.push(r.id);
+          });
+          if (memberRolesIdArray.includes("664379969438482432")) {
+            mem.send(
+              `sorry but you are not a high enough level to get the nsfw role !`
+            );
+          } else {
+            await addRole("664392387367272460");
+            let msgEmb = new Discord.RichEmbed()
+              .setAuthor("NSFW rules")
+              .setDescripton("rules")
+              .setColor("#202225");
+            mem.send(msgEmb);
+          }
+        }
+      }
+    }
   }
 
   function extension(messageReaction, attachment) {
@@ -735,6 +994,53 @@ module.exports = async (client, messageReaction, user) => {
     await ctx.drawImage(avatar2, 201, 55, 115, 115);
     // let fontPath = shipFont.getPath(txt, 0, 200, 26);
     // fontPath.draw(ctx);
+
+    return canvas.toBuffer();
+  }
+
+  async function canvasLosersClubWelcome(name, avatarURL) {
+    const canvas = Canvas.createCanvas(950, 350);
+
+    const ctx = canvas.getContext("2d");
+
+    let ttfPath = path.join(__dirname, "../fonts/Archivo.ttf");
+
+    Canvas.registerFont(ttfPath, { family: "arch" });
+    ctx.textAlign = "left";
+
+    ctx.font = "72px arch";
+    ctx.lineWidth = 3;
+    ctx.fillStyle = "white";
+    ctx.strokeStyle = "#36393f";
+
+    let reqPath = path.join(__dirname, "../images/losers_club_welcome.png");
+    const background = await Canvas.loadImage(reqPath);
+    ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+
+    ctx.beginPath();
+    ctx.rect(25, 25, 36, 300);
+    ctx.closePath();
+
+    ctx.rect(91, 25, 36, 300);
+    ctx.closePath();
+
+    ctx.rect(157, 25, 36, 300);
+    ctx.closePath();
+
+    ctx.rect(223, 25, 36, 300);
+    ctx.closePath();
+
+    ctx.rect(289, 25, 36, 300);
+    ctx.closePath();
+
+    ctx.strokeText(`${name}`, 382, 196);
+    ctx.fillText(`${name}`, 382, 196);
+
+    ctx.clip();
+
+    const { body: buffer } = await snekfetch.get(avatarURL);
+    const avatar = await Canvas.loadImage(buffer);
+    await ctx.drawImage(avatar, 25, 25, 300, 300);
 
     return canvas.toBuffer();
   }
