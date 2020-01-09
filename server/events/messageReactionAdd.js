@@ -924,8 +924,10 @@ module.exports = async (client, messageReaction, user) => {
           await mem.roles.map(r => {
             memberRolesIdArray.push(r.id);
           });
-          if (memberRolesIdArray.includes("664379969438482432") &&
-            !memberRolesIdArray.includes("664373343771688981")) {
+          if (
+            memberRolesIdArray.includes("664379969438482432") &&
+            !memberRolesIdArray.includes("664373343771688981")
+          ) {
             mem.send(
               `sorry but you are not a high enough level to get the nsfw role !`
             );
@@ -933,7 +935,9 @@ module.exports = async (client, messageReaction, user) => {
             await addRole("664392387367272460");
             let msgEmbed = new Discord.RichEmbed()
               .setAuthor("NSFW rules")
-              .setDescription("rules")
+              .setDescription(
+                `I. Posting NSFW images outside of designated sections is not allowed.\n\nII. #nsfw-selfies must be your own photos of you and no one else.\n\nIII. All comments for nsfw selfies/nsfw chat goes into #nsfw-chat.\n\nIV. Be respectful, you are an adult.\n\nV. If there is any questions of you being underage you will be banned.\n\nVI. If someone is giving you a problem, please DM a staff member.\n\nVII. Remember DMs exist <3.`
+              )
               .setColor("#202225");
             mem.send(msgEmbed);
           }
