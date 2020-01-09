@@ -853,11 +853,11 @@ module.exports = async (client, messageReaction, user) => {
           name: "🖤"
         }
       ];
-      if (messageReaction._emoji.name === "💁‍♀️") {
+      if (messageReaction._emoji.name === "❤") {
         await addRoleRemoveOthers(removeArray, "664372807219675136");
-      } else if (messageReaction._emoji.name === "❤") {
+      } else if (messageReaction._emoji.name === "💘") {
         await addRoleRemoveOthers(removeArray, "664372855668080642");
-      } else if (messageReaction._emoji.name === "🙊") {
+      } else if (messageReaction._emoji.name === "🖤") {
         await addRoleRemoveOthers(removeArray, "664374507904958515");
       }
     } else if (messageReaction.message.id === "664781128594620416") {
@@ -921,20 +921,21 @@ module.exports = async (client, messageReaction, user) => {
         let memberRolesIdArray = [];
         let mem = await messageReaction.message.guild.fetchMember(user.id);
         if (mem) {
-          mem.roles.map(r => {
+          await mem.roles.map(r => {
             memberRolesIdArray.push(r.id);
           });
-          if (memberRolesIdArray.includes("664379969438482432")) {
+          if (memberRolesIdArray.includes("664379969438482432") &&
+            !memberRolesIdArray.includes("664373343771688981")) {
             mem.send(
               `sorry but you are not a high enough level to get the nsfw role !`
             );
           } else {
             await addRole("664392387367272460");
-            let msgEmb = new Discord.RichEmbed()
+            let msgEmbed = new Discord.RichEmbed()
               .setAuthor("NSFW rules")
-              .setDescripton("rules")
+              .setDescription("rules")
               .setColor("#202225");
-            mem.send(msgEmb);
+            mem.send(msgEmbed);
           }
         }
       }

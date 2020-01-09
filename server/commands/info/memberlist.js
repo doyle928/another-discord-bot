@@ -21,7 +21,9 @@ exports.run = async (client, message, args) => {
   memArray = await _.orderBy(memArray, ["joinedTimestamp"], ["asc"]);
 
   let strg = "";
-  let msgEmbed = new Discord.RichEmbed().setAuthor("Member join date");
+  let msgEmbed = new Discord.RichEmbed()
+    .setAuthor("Member join date")
+    .setColor("#202225");
 
   if (_.size(memArray) > 25) {
     let newMemArray = _.take(memArray, 25);
