@@ -1,6 +1,7 @@
 const { request } = require("graphql-request");
 const moment = require("moment");
 const Discord = require("discord.js");
+const addedRecently = new Set();
 
 function checkMembers(guild) {
   let memberCount = 0;
@@ -121,26 +122,72 @@ module.exports = async (client, member, guild) => {
     member.addRole("585353865575137281");
   } else if (member.guild.id === "664351758344257537") {
     let c = await member.guild.channels.get("664364035386507274");
-    messageEmbed
-      .setAuthor("New member")
-      .setDescription(`**${member.user.username}** joined !`);
 
-    member.guild
-      .fetchMember("157673412561469440")
-      .then(m => m.send(`**${member.user.username}** joined Losers Club !`));
+    if (addedRecently.has("raid-mode-on")) {
+      member.addRole("664383601248305173");
+      messageEmbed
+        .setAuthor("Notice")
+        .setDescription(
+          `Thanks for joining Losers Club !\nUnfortunately we had a large amount of joins in a few secondes so raid mode was automatically activated ! If you are not a bot you can join again in 30-45 minutes !`
+        );
+      member.send(messageEmbed).then(() => member.kick("raid mode"));
+    } else {
+      if (addedRecently.has("raid-mode-check")) {
+        if (!addedRecently.has("sent-raid-msg")) {
+          messageEmbed
+            .setAuthor("Raid mode")
+            .setDescription(`Raid mode is turned on for 20 minutes`);
+          c.send(messageEmbed);
 
-    member
-      .addRole("664383363901030400")
-      .then(() => c.send(messageEmbed))
-      .catch(() => {
+          addedRecently.add("sent-raid-msg");
+          addedRecently.add("raid-mode-on");
+          if (addedRecently.has("raid-mode-check")) {
+            addedRecently.delete("raid-mode-check");
+          }
+
+          setTimeout(() => {
+            addedRecently.delete("sent-raid-msg");
+            addedRecently.delete("raid-mode-on");
+          }, 1200000);
+        }
+        member.addRole("664383601248305173");
+        messageEmbed
+          .setAuthor("Notice")
+          .setDescription(
+            `Thanks for joining Losers Club !\nUnfortunately we had a large amount of joins in a few secondes so raid mode was automatically activated ! If you are not a bot you can join again in 30-45 minutes !`
+          );
+        member.send(messageEmbed).then(() => member.kick("raid mode"));
+      } else {
         messageEmbed
           .setAuthor("New member")
-          .setDescription(
-            `**${member.user.username}** has joined the server but i failed to give them the welcome to serveur role !`
+          .setDescription(`**${member.user.username}** joined !`);
+
+        member.guild
+          .fetchMember("157673412561469440")
+          .then(m =>
+            m.send(`**${member.user.username}** joined Losers Club !`)
           );
 
-        c.send(messageEmbed);
-      });
+        member
+          .addRole("664383363901030400")
+          .then(() => c.send(messageEmbed))
+          .catch(() => {
+            messageEmbed
+              .setAuthor("New member")
+              .setDescription(
+                `**${member.user.username}** has joined the server but i failed to give them the welcome to serveur role !`
+              );
+
+            c.send(messageEmbed);
+          });
+        addedRecently.add("raid-mode-check");
+        setTimeout(() => {
+          if (addedRecently.has("raid-mode-check")) {
+            addedRecently.delete("raid-mode-check");
+          }
+        }, 15000);
+      }
+    }
   }
 
   query = `mutation {

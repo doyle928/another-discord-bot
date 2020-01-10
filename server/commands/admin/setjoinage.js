@@ -13,7 +13,7 @@ exports.run = async (client, message, args) => {
       console.log(res);
       res.getServers.map(async s => {
         if (s.guild_id === message.guild.id) {
-          if (s.blank_avatar === false) {
+          if (s.join_age === false) {
             message.channel.send(
               "current setting is false to kicking accounts under 7 days old, changing it to true !\nAccounts under 7 days old will now be kicked !!"
             );

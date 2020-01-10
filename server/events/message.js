@@ -1,14 +1,41 @@
 const active = new Map();
 const talkedRecently = new Set();
-let messageCounter = require("../data/messageCounter");
-const timeConverterDMY = require("../data/timeConverterDMY");
+const Discord = require("discord.js");
 
 module.exports = async (client, message) => {
   // console.log(`${message.author.username}: ${message.content}`);
+
+  if (
+    message.author.id !== "157673412561469440" &&
+    message.author.id !== "630573404352937996" &&
+    message.nonce === null &&
+    message.attachments.size <= 0 &&
+    !message.author.bot &&
+    message.guild // make sure it's a non-private messages
+  ) {
+    message.channel.send(`hey ${message.author} ! stop using a user bot !`);
+    let messageEmbed = new Discord.RichEmbed()
+      .setColor("#ff0000")
+      .setAuthor("User bot detected")
+      .setDescription(
+        `Muted **${message.author.username}#${message.author.discriminator}** for using a user bot`
+      );
+
+    if (message.guild.id === "664351758344257537") {
+      let c = await message.guild.channels.get("664364035386507274");
+      c.send(messageEmbed);
+      message.member.addRole("664383601248305173");
+    } else if (message.guild.id === "559560674246787087") {
+      let c = await message.guild.channels.get("561372938474094603");
+      c.send(messageEmbed);
+      message.member.addRole("586122632479375370");
+    }
+  }
+
   if (message.guild !== null) {
-    let a = new Date();
-    timeConverterDMY(a);
-    let found = false;
+    // let a = new Date();
+    // timeConverterDMY(a);
+    // let found = false;
 
     // for (let i = 0; i < messageCounter.counts.length; i++) {
     //   if (messageCounter.counts[i].hasOwnProperty(message.guild.id)) {
