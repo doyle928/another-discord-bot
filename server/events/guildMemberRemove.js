@@ -8,9 +8,9 @@ function checkMembers(guild) {
   return memberCount;
 }
 
-module.exports = async (client, member, guild) => {
+module.exports = async (client, member) => {
   if (member.guild.id === "664351758344257537") {
-    let c = await member.guild.channels.get("664364035386507274");
+    let c = await client.channels.get("664364035386507274");
     messageEmbed
       .setAuthor("Member left")
       .setDescription(`**${member.user.username}** just left :(`);
