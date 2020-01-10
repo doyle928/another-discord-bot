@@ -23,7 +23,7 @@ exports.run = async (client, message, args) => {
           }`;
     try {
       let res = await request(url, query);
-      if (res.getShips === null || res.getShips === []) {
+      if (res.getShips === null || res.getShips.length === 0) {
         message.channel.send("there are no ships in the serveur !");
       } else {
         let msgBase = "";
@@ -173,7 +173,7 @@ exports.run = async (client, message, args) => {
           message.channel.send(
             `sorry but ${
               message.mentions.members.first().user.username
-            } is already shipped with ${m} !`
+            } is already shipped with ${m.user.username} !`
           );
         } else {
           message.channel.send(
@@ -223,7 +223,7 @@ exports.run = async (client, message, args) => {
         console.log(res1);
         if (res1.getShip === null) {
           query = `{
-            getShip(guild_id: "${message.guild.id}", user_id: "${memberArray[0].user.id}") {
+            getShip(guild_id: "${message.guild.id}", user_id: "${memberArray[1].user.id}") {
               user_id ship_id timestamp
             }
           }`;
@@ -258,7 +258,7 @@ exports.run = async (client, message, args) => {
               let m = await message.guild.fetchMember(res2.getShip.ship_id);
               if (m) {
                 message.channel.send(
-                  `sorry but ${memberArray[1].user.username} is already shipped with ${m} !`
+                  `sorry but ${memberArray[1].user.username} is already shipped with ${m.user.username} !`
                 );
               } else {
                 message.channel.send(
@@ -277,7 +277,7 @@ exports.run = async (client, message, args) => {
           let m = await message.guild.fetchMember(res1.getShip.ship_id);
           if (m) {
             message.channel.send(
-              `sorry but ${memberArray[0].user.username} is already shipped with ${m} !`
+              `sorry but ${memberArray[0].user.username} is already shipped with ${m.user.username} !`
             );
           } else {
             message.channel.send(
