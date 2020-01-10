@@ -4,7 +4,8 @@ module.exports = async (client, message) => {
   if (message.guild.id === "664351758344257537") {
     let messageEmbed = new Discord.RichEmbed()
       .setColor("#ff0000")
-      .setAuthor("Message deleted");
+      .setAuthor("Message deleted")
+      .setTimestamp();
     let c = await message.guild.channels.get("664363921196580874");
 
     if (

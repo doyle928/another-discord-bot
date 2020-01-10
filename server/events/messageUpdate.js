@@ -11,7 +11,8 @@ module.exports = async (client, messageOld, messageNew) => {
         .setAuthor("Message edited")
         .setDescription(
           `${messageOld.author.username}#${messageOld.author.discriminator} in ${messageOld.channel.name}\n\n${messageOld.content}\n- to -\n${messageNew.content}`
-        );
+        )
+        .setTimestamp();
       let c = await messageOld.channel.guild.channels.get("664363921196580874");
       c.send(messageEmbed);
     }
