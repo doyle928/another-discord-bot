@@ -11,7 +11,7 @@ exports.run = async (client, message, args) => {
     console.log("hey command called");
     let member = null;
 
-    let level = parseInt(args[8]);
+    let level = parseInt(args[9]);
 
     let memberRolesIdArray = [],
       memberRolesArray = [],

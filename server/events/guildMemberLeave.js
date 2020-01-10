@@ -9,6 +9,14 @@ function checkMembers(guild) {
 }
 
 module.exports = async (client, member, guild) => {
+  if (member.guild.id === "664351758344257537") {
+    let c = await member.guild.channels.get("664364035386507274");
+    messageEmbed
+      .setAuthor("Member left")
+      .setDescription(`**${member.user.username}** just left :(`);
+    c.send(messageEmbed);
+  }
+
   let query = `mutation {
             addCount (guild_id: "${member.guild.id}", members: ${checkMembers(
     member.guild

@@ -1,7 +1,10 @@
 const Discord = require("discord.js");
 
 module.exports = async (client, messageOld, messageNew) => {
-  if (messageOld.channel.guild.id === "664351758344257537") {
+  if (
+    messageOld.channel.guild.id === "664351758344257537" &&
+    messageOld.embeds.length === 0
+  ) {
     if (messageOld.channel.id !== "664363921196580874") {
       let messageEmbed = new Discord.RichEmbed()
         .setColor("#ffff00")

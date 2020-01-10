@@ -172,6 +172,12 @@ exports.run = async (client, message, args) => {
             .addField("Reason", `${message.author.tag}: ${reason}`)
             .setTimestamp();
 
+          if (message.guild.id ==="664351758344257537"){
+            let c = await message.guild.channels.get("664364035386507274");
+            c.send(messageEmbed);
+          }
+
+
           message.channel.send(messageEmbed);
         })
         .catch(error => {

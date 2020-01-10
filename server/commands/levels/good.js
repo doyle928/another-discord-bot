@@ -20,7 +20,10 @@ exports.run = async (client, message, args) => {
 
     function changeLevelArray(memberRolesLevelsRemovedArray, levelInt) {
       console.log("changeLevelArray()");
-      return _.concat(memberRolesLevelsRemovedArray, levelRoles.ourHome[levelInt + 1]);
+      return _.concat(
+        memberRolesLevelsRemovedArray,
+        levelRoles.ourHome[levelInt + 1]
+      );
     }
 
     function checkLevelChange() {
@@ -45,7 +48,25 @@ exports.run = async (client, message, args) => {
       );
 
       // switch (level) { switch slower than if
-      if (level >= 50 && member.roles.has(levelRoles.ourHome[6])) {
+      if (level >= 90 && member.roles.has(levelRoles.ourHome[9])) {
+        memberUpdatedRolesArray = changeLevelArray(
+          memberRolesLevelsRemovedArray,
+          calledMemberHasLevelRole
+        );
+        return;
+      } else if (level >= 70 && member.roles.has(levelRoles.ourHome[8])) {
+        memberUpdatedRolesArray = changeLevelArray(
+          memberRolesLevelsRemovedArray,
+          calledMemberHasLevelRole
+        );
+        return;
+      } else if (level >= 60 && member.roles.has(levelRoles.ourHome[7])) {
+        memberUpdatedRolesArray = changeLevelArray(
+          memberRolesLevelsRemovedArray,
+          calledMemberHasLevelRole
+        );
+        return;
+      } else if (level >= 50 && member.roles.has(levelRoles.ourHome[6])) {
         memberUpdatedRolesArray = changeLevelArray(
           memberRolesLevelsRemovedArray,
           calledMemberHasLevelRole

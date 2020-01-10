@@ -103,7 +103,7 @@ module.exports = async (client, member, guild) => {
   if (member.guild.id === "559560674246787087") {
     let c = await member.guild.channels.get("561372938474094603");
     messageEmbed
-      .setAuthor("New Member")
+      .setAuthor("New member")
       .setDescription(`**${member.user.username}** joined !`);
 
     member
@@ -111,7 +111,7 @@ module.exports = async (client, member, guild) => {
       .then(() => c.send(messageEmbed))
       .catch(() => {
         messageEmbed
-          .setAuthor("New Member")
+          .setAuthor("New member")
           .setDescription(
             `**${member.user.username}** has joined the server but i failed to give them the welcome to serveur role !`
           );
@@ -122,15 +122,19 @@ module.exports = async (client, member, guild) => {
   } else if (member.guild.id === "664351758344257537") {
     let c = await member.guild.channels.get("664364035386507274");
     messageEmbed
-      .setAuthor("New Member")
+      .setAuthor("New member")
       .setDescription(`**${member.user.username}** joined !`);
+
+    member.guild
+      .fetchMember("157673412561469440")
+      .then(m => m.send(`**${member.user.username}** joined Losers Club !`));
 
     member
       .addRole("664383363901030400")
       .then(() => c.send(messageEmbed))
       .catch(() => {
         messageEmbed
-          .setAuthor("New Member")
+          .setAuthor("New member")
           .setDescription(
             `**${member.user.username}** has joined the server but i failed to give them the welcome to serveur role !`
           );
