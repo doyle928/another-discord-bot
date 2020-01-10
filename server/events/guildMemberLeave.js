@@ -11,7 +11,7 @@ function checkMembers(guild) {
 module.exports = async (client, member) => {
   if (member.guild.id === "664351758344257537") {
     let c = await client.channels.get("664364035386507274");
-    messageEmbed
+    let messageEmbed = new Discord.RichEmbed()
       .setAuthor("Member left")
       .setDescription(`**${member.user.username}** just left :(`);
     c.send(messageEmbed);
