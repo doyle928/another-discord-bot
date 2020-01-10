@@ -5,7 +5,7 @@ exports.run = async (client, message, args) => {
   const nightmare = Nightmare({ width: 1080, height: 800 });
 
   await nightmare
-    .goto("https://yagpdb.xyz/public/559560674246787087/stats")
+    .goto(`https://yagpdb.xyz/public/${message.guild.id}/stats`)
     .wait("#chart-message-counts")
     .wait(1103)
     .scrollTo(1503, 0)
@@ -20,7 +20,7 @@ exports.run = async (client, message, args) => {
           .screenshot({
             //109 is height of the top element which remains
             x: 320,
-            y: 320,
+            y: 315,
             width: 720,
             height: 433
           })

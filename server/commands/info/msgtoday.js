@@ -3,9 +3,9 @@ const Discord = require("discord.js");
 
 exports.run = async (client, message, args) => {
   const nightmare = Nightmare();
-
+  //https://yagpdb.xyz/public/664351758344257537/stats
   await nightmare
-    .goto("https://yagpdb.xyz/public/559560674246787087/stats")
+    .goto(`https://yagpdb.xyz/public/${message.guild.id}/stats`)
     .wait("#messages-24h")
     .wait(1000)
     .evaluate(getInnerHTML, "messages-24h")
