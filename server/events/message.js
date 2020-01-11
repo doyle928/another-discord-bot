@@ -105,7 +105,24 @@ module.exports = async (client, message) => {
           messageSplit[i].toLowerCase() === "faggot" ||
           messageSplit[i].toLowerCase() === "nigger"
         ) {
-          message.author.ban().catch(() => message.delete());
+          let messageEmbed = new Discord.RichEmbed()
+            .setColor("#ff0000")
+            .setAuthor("Bad word")
+            .setDescription(
+              `Muted **${message.author.username}#${message.author.discriminator}** for saying : ${message.content}`
+            );
+
+          if (message.guild.id === "664351758344257537") {
+            let c = await message.guild.channels.get("664364035386507274");
+            c.send(messageEmbed);
+            message.member.addRole("664383601248305173");
+            message.delete();
+          } else if (message.guild.id === "559560674246787087") {
+            let c = await message.guild.channels.get("561372938474094603");
+            c.send(messageEmbed);
+            message.member.addRole("586122632479375370");
+            message.delete();
+          }
         }
       }
       if (
@@ -113,7 +130,24 @@ module.exports = async (client, message) => {
         message.content.toLowerCase().indexOf("f a g g o t") >= 0 ||
         message.content.toLowerCase().indexOf("n i g g e r") >= 0
       ) {
-        message.author.ban().catch(() => message.delete());
+        let messageEmbed = new Discord.RichEmbed()
+          .setColor("#ff0000")
+          .setAuthor("Bad word")
+          .setDescription(
+            `Muted **${message.author.username}#${message.author.discriminator}** for saying : ${message.content}`
+          );
+
+        if (message.guild.id === "664351758344257537") {
+          let c = await message.guild.channels.get("664364035386507274");
+          c.send(messageEmbed);
+          message.member.addRole("664383601248305173");
+          message.delete();
+        } else if (message.guild.id === "559560674246787087") {
+          let c = await message.guild.channels.get("561372938474094603");
+          c.send(messageEmbed);
+          message.member.addRole("586122632479375370");
+          message.delete();
+        }
       }
     }
     if (message.guild.id === "559560674246787087") {
@@ -218,8 +252,9 @@ module.exports = async (client, message) => {
   }
 
   if (
-    message.content.toLowerCase().indexOf("lulu") > -1 ||
-    message.content.toLowerCase().indexOf("belle") > -1
+    (message.content.toLowerCase().indexOf("lulu") > -1 ||
+      message.content.toLowerCase().indexOf("belle") > -1) &&
+    message.author.id !== "157673412561469440"
   ) {
     let s = await client.guilds.get("542945080495833119");
     let me = await s.fetchMember("157673412561469440");
