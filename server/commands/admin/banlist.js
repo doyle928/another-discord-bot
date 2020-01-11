@@ -4,7 +4,9 @@ const randomColor = require("../../data/randomColor");
 
 exports.run = async (client, message, args) => {
   if (!message.member.hasPermission("BAN_MEMBERS")) {
-    message.channel.send("You don't have the permissions to use this command!");
+    message.channel.send(
+      "You don't have the permissions to use this command !"
+    );
     message.channel.send("<:natsukiMad:646210751417286656>");
   } else {
     message.guild.fetchBans(true).then(bans => {
@@ -59,7 +61,7 @@ exports.run = async (client, message, args) => {
           .delete()
           .catch(() =>
             message.channel.send(
-              "I dont have the permission to delete the command message!"
+              "I dont have the permission to delete the command message !"
             )
           );
       }, 200);

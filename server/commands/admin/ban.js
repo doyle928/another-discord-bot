@@ -19,7 +19,7 @@ exports.run = async (client, message, args) => {
         }
 
         if (!member.bannable) {
-          message.channel.send("I cannot ban this user!");
+          message.channel.send("I cannot ban this user !");
           message.channel.send("<a:sataniacrying:575078717911597077>");
           return;
         }
@@ -135,7 +135,7 @@ exports.run = async (client, message, args) => {
     }
   } else {
     if (!args[1]) {
-      message.channel.send("there's no user specified!!!");
+      message.channel.send("there's no user specified !!");
       message.channel.send("<:natsukiMad:646210751417286656>");
     } else {
       let member = null;

@@ -3,7 +3,7 @@ const Discord = require("discord.js");
 exports.run = async (client, message, args) => {
   if (!message.member.hasPermission("KICK_MEMBERS")) {
     message.channel.send(
-      `How dare you ${message.author.username} !! You don't have the permissions to use this command!`
+      `How dare you ${message.author.username} !! You don't have the permissions to use this command !`
     );
     message.channel.send("<:natsukiMad:646210751417286656>");
   } else {
@@ -29,7 +29,7 @@ exports.run = async (client, message, args) => {
 
       if (!member.bannable)
         return message.channel.send(
-          "I cannot kick this user! Do they have a higher role? Do I have kick permissions?"
+          "I cannot kick this user ! Do they have a higher role? Do I have kick permissions ?"
         );
       let reason = args.slice(2).join(" ");
       if (!reason) reason = "No reason provided";

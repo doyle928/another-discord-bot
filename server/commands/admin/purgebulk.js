@@ -6,7 +6,7 @@ exports.run = async (client, message, args) => {
     message.channel.send("<:natsukiMad:646210751417286656>");
   } else {
     if (!args[1]) {
-      message.channel.send("You didn't enter the amount of messages!!!");
+      message.channel.send("You didn't enter the amount of messages !!");
       message.channel.send("<:natsukiMad:646210751417286656>");
     } else {
       let limit = parseInt(args[1], 10);

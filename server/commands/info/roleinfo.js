@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 
 exports.run = async (client, message, args) => {
   if (!args[1]) {
-    message.channel.send("there's no role specified!!!");
+    message.channel.send("there's no role specified !!");
     message.channel.send("<:natsukiMad:646210751417286656>");
   } else {
     let id = args[1].match(/([0-9])\d+/g);
@@ -39,7 +39,7 @@ exports.run = async (client, message, args) => {
               .delete()
               .catch(() =>
                 message.channel.send(
-                  "I dont have the permission to delete the command message!"
+                  "I dont have the permission to delete the command message !"
                 )
               );
           }, 200);
