@@ -1,4 +1,5 @@
 const { request } = require("graphql-request");
+const Discord = require("discord.js");
 
 function checkMembers(guild) {
   let memberCount = 0;
