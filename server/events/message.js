@@ -254,7 +254,7 @@ module.exports = async (client, message) => {
   if (
     (message.content.toLowerCase().indexOf("lulu") > -1 ||
       message.content.toLowerCase().indexOf("belle") > -1) &&
-    message.author.id !== "157673412561469440"
+    message.author.id !== "601825955572350976"
   ) {
     let s = await client.guilds.get("542945080495833119");
     let me = await s.fetchMember("157673412561469440");
