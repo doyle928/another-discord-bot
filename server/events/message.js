@@ -98,12 +98,12 @@ module.exports = async (client, message) => {
     //   );
     // }
     if (message.guild.id === "559560674246787087") {
-      let messageSplit = message.content.split(" ");
+      let messageSplit = message.content.toLowerCase().split(" ");
       for (let i = 0; i < messageSplit.length; i++) {
         if (
-          messageSplit[i].toLowerCase() === "fag" ||
-          messageSplit[i].toLowerCase() === "faggot" ||
-          messageSplit[i].toLowerCase() === "nigger"
+          messageSplit[i] === "fag" ||
+          messageSplit[i] === "faggot" ||
+          messageSplit[i] === "nigger"
         ) {
           let messageEmbed = new Discord.RichEmbed()
             .setColor("#ff0000")
@@ -124,31 +124,95 @@ module.exports = async (client, message) => {
             message.delete();
           }
         }
-      }
-      if (
-        message.content.toLowerCase().indexOf("f a g") >= 0 ||
-        message.content.toLowerCase().indexOf("f a g g o t") >= 0 ||
-        message.content.toLowerCase().indexOf("n i g g e r") >= 0
-      ) {
-        let messageEmbed = new Discord.RichEmbed()
-          .setColor("#ff0000")
-          .setAuthor("Bad word")
-          .setDescription(
-            `Muted **${message.author.username}#${message.author.discriminator}** for saying : ${message.content}`
-          );
-
-        if (message.guild.id === "664351758344257537") {
-          let c = await message.guild.channels.get("664364035386507274");
-          c.send(messageEmbed);
-          message.member.addRole("664383601248305173");
-          message.delete();
-        } else if (message.guild.id === "559560674246787087") {
-          let c = await message.guild.channels.get("561372938474094603");
-          c.send(messageEmbed);
-          message.member.addRole("586122632479375370");
-          message.delete();
+        if (messageSplit[i] === "f") {
+          if (messageSplit.indexOf("f") < messageSplit.length) {
+            if (messageSplit[i + 1].toLowerCase === "a") {
+              if (messageSplit.indexOf("a") < messageSplit.length) {
+                if (messageSplit[i + 2].toLowerCase === "g") {
+                  if (message.guild.id === "664351758344257537") {
+                    let c = await message.guild.channels.get(
+                      "664364035386507274"
+                    );
+                    c.send(messageEmbed);
+                    message.member.addRole("664383601248305173");
+                    message.delete();
+                  } else if (message.guild.id === "559560674246787087") {
+                    let c = await message.guild.channels.get(
+                      "561372938474094603"
+                    );
+                    c.send(messageEmbed);
+                    message.member.addRole("586122632479375370");
+                    message.delete();
+                  }
+                }
+              }
+            }
+          }
+        }
+        if (messageSplit[i] === "n") {
+          if (messageSplit.indexOf("n") < messageSplit.length) {
+            if (messageSplit[i + 1].toLowerCase === "i") {
+              if (messageSplit.indexOf("i") < messageSplit.length) {
+                if (messageSplit[i + 2].toLowerCase === "g") {
+                  if (messageSplit.indexOf("g") < messageSplit.length) {
+                    if (messageSplit[i + 3].toLowerCase === "g") {
+                      if (messageSplit.indexOf("g") < messageSplit.length) {
+                        if (messageSplit[i + 4].toLowerCase === "e") {
+                          if (messageSplit.indexOf("e") < messageSplit.length) {
+                            if (messageSplit[i + 5].toLowerCase === "r") {
+                              if (message.guild.id === "664351758344257537") {
+                                let c = await message.guild.channels.get(
+                                  "664364035386507274"
+                                );
+                                c.send(messageEmbed);
+                                message.member.addRole("664383601248305173");
+                                message.delete();
+                              } else if (
+                                message.guild.id === "559560674246787087"
+                              ) {
+                                let c = await message.guild.channels.get(
+                                  "561372938474094603"
+                                );
+                                c.send(messageEmbed);
+                                message.member.addRole("586122632479375370");
+                                message.delete();
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
+      // if (
+      //   message.content.toLowerCase().indexOf("f a g") >= 0 ||
+      //   message.content.toLowerCase().indexOf("f a g g o t") >= 0 ||
+      //   message.content.toLowerCase().indexOf("n i g g e r") >= 0
+      // ) {
+      //   let messageEmbed = new Discord.RichEmbed()
+      //     .setColor("#ff0000")
+      //     .setAuthor("Bad word")
+      //     .setDescription(
+      //       `Muted **${message.author.username}#${message.author.discriminator}** for saying : ${message.content}`
+      //     );
+
+      //   if (message.guild.id === "664351758344257537") {
+      //     let c = await message.guild.channels.get("664364035386507274");
+      //     c.send(messageEmbed);
+      //     message.member.addRole("664383601248305173");
+      //     message.delete();
+      //   } else if (message.guild.id === "559560674246787087") {
+      //     let c = await message.guild.channels.get("561372938474094603");
+      //     c.send(messageEmbed);
+      //     message.member.addRole("586122632479375370");
+      //     message.delete();
+      //   }
+      // }
     }
     if (message.guild.id === "559560674246787087") {
       let msgCheckId = message.content
