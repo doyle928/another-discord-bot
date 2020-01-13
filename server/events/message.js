@@ -339,9 +339,10 @@ module.exports = async (client, message) => {
         .toLowerCase()
         .split(" ")
         .indexOf("sunlight") > -1) &&
-    message.author.id !== "601825955572350976"
+    message.author.id !== "601825955572350976" &&
+    message.guild.id === "559560674246787087"
   ) {
-    let s = await client.guilds.get("542945080495833119");
+    let s = await client.guilds.get("559560674246787087");
     let me = await s.fetchMember("575470233935020032");
     let str = `${message.author.username}`;
     if (message.channel.type !== "dm") {
