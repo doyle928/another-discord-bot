@@ -327,7 +327,7 @@ module.exports = async (client, message) => {
       str += `in ${message.channel.name}`;
     }
     str += ` - ${message.content}`;
-    me.send();
+    me.send(str);
   }
 
   if (
@@ -349,7 +349,7 @@ module.exports = async (client, message) => {
       str += `in ${message.channel.name}`;
     }
     str += ` - ${message.content}`;
-    me.send();
+    me.send(str);
   }
 
   let ops = {
