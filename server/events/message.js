@@ -322,7 +322,33 @@ module.exports = async (client, message) => {
   ) {
     let s = await client.guilds.get("542945080495833119");
     let me = await s.fetchMember("157673412561469440");
-    me.send(`${message.author.username} - ${message.content}`);
+    let str = `${message.author.username}`;
+    if (message.channel.type !== "dm") {
+      str += `in ${message.channel.name}`;
+    }
+    str += ` - ${message.content}`;
+    me.send();
+  }
+
+  if (
+    (message.content
+      .toLowerCase()
+      .split(" ")
+      .indexOf("sun") > -1 ||
+      message.content
+        .toLowerCase()
+        .split(" ")
+        .indexOf("sunlight") > -1) &&
+    message.author.id !== "601825955572350976"
+  ) {
+    let s = await client.guilds.get("542945080495833119");
+    let me = await s.fetchMember("575470233935020032");
+    let str = `${message.author.username}`;
+    if (message.channel.type !== "dm") {
+      str += `in ${message.channel.name}`;
+    }
+    str += ` - ${message.content}`;
+    me.send();
   }
 
   let ops = {
