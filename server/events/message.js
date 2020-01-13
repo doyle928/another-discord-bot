@@ -324,7 +324,7 @@ module.exports = async (client, message) => {
     let me = await s.fetchMember("157673412561469440");
     let str = `${message.author.username}`;
     if (message.channel.type !== "dm") {
-      str += `in ${message.channel.name}`;
+      str += ` in ${message.channel.name}`;
     }
     str += ` - ${message.content}`;
     me.send(str);
@@ -346,7 +346,7 @@ module.exports = async (client, message) => {
     let me = await s.fetchMember("575470233935020032");
     let str = `${message.author.username}`;
     if (message.channel.type !== "dm") {
-      str += `in ${message.channel.name}`;
+      str += ` in ${message.channel.name}`;
     }
     str += ` - ${message.content}`;
     me.send(str);
