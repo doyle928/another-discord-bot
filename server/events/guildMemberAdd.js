@@ -105,7 +105,8 @@ module.exports = async (client, member, guild) => {
     let c = await member.guild.channels.get("561372938474094603");
     messageEmbed
       .setAuthor("New member")
-      .setDescription(`**${member.user.username}** joined !`);
+      .setDescription(`**${member.user.username}** joined !`)
+      .setColor("#00ff00");
 
     member
       .addRole("596016686331723785")
@@ -160,7 +161,8 @@ module.exports = async (client, member, guild) => {
       } else {
         messageEmbed
           .setAuthor("New member")
-          .setDescription(`**${member.user.username}** joined !`);
+          .setDescription(`**${member.user.username}** joined !`)
+          .setColor("#00ff00");
 
         member.guild
           .fetchMember("157673412561469440")

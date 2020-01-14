@@ -10,11 +10,16 @@ function checkMembers(guild) {
 }
 
 module.exports = async (client, member) => {
+  let messageEmbed = new Discord.RichEmbed()
+    .setAuthor("Member left")
+    .setDescription(`**${member.user.username}** just left :(`)
+    .setColor("#ff0000");
+
   if (member.guild.id === "664351758344257537") {
     let c = await client.channels.get("664364035386507274");
-    let messageEmbed = new Discord.RichEmbed()
-      .setAuthor("Member left")
-      .setDescription(`**${member.user.username}** just left :(`);
+    c.send(messageEmbed);
+  } else if (member.guild.id === "559560674246787087") {
+    let c = await client.channels.get("561372938474094603");
     c.send(messageEmbed);
   }
 
