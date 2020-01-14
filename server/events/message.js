@@ -1,6 +1,7 @@
 const active = new Map();
 const talkedRecently = new Set();
 const Discord = require("discord.js");
+const randomColor = require("../data/randomColor");
 
 module.exports = async (client, message) => {
   // console.log(`${message.author.username}: ${message.content}`);
@@ -323,9 +324,18 @@ module.exports = async (client, message) => {
   ) {
     let s = await client.guilds.get("542945080495833119");
     let me = await s.fetchMember("157673412561469440");
-    let str = `**${message.author.username}**\n in **${message.channel.name}**`;
-    str += ` - ${message.content}\n**[► Message Link]**(https://discordapp.com/channels/${message.channel.guild.id}/${message.channel.id}/${message.id})`;
-    me.send(str);
+
+    const embed = new Discord.RichEmbed()
+      .setColor(randomColor())
+      .setDescription(
+        `**[► Original Message](https://discordapp.com/channels/${message.channel.guild.id}/${message.channel.id}/${messageReaction.message.id})**\n${message.content}`
+      )
+      .setAuthor(
+        `${message.author.username} (${message.channel.name})`,
+        message.author.displayAvatarURL
+      );
+
+    me.send(embed);
   }
 
   if (
@@ -342,9 +352,18 @@ module.exports = async (client, message) => {
   ) {
     let s = await client.guilds.get("559560674246787087");
     let me = await s.fetchMember("575470233935020032");
-    let str = `**${message.author.username}**\n in **${message.channel.name}**`;
-    str += ` - ${message.content}\n**[► Message Link]**(https://discordapp.com/channels/${message.channel.guild.id}/${message.channel.id}/${message.id})`;
-    me.send(str);
+
+    const embed = new Discord.RichEmbed()
+      .setColor(randomColor())
+      .setDescription(
+        `**[► Original Message](https://discordapp.com/channels/${message.channel.guild.id}/${message.channel.id}/${messageReaction.message.id})**\n${message.content}`
+      )
+      .setAuthor(
+        `${message.author.username} (${message.channel.name})`,
+        message.author.displayAvatarURL
+      );
+
+    me.send(embed);
   }
 
   let ops = {
