@@ -322,11 +322,11 @@ module.exports = async (client, message) => {
   ) {
     let s = await client.guilds.get("542945080495833119");
     let me = await s.fetchMember("157673412561469440");
-    let str = `${message.author.username}`;
+    let str = `**${message.author.username}**`;
     if (message.channel.type !== "dm") {
-      str += ` in ${message.channel.name}`;
+      str += ` in **${message.channel.name}**`;
     }
-    str += ` - ${message.content}`;
+    str += ` - ${message.content}\n**[► Message Link]**(https://discordapp.com/channels/${message.channel.guild.id}/${message.channel.id}/${message.id})`;
     me.send(str);
   }
 
@@ -344,11 +344,11 @@ module.exports = async (client, message) => {
   ) {
     let s = await client.guilds.get("559560674246787087");
     let me = await s.fetchMember("575470233935020032");
-    let str = `${message.author.username}`;
+    let str = `**${message.author.username}**`;
     if (message.channel.type !== "dm") {
-      str += ` in ${message.channel.name}`;
+      str += ` in **${message.channel.name}**`;
     }
-    str += ` - ${message.content}`;
+    str += ` - ${message.content}\n**[► Message Link]**(https://discordapp.com/channels/${message.channel.guild.id}/${message.channel.id}/${message.id})`;
     me.send(str);
   }
 
