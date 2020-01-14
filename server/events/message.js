@@ -328,7 +328,7 @@ module.exports = async (client, message) => {
     const embed = new Discord.RichEmbed()
       .setColor(randomColor())
       .setDescription(
-        `**[► Original Message](https://discordapp.com/channels/${message.channel.guild.id}/${message.channel.id}/${messageReaction.message.id})**\n${message.content}`
+        `**[► Original Message](https://discordapp.com/channels/${message.channel.guild.id}/${message.channel.id}/${message.id})**\n${message.content}`
       )
       .setAuthor(
         `${message.author.username} (${message.channel.name})`,
@@ -356,7 +356,7 @@ module.exports = async (client, message) => {
     const embed = new Discord.RichEmbed()
       .setColor(randomColor())
       .setDescription(
-        `**[► Original Message](https://discordapp.com/channels/${message.channel.guild.id}/${message.channel.id}/${messageReaction.message.id})**\n${message.content}`
+        `**[► Original Message](https://discordapp.com/channels/${message.channel.guild.id}/${message.channel.id}/${message.id})**\n${message.content}`
       )
       .setAuthor(
         `${message.author.username} (${message.channel.name})`,
