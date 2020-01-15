@@ -249,29 +249,6 @@ module.exports = async (client, message) => {
     me.send(embed);
   }
 
-  if (
-    (message.content.toLowerCase().indexOf("fig") > -1 ||
-      message.content.toLowerCase().indexOf("figgy") > -1 ||
-      message.content.toLowerCase().indexOf("figgie") > -1) &&
-    message.author.id !== "601825955572350976" &&
-    message.guild
-  ) {
-    let s = await client.guilds.get("559560674246787087");
-    let me = await s.fetchMember("553266507593809941");
-
-    const embed = new Discord.RichEmbed()
-      .setColor(randomColor())
-      .setDescription(
-        `**[► Original Message](https://discordapp.com/channels/${message.channel.guild.id}/${message.channel.id}/${message.id})**\n${message.content}`
-      )
-      .setAuthor(
-        `${message.author.username} (${message.channel.name})`,
-        message.author.displayAvatarURL
-      );
-
-    me.send(embed);
-  }
-
   let ops = {
     active: active
   };
@@ -451,4 +428,28 @@ module.exports = async (client, message) => {
 //       message.delete();
 //     }, 225);
 //   }
+// }
+//-------------------------------------------------------------
+
+// if (
+//   (message.content.toLowerCase().indexOf("fig") > -1 ||
+//     message.content.toLowerCase().indexOf("figgy") > -1 ||
+//     message.content.toLowerCase().indexOf("figgie") > -1) &&
+//   message.author.id !== "601825955572350976" &&
+//   message.guild
+// ) {
+//   let s = await client.guilds.get("559560674246787087");
+//   let me = await s.fetchMember("553266507593809941");
+
+//   const embed = new Discord.RichEmbed()
+//     .setColor(randomColor())
+//     .setDescription(
+//       `**[► Original Message](https://discordapp.com/channels/${message.channel.guild.id}/${message.channel.id}/${message.id})**\n${message.content}`
+//     )
+//     .setAuthor(
+//       `${message.author.username} (${message.channel.name})`,
+//       message.author.displayAvatarURL
+//     );
+
+//   me.send(embed);
 // }
