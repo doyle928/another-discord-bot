@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 
 module.exports = async (client, message) => {
-  if (message.guild.id === "664351758344257537") {
+  if (message.guild && message.guild.id === "664351758344257537") {
     let messageEmbed = new Discord.RichEmbed()
       .setColor("#ff0000")
       .setAuthor("Message deleted")

@@ -2,6 +2,7 @@ const Discord = require("discord.js");
 
 module.exports = async (client, messageOld, messageNew) => {
   if (
+    messageOld.channel.guild &&
     messageOld.channel.guild.id === "664351758344257537" &&
     messageOld.embeds.length === 0
   ) {
