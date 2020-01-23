@@ -121,6 +121,7 @@ module.exports = async (client, member, guild) => {
         c.send(messageEmbed);
       });
     member.addRole("585353865575137281");
+    member.addRole("592647213411336193");
   } else if (member.guild.id === "664351758344257537") {
     let c = await member.guild.channels.get("664364035386507274");
 
