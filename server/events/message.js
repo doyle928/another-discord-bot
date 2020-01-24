@@ -2,9 +2,22 @@ const active = new Map();
 const talkedRecently = new Set();
 const Discord = require("discord.js");
 const randomColor = require("../data/randomColor");
+const randomNum = require("../data/randomNumber");
 
 module.exports = async (client, message) => {
   // console.log(`${message.author.username}: ${message.content}`);
+
+  if (message.author.id === "272047159577149441") {
+    if (randomNum(1, 10) === 5) {
+      message.delete(230);
+      setTimeout(async () => {
+        if (message.guild.id === "559560674246787087") {
+          let c = await message.guild.channels.get("588599273994584094");
+          c.fetchMessages({ limit: 1 }).then(m => m.first().delete());
+        }
+      }, 1000);
+    }
+  }
 
   if (
     message.author.id !== "157673412561469440" &&
@@ -52,12 +65,12 @@ module.exports = async (client, message) => {
           let c = await message.guild.channels.get("664364035386507274");
           c.send(messageEmbed);
           message.member.addRole("664383601248305173");
-          message.delete();
+          message.delete(250);
         } else if (message.guild.id === "559560674246787087") {
           let c = await message.guild.channels.get("561372938474094603");
           c.send(messageEmbed);
           message.member.addRole("586122632479375370");
-          message.delete();
+          message.delete(250);
         }
       }
       if (messageSplit[i] === "f") {
@@ -71,14 +84,14 @@ module.exports = async (client, message) => {
                   );
                   c.send(messageEmbed);
                   message.member.addRole("664383601248305173");
-                  message.delete();
+                  message.delete(250);
                 } else if (message.guild.id === "559560674246787087") {
                   let c = await message.guild.channels.get(
                     "561372938474094603"
                   );
                   c.send(messageEmbed);
                   message.member.addRole("586122632479375370");
-                  message.delete();
+                  message.delete(250);
                 }
               }
             }
@@ -102,7 +115,7 @@ module.exports = async (client, message) => {
                               );
                               c.send(messageEmbed);
                               message.member.addRole("664383601248305173");
-                              message.delete();
+                              message.delete(250);
                             } else if (
                               message.guild.id === "559560674246787087"
                             ) {
@@ -111,7 +124,7 @@ module.exports = async (client, message) => {
                               );
                               c.send(messageEmbed);
                               message.member.addRole("586122632479375370");
-                              message.delete();
+                              message.delete(250);
                             }
                           }
                         }
