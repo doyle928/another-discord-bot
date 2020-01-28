@@ -1,4 +1,6 @@
 const puppeteer = require("puppeteer");
+const Discord = require("discord.js");
+const randomColor = require("../../data/randomColor");
 
 exports.run = async (client, message) => {
   function delay(timeout) {
@@ -8,7 +10,8 @@ exports.run = async (client, message) => {
   }
 
   const browser = await puppeteer.launch({
-    headless: true
+    headless: true,
+    args: ["--no-sandbox"]
   });
   const page = await browser.newPage();
   await page.goto(`https://mee6.xyz/leaderboard/${message.guild.id}`);
@@ -23,27 +26,34 @@ exports.run = async (client, message) => {
         username: element.children[0].children[2].innerText,
         messages: element.children[1].children[0].children[1].innerText,
         experience: element.children[1].children[1].children[1].innerText,
-        level: element.children[1].children[2].children[1].children[1].innerText
+        level: element.children[1].children[2].children[0].children[1].innerText
       })
     )
   );
-  console.log(users);
   await browser.close();
 
   let username = message.author.username;
-  if (message.mentions.members.first())
+  let member = message.author;
+  if (message.mentions.members.first()) {
     username = message.mentions.members.first().user.username;
-  console.log(username);
+    member = message.mentions.members.first().user;
+  }
 
   for (let user in users) {
-    console.log(users[user]);
     if (users[user].username === username) {
-      return message.channel.send(
-        `**${username}** has sent a total of **${users[user].messages} messages** for a total of **${users[user].experience} experience** ! They are **level ${users[user].level}** !!`
-      );
+      let embed = new Discord.RichEmbed()
+        .setAuthor(member.username, member.displayAvatarURL)
+        .setColor(randomColor())
+        .setDescription(
+          `**Messages :** ${users[user].messages}\n**Experience :** ${users[user].experience}\n**Level :** ${users[user].level}`
+        );
+      return message.channel.send(embed);
+      // return message.channel.send(
+      //   `**${username}** has sent a total of **${users[user].messages} messages** for a total of **${users[user].experience} experience** ! They are **level ${users[user].level}** !!`
+      // );
     }
   }
   return message.channel.send(
-    `sorry but ${username} is not in the top 100 and i do not feel like going and finding them !`
+    `sorry but **${username}** is not in the top 100 and i do not feel like going and finding them !`
   );
 };
