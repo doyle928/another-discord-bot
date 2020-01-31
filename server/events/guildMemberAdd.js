@@ -196,8 +196,8 @@ module.exports = async (client, member, guild) => {
   query = `mutation {
             addUser(guild_id: "${member.guild.id}", user_id: "${
     member.user.id
-  }", join_date: "${member.joinedTimestamp}", strikes: ${0}) {
-              guild_id user_id join_date strikes
+  }", join_date: "${member.joinedTimestamp}", strikes: ${0}, booster: false) {
+              guild_id user_id join_date strikes booster
             }
           }`;
 

@@ -229,7 +229,7 @@ module.exports = async (client, messageReaction, user) => {
 
                   c.send(attachment).then(() => {
                     c.send(
-                      `~ ${mem} ~\nWelcome to the **Our Home** !\nMake sure you to get some roles in ${rolesC} and tell us a little about yourself in ${introC} ! <:softheart:575053165804912652>`
+                      `<a:star:662882173145055242> ${mem} <a:star:662882173145055242>\nWelcome to the **Our Home** !\nMake sure you to get some roles in ${rolesC} and tell us a little about yourself in ${introC} ! If you have any questions feel free to ask any of the <@&559562042907033651> ! <:softheart:575053165804912652>\n<@&672789435875590144>`
                     ).catch(err => console.error(err));
                   });
                   // gif drawn or error

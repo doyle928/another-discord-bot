@@ -4,7 +4,8 @@ const userSchema = new Schema({
   guild_id: String,
   user_id: String,
   join_date: String,
-  strikes: Number
+  strikes: Number,
+  booster: Boolean
 });
 
 module.exports = model("User", userSchema);
