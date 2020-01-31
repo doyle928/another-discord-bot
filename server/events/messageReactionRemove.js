@@ -146,6 +146,8 @@ module.exports = async (client, messageReaction, user) => {
   } else if (messageReaction.message.id === "663889028315217935") {
     if (messageReaction._emoji.name === "🎙️") {
       removeRole("663148896046022707");
+    } else if (messageReaction._emoji.name === "👋") {
+      removeRole("672789435875590144");
     }
   }
   //----------------------------- losers club below

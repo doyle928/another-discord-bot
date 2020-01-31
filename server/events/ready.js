@@ -116,6 +116,7 @@ module.exports = async client => {
       //voicechat
       if (_.size(msg.reactions) === 0) {
         await msg.react("🎙️");
+        await msg.react("👋");
       }
     });
 

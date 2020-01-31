@@ -27,9 +27,11 @@ exports.run = async (client, message) => {
             let members = await message.guild.fetchMembers();
 
             let boosterRoleID = null;
-            guild.roles.map(r => {
-              if (r.name === "Nitro Booster") boosterRoleID = r.id;
-            });
+            await Promise.all(
+              message.guild.roles.map(r => {
+                if (r.name === "Nitro Booster") boosterRoleID = r.id;
+              })
+            );
 
             members.members.map(async mem => {
               let booster = false;

@@ -726,9 +726,11 @@ module.exports = async (client, messageReaction, user) => {
         await addRole("561443309667745805");
       }
     } else if (messageReaction.message.id === "663889028315217935") {
-      //vc role
+      //ping roles
       if (messageReaction._emoji.name === "🎙️") {
         await addRole("663148896046022707");
+      } else if (messageReaction._emoji.name === "👋") {
+        await addRole("672789435875590144");
       }
     }
     //--------------------------------------------------- losers club below
