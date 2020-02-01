@@ -18,7 +18,7 @@ module.exports = async (client, message) => {
     message.guild && // make sure it's a non-private messages 
     message.type === "DEFAULT"
   ) {
-    message.channel.fetchMessage(message.id).then(m=>{
+    message.channel.fetchMessage(message.id).then(async m=>{
       if(m.nonce === null){
         message.channel.send(`hey ${message.author} ! stop using a user bot !`);
         let messageEmbed = new Discord.RichEmbed()
