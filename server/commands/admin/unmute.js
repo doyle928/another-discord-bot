@@ -3,7 +3,8 @@ const Discord = require("discord.js");
 exports.run = async (client, message, args) => {
   if (
     !message.member.hasPermission("KICK_MEMBERS") &&
-    message.author.id !== "274056145856102402"
+    message.author.id !== "283061927121256449" &&
+    message.author.id !== "538026019681075220"
   ) {
     message.channel.send(
       `How dare you ${message.author.username} !! You don't have the permissions to use this command !`
