@@ -284,6 +284,9 @@ module.exports = async (client, messageReaction, user) => {
                             userArray.push(m.author.id);
                         });
                         collector.on("end", async collected => {
+                          let url =
+                            "https://lulu-discord-bot.herokuapp.com/api";
+
                           for (let user in userArray) {
                             let query = `query {
                               getUser(guild_id: "${msg.guild.id}", user_id: "${userArray[user]}") {
