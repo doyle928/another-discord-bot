@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const randomColor = require("../data/randomColor");
+const randomNum = require("../data/randomNumber");
 const _ = require("lodash");
 const Canvas = require("canvas");
 const path = require("path");
@@ -230,7 +231,87 @@ module.exports = async (client, messageReaction, user) => {
                   c.send(attachment).then(() => {
                     c.send(
                       `<a:star:662882173145055242> ${mem} <a:star:662882173145055242>\nWelcome to the **Our Home** !\nMake sure you to get some roles in ${rolesC} and tell us a little about yourself in ${introC} ! If you have any questions feel free to ask any of the <@&559562042907033651> ! <:softheart:575053165804912652>\n<@&672789435875590144>`
-                    ).catch(err => console.error(err));
+                    )
+                      .then(msg => {
+                        const filter = m =>
+                          m.content
+                            .toLowerCase()
+                            .replace(/([^a-z])/g)
+                            .indexOf("hi") >= 0 ||
+                          m.content
+                            .toLowerCase()
+                            .replace(/([^a-z])/g)
+                            .indexOf("hello") >= 0 ||
+                          m.content
+                            .toLowerCase()
+                            .replace(/([^a-z])/g)
+                            .indexOf("welcome") >= 0 ||
+                          m.content
+                            .toLowerCase()
+                            .replace(/([^a-z])/g)
+                            .indexOf("howareyou") >= 0 ||
+                          m.content
+                            .toLowerCase()
+                            .replace(/([^a-z])/g)
+                            .indexOf("howareu") >= 0 ||
+                          m.content
+                            .toLowerCase()
+                            .replace(/([^a-z])/g)
+                            .indexOf("welcome") >= 0 ||
+                          m.content
+                            .toLowerCase()
+                            .replace(/([^a-z])/g)
+                            .indexOf("bienvenue") >= 0 ||
+                          m.content
+                            .toLowerCase()
+                            .replace(/([^a-z])/g)
+                            .indexOf("yo") >= 0 ||
+                          m.content
+                            .toLowerCase()
+                            .replace(/([^a-z])/g)
+                            .indexOf("hey") >= 0 ||
+                          m.content
+                            .toLowerCase()
+                            .replace(/([^a-z])/g)
+                            .indexOf("nicetomeetyou") >= 0;
+                        const collector = msg.channel.createMessageCollector(
+                          filter,
+                          { time: 120000 }
+                        );
+                        let userArray = [];
+                        collector.on("collect", m => {
+                          if (!userArray.includes(m.author.id))
+                            userArray.push(m.author.id);
+                        });
+                        collector.on("end", async collected => {
+                          for (let user in userArray) {
+                            let query = `query {
+                              getUser(guild_id: "${msg.guild.id}", user_id: "${userArray[user]}") {
+                                guild_id user_id welcome_points
+                              }
+                            }`;
+                            try {
+                              let res = await request(url, query);
+                              let points =
+                                res.getUser.welcome_points +
+                                randomNum(150, 250);
+                              query = `mutation {
+                              addWelcomePoints(guild_id: "${msg.guild.id}", user_id: "${userArray[user]}", welcome_points: ${points}) {
+                                guild_id user_id welcome_points
+                              }
+                            }`;
+                              try {
+                                await request(url, query);
+                              } catch (err) {
+                                console.error(err);
+                              }
+                            } catch (err) {
+                              console.error(err);
+                            }
+                          }
+                        });
+                      })
+                      .catch(err => console.error(err));
                   });
                   // gif drawn or error
                 }

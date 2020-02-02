@@ -45,8 +45,8 @@ exports.run = async (client, message) => {
                 mem.user.id
               }", join_date: "${
                 mem.joinedTimestamp
-              }", strikes: ${0}, booster: ${booster}) {
-              guild_id user_id join_date strikes booster
+                }", strikes: ${0}, booster: ${booster}, welcome_points: ${0}) {
+              guild_id user_id join_date strikes booster welcome_points
             }
           }`;
               let url = "https://lulu-discord-bot.herokuapp.com/api";

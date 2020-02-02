@@ -193,16 +193,31 @@ module.exports = async (client, member, guild) => {
     }
   }
 
-  query = `mutation {
-            addUser(guild_id: "${member.guild.id}", user_id: "${
-    member.user.id
-  }", join_date: "${member.joinedTimestamp}", strikes: ${0}, booster: false) {
-              guild_id user_id join_date strikes booster
+  query = `query {
+            getUser(guild_id: "${member.guild.id}", user_id: "${member.user.id}") {
+              guild_id user_id 
             }
           }`;
 
   try {
-    await request(url, query);
+    let res = await request(url, query);
+    if (res.getUser === null) {
+      query = `mutation {
+            addUser(guild_id: "${member.guild.id}", user_id: "${
+        member.user.id
+      }", join_date: "${
+        member.joinedTimestamp
+      }", strikes: ${0}, booster: false, welcome_points: ${0}) {
+              guild_id user_id join_date strikes booster welcome_points
+            }
+          }`;
+
+      try {
+        await request(url, query);
+      } catch (err) {
+        console.error(err);
+      }
+    }
   } catch (err) {
     console.error(err);
   }

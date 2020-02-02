@@ -5,7 +5,8 @@ const userSchema = new Schema({
   user_id: String,
   join_date: String,
   strikes: Number,
-  booster: Boolean
+  booster: Boolean,
+  welcome_points: Number
 });
 
 module.exports = model("User", userSchema);

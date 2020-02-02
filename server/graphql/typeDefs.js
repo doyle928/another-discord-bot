@@ -7,6 +7,7 @@ module.exports = gql`
     join_date: String!
     strikes: Int
     booster: Boolean!
+    welcome_points: Int!
   }
   type Count {
     guild_id: String!
@@ -56,9 +57,15 @@ module.exports = gql`
       join_date: String!
       strikes: Int!
       booster: Boolean!
+      welcome_points: Int!
     ): User!
     addStrike(guild_id: String!, user_id: String!, strikes: Int): User!
     setBooster(guild_id: String!, user_id: String!, booster: Boolean): User!
+    addWelcomePoints(
+      guild_id: String!
+      user_id: String!
+      welcome_points: Int
+    ): User!
     addCount(guild_id: String!, members: Int!, timestamp: String!): Count!
     addServer(
       guild_id: String!

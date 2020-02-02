@@ -14,19 +14,23 @@ module.exports = {
     getUser: async (_, { guild_id, user_id }) => {
       const user = await User.find(
         { guild_id: guild_id, user_id: user_id },
-        "guild_id user_id join_date strikes booster"
+        "guild_id user_id join_date strikes booster welcome_points"
       );
       return user[0];
     }
   },
   Mutation: {
-    addUser: async (_, { guild_id, user_id, join_date, strikes, booster }) => {
+    addUser: async (
+      _,
+      { guild_id, user_id, join_date, strikes, booster, welcome_points }
+    ) => {
       const newUser = new User({
         guild_id,
         user_id,
         join_date,
         strikes,
-        booster
+        booster,
+        welcome_points
       });
 
       //  Create the new user
@@ -58,6 +62,22 @@ module.exports = {
         },
         {
           booster: booster
+        },
+        {
+          new: true
+        }
+      );
+
+      return res;
+    },
+    addWelcomePoints: async (_, { guild_id, user_id, welcome_points }) => {
+      const res = await User.findOneAndUpdate(
+        {
+          guild_id: guild_id,
+          user_id: user_id
+        },
+        {
+          welcome_points: welcome_points
         },
         {
           new: true
