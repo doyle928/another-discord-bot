@@ -16,7 +16,8 @@ exports.run = async (client, message, args) => {
     "653754818677964831",
     "663423171185213487",
     "663977787606040576",
-    "667218872784519189"
+    "667218872784519189",
+    "673747419988754462"
   ];
   let changedRoleCheck = false;
   for (let role in message.member._roles) {

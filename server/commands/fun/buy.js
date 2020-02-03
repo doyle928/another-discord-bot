@@ -15,7 +15,7 @@ exports.run = async (client, message, args) => {
     if (user.getUser.welcome_points >= 10000) {
       message.channel
         .send(
-          `What would you like to buy ?\n\n1 : 10.000 - 1 month custom role\n2 : 50.000 - permanent custom role\n\nplease respond with 1 or 2`
+          `What would you like to buy ? you have **${user.getUser.welcome_points} points** !\n\n**1 :** 10.000 - 1 month custom role\n**2 :** 50.000 - permanent custom role\n\nplease respond with 1 or 2`
         )
         .then(() => {
           message.channel
@@ -82,16 +82,16 @@ exports.run = async (client, message, args) => {
                                       .setColor(randomColor());
                                     c.send(embed);
                                     query = `mutation {
-                              addWelcomePoints(guild_id: "${
-                                message.guild
-                              }", user_id: "${
+                                      addWelcomePoints(guild_id: "${
+                                        message.guild.id
+                                      }", user_id: "${
                                       message.author.id
                                     }", welcome_points: ${Number(
                                       user.getUser.welcome_points
                                     ) - 10000}) {
-                                guild_id user_id welcome_points
-                              }
-                            }`;
+                                        guild_id user_id welcome_points
+                                      }
+                                    }`;
                                     try {
                                       await request(url, query);
                                     } catch (err) {
@@ -163,7 +163,7 @@ exports.run = async (client, message, args) => {
 
                                       query = `mutation {
                               addWelcomePoints(guild_id: "${
-                                message.guild
+                                message.guild.id
                               }", user_id: "${
                                         message.author.id
                                       }", welcome_points: ${Number(
