@@ -11,8 +11,8 @@ exports.run = async (client, message, args) => {
             }
           }`;
   try {
-    let res = await request(url, query);
-    if (res.getUser.welcome_points >= 10000) {
+    let user = await request(url, query);
+    if (user.getUser.welcome_points >= 10000) {
       message.channel
         .send(
           `What would you like to buy ?\n\n1 : 10.000 - 1 month custom role\n2 : 50.000 - permanent custom role\n\nplease respond with 1 or 2`
@@ -68,9 +68,9 @@ exports.run = async (client, message, args) => {
                                   .then(async role => {
                                     await message.member.addRole(role.id);
                                     await message.channel.send(
-                                      `done ! enjoy your new role !\nyou have ${res
-                                        .getUser.welcome_points -
-                                        10000} points left now !`
+                                      `done ! enjoy your new role !\nyou have ${Number(
+                                        user.getUser.welcome_points
+                                      ) - 10000} points left now !`
                                     );
                                     let c = await client.channels.get(
                                       "561372938474094603"
@@ -86,8 +86,9 @@ exports.run = async (client, message, args) => {
                                 message.guild
                               }", user_id: "${
                                       message.author.id
-                                    }", welcome_points: ${res.getUser
-                                      .welcome_points - 10000}) {
+                                    }", welcome_points: ${Number(
+                                      user.getUser.welcome_points
+                                    ) - 10000}) {
                                 guild_id user_id welcome_points
                               }
                             }`;
@@ -103,7 +104,7 @@ exports.run = async (client, message, args) => {
                       });
                   });
               } else if (collected.first().content === "2") {
-                if (res.getUser.welcome_points >= 50000) {
+                if (user.getUser.welcome_points >= 50000) {
                   message.channel
                     .send(
                       `so you want to by the permanent role for 50.000 !\nwhat do you want the name of it to be ??`
@@ -146,9 +147,9 @@ exports.run = async (client, message, args) => {
                                     .then(async role => {
                                       await message.member.addRole(role.id);
                                       await message.channel.send(
-                                        `done ! enjoy your new role !\nyou have ${res
-                                          .getUser.welcome_points -
-                                          10000} points left !`
+                                        `done ! enjoy your new role !\nyou have ${Number(
+                                          user.getUser.welcome_points
+                                        ) - 10000} points left !`
                                       );
                                       let c = await client.channels.get(
                                         "561372938474094603"
@@ -165,8 +166,9 @@ exports.run = async (client, message, args) => {
                                 message.guild
                               }", user_id: "${
                                         message.author.id
-                                      }", welcome_points: ${res.getUser
-                                        .welcome_points - 50000}) {
+                                      }", welcome_points: ${Number(
+                                        user.getUser.welcome_points
+                                      ) - 50000}) {
                                 guild_id user_id welcome_points
                               }
                             }`;
@@ -184,7 +186,7 @@ exports.run = async (client, message, args) => {
                 } else {
                   message.channel.send(
                     `you dont have enough points ! you need 50.000 ! you need **${50000 -
-                      res.getUser.welcome_points} more** !`
+                      Number(user.getUser.welcome_points)} more** !`
                   );
                 }
               }
@@ -192,7 +194,7 @@ exports.run = async (client, message, args) => {
         });
     } else {
       message.channel.send(
-        `sorry but the cheapest thing in the store is 10.000 points ! you only have ${res.getUser.welcome_points}`
+        `sorry but the cheapest thing in the store is 10.000 points ! you only have ${user.getUser.welcome_points}`
       );
     }
   } catch (err) {

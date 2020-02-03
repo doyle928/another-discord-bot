@@ -18,6 +18,7 @@ exports.run = async (client, message, args) => {
     "663977787606040576",
     "667218872784519189"
   ];
+  let changedRoleCheck = false;
   for (let role in message.member._roles) {
     if (customRoles.includes(message.member._roles[role])) {
       let roleToChange = await message.guild.roles.get(
@@ -35,10 +36,13 @@ exports.run = async (client, message, args) => {
           );
           return message.channel.send("<:deadinside:>");
         });
+      changedRoleCheck = true;
     } else if (Number(role) === message.member._roles.length - 1) {
-      return message.channel.send(
-        "sorry ! but you dont have a custom role to change !"
-      );
+      if (!changedRoleCheck) {
+        return message.channel.send(
+          "sorry ! but you dont have a custom role to change !"
+        );
+      }
     }
   }
 };
