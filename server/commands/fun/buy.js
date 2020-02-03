@@ -25,7 +25,7 @@ exports.run = async (client, message, args) => {
               errors: ["time"]
             })
             .then(async collected => {
-              if (collected.first().content === 1) {
+              if (collected.first().content === "1") {
                 message.channel
                   .send(
                     `so you want to by the 1 month role for 10.000 !\nwhat do you want the name of it to be ??`
@@ -102,7 +102,7 @@ exports.run = async (client, message, args) => {
                           });
                       });
                   });
-              } else if (collected.first().content === 2) {
+              } else if (collected.first().content === "2") {
                 if (res.getUser.welcome_points >= 50000) {
                   message.channel
                     .send(
@@ -190,6 +190,10 @@ exports.run = async (client, message, args) => {
               }
             });
         });
+    } else {
+      message.channel.send(
+        `sorry but the cheapest thing in the store is 10.000 points ! you only have ${res.getUser.welcome_points}`
+      );
     }
   } catch (err) {
     console.error(err);

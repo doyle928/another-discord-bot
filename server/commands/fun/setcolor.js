@@ -35,9 +35,10 @@ exports.run = async (client, message, args) => {
           );
           return message.channel.send("<:deadinside:>");
         });
+    } else if (Number(role) === message.member._roles.length - 1) {
+      return message.channel.send(
+        "sorry ! but you dont have a custom role to change !"
+      );
     }
   }
-  return message.channel.send(
-    "sorry ! but you dont have a custom role to change !"
-  );
 };
