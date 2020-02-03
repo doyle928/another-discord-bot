@@ -57,7 +57,9 @@ exports.run = async (client, message, args) => {
                                 }
                               )
                               .then(async collected => {
-                                let roleColour = collected.first().content;
+                                let roleColour = collected
+                                  .first()
+                                  .content.replace(/([\s])/g, "");
                                 message.guild
                                   .createRole({
                                     name: roleName,
@@ -77,7 +79,7 @@ exports.run = async (client, message, args) => {
                                     );
                                     let embed = new Discord.RichEmbed()
                                       .setDescription(
-                                        `**${message.author.username}** just bought a 1 month custom role !\n\nRole : ${roleName}`
+                                        `**${message.author.username}** just bought a **1 month** custom role !\n\n**Role :** ${roleName}`
                                       )
                                       .setColor(randomColor());
                                     c.send(embed);
@@ -136,7 +138,9 @@ exports.run = async (client, message, args) => {
                                   }
                                 )
                                 .then(async collected => {
-                                  let roleColour = collected.first().content;
+                                  let roleColour = collected
+                                    .first()
+                                    .content.replace(/([\s])/g, "");
                                   message.guild
                                     .createRole({
                                       name: roleName,
@@ -156,7 +160,7 @@ exports.run = async (client, message, args) => {
                                       );
                                       let embed = new Discord.RichEmbed()
                                         .setDescription(
-                                          `**${message.author.username}** just bought a permanent custom role !\n\nRole : ${roleName}`
+                                          `**${message.author.username}** just bought a **permanent** custom role !\n\n**Role :** ${roleName}`
                                         )
                                         .setColor(randomColor());
                                       c.send(embed);
