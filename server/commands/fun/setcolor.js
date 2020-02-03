@@ -18,21 +18,26 @@ exports.run = async (client, message, args) => {
     "663977787606040576",
     "667218872784519189"
   ];
-  for (let role in message.author._roles) {
-    if (customRoles.includes(message.author._roles[roles])) {
+  for (let role in message.member._roles) {
+    if (customRoles.includes(message.member._roles[role])) {
       let roleToChange = await message.guild.roles.get(
-        message.author._roles[roles]
+        message.member._roles[role]
       );
       await roleToChange
         .setColor(args[1].replace(/([\s])/g))
-        .then(() => message.channel.send("okay i did it !"))
+        .then(() => {
+          return message.channel.send("okay i did it !");
+        })
         .catch(err => {
           console.error(err);
           message.channel.send(
             "sorry i was not able to ! make sure it is a hex code like #fdd1ff !!"
           );
-          message.channel.send("<:deadinside:>");
+          return message.channel.send("<:deadinside:>");
         });
     }
   }
+  return message.channel.send(
+    "sorry ! but you dont have a custom role to change !"
+  );
 };

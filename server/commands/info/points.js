@@ -97,7 +97,7 @@ exports.run = async (client, message, args) => {
                             }`;
       try {
         await request(url, query);
-        let query = `query {
+        query = `query {
             getUser(guild_id: "${message.guild.id}", user_id: "${user2.id}") {
               guild_id user_id welcome_points
             }
