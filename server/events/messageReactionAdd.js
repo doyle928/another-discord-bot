@@ -236,43 +236,47 @@ module.exports = async (client, messageReaction, user) => {
                         const filter = m =>
                           m.content
                             .toLowerCase()
-                            .replace(/([^a-z])/g)
+                            .replace(/([^a-z])/g,"")
                             .indexOf("hi") >= 0 ||
                           m.content
                             .toLowerCase()
-                            .replace(/([^a-z])/g)
+                            .replace(/([^a-z])/g,"")
                             .indexOf("hello") >= 0 ||
                           m.content
                             .toLowerCase()
-                            .replace(/([^a-z])/g)
-                            .indexOf("welcome") >= 0 ||
-                          m.content
-                            .toLowerCase()
-                            .replace(/([^a-z])/g)
+                            .replace(/([^a-z])/g,"")
                             .indexOf("howareyou") >= 0 ||
                           m.content
                             .toLowerCase()
-                            .replace(/([^a-z])/g)
+                            .replace(/([^a-z])/g,"")
                             .indexOf("howareu") >= 0 ||
                           m.content
                             .toLowerCase()
-                            .replace(/([^a-z])/g)
+                            .replace(/([^a-z])/g,"")
                             .indexOf("welcome") >= 0 ||
                           m.content
                             .toLowerCase()
-                            .replace(/([^a-z])/g)
+                            .replace(/([^a-z])/g,"")
                             .indexOf("bienvenue") >= 0 ||
                           m.content
                             .toLowerCase()
-                            .replace(/([^a-z])/g)
+                            .replace(/([^a-z])/g,"")
                             .indexOf("yo") >= 0 ||
                           m.content
                             .toLowerCase()
-                            .replace(/([^a-z])/g)
+                            .replace(/([^a-z])/g,"")
                             .indexOf("hey") >= 0 ||
                           m.content
                             .toLowerCase()
-                            .replace(/([^a-z])/g)
+                            .replace(/([^a-z])/g,"")
+                            .indexOf("hai") >= 0 ||
+                          m.content
+                            .toLowerCase()
+                            .replace(/([^a-z])/g,"")
+                            .indexOf("hail") >= 0 ||
+                          m.content
+                            .toLowerCase()
+                            .replace(/([^a-z])/g,"")
                             .indexOf("nicetomeetyou") >= 0;
                         const collector = msg.channel.createMessageCollector(
                           filter,
