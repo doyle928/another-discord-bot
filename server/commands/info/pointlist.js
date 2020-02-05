@@ -73,9 +73,7 @@ exports.run = async (client, message, args) => {
       });
     } else {
       for (i in welcomePointsArray) {
-        strg += `**${welcomePointsArray[i].username} :**\t
-                    ${welcomePointsArray[i].welcome_points}
-                \n`;
+        strg += `**${welcomePointsArray[i].username} :** ${welcomePointsArray[i].welcome_points}\n`;
       }
       msgEmbed.setDescription(strg);
 

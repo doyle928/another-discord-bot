@@ -39,23 +39,15 @@ exports.run = async (client, message, args) => {
             }
           }`;
       try {
-        if (
-          message.channel.id === "561401129296986112" &&
-          message.author.id !== "157673412561469440"
-        ) {
-          let res = await request(url, query);
-          const embed = new Discord.RichEmbed()
-            .setAuthor(
-              message.mentions.members.first().user.username,
-              message.mentions.members.first().user.displayAvatarURL
-            )
-            .setDescription(`**Points :** ${res.getUser.welcome_points}`)
-            .setColor(randomColor());
-          return message.channel.send(embed);
-        } else {
-          message.channel.send("sorry but i'm not allowed in here anymore !");
-          return message.channel.send("<a:crying:661358360091688980>");
-        }
+        let res = await request(url, query);
+        const embed = new Discord.RichEmbed()
+          .setAuthor(
+            message.mentions.members.first().user.username,
+            message.mentions.members.first().user.displayAvatarURL
+          )
+          .setDescription(`**Points :** ${res.getUser.welcome_points}`)
+          .setColor(randomColor());
+        return message.channel.send(embed);
       } catch (err) {
         console.error(err);
       }
@@ -67,12 +59,20 @@ exports.run = async (client, message, args) => {
             }
           }`;
     try {
-      let res = await request(url, query);
-      const embed = new Discord.RichEmbed()
-        .setAuthor(message.author.username, message.author.displayAvatarURL)
-        .setDescription(`**Points :** ${res.getUser.welcome_points}`)
-        .setColor(randomColor());
-      return message.channel.send(embed);
+      if (
+        message.channel.id === "561401129296986112" &&
+        message.author.id !== "157673412561469440"
+      ) {
+        let res = await request(url, query);
+        const embed = new Discord.RichEmbed()
+          .setAuthor(message.author.username, message.author.displayAvatarURL)
+          .setDescription(`**Points :** ${res.getUser.welcome_points}`)
+          .setColor(randomColor());
+        return message.channel.send(embed);
+      } else {
+        message.channel.send("sorry but i'm not allowed in here anymore !");
+        return message.channel.send("<a:crying:661358360091688980>");
+      }
     } catch (err) {
       console.error(err);
     }

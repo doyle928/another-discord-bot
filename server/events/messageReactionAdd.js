@@ -531,7 +531,8 @@ module.exports = async (client, messageReaction, user) => {
   } else if (messageReaction._emoji.name === "➡️") {
     if (
       user.id !== "601825955572350976" &&
-      messageReaction.message.id === memberListHelper.welcomePointsArray[0]
+      memberListHelper.memberList.length > 0 &&
+      messageReaction.message.id === memberListHelper.memberList[0]
     ) {
       messageReaction.message.reactions.map(r => {
         r.message.reactions.forEach(reaction => reaction.remove(user.id));
@@ -577,6 +578,7 @@ module.exports = async (client, messageReaction, user) => {
       }
     } else if (
       user.id !== "601825955572350976" &&
+      welcomePointListHelper.welcomePointsArray.length > 0 &&
       messageReaction.message.id ===
         welcomePointListHelper.welcomePointsArray[0]
     ) {
@@ -611,9 +613,7 @@ module.exports = async (client, messageReaction, user) => {
 
         let strg = "";
         for (i in newWelcomePointsArray) {
-          strg += `**${newWelcomePointsArray[i].username} :**\t
-                    ${newWelcomePointsArray[i].welcome_points}
-                \n`;
+          strg += `**${newWelcomePointsArray[i].username} :** ${newWelcomePointsArray[i].welcome_points}\n`;
         }
         newEmb.setDescription(strg);
         newEmb.setFooter(
@@ -628,6 +628,7 @@ module.exports = async (client, messageReaction, user) => {
   } else if (messageReaction._emoji.name === "⬅️") {
     if (
       user.id !== "601825955572350976" &&
+      memberListHelper.memberList.length > 0 &&
       messageReaction.message.id === memberListHelper.memberList[0]
     ) {
       messageReaction.message.reactions.map(r => {
@@ -670,6 +671,7 @@ module.exports = async (client, messageReaction, user) => {
       }
     } else if (
       user.id !== "601825955572350976" &&
+      welcomePointListHelper.welcomePointsArray.length > 0 &&
       messageReaction.message.id ===
         welcomePointListHelper.welcomePointsArray[0]
     ) {
@@ -700,9 +702,7 @@ module.exports = async (client, messageReaction, user) => {
 
         let strg = "";
         for (i in newWelcomePointsArray) {
-          strg += `**${newWelcomePointsArray[i].username} :**\t
-                    ${newWelcomePointsArray[i].welcome_points}
-                \n`;
+          strg += `**${newWelcomePointsArray[i].username} :** ${newWelcomePointsArray[i].welcome_points}\n`;
         }
         newEmb.setDescription(strg);
         newEmb.setFooter(
