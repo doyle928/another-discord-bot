@@ -39,7 +39,10 @@ exports.run = async (client, message, args) => {
             }
           }`;
       try {
-        if (message.channel.id === "") {
+        if (
+          message.channel.id === "561401129296986112" &&
+          message.author.id !== "157673412561469440"
+        ) {
           let res = await request(url, query);
           const embed = new Discord.RichEmbed()
             .setAuthor(
