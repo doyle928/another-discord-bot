@@ -39,7 +39,7 @@ module.exports = gql`
     timestamp: String
   }
   type Query {
-    getUser(guild_id: String!, user_id: String!): User!
+    getUser(guild_id: String!, user_id: String!): User
     getUsers: [User]
     getCount(guild_id: String!): [Count]
     getCounts: [Count]

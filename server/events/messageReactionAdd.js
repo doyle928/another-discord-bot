@@ -10,6 +10,7 @@ const { writeFile } = require("fs");
 let messageShipId = require("../data/messageShipId");
 const { request } = require("graphql-request");
 const memberListHelper = require("../data/memberListHelper");
+const welcomePointListHelper = require("../data/welcomePointListHelper");
 const moment = require("moment");
 
 module.exports = async (client, messageReaction, user) => {
@@ -236,47 +237,47 @@ module.exports = async (client, messageReaction, user) => {
                         const filter = m =>
                           m.content
                             .toLowerCase()
-                            .replace(/([^a-z])/g,"")
+                            .replace(/([^a-z])/g, "")
                             .indexOf("hi") >= 0 ||
                           m.content
                             .toLowerCase()
-                            .replace(/([^a-z])/g,"")
+                            .replace(/([^a-z])/g, "")
                             .indexOf("hello") >= 0 ||
                           m.content
                             .toLowerCase()
-                            .replace(/([^a-z])/g,"")
+                            .replace(/([^a-z])/g, "")
                             .indexOf("howareyou") >= 0 ||
                           m.content
                             .toLowerCase()
-                            .replace(/([^a-z])/g,"")
+                            .replace(/([^a-z])/g, "")
                             .indexOf("howareu") >= 0 ||
                           m.content
                             .toLowerCase()
-                            .replace(/([^a-z])/g,"")
+                            .replace(/([^a-z])/g, "")
                             .indexOf("welcome") >= 0 ||
                           m.content
                             .toLowerCase()
-                            .replace(/([^a-z])/g,"")
+                            .replace(/([^a-z])/g, "")
                             .indexOf("bienvenue") >= 0 ||
                           m.content
                             .toLowerCase()
-                            .replace(/([^a-z])/g,"")
+                            .replace(/([^a-z])/g, "")
                             .indexOf("yo") >= 0 ||
                           m.content
                             .toLowerCase()
-                            .replace(/([^a-z])/g,"")
+                            .replace(/([^a-z])/g, "")
                             .indexOf("hey") >= 0 ||
                           m.content
                             .toLowerCase()
-                            .replace(/([^a-z])/g,"")
+                            .replace(/([^a-z])/g, "")
                             .indexOf("hai") >= 0 ||
                           m.content
                             .toLowerCase()
-                            .replace(/([^a-z])/g,"")
+                            .replace(/([^a-z])/g, "")
                             .indexOf("hail") >= 0 ||
                           m.content
                             .toLowerCase()
-                            .replace(/([^a-z])/g,"")
+                            .replace(/([^a-z])/g, "")
                             .indexOf("nicetomeetyou") >= 0;
                         const collector = msg.channel.createMessageCollector(
                           filter,
@@ -530,7 +531,7 @@ module.exports = async (client, messageReaction, user) => {
   } else if (messageReaction._emoji.name === "➡️") {
     if (
       user.id !== "601825955572350976" &&
-      messageReaction.message.id === memberListHelper.memberList[0]
+      messageReaction.message.id === memberListHelper.welcomePointsArray[0]
     ) {
       messageReaction.message.reactions.map(r => {
         r.message.reactions.forEach(reaction => reaction.remove(user.id));
@@ -570,11 +571,58 @@ module.exports = async (client, messageReaction, user) => {
         newEmb.setFooter(
           `Page ${memberListHelper.memberList[2].currentPage + 1} ${footerEnd}`
         );
-        // const star = /^\⭐\s([0-9]{1,3})\s\|\s([0-9]{17,20})/.exec(
-        //           stars.embeds[0].footer.text
-        //         );
+
         messageReaction.message.edit(newEmb);
         memberListHelper.changePage(1);
+      }
+    } else if (
+      user.id !== "601825955572350976" &&
+      messageReaction.message.id ===
+        welcomePointListHelper.welcomePointsArray[0]
+    ) {
+      messageReaction.message.reactions.map(r => {
+        r.message.reactions.forEach(reaction => reaction.remove(user.id));
+      });
+
+      if (
+        welcomePointListHelper.welcomePointsArray[2].currentPage <
+        welcomePointListHelper.welcomePointsArray[2].maxPage
+      ) {
+        let footerEnd = messageReaction.message.embeds[0].footer.text;
+        footerEnd = footerEnd.substring(
+          footerEnd.indexOf("/"),
+          footerEnd.lenth
+        );
+
+        let newEmb = new Discord.RichEmbed().setAuthor(
+          messageReaction.message.embeds[0].author.name
+        );
+
+        let welcomePointsArray = welcomePointListHelper.welcomePointsArray[1];
+        let newWelcomePointsArray = _.takeRight(
+          welcomePointsArray,
+          welcomePointsArray.length -
+            welcomePointListHelper.welcomePointsArray[2].currentPage * 25
+        );
+
+        if (_.size(newWelcomePointsArray) > 25) {
+          newWelcomePointsArray = _.take(newWelcomePointsArray, 25);
+        }
+
+        let strg = "";
+        for (i in newWelcomePointsArray) {
+          strg += `**${newWelcomePointsArray[i].username} :**\t
+                    ${newWelcomePointsArray[i].welcome_points}
+                \n`;
+        }
+        newEmb.setDescription(strg);
+        newEmb.setFooter(
+          `Page ${welcomePointListHelper.welcomePointsArray[2].currentPage +
+            1} ${footerEnd}`
+        );
+
+        messageReaction.message.edit(newEmb);
+        welcomePointListHelper.changePage(1);
       }
     }
   } else if (messageReaction._emoji.name === "⬅️") {
@@ -606,7 +654,6 @@ module.exports = async (client, messageReaction, user) => {
         );
 
         newMemArray = _.take(newMemArray, 25);
-        // console.log(newMemArray);
 
         let strg = "";
         for (i in newMemArray) {
@@ -618,11 +665,52 @@ module.exports = async (client, messageReaction, user) => {
         newEmb.setFooter(
           `Page ${memberListHelper.memberList[2].currentPage - 1} ${footerEnd}`
         );
-        // const star = /^\⭐\s([0-9]{1,3})\s\|\s([0-9]{17,20})/.exec(
-        //           stars.embeds[0].footer.text
-        //         );
         messageReaction.message.edit(newEmb);
         memberListHelper.changePage(-1);
+      }
+    } else if (
+      user.id !== "601825955572350976" &&
+      messageReaction.message.id ===
+        welcomePointListHelper.welcomePointsArray[0]
+    ) {
+      messageReaction.message.reactions.map(r => {
+        r.message.reactions.forEach(reaction => reaction.remove(user.id));
+      });
+
+      if (welcomePointListHelper.welcomePointsArray[2].currentPage > 1) {
+        let footerEnd = messageReaction.message.embeds[0].footer.text;
+        footerEnd = footerEnd.substring(
+          footerEnd.indexOf("/"),
+          footerEnd.lenth
+        );
+
+        let newEmb = new Discord.RichEmbed().setAuthor(
+          messageReaction.message.embeds[0].author.name
+        );
+
+        let welcomePointsArray = welcomePointListHelper.welcomePointsArray[1];
+
+        let newWelcomePointsArray = _.takeRight(
+          welcomePointsArray,
+          welcomePointsArray.length -
+            (welcomePointListHelper.welcomePointsArray[2].currentPage - 2) * 25
+        );
+
+        newWelcomePointsArray = _.take(newWelcomePointsArray, 25);
+
+        let strg = "";
+        for (i in newWelcomePointsArray) {
+          strg += `**${newWelcomePointsArray[i].username} :**\t
+                    ${newWelcomePointsArray[i].welcome_points}
+                \n`;
+        }
+        newEmb.setDescription(strg);
+        newEmb.setFooter(
+          `Page ${welcomePointListHelper.welcomePointsArray[2].currentPage -
+            1} ${footerEnd}`
+        );
+        messageReaction.message.edit(newEmb);
+        welcomePointListHelper.changePage(-1);
       }
     }
   } else if (user.id !== "601825955572350976") {
