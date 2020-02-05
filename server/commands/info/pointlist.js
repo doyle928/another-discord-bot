@@ -4,6 +4,7 @@ const _ = require("lodash");
 const welcomePointListHelper = require("../../data/welcomePointListHelper");
 
 exports.run = async (client, message, args) => {
+  let url = "https://lulu-discord-bot.herokuapp.com/api";
   let memArray = [];
   let welcomePointsArray = [];
 

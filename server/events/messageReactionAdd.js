@@ -302,7 +302,7 @@ module.exports = async (client, messageReaction, user) => {
                               let res = await request(url, query);
                               let points =
                                 res.getUser.welcome_points +
-                                randomNum(150, 250);
+                                randomNum(100, 200);
                               query = `mutation {
                               addWelcomePoints(guild_id: "${msg.guild.id}", user_id: "${userArray[user]}", welcome_points: ${points}) {
                                 guild_id user_id welcome_points
