@@ -8,6 +8,7 @@ module.exports = gql`
     strikes: Int
     booster: Boolean!
     welcome_points: Int!
+    temp_role: String
   }
   type Count {
     guild_id: String!
@@ -75,6 +76,7 @@ module.exports = gql`
       user_id: String!
       welcome_points: Int
     ): User!
+    setTempRole(guild_id: String!, user_id: String!, temp_role: String): User
     addCount(guild_id: String!, members: Int!, timestamp: String!): Count!
     addServer(
       guild_id: String!

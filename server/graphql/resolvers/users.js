@@ -85,6 +85,22 @@ module.exports = {
       );
 
       return res;
+    },
+    setTempRole: async (_, { guild_id, user_id, temp_role }) => {
+      const res = await User.findOneAndUpdate(
+        {
+          guild_id: guild_id,
+          user_id: user_id
+        },
+        {
+          temp_role: temp_role
+        },
+        {
+          new: true
+        }
+      );
+
+      return res;
     }
   }
 };

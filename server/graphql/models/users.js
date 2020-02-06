@@ -6,7 +6,8 @@ const userSchema = new Schema({
   join_date: String,
   strikes: Number,
   booster: Boolean,
-  welcome_points: Number
+  welcome_points: Number,
+  temp_role: String
 });
 
 module.exports = model("User", userSchema);

@@ -25,7 +25,35 @@ module.exports = async client => {
     for (let i in res.getSchedules) {
       if (moment(res.getSchedules[i].date).diff(new Date(), "days", true) > 0) {
         schedule.scheduleJob(res.getSchedules[i].date, async () => {
-          if (res.getSchedules[i].dm_user) {
+          if (res.getSchedules[i].message.indexOf("roleremove") >= 0) {
+            let messageArray = res.getSchedules[i].message.split(/[\s]/g);
+            if (messageArray[1]) {
+              let s = await client.guilds.get(res.getSchedules[i].guild_id);
+              s.fetchMember(res.getSchedules[i].user_id).then(async m => {
+                let roleArray = m._roles;
+                for (let i in roleArray) {
+                  if (roleArray[i] === messageArray[1]) {
+                    roleArray.splice(i, 1);
+                    message.member.setRoles(roleArray);
+                    query = `mutation {
+                        setTempRole(guild_id: "${
+                          message.guild.id
+                        }", user_id: "${
+                      message.author.id
+                    }", temp_role: ${null}) {
+                        temp_role
+                        }
+                        }`;
+                    try {
+                      await request(url, query);
+                    } catch (err) {
+                      console.error(err);
+                    }
+                  }
+                }
+              });
+            }
+          } else if (res.getSchedules[i].dm_user) {
             let s = await client.guilds.get(res.getSchedules[i].guild_id);
             s.fetchMember(res.getSchedules[i].user_id).then(m =>
               m.send(res.getSchedules[i].message)
