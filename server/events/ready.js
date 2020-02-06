@@ -36,11 +36,7 @@ module.exports = async client => {
                     roleArray.splice(i, 1);
                     message.member.setRoles(roleArray);
                     query = `mutation {
-                        setTempRole(guild_id: "${
-                          message.guild.id
-                        }", user_id: "${
-                      message.author.id
-                    }", temp_role: ${null}) {
+                        setTempRole(guild_id: "${message.guild.id}", user_id: "${message.author.id}", temp_role: "") {
                         temp_role
                         }
                         }`;

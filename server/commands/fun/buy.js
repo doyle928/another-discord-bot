@@ -30,7 +30,7 @@ exports.run = async (client, message, args) => {
             })
             .then(async collected => {
               if (collected.first().content === "1") {
-                if (user.getUser.temp_role) {
+                if (user.getUser.temp_role && user.getUser.temp_role.length > 0) {
                   let role = await message.guild.roles.get(
                     user.getUser.temp_role
                   );
