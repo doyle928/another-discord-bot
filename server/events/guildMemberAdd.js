@@ -17,10 +17,10 @@ module.exports = async (client, member, guild) => {
       moment(new Date(member.user.createdTimestamp).toISOString())
     )
   );
-
+  moment.locale("fr");
   let discordJoinDate = moment(
     new Date(member.user.createdTimestamp).toISOString()
-  ).format("D MMM YYYY [at] H:mm");
+  ).format("D MMM YYYY [à] H:mm");
 
   let blank_avatar = false,
     join_age = false;
@@ -105,8 +105,11 @@ module.exports = async (client, member, guild) => {
     let c = await member.guild.channels.get("561372938474094603");
     messageEmbed
       .setAuthor("New member")
-      .setDescription(`**${member.user.username}** joined !`)
-      .setColor("#00ff00");
+      .setDescription(
+        `**${member.user.username}** joined !\n\n**Account created :** ${discordJoinDate}`
+      )
+      .setColor("#00ff00")
+      .setThumbnail(member.user.displayAvatarURL);
 
     member
       .addRole("596016686331723785")
@@ -162,8 +165,11 @@ module.exports = async (client, member, guild) => {
       } else {
         messageEmbed
           .setAuthor("New member")
-          .setDescription(`**${member.user.username}** joined !`)
-          .setColor("#00ff00");
+          .setDescription(
+            `**${member.user.username}** joined !\n\n**Account created :** ${discordJoinDate}`
+          )
+          .setColor("#00ff00")
+          .setThumbnail(member.user.displayAvatarURL);
 
         member.guild
           .fetchMember("157673412561469440")

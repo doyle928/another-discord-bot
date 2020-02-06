@@ -43,11 +43,11 @@ exports.run = async (client, message, args) => {
   );
   let serverJoinDate = moment(
     new Date(member.joinedTimestamp).toISOString()
-  ).format("D MMM YYYY [at] H:mm");
+  ).format("D MMM YYYY [à] H:mm");
 
   let discordJoinDate = moment(
     new Date(member.user.createdTimestamp).toISOString()
-  ).format("D MMM YYYY [at] H:mm");
+  ).format("D MMM YYYY [à] H:mm");
 
   const formatDateDiff = dateObj => {
     let string = "il y a ";

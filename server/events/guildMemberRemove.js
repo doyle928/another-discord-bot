@@ -13,7 +13,8 @@ module.exports = async (client, member) => {
   let messageEmbed = new Discord.RichEmbed()
     .setAuthor("Member left")
     .setDescription(`**${member.user.username}** just left :(`)
-    .setColor("#ff0000");
+    .setColor("#ff0000")
+    .setThumbnail(member.user.displayAvatarURL);
 
   if (member.guild.id === "664351758344257537") {
     let c = await client.channels.get("664364035386507274");

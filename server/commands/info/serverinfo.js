@@ -23,7 +23,7 @@ exports.run = async (client, message, args) => {
   );
   let serverCreationDate = moment(
     new Date(message.guild.createdTimestamp).toISOString()
-  ).format("D MMM YYYY [at] H:mm");
+  ).format("D MMM YYYY [à] H:mm");
 
   const formatDateDiff = dateObj => {
     let string = "il y a ";
@@ -38,6 +38,14 @@ exports.run = async (client, message, args) => {
     }
     return string;
   };
+
+  let i = 0;
+
+  await message.guild.members.map(member => {
+    if (member.roles.find(r => r.name === "Nitro Booster")) {
+      i++;
+    }
+  });
 
   if (!args[1]) {
     message.guild.channels.map(chan => channelArray.push(chan));
@@ -72,6 +80,7 @@ exports.run = async (client, message, args) => {
     messageEmbed.addField("Voice Channels", channelCategory.voice, true);
     messageEmbed.addField("Emojis", emojiArray.length, true);
     messageEmbed.addField("Roles", roleArray.length, true);
+    messageEmbed.addField("Boosts", `${i} minimum`, true);
     embedFilled = true;
   } else {
     let guildId = client.guilds.get(args[1]);
