@@ -4,10 +4,7 @@ const moment = require("moment");
 const schedule = require("node-schedule");
 
 exports.run = async (client, message, args) => {
-  if (
-    !message.member.hasPermission("BAN_MEMBERS") &&
-    message.author.id !== "217838986700259339"
-  ) {
+  if (!message.member.hasPermission("BAN_MEMBERS")) {
     message.channel.send("You don't have the permissions to use this command!");
     message.channel.send("<:natsukiMad:646210751417286656>");
   } else {
@@ -22,7 +19,10 @@ exports.run = async (client, message, args) => {
     } else if (args[1]) {
       let queryAddition = "";
       let channelId = "";
-      if (message.mentions.members.first()) {
+      if (
+        message.mentions.members.first().user.id ===
+        message.content.split(/ +/g)[1].replace(/([^0-9])/g, "")
+      ) {
         queryAddition = `user_id: "${
           message.mentions.members.first().user.id
         }", dm_user: ${true}`;
@@ -71,7 +71,10 @@ exports.run = async (client, message, args) => {
               await request(url, query);
               message.channel.send(`okay reminder set !`);
               schedule.scheduleJob(newDateObj, async () => {
-                if (message.mentions.members.first()) {
+                if (
+                  message.mentions.members.first().user.id ===
+                  message.content.split(/ +/g)[1].replace(/([^0-9])/g, "")
+                ) {
                   message.mentions.members.first().send(msg);
                 } else {
                   let c = await message.guild.channels.get(channelId);
