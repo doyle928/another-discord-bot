@@ -3,6 +3,7 @@ const randomColor = require("../../data/randomColor");
 const {
   request
 } = require("graphql-request");
+const moment = require("moment");
 
 exports.run = async (client, message, args) => {
   let url = "https://lulu-discord-bot.herokuapp.com/api";
