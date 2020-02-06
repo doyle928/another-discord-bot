@@ -23,7 +23,7 @@ exports.run = async (client, message, args) => {
         show: false
       });
 
-      let query = message.content.replace(".image2 ", "").trim();
+      let query = message.content.replace(".image ", "").trim();
       query = query.replace(/[\s]/g, "%20");
       console.log(query);
       await nightmare
@@ -64,26 +64,42 @@ exports.run = async (client, message, args) => {
           };
 
           console.log(imgs);
-          let img =
-            imgs.length > 10
-              ? imgs[randomNum(0, 9)]
-              : imgs[randomNum(0, imgs.length - 1)];
-          let embed = new Discord.RichEmbed()
-            .setAuthor(message.author.username, message.author.displayAvatarURL)
-            .setColor(randomColor())
-            .setTitle(
-              `Résultat pour la recherche: ${message.content
-                .replace(".image2 ", "")
+          if (img.length === 0) {
+            message.channel.send(
+              `sorry but i looked everywhere and could not find anything for ${message.content
+                .replace(".image ", "")
                 .trim()}`
-            )
-            .setImage(img.src)
-            .setFooter(`${img.resolution} | ${format(img.src)}`)
-            .setTimestamp();
-          message.channel.send(embed);
-          talkedRecently.add("image-called");
-          setTimeout(() => {
-            talkedRecently.delete("image-called");
-          }, 45000);
+            );
+            message.channel.send("<:confusedKanna:665372884402962432>");
+            talkedRecently.add("image-called");
+            setTimeout(() => {
+              talkedRecently.delete("image-called");
+            }, 45000);
+          } else {
+            let img =
+              imgs.length > 10
+                ? imgs[randomNum(0, 9)]
+                : imgs[randomNum(0, imgs.length - 1)];
+            let embed = new Discord.RichEmbed()
+              .setAuthor(
+                message.author.username,
+                message.author.displayAvatarURL
+              )
+              .setColor(randomColor())
+              .setTitle(
+                `Résultat pour la recherche: ${message.content
+                  .replace(".image ", "")
+                  .trim()}`
+              )
+              .setImage(img.src)
+              .setFooter(`${img.resolution} | ${format(img.src)}`)
+              .setTimestamp();
+            message.channel.send(embed);
+            talkedRecently.add("image-called");
+            setTimeout(() => {
+              talkedRecently.delete("image-called");
+            }, 45000);
+          }
         })
         .catch(function(err) {
           console.log(err);
