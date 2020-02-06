@@ -4,21 +4,38 @@ const moment = require("moment");
 const schedule = require("node-schedule");
 
 exports.run = async (client, message, args) => {
-  if (!message.member.hasPermission("BAN_MEMBERS")) {
+  if (
+    !message.member.hasPermission("BAN_MEMBERS") &&
+    message.author.id !== "217838986700259339"
+  ) {
     message.channel.send("You don't have the permissions to use this command!");
-    message.channel.send("<a:02upset:538273249306345476>");
+    message.channel.send("<:natsukiMad:646210751417286656>");
   } else {
     let embed = new Discord.RichEmbed()
       .setAuthor("Reminder help")
       .setDescription(
-        `**Command**\n.remind #channel xd message\n\nx : integer\nd : s/m/h/d (secondes/minutes/heures/days)\n\nE.g.\n.remind ${message.channel} 10m hii !`
+        `**Command**\n.remind #channel/@user xd message\n\nx : integer\nd : s/m/h/d (secondes/minutes/heures/days)\n\nE.g.\n.remind ${message.channel} 10m hii !\n.remind ${message.author} 55s hii again !`
       )
       .setColor("#202225");
     if (args[1] && args[1].toLowerCase() === "help") {
       message.channel.send(embed);
     } else if (args[1]) {
-      let channelId = args[1].replace(/([^0-9])/g, "");
-      if (channelId.length === 18 || (channelId.length === 19 && args[2])) {
+      let queryAddition = "";
+      let channelId = "";
+      if (message.mentions.members.first()) {
+        queryAddition = `user_id: "${
+          message.mentions.members.first().user.id
+        }", dm_user: ${true}`;
+      } else {
+        channelId = args[1].replace(/([^0-9])/g, "");
+        queryAddition = `channel_id: "${channelId}",  dm_user: ${false}`;
+      }
+      if (
+        (message.mentions.members.first() ||
+          channelId.length === 18 ||
+          channelId.length === 19) &&
+        args[2]
+      ) {
         let timeDelay = args[2];
         let timeUnit = timeDelay.toLowerCase().replace(/([^a-z])/g, "");
         if (
@@ -44,7 +61,7 @@ exports.run = async (client, message, args) => {
             let query = `mutation {
                       addSchedules(guild_id: "${
                         message.guild.id
-                      }", channel_id: "${channelId}", message: "${msg}", date: "${moment(
+                      }", ${queryAddition}, message: "${msg}", date: "${moment(
               newDateObj
             )}") {
                           message
@@ -54,8 +71,12 @@ exports.run = async (client, message, args) => {
               await request(url, query);
               message.channel.send(`okay reminder set !`);
               schedule.scheduleJob(newDateObj, async () => {
-                let c = await message.guild.channels.get(channelId);
-                c.send(msg);
+                if (message.mentions.members.first()) {
+                  message.mentions.members.first().send(msg);
+                } else {
+                  let c = await message.guild.channels.get(channelId);
+                  c.send(msg);
+                }
               });
             } catch (err) {
               console.error(err);

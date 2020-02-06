@@ -41,6 +41,8 @@ module.exports = gql`
   type Schedules {
     guild_id: String
     channel_id: String
+    user_id: String
+    dm_user: Boolean
     message: String
     date: String
   }
@@ -111,14 +113,11 @@ module.exports = gql`
     addSchedules(
       guild_id: String
       channel_id: String
+      user_id: String
+      dm_user: Boolean
       message: String
       date: String
     ): Schedules
-    deleteSchedules(
-      guild_id: String
-      channel_id: String
-      message: String
-      date: String
-    ): Schedules
+    deleteSchedules(guild_id: String, message: String, date: String): Schedules
   }
 `;

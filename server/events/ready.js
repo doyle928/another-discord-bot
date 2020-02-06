@@ -16,7 +16,7 @@ module.exports = async client => {
 
   let query = `query {
                       getSchedules {
-                          guild_id channel_id message date
+                          guild_id channel_id user_id dm_user message date
                       }
                     }`;
   try {
@@ -25,12 +25,19 @@ module.exports = async client => {
     for (let i in res.getSchedules) {
       if (moment(res.getSchedules[i].date).diff(new Date(), "days", true) > 0) {
         schedule.scheduleJob(res.getSchedules[i].date, async () => {
-          let c = await client.channels.get(res.getSchedules[i].channel_id);
-          c.send(res.getSchedules[i].message);
+          if (res.getSchedules[i].dm_user) {
+            let s = await client.guilds.get(res.getSchedules[i].guild_id);
+            s.fetchMember(res.getSchedules[i].user_id).then(m =>
+              m.send(res.getSchedules[i].message)
+            );
+          } else {
+            let c = await client.channels.get(res.getSchedules[i].channel_id);
+            c.send(res.getSchedules[i].message);
+          }
         });
       } else {
         query = `mutation {
-                      deleteSchedules(guild_id: "${res.getSchedules[i].guild_id}", channel_id: "${res.getSchedules[i].channel_id}", message: "${res.getSchedules[i].message}", date: "${res.getSchedules[i].date}"){
+                      deleteSchedules(guild_id: "${res.getSchedules[i].guild_id}", message: "${res.getSchedules[i].message}", date: "${res.getSchedules[i].date}"){
                           guild_id
                       }
                     }`;
