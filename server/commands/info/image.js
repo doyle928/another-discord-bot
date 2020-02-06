@@ -64,7 +64,7 @@ exports.run = async (client, message, args) => {
           };
 
           console.log(imgs);
-          if (img.length === 0) {
+          if (imgs.length === 0) {
             message.channel.send(
               `sorry but i looked everywhere and could not find anything for ${message.content
                 .replace(".image ", "")
