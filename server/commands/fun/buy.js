@@ -4,6 +4,7 @@ const {
   request
 } = require("graphql-request");
 const moment = require("moment");
+const schedule = require("node-schedule");
 
 exports.run = async (client, message, args) => {
   let url = "https://lulu-discord-bot.herokuapp.com/api";
