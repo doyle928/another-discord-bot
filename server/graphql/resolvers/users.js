@@ -14,7 +14,7 @@ module.exports = {
     getUser: async (_, { guild_id, user_id }) => {
       const user = await User.find(
         { guild_id: guild_id, user_id: user_id },
-        "guild_id user_id join_date strikes booster welcome_points"
+        "guild_id user_id join_date strikes booster welcome_points temp_role"
       );
       return user[0];
     }
