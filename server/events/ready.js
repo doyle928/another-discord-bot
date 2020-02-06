@@ -1,4 +1,7 @@
 const _ = require("lodash");
+const schedule = require("node-schedule");
+const { request } = require("graphql-request");
+const moment = require("moment");
 
 module.exports = async client => {
   console.log("started");
@@ -8,6 +11,39 @@ module.exports = async client => {
   client.user.setActivity("mon fils stp pas touche", {
     type: 3
   });
+
+  let url = "https://lulu-discord-bot.herokuapp.com/api";
+
+  let query = `query {
+                      getSchedules {
+                          guild_id channel_id message date
+                      }
+                    }`;
+  try {
+    let res = await request(url, query);
+    console.log(res);
+    for (let i in res.getSchedules) {
+      if (moment(res.getSchedules[i].date).diff(new Date(), "days", true) > 0) {
+        schedule.scheduleJob(res.getSchedules[i].date, async () => {
+          let c = await client.channels.get(res.getSchedules[i].channel_id);
+          c.send(res.getSchedules[i].message);
+        });
+      } else {
+        query = `mutation {
+                      deleteSchedules(guild_id: "${res.getSchedules[i].guild_id}", channel_id: "${res.getSchedules[i].channel_id}", message: "${res.getSchedules[i].message}", date: "${res.getSchedules[i].date}"){
+                          guild_id
+                      }
+                    }`;
+        try {
+          await request(url, query);
+        } catch (err) {
+          console.error(err);
+        }
+      }
+    }
+  } catch (err) {
+    console.error(err);
+  }
 
   const server1 = await client.guilds.get("559560674246787087");
   await server1.channels

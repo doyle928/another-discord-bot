@@ -55,9 +55,7 @@ exports.run = async (client, message, args) => {
       let newWelcomePointsArray = _.take(welcomePointsArray, 25);
 
       for (i in newWelcomePointsArray) {
-        strg += `**${welcomePointsArray[i].username} :**\t
-                    ${welcomePointsArray[i].welcome_points}
-                \n`;
+        strg += `**${welcomePointsArray[i].username} :** ${welcomePointsArray[i].welcome_points}\n`;
       }
       msgEmbed.setDescription(strg);
       message.channel.send(msgEmbed).then(async m => {

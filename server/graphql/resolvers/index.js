@@ -4,6 +4,7 @@ const serverResolvers = require("./server");
 const defaultResolvers = require("./default");
 const messageResolvers = require("./message");
 const shipResolvers = require("./ship");
+const schedulesResolvers = require("./schedules");
 
 module.exports = {
   Query: {
@@ -12,7 +13,8 @@ module.exports = {
     ...serverResolvers.Query,
     ...defaultResolvers.Query,
     ...messageResolvers.Query,
-    ...shipResolvers.Query
+    ...shipResolvers.Query,
+    ...schedulesResolvers.Query
   },
   Mutation: {
     ...usersResolvers.Mutation,
@@ -20,6 +22,7 @@ module.exports = {
     ...serverResolvers.Mutation,
     ...defaultResolvers.Mutation,
     ...messageResolvers.Mutation,
-    ...shipResolvers.Mutation
+    ...shipResolvers.Mutation,
+    ...schedulesResolvers.Mutation
   }
 };

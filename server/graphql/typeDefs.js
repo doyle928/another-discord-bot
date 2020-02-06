@@ -38,6 +38,12 @@ module.exports = gql`
     ship_id: String
     timestamp: String
   }
+  type Schedules {
+    guild_id: String
+    channel_id: String
+    message: String
+    date: String
+  }
   type Query {
     getUser(guild_id: String!, user_id: String!): User
     getUsers: [User]
@@ -49,6 +55,7 @@ module.exports = gql`
     getMessage(guild_id: String!, channel_id: String!, day: String!): Message!
     getShips(guild_id: String!): [Ship]
     getShip(guild_id: String!, user_id: String!): Ship
+    getSchedules: [Schedules]
   }
   type Mutation {
     addUser(
@@ -101,5 +108,17 @@ module.exports = gql`
       timestamp: String
     ): Ship
     deleteShip(guild_id: String, user_id: String): Ship
+    addSchedules(
+      guild_id: String
+      channel_id: String
+      message: String
+      date: String
+    ): Schedules
+    deleteSchedules(
+      guild_id: String
+      channel_id: String
+      message: String
+      date: String
+    ): Schedules
   }
 `;

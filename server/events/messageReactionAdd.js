@@ -572,7 +572,7 @@ module.exports = async (client, messageReaction, user) => {
         newEmb.setFooter(
           `Page ${memberListHelper.memberList[2].currentPage + 1} ${footerEnd}`
         );
-
+        newEmb.setColor("#202225");
         messageReaction.message.edit(newEmb);
         memberListHelper.changePage(1);
       }
@@ -620,7 +620,7 @@ module.exports = async (client, messageReaction, user) => {
           `Page ${welcomePointListHelper.welcomePointsArray[2].currentPage +
             1} ${footerEnd}`
         );
-
+        newEmb.setColor("#202225");
         messageReaction.message.edit(newEmb);
         welcomePointListHelper.changePage(1);
       }
@@ -666,6 +666,7 @@ module.exports = async (client, messageReaction, user) => {
         newEmb.setFooter(
           `Page ${memberListHelper.memberList[2].currentPage - 1} ${footerEnd}`
         );
+        newEmb.setColor("#202225");
         messageReaction.message.edit(newEmb);
         memberListHelper.changePage(-1);
       }
@@ -709,6 +710,7 @@ module.exports = async (client, messageReaction, user) => {
           `Page ${welcomePointListHelper.welcomePointsArray[2].currentPage -
             1} ${footerEnd}`
         );
+        newEmb.setColor("#202225");
         messageReaction.message.edit(newEmb);
         welcomePointListHelper.changePage(-1);
       }
