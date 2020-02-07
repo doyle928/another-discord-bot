@@ -12,6 +12,7 @@ exports.run = async (client, message, args) => {
             }`;
     try {
       boosterRoles = await request(url, query);
+      console.log(boosterRoles);
       let haveRoleBool = false;
       let roleId = "";
       for (let i in boosterRoles) {

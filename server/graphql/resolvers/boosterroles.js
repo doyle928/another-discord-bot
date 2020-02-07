@@ -6,6 +6,7 @@ module.exports = {
       try {
         //  Find all users
         const boosterroles = await Boosterroles.find();
+        console.log(boosterroles);
         return boosterroles;
       } catch (err) {
         throw new Error(err);
