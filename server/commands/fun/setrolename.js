@@ -21,7 +21,7 @@ exports.run = async (client, message, args) => {
         }
       }
       if (haveRoleBool) {
-        let name = message.content.replace(".setname ", "").trim();
+        let name = message.content.replace(".setrolename ", "").trim();
         if (name.length < 32) {
           let role = await s.roles.get(roleId);
           role.setName(name).then(() => {
