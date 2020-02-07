@@ -40,10 +40,13 @@ exports.run = async (client, message, args) => {
           }`;
       try {
         if (
-          message.channel.id !== "561453542741901322" ||
-          message.author.id !== "157673412561469440" ||
+          message.channel.id === "561453542741901322" &&
+          message.author.id !== "157673412561469440" &&
           !message.member.hasPermission("BAN_MEMBERS")
         ) {
+          message.channel.send("sorry but i'm not allowed in here anymore !");
+          return message.channel.send("<a:crying:661358360091688980>");
+        } else {
           let res = await request(url, query);
           const embed = new Discord.RichEmbed()
             .setAuthor(
@@ -53,9 +56,6 @@ exports.run = async (client, message, args) => {
             .setDescription(`**Points :** ${res.getUser.welcome_points}`)
             .setColor(randomColor());
           return message.channel.send(embed);
-        } else {
-          message.channel.send("sorry but i'm not allowed in here anymore !");
-          return message.channel.send("<a:crying:661358360091688980>");
         }
       } catch (err) {
         console.error(err);
@@ -69,19 +69,19 @@ exports.run = async (client, message, args) => {
           }`;
     try {
       if (
-        message.channel.id !== "561453542741901322" ||
-        message.author.id !== "157673412561469440" ||
+        message.channel.id === "561453542741901322" &&
+        message.author.id !== "157673412561469440" &&
         !message.member.hasPermission("BAN_MEMBERS")
       ) {
+        message.channel.send("sorry but i'm not allowed in here anymore !");
+        return message.channel.send("<a:crying:661358360091688980>");
+      } else {
         let res = await request(url, query);
         const embed = new Discord.RichEmbed()
           .setAuthor(message.author.username, message.author.displayAvatarURL)
           .setDescription(`**Points :** ${res.getUser.welcome_points}`)
           .setColor(randomColor());
         return message.channel.send(embed);
-      } else {
-        message.channel.send("sorry but i'm not allowed in here anymore !");
-        return message.channel.send("<a:crying:661358360091688980>");
       }
     } catch (err) {
       console.error(err);
