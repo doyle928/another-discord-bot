@@ -10,6 +10,7 @@ exports.run = async (client, message, args) => {
       for (let i = 1; i < args.length; i++) {
         nickname += `${args[i]} `;
       }
+
       if (nickname === "") {
         nickname = message.member.user.username;
       }
@@ -18,9 +19,10 @@ exports.run = async (client, message, args) => {
           `the nickname was too long ! it can only be 32 characters ! not ${nickname.length} !`
         );
       } else {
+        nickname = nickname.trim();
         message.member
           .setNickname(nickname)
-          .then(() => message.channel.send(`hi ${nickname}!`))
+          .then(() => message.channel.send(`hi ${nickname} !`))
           .catch(err => {
             console.error(err);
             message.channel

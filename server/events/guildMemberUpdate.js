@@ -50,6 +50,10 @@ module.exports = async (client, memberOld, memberNew) => {
           .channels.get("663920241990172692");
 
         s.send(messageEmbed).then(m => m.react("575053165804912652"));
+
+        memberNew.send(
+          `Thanks for boosting the serveur ! i can give you a custom role !\nfigure out a name a hex-code value like #fdd1ff !! once you are ready use the command **.setboosterrole** in here or in any of the **Our Home** channels !`
+        );
       } else if (memberNew.guild.id === "664351758344257537") {
         let s = client.guilds
           .get("664351758344257537")
@@ -85,6 +89,32 @@ module.exports = async (client, memberOld, memberNew) => {
         s.send(
           `**${memberNew.user.username}** is no longer boosting the serveur !`
         );
+        query = `{
+                getBoosterroles {
+                    guild_id user_id role_id
+                }
+            }`;
+        try {
+          boosterRoles = await request(url, query);
+          for (let i in boosterRoles) {
+            if (boosterRoles[i].user_id === memberNew.user.id) {
+              query = `{
+                deleteBoosterroles(role_id: "${boosterRoles[i].role_id}") {
+                  role_id
+                }
+              }`;
+              try {
+                let guildRole = await s.roles.get(boosterRoles[i].role_id);
+                guildRole.delete();
+                await request(url, query);
+              } catch (err) {
+                console.error(err);
+              }
+            }
+          }
+        } catch (err) {
+          console.error(err);
+        }
       } else if (memberNew.guild.id === "664351758344257537") {
         let s = client.guilds
           .get("664351758344257537")

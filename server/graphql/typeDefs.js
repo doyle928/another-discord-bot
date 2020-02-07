@@ -47,6 +47,11 @@ module.exports = gql`
     message: String
     date: String
   }
+  type Boosterroles {
+    guild_id: String
+    user_id: String
+    role_id: String
+  }
   type Query {
     getUser(guild_id: String!, user_id: String!): User
     getUsers: [User]
@@ -59,6 +64,7 @@ module.exports = gql`
     getShips(guild_id: String!): [Ship]
     getShip(guild_id: String!, user_id: String!): Ship
     getSchedules: [Schedules]
+    getBoosterroles: [Boosterroles]
   }
   type Mutation {
     addUser(
@@ -121,5 +127,11 @@ module.exports = gql`
       date: String
     ): Schedules
     deleteSchedules(guild_id: String, message: String, date: String): Schedules
+    addBoosterroles(
+      guild_id: String
+      user_id: String
+      role_id: String
+    ): Boosterroles
+    deleteBoosterroles(role_id: String): Boosterroles
   }
 `;

@@ -36,12 +36,18 @@ module.exports = async client => {
                     roleArray.splice(i, 1);
                     message.member.setRoles(roleArray);
                     query = `mutation {
-                        setTempRole(guild_id: "${message.guild.id}", user_id: "${message.author.id}", temp_role: "") {
+                        setTempRole(guild_id: "${s.id}", user_id: "${res.getSchedules[i].user_id}", temp_role: "") {
                         temp_role
                         }
                         }`;
                     try {
                       await request(url, query);
+                      let guildRole = await s.roles.get(
+                        res.getSchedules[i].user_id
+                      );
+                      if (guildRole) {
+                        guildRole.delete();
+                      }
                     } catch (err) {
                       console.error(err);
                     }

@@ -1,65 +1,45 @@
+const { request } = require("graphql-request");
+
 exports.run = async (client, message, args) => {
-  let customRoles = [
-    "646877619630899244",
-    "627179571703447583",
-    "635148096686522368",
-    "651547606333390858",
-    "626919130519568395",
-    "661225122014691329",
-    "648343939371499744",
-    "651115640752439296",
-    "638254922189635585",
-    "664958752004505621",
-    "651170085205180435",
-    "656248592557932558",
-    "663948238709325834",
-    "653754818677964831",
-    "663423171185213487",
-    "663977787606040576",
-    "667218872784519189",
-    "673747419988754462"
-  ];
-  let changedRoleCheck = false;
-  for (let role in message.member._roles) {
-    if (customRoles.includes(message.member._roles[role])) {
-      let roleToChange = await message.guild.roles.get(
-        message.member._roles[role]
-      );
-      let name = "";
-      if (args[1]) {
-        for (let i = 1; args.length; i++) {
-          name += `${args[i]} `;
+  let s = await client.guilds.get("559560674246787087");
+
+  if (s.members.has(message.author.id)) {
+    let url = "https://lulu-discord-bot.herokuapp.com/api";
+    let query = `{
+                getBoosterroles {
+                    guild_id user_id role_id
+                }
+            }`;
+    try {
+      boosterRoles = await request(url, query);
+      let haveRoleBool = false;
+      let roleId = "";
+      for (let i in boosterRoles) {
+        if (boosterRoles[i].user_id === message.author.id) {
+          haveRoleBool = true;
+          roleId = boosterRoles[i].role_id;
         }
-        if (name.length > 32) {
-          return message.channel.send(
-            `the name was too long ! it can only be 32 characters ! not ${name.length} !`
-          );
+      }
+      if (haveRoleBool) {
+        let name = message.content.replace(".setname ", "").trim();
+        if (name.length < 32) {
+          let role = await s.roles.get(roleId);
+          role.setName(name).then(() => {
+            message.channel.send(
+              `okay i changed the name of the role to ${name} !!`
+            );
+          });
         } else {
-          await roleToChange
-            .setName(name)
-            .then(() => {
-              return message.channel.send("okay i did it !");
-            })
-            .catch(err => {
-              console.error(err);
-              message.channel.send(
-                "sorry i was not able to ! make sure it is a hex code like #fdd1ff !!"
-              );
-              return message.channel.send("<:deadinside:606350795881054216>");
-            });
-          changedRoleCheck = true;
+          return message.channel.send(
+            `the role name has to be under 32 characters ! not ${name.length} !!`
+          );
         }
       } else {
-        return message.channel.send(
-          "you need to tell me what you want it to be named dummy !"
-        );
+        message.channel.send("you dont have a boosted role !!");
+        return message.channel.send("<:natsukiMad:646210751417286656>");
       }
-    } else if (Number(role) === message.member._roles.length - 1) {
-      if (!changedRoleCheck) {
-        return message.channel.send(
-          "sorry ! but you dont have a custom role to change !"
-        );
-      }
+    } catch (err) {
+      console.error(err);
     }
   }
 };
