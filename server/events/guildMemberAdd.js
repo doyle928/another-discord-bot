@@ -50,7 +50,7 @@ module.exports = async (client, member, guild) => {
         messageEmbed
           .setAuthor("Notice")
           .setDescription(
-            `Thanks for joining Our Home !\nUnfortunately we require discord accounts to have an avatar photo, sorry it is just to help keep bots from joining !\n\nYou can get a photo and try again though !!`
+            `Thanks for joining **Our Home** !\nUnfortunately we require discord accounts to have an avatar photo, sorry it is just to help keep bots from joining !\n\nYou can get a photo and try again though !!`
           );
 
         member.send(messageEmbed).then(() => {
@@ -61,7 +61,17 @@ module.exports = async (client, member, guild) => {
         messageEmbed
           .setAuthor("Notice")
           .setDescription(
-            `Thanks for joining Losers Club !\nUnfortunately we require discord accounts to have an avatar photo, sorry it is just to help keep bots from joining !\n\nYou can get a photo and try again though !!`
+            `Thanks for joining **Losers Club** !\nUnfortunately we require discord accounts to have an avatar photo, sorry it is just to help keep bots from joining !\n\nYou can get a photo and try again though !!`
+          );
+        member.send(messageEmbed).then(() => {
+          member.kick("no avatar photo !!");
+        });
+        return;
+      } else if (member.guild.id === "634305104693952532") {
+        messageEmbed
+          .setAuthor("Notice")
+          .setDescription(
+            `Thanks for joining **Naughty Things** !\nUnfortunately we require discord accounts to have an avatar photo, sorry it is just to help keep bots from joining !\n\nYou can get a photo and try again though !!`
           );
         member.send(messageEmbed).then(() => {
           member.kick("no avatar photo !!");
