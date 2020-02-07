@@ -14,10 +14,10 @@ exports.run = async (client, message, args) => {
       boosterRoles = await request(url, query);
       let haveRoleBool = false;
       let roleId = "";
-      for (let i in boosterRoles) {
-        if (boosterRoles[i].user_id === message.author.id) {
+      for (let i in boosterRoles.getBoosterroles) {
+        if (boosterRoles.getBoosterroles[i].user_id === message.author.id) {
           haveRoleBool = true;
-          roleId = boosterRoles[i].role_id;
+          roleId = boosterRoles.getBoosterroles[i].role_id;
         }
       }
       if (haveRoleBool) {
