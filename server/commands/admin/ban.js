@@ -61,8 +61,8 @@ exports.run = async (client, message, args) => {
         );
         message.channel.send("<:oh_my:606353903558066176>");
         setTimeout(() => {
-          member.send("you banned youself, here is a invite link");
-          member.send("https://discord.gg/TTVdzRE");
+          message.author.send("you banned youself, here is a invite link");
+          message.author.send("https://discord.gg/TTVdzRE");
           let memberId = message.author.id;
 
           message.author
