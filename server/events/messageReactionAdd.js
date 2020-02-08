@@ -1218,8 +1218,12 @@ module.exports = async (client, messageReaction, user) => {
     ctx.rect(289, 25, 36, 300);
     ctx.closePath();
 
-    ctx.strokeText(`${name}`, 382, 196);
-    ctx.fillText(`${name}`, 382, 196);
+    ctx.strokeText(
+      `${name.replace(/([^A-Za-z\s.,()-_:;'"+-])/g, "")}`,
+      382,
+      196
+    );
+    ctx.fillText(`${name.replace(/([^A-Za-z\s.,()-_:;'"+-])/g, "")}`, 382, 196);
 
     ctx.clip();
 
