@@ -147,40 +147,168 @@ module.exports = async (client, messageReaction, user) => {
               const { body: bufferAvatar } = await snekfetch.get(
                 mem.user.displayAvatarURL
               );
+
+              // async function addFrame(path) {
+              //   let canvasFrame = Canvas.createCanvas(600, 335);
+              //   let ctxFrame = canvasFrame.getContext("2d");
+
+              //   let reqPathFrame = path.join(__dirname, path);
+              //   let backgroundFrame = await Canvas.loadImage(reqPathFrame);
+              //   ctxFrame.drawImage(
+              //     backgroundFrame,
+              //     0,
+              //     0,
+              //     canvasFrame.width,
+              //     canvasFrame.height
+              //   );
+
+              //   // Pick up the pen
+              //   ctxFrame.beginPath();
+              //   // Start the arc to form a circle
+              //   ctxFrame.arc(300, 85, 65, 0, Math.PI * 2, true);
+              //   // Put the pen down
+              //   ctxFrame.closePath();
+              //   // Clip off the region you drew on
+              //   ctxFrame.clip();
+
+              //   await ctxFrame.drawImage(avatarWelcome, 235, 20, 130, 130); //115
+
+              //   encoder.addFrame(ctxFrame);
+              // }
+
+              // await addFrame("../images/our_home_testing_frame1.png");
+              // await addFrame("../images/our_home_testing_frame2.png");
+              // await addFrame("../images/our_home_testing_frame3.png");
+              // await addFrame("../images/our_home_testing_frame4.png");
+
+              //--------------------------------------------------------- frame 1
+              const canvasFrame1 = Canvas.createCanvas(600, 335);
+
+              const ctxFrame1 = canvasFrame1.getContext("2d");
+
+              let reqPathFrame1 = path.join(
+                __dirname,
+                "../images/our_home_testing_frame1.png"
+              );
+              const backgroundFrame1 = await Canvas.loadImage(reqPathFrame1);
+              ctxFrame1.drawImage(
+                backgroundFrame1,
+                0,
+                0,
+                canvasFrame1.width,
+                canvasFrame1.height
+              );
+
+              // Pick up the pen
+              ctxFrame1.beginPath();
+              // Start the arc to form a circle
+              ctxFrame1.arc(300, 85, 65, 0, Math.PI * 2, true);
+              // Put the pen down
+              ctxFrame1.closePath();
+              // Clip off the region you drew on
+              ctxFrame1.clip();
+
               const avatarWelcome = await Canvas.loadImage(bufferAvatar);
+              await ctxFrame1.drawImage(avatarWelcome, 235, 20, 130, 130); //115
 
-              async function addFrame(path) {
-                let canvasFrame = Canvas.createCanvas(600, 335);
-                let ctxFrame = canvasFrame.getContext("2d");
+              encoder.addFrame(ctxFrame1);
+              //--------------------------------------------------------- frame 1
+              //--------------------------------------------------------- frame 2
+              const canvasFrame2 = Canvas.createCanvas(600, 335);
 
-                let reqPathFrame = path.join(__dirname, path);
-                let backgroundFrame = await Canvas.loadImage(reqPathFrame);
-                ctxFrame.drawImage(
-                  backgroundFrame,
-                  0,
-                  0,
-                  canvasFrame.width,
-                  canvasFrame.height
-                );
+              const ctxFrame2 = canvasFrame2.getContext("2d");
 
-                // Pick up the pen
-                ctxFrame.beginPath();
-                // Start the arc to form a circle
-                ctxFrame.arc(300, 85, 65, 0, Math.PI * 2, true);
-                // Put the pen down
-                ctxFrame.closePath();
-                // Clip off the region you drew on
-                ctxFrame.clip();
+              let reqPathFrame2 = path.join(
+                __dirname,
+                "../images/our_home_testing_frame2.png"
+              );
+              const backgroundFrame2 = await Canvas.loadImage(reqPathFrame2);
+              ctxFrame2.drawImage(
+                backgroundFrame2,
+                0,
+                0,
+                canvasFrame2.width,
+                canvasFrame2.height
+              );
 
-                await ctxFrame.drawImage(avatarWelcome, 235, 20, 130, 130); //115
+              // Pick up the pen
+              ctxFrame2.beginPath();
+              // Start the arc to form a circle
+              ctxFrame2.arc(300, 85, 65, 0, Math.PI * 2, true);
+              // Put the pen down
+              ctxFrame2.closePath();
+              // Clip off the region you drew on
+              ctxFrame2.clip();
 
-                encoder.addFrame(ctxFrame);
-              }
+              const avatarWelcome = await Canvas.loadImage(bufferAvatar);
+              await ctxFrame2.drawImage(avatarWelcome, 235, 20, 130, 130); //115
 
-              await addFrame("../images/our_home_testing_frame1.png");
-              await addFrame("../images/our_home_testing_frame2.png");
-              await addFrame("../images/our_home_testing_frame3.png");
-              await addFrame("../images/our_home_testing_frame4.png");
+              encoder.addFrame(ctxFrame2);
+              //--------------------------------------------------------- frame 2
+              //--------------------------------------------------------- frame 3
+              const canvasFrame3 = Canvas.createCanvas(600, 335);
+
+              const ctxFrame3 = canvasFrame3.getContext("2d");
+
+              let reqPathFrame3 = path.join(
+                __dirname,
+                "../images/our_home_testing_frame3.png"
+              );
+              const backgroundFrame3 = await Canvas.loadImage(reqPathFrame3);
+              ctxFrame3.drawImage(
+                backgroundFrame3,
+                0,
+                0,
+                canvasFrame3.width,
+                canvasFrame3.height
+              );
+
+              // Pick up the pen
+              ctxFrame3.beginPath();
+              // Start the arc to form a circle
+              ctxFrame3.arc(300, 85, 65, 0, Math.PI * 2, true);
+              // Put the pen down
+              ctxFrame3.closePath();
+              // Clip off the region you drew on
+              ctxFrame3.clip();
+
+              const avatarWelcome = await Canvas.loadImage(bufferAvatar);
+              await ctxFrame3.drawImage(avatarWelcome, 235, 20, 130, 130); //115
+
+              encoder.addFrame(ctxFrame3);
+              //--------------------------------------------------------- frame 3
+              //--------------------------------------------------------- frame 4
+              const canvasFrame4 = Canvas.createCanvas(600, 335);
+
+              const ctxFrame4 = canvasFrame4.getContext("2d");
+
+              let reqPathFrame4 = path.join(
+                __dirname,
+                "../images/our_home_testing_frame4.png"
+              );
+              const backgroundFrame4 = await Canvas.loadImage(reqPathFrame4);
+              ctxFrame4.drawImage(
+                backgroundFrame4,
+                0,
+                0,
+                canvasFrame4.width,
+                canvasFrame4.height
+              );
+
+              // Pick up the pen
+              ctxFrame4.beginPath();
+              // Start the arc to form a circle
+              ctxFrame4.arc(300, 85, 65, 0, Math.PI * 2, true);
+              // Put the pen down
+              ctxFrame4.closePath();
+              // Clip off the region you drew on
+              ctxFrame4.clip();
+
+              const avatarWelcome = await Canvas.loadImage(bufferAvatar);
+              await ctxFrame4.drawImage(avatarWelcome, 235, 20, 130, 130); //115
+
+              encoder.addFrame(ctxFrame4);
+              //--------------------------------------------------------- frame 4
 
               encoder.finish();
               const buffer = encoder.out.getData();
