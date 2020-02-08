@@ -208,8 +208,8 @@ module.exports = async (client, messageReaction, user) => {
               // Clip off the region you drew on
               ctxFrame1.clip();
 
-              const avatarWelcome = await Canvas.loadImage(bufferAvatar);
-              await ctxFrame1.drawImage(avatarWelcome, 235, 20, 130, 130); //115
+              const avatarWelcome1 = await Canvas.loadImage(bufferAvatar);
+              await ctxFrame1.drawImage(avatarWelcome1, 235, 20, 130, 130); //115
 
               encoder.addFrame(ctxFrame1);
               //--------------------------------------------------------- frame 1
@@ -240,8 +240,8 @@ module.exports = async (client, messageReaction, user) => {
               // Clip off the region you drew on
               ctxFrame2.clip();
 
-              const avatarWelcome = await Canvas.loadImage(bufferAvatar);
-              await ctxFrame2.drawImage(avatarWelcome, 235, 20, 130, 130); //115
+              const avatarWelcome2 = await Canvas.loadImage(bufferAvatar);
+              await ctxFrame2.drawImage(avatarWelcome2, 235, 20, 130, 130); //115
 
               encoder.addFrame(ctxFrame2);
               //--------------------------------------------------------- frame 2
@@ -272,8 +272,8 @@ module.exports = async (client, messageReaction, user) => {
               // Clip off the region you drew on
               ctxFrame3.clip();
 
-              const avatarWelcome = await Canvas.loadImage(bufferAvatar);
-              await ctxFrame3.drawImage(avatarWelcome, 235, 20, 130, 130); //115
+              const avatarWelcome3 = await Canvas.loadImage(bufferAvatar);
+              await ctxFrame3.drawImage(avatarWelcome3, 235, 20, 130, 130); //115
 
               encoder.addFrame(ctxFrame3);
               //--------------------------------------------------------- frame 3
@@ -304,8 +304,8 @@ module.exports = async (client, messageReaction, user) => {
               // Clip off the region you drew on
               ctxFrame4.clip();
 
-              const avatarWelcome = await Canvas.loadImage(bufferAvatar);
-              await ctxFrame4.drawImage(avatarWelcome, 235, 20, 130, 130); //115
+              const avatarWelcome4 = await Canvas.loadImage(bufferAvatar);
+              await ctxFrame4.drawImage(avatarWelcome4, 235, 20, 130, 130); //115
 
               encoder.addFrame(ctxFrame4);
               //--------------------------------------------------------- frame 4
