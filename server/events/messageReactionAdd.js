@@ -144,74 +144,43 @@ module.exports = async (client, messageReaction, user) => {
               encoder.setDelay(600); // frame delay in ms
               encoder.setQuality(1); // image quality. 10 is default.
 
-              const canvasFrame1 = Canvas.createCanvas(600, 335);
-
-              const ctxFrame1 = canvasFrame1.getContext("2d");
-
-              let reqPathFrame1 = path.join(
-                __dirname,
-                "../images/our_home_testing_frame1.png"
-              );
-              const backgroundFrame1 = await Canvas.loadImage(reqPathFrame1);
-              ctxFrame1.drawImage(
-                backgroundFrame1,
-                0,
-                0,
-                canvasFrame1.width,
-                canvasFrame1.height
-              );
-
-              // Pick up the pen
-              ctxFrame1.beginPath();
-              // Start the arc to form a circle
-              ctxFrame1.arc(300, 85, 65, 0, Math.PI * 2, true);
-              // Put the pen down
-              ctxFrame1.closePath();
-              // Clip off the region you drew on
-              ctxFrame1.clip();
-
-              const { body: bufferFrame1 } = await snekfetch.get(
+              const { body: bufferAvatar } = await snekfetch.get(
                 mem.user.displayAvatarURL
               );
-              const avatarFrame1 = await Canvas.loadImage(bufferFrame1);
-              await ctxFrame1.drawImage(avatarFrame1, 235, 20, 130, 130); //115
+              const avatarWelcome = await Canvas.loadImage(bufferAvatar);
 
-              encoder.addFrame(ctxFrame1);
-              //--------------------------------------------------------- frame 1
-              const canvasFrame2 = Canvas.createCanvas(600, 335);
+              async function addFrame(path) {
+                let ctxFrame = canvasFrame.getContext("2d");
 
-              const ctxFrame2 = canvasFrame2.getContext("2d");
+                let reqPathFrame = path.join(__dirname, path);
+                let backgroundFrame = await Canvas.loadImage(reqPathFrame);
+                ctxFrame.drawImage(
+                  backgroundFrame,
+                  0,
+                  0,
+                  canvasFrame.width,
+                  canvasFrame.height
+                );
 
-              let reqPathFrame2 = path.join(
-                __dirname,
-                "../images/our_home_testing_frame2.png"
-              );
-              const backgroundFrame2 = await Canvas.loadImage(reqPathFrame2);
-              ctxFrame2.drawImage(
-                backgroundFrame2,
-                0,
-                0,
-                canvasFrame2.width,
-                canvasFrame2.height
-              );
+                // Pick up the pen
+                ctxFrame.beginPath();
+                // Start the arc to form a circle
+                ctxFrame.arc(300, 85, 65, 0, Math.PI * 2, true);
+                // Put the pen down
+                ctxFrame.closePath();
+                // Clip off the region you drew on
+                ctxFrame.clip();
 
-              // Pick up the pen
-              ctxFrame2.beginPath();
-              // Start the arc to form a circle
-              ctxFrame2.arc(300, 85, 65, 0, Math.PI * 2, true);
-              // Put the pen down
-              ctxFrame2.closePath();
-              // Clip off the region you drew on
-              ctxFrame2.clip();
+                await ctxFrame.drawImage(avatarWelcome, 235, 20, 130, 130); //115
 
-              const { body: bufferFrame2 } = await snekfetch.get(
-                mem.user.displayAvatarURL
-              );
-              const avatarFrame2 = await Canvas.loadImage(bufferFrame2);
-              await ctxFrame2.drawImage(avatarFrame2, 235, 20, 130, 130); //115
+                encoder.addFrame(ctxFrame);
+              }
 
-              encoder.addFrame(ctxFrame2);
-              //--------------------------------------------------------- frame 2
+              await addFrame("../images/our_home_testing_frame1.png");
+              await addFrame("../images/our_home_testing_frame2.png");
+              await addFrame("../images/our_home_testing_frame3.png");
+              await addFrame("../images/our_home_testing_frame4.png");
+
               encoder.finish();
               const buffer = encoder.out.getData();
               let rolesC = await client.guilds
