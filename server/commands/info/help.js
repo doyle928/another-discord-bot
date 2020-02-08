@@ -99,5 +99,7 @@ exports.run = async (client, message, args) => {
 .ship leave/end/breakup (ends your current ship)`
     );
   }
-  message.author.send(embed);
+  message.author.send(embed).then(() => {
+    message.delete(250);
+  });
 };
