@@ -150,6 +150,7 @@ module.exports = async (client, messageReaction, user) => {
               const avatarWelcome = await Canvas.loadImage(bufferAvatar);
 
               async function addFrame(path) {
+                let canvasFrame = Canvas.createCanvas(600, 335);
                 let ctxFrame = canvasFrame.getContext("2d");
 
                 let reqPathFrame = path.join(__dirname, path);
