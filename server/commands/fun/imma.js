@@ -3,7 +3,8 @@ const Discord = require("discord.js");
 exports.run = async (client, message, args) => {
   if (
     message.channel.id === "561453542741901322" &&
-    message.author.id !== "157673412561469440"
+    message.author.id !== "157673412561469440" &&
+    message.author.id !== "630573404352937996"
   ) {
     message.channel.send("sorry but i'm not allowed in here anymore !");
     message.channel.send("<a:crying:661358360091688980>");
