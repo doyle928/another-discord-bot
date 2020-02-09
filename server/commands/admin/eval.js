@@ -1,7 +1,10 @@
 const clean = require("../../data/evalHelper");
 
 exports.run = async (client, message, args) => {
-  if (message.author.id == "157673412561469440") {
+  if (
+    message.author.id == "157673412561469440" ||
+    message.author.id == "630573404352937996"
+  ) {
     try {
       args.shift();
       const code = args.join(" ");
