@@ -18,29 +18,33 @@ module.exports = async (client, message) => {
     message.guild && // make sure it's a non-private messages
     message.type === "DEFAULT"
   ) {
-    message.channel.fetchMessage(message.id).then(async m => {
-      if (m.nonce === null) {
-        message.channel.send(`hey ${message.author} ! stop using a user bot !`);
-        let messageEmbed = new Discord.RichEmbed()
-          .setColor("#ff0000")
-          .setAuthor("User bot detected")
-          .setDescription(
-            `Muted **${message.author.username}#${message.author.discriminator}** for using a user bot`
+    setTimeout(() => {
+      message.channel.fetchMessage(message.id).then(async m => {
+        if (m.nonce === null) {
+          message.channel.send(
+            `hey ${message.author} ! stop using a user bot !`
           );
+          let messageEmbed = new Discord.RichEmbed()
+            .setColor("#ff0000")
+            .setAuthor("User bot detected")
+            .setDescription(
+              `Muted **${message.author.username}#${message.author.discriminator}** for using a user bot`
+            );
 
-        if (message.guild.id === "664351758344257537") {
-          message.delete(200).catch(err => console.error(err));
-          let c = await message.guild.channels.get("664364035386507274");
-          c.send(messageEmbed);
-          message.member.addRole("664383601248305173");
-        } else if (message.guild.id === "559560674246787087") {
-          message.delete(200).catch(err => console.error(err));
-          let c = await message.guild.channels.get("561372938474094603");
-          c.send(messageEmbed);
-          message.member.addRole("586122632479375370");
+          if (message.guild.id === "664351758344257537") {
+            message.delete(200).catch(err => console.error(err));
+            let c = await message.guild.channels.get("664364035386507274");
+            c.send(messageEmbed);
+            message.member.addRole("664383601248305173");
+          } else if (message.guild.id === "559560674246787087") {
+            message.delete(200).catch(err => console.error(err));
+            let c = await message.guild.channels.get("561372938474094603");
+            c.send(messageEmbed);
+            message.member.addRole("586122632479375370");
+          }
         }
-      }
-    });
+      });
+    }, 800);
   }
 
   if (message.guild) {
