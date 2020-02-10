@@ -20,8 +20,9 @@ exports.run = async (client, message, args) => {
       let queryAddition = "";
       let channelId = "";
       if (
+        message.mentions.members.first() &&
         message.mentions.members.first().user.id ===
-        message.content.split(/ +/g)[1].replace(/([^0-9])/g, "")
+          message.content.split(/ +/g)[1].replace(/([^0-9])/g, "")
       ) {
         queryAddition = `user_id: "${
           message.mentions.members.first().user.id
@@ -72,8 +73,9 @@ exports.run = async (client, message, args) => {
               message.channel.send(`okay reminder set !`);
               schedule.scheduleJob(newDateObj, async () => {
                 if (
+                  message.mentions.members.first() &&
                   message.mentions.members.first().user.id ===
-                  message.content.split(/ +/g)[1].replace(/([^0-9])/g, "")
+                    message.content.split(/ +/g)[1].replace(/([^0-9])/g, "")
                 ) {
                   message.mentions.members.first().send(msg);
                 } else {
