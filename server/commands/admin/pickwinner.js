@@ -38,7 +38,7 @@ exports.run = async (client, message, args) => {
             const embedDm = new Discord.RichEmbed()
                 .setAuthor(`🎉 Congrats 🎉`)
                 .setDescription(
-                    `You won the giveaway !!\n\nMake to check your dms, make sure to let **CoryK** and **GHOST!** know !`
+                    `You won the giveaway !!\n\nMake sure to let **CoryK** and **GHOST!** know !`
                 )
                 .setColor("#f5acba");
 

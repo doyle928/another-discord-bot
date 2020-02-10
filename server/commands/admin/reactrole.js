@@ -1,8 +1,6 @@
 const Discord = require("discord.js");
 const reactionRoleHelper = require("../../data/reactionRoleHelper");
-const {
-  request
-} = require("graphql-request");
+const { request } = require("graphql-request");
 
 exports.run = async (client, message, args) => {
   let msgArray = [];
@@ -42,7 +40,8 @@ exports.run = async (client, message, args) => {
                     msgArray.push(msg.id);
                     message.channel
                       .awaitMessages(
-                        res => res.author.id === message.author.id, {
+                        res => res.author.id === message.author.id,
+                        {
                           max: 1,
                           time: 120000,
                           errors: ["time"]
@@ -150,21 +149,22 @@ exports.run = async (client, message, args) => {
               msgIdCheck.length === 17 ||
               msgIdCheck.length === 18
             ) {
-              chan.fetchMessage(msgIdCheck).then(msg => {
-                await msg.react(reactionEmote);
-                await message.channel.send("okay done !");
-                await message.channel.bulkDelete(msgArray)
-                return addToDatabase(chan.id, role.id, emote, msg.id);
-              }).catch(() => {
-                message.channel.send(
-                  "sorry but i cannot find this message"
-                )
-              })
+              chan
+                .fetchMessage(msgIdCheck)
+                .then(async msg => {
+                  await msg.react(reactionEmote);
+                  await message.channel.send("okay done !");
+                  await message.channel.bulkDelete(msgArray);
+                  return addToDatabase(chan.id, role.id, emote, msg.id);
+                })
+                .catch(() => {
+                  message.channel.send("sorry but i cannot find this message");
+                });
             } else {
               chan.send(collected.first().content).then(async msg => {
                 await msg.react(reactionEmote);
                 await message.channel.send("okay done !");
-                await message.channel.bulkDelete(msgArray)
+                await message.channel.bulkDelete(msgArray);
                 return addToDatabase(chan.id, role.id, emote, msg.id);
               });
             }
