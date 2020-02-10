@@ -6,6 +6,7 @@ const messageResolvers = require("./message");
 const shipResolvers = require("./ship");
 const schedulesResolvers = require("./schedules");
 const boosterrolesResolvers = require("./boosterroles");
+const reactionrolesResolvers = require("./reactionroles");
 
 module.exports = {
   Query: {
@@ -16,7 +17,8 @@ module.exports = {
     ...messageResolvers.Query,
     ...shipResolvers.Query,
     ...schedulesResolvers.Query,
-    ...boosterrolesResolvers.Query
+    ...boosterrolesResolvers.Query,
+    ...reactionrolesResolvers.Query
   },
   Mutation: {
     ...usersResolvers.Mutation,
@@ -26,6 +28,7 @@ module.exports = {
     ...messageResolvers.Mutation,
     ...shipResolvers.Mutation,
     ...schedulesResolvers.Mutation,
-    ...boosterrolesResolvers.Mutation
+    ...boosterrolesResolvers.Mutation,
+    ...reactionrolesResolvers.Mutation
   }
 };

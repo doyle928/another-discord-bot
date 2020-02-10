@@ -52,6 +52,13 @@ module.exports = gql`
     user_id: String
     role_id: String
   }
+  type Reactionroles {
+    guild_id: String
+    channel_id: String
+    role_id: String
+    emote: String
+    message_id: String
+  }
   type Query {
     getUser(guild_id: String!, user_id: String!): User
     getUsers: [User]
@@ -65,6 +72,7 @@ module.exports = gql`
     getShip(guild_id: String!, user_id: String!): Ship
     getSchedules: [Schedules]
     getBoosterroles: [Boosterroles]
+    getReactionRoles: [Reactionroles]
   }
   type Mutation {
     addUser(
@@ -133,5 +141,19 @@ module.exports = gql`
       role_id: String
     ): Boosterroles
     deleteBoosterroles(role_id: String): Boosterroles
+    addReactionRoles(
+      guild_id: String
+      channel_id: String
+      role_id: String
+      emote: String
+      message_id: String
+    ): Reactionroles
+    deleteReactionRoles(
+      guild_id: String
+      channel_id: String
+      role_id: String
+      emote: String
+      message_id: String
+    ): Reactionroles
   }
 `;

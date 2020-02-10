@@ -2,6 +2,7 @@ const _ = require("lodash");
 const schedule = require("node-schedule");
 const { request } = require("graphql-request");
 const moment = require("moment");
+const reactionRoleHelper = require("../data/reactionRoleHelper");
 
 module.exports = async client => {
   console.log("started");
@@ -81,6 +82,70 @@ module.exports = async client => {
   } catch (err) {
     console.error(err);
   }
+
+  query = `query {
+      getReactionRoles {
+        guild_id channel_id role_id emote message_id
+      }
+    }`;
+  try {
+    let res = await request(url, query);
+    console.log(res);
+    for (let i in res.getReactionRoles) {
+      try {
+        let c = await client.channels.get(res.getReactionRoles[i].channel_id);
+        c.fetchMessage(res.getReactionRoles[i].message_id)
+          .then(() => {
+            reactionRoleHelper.addReactionRole(
+              res.getReactionRoles[i].guild_id,
+              res.getReactionRoles[i].channel_id,
+              res.getReactionRoles[i].role_id,
+              res.getReactionRoles[i].emote,
+              res.getReactionRoles[i].message_id
+            );
+          })
+          .catch(async () => {
+            await deleteReactionRole(
+              res.getReactionRoles[i].guild_id,
+              res.getReactionRoles[i].channel_id,
+              res.getReactionRoles[i].role_id,
+              res.getReactionRoles[i].emote,
+              res.getReactionRoles[i].message_id
+            );
+          });
+      } catch (err) {
+        await deleteReactionRole(
+          res.getReactionRoles[i].guild_id,
+          res.getReactionRoles[i].channel_id,
+          res.getReactionRoles[i].role_id,
+          res.getReactionRoles[i].emote,
+          res.getReactionRoles[i].message_id
+        );
+      }
+    }
+  } catch (err) {
+    console.error(err);
+  }
+
+  async function deleteReactionRole(
+    guild_id,
+    channel_id,
+    role_id,
+    emote,
+    message_id
+  ) {
+    query = `mutation {
+            deleteReactionRoles(guild_id: "${guild_id}", channel_id: "${channel_id}", role_id: "${role_id}", emote: "${emote}", message_id: "${message_id}") {
+              guild_id 
+            }
+          }`;
+    try {
+      await request(url, query);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
 
   const server1 = await client.guilds.get("559560674246787087");
   await server1.channels

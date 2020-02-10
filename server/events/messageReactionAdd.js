@@ -12,8 +12,23 @@ const { request } = require("graphql-request");
 const memberListHelper = require("../data/memberListHelper");
 const welcomePointListHelper = require("../data/welcomePointListHelper");
 const moment = require("moment");
+const reactionRoleHelper = require("../data/reactionRoleHelper");
 
 module.exports = async (client, messageReaction, user) => {
+  for (let i in reactionRoleHelper.reactionRoleList) {
+    let emoteName = reactionRoleHelper.reactionRoleList[i].emote;
+    if (emoteName.indexOf("<") > -1) {
+      emoteName = emoteName.split(":")[1];
+    }
+    if (
+      messageReaction._emoji.name === emoteName &&
+      messageReaction.message.id ===
+      reactionRoleHelper.reactionRoleList[i].message_id
+    ) {
+      await addRole(reactionRoleHelper.reactionRoleList[i].role_id);
+    }
+  }
+
   if (messageReaction._emoji.name === "⭐") {
     if (messageReaction.message.author.id === user.id) {
       let oriMsg = await messageReaction.message.channel.fetchMessage(

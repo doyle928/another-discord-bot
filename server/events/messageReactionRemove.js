@@ -2,6 +2,21 @@ const Discord = require("discord.js");
 const randomColor = require("../data/randomColor");
 
 module.exports = async (client, messageReaction, user) => {
+  for (let i in reactionRoleHelper.reactionRoleList) {
+    let emoteName = reactionRoleHelper.reactionRoleList[i].emote;
+    if (emoteName.indexOf("<") > -1) {
+      emoteName = emoteName.split(":")[1];
+    }
+    console.log(emoteName);
+    if (
+      messageReaction._emoji.name === emoteName &&
+      messageReaction.message.id ===
+      reactionRoleHelper.reactionRoleList[i].message_id
+    ) {
+      await removeRole(reactionRoleHelper.reactionRoleList[i].role_id);
+    }
+  }
+
   if (messageReaction._emoji.name === "⭐") {
     let starChannel = messageReaction.message.channel.guild.channels.find(
       channel => channel.name === "⭐memories"
