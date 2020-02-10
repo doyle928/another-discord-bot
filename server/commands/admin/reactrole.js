@@ -1,6 +1,8 @@
 const Discord = require("discord.js");
 const reactionRoleHelper = require("../../data/reactionRoleHelper");
-const { request } = require("graphql-request");
+const {
+  request
+} = require("graphql-request");
 
 exports.run = async (client, message, args) => {
   let msgArray = [];
@@ -24,7 +26,7 @@ exports.run = async (client, message, args) => {
           message.channel
             .awaitMessages(res => res.author.id === message.author.id, {
               max: 1,
-              time: 60000,
+              time: 120000,
               errors: ["time"]
             })
             .then(async collected => {
@@ -40,10 +42,9 @@ exports.run = async (client, message, args) => {
                     msgArray.push(msg.id);
                     message.channel
                       .awaitMessages(
-                        res => res.author.id === message.author.id,
-                        {
+                        res => res.author.id === message.author.id, {
                           max: 1,
-                          time: 60000,
+                          time: 120000,
                           errors: ["time"]
                         }
                       )
@@ -104,7 +105,7 @@ exports.run = async (client, message, args) => {
   async function getEmote(role) {
     await message.channel
       .send(
-        `okay i have the role **${role.name}** ! now just tell me the emote you want to use !\nmake sure it is a default emote or an emote from this serveur !!`
+        `okay i have the role **@${role.name}** ! now just tell me the emote you want to use !\nmake sure it is a default emote or an emote from this serveur !!`
       )
       .then(async m => {
         msgArray.push(m.id);
@@ -132,7 +133,7 @@ exports.run = async (client, message, args) => {
         message.channel
           .awaitMessages(res => res.author.id === message.author.id, {
             max: 1,
-            time: 120000,
+            time: 240000,
             errors: ["time"]
           })
           .then(async collected => {
@@ -149,20 +150,21 @@ exports.run = async (client, message, args) => {
               msgIdCheck.length === 17 ||
               msgIdCheck.length === 18
             ) {
-              try {
-                let msg = await chan.fetchMessage(msgIdCheck);
+              chan.fetchMessage(msgIdCheck).then(msg => {
                 await msg.react(reactionEmote);
                 await message.channel.send("okay done !");
+                await message.channel.bulkDelete(msgArray)
                 return addToDatabase(chan.id, role.id, emote, msg.id);
-              } catch (err) {
-                return message.channel.send(
+              }).catch(() => {
+                message.channel.send(
                   "sorry but i cannot find this message"
-                );
-              }
+                )
+              })
             } else {
               chan.send(collected.first().content).then(async msg => {
                 await msg.react(reactionEmote);
                 await message.channel.send("okay done !");
+                await message.channel.bulkDelete(msgArray)
                 return addToDatabase(chan.id, role.id, emote, msg.id);
               });
             }
@@ -189,7 +191,7 @@ exports.run = async (client, message, args) => {
               await message.channel
                 .awaitMessages(res => res.author.id === message.author.id, {
                   max: 1,
-                  time: 60000,
+                  time: 120000,
                   errors: ["time"]
                 })
                 .then(async collected => {
@@ -229,7 +231,7 @@ exports.run = async (client, message, args) => {
               await message.channel
                 .awaitMessages(res => res.author.id === message.author.id, {
                   max: 1,
-                  time: 60000,
+                  time: 120000,
                   errors: ["time"]
                 })
                 .then(async collected => {
