@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const randomColor = require("../data/randomColor");
+const reactionRoleHelper = require("../data/reactionRoleHelper");
 
 module.exports = async (client, messageReaction, user) => {
   for (let i in reactionRoleHelper.reactionRoleList) {
@@ -11,7 +12,7 @@ module.exports = async (client, messageReaction, user) => {
     if (
       messageReaction._emoji.name === emoteName &&
       messageReaction.message.id ===
-      reactionRoleHelper.reactionRoleList[i].message_id
+        reactionRoleHelper.reactionRoleList[i].message_id
     ) {
       await removeRole(reactionRoleHelper.reactionRoleList[i].role_id);
     }
