@@ -19,6 +19,7 @@ exports.run = async (client, message, args) => {
     .end()
     .then(async el => {
       console.log(el);
+      //   await nightmare.end();
       if (el.indexOf("https:") === -1) {
         el = `https:${el}`;
       }
@@ -34,4 +35,9 @@ exports.run = async (client, message, args) => {
     .catch(function(err) {
       console.log(err);
     });
+
+  function getBounds(selector) {
+    let el = document.querySelector(selector).getAttribute("src");
+    return el;
+  }
 };
