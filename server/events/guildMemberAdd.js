@@ -45,7 +45,10 @@ module.exports = async (client, member, guild) => {
   let messageEmbed = new Discord.RichEmbed().setColor("#202225");
 
   if (blank_avatar) {
-    if (member.user.avatarURL === null || member.user.displayAvatarURL.indexOf("assets") > -1) {
+    if (
+      member.user.avatarURL === null ||
+      member.user.displayAvatarURL.indexOf("assets") > -1
+    ) {
       if (member.guild.id === "559560674246787087") {
         messageEmbed
           .setAuthor("Notice")
@@ -57,7 +60,7 @@ module.exports = async (client, member, guild) => {
           member.kick("no avatar photo !!");
         });
         return;
-      } else if (member.guild.id === "559560674246787087") {
+      } else if (member.guild.id === "664351758344257537") {
         messageEmbed
           .setAuthor("Notice")
           .setDescription(
