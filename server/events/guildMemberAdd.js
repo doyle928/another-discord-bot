@@ -45,7 +45,7 @@ module.exports = async (client, member, guild) => {
   let messageEmbed = new Discord.RichEmbed().setColor("#202225");
 
   if (blank_avatar) {
-    if (member.user.avatarURL === null) {
+    if (member.user.avatarURL === null && member.user.displayAvatarURL.indexOf("assets") > -1)) {
       if (member.guild.id === "559560674246787087") {
         messageEmbed
           .setAuthor("Notice")
