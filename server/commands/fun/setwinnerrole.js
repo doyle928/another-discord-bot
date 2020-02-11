@@ -1,12 +1,12 @@
 const { request } = require("graphql-request");
 
 exports.run = async (client, message, args) => {
-  let s = await client.guilds.get("542945080495833119");
+  let s = await client.guilds.get("559560674246787087");
 
   if (s.members.has(message.author.id)) {
     console.log("here");
     let mem = await s.fetchMember(message.author.id);
-    if (mem._roles.includes("676580960955007001")) {
+    if (mem._roles.includes("676621473196277768")) {
       message.channel
         .send(
           `Congrats on Winning again !!\nwhat would you like the name of your custom role to be ?`
@@ -55,7 +55,7 @@ exports.run = async (client, message, args) => {
                           let memRoles = [];
                           await Promise.all(
                             mem.roles.map(r => {
-                              if (r.id !== "676580960955007001") {
+                              if (r.id !== "676621473196277768") {
                                 memRoles.push(r.id);
                               }
                             })

@@ -18,6 +18,7 @@ exports.run = async (client, message, args) => {
       let roleArray = [];
       if (
         "booster_role" in user.getUser &&
+        user.getUser.booster_role &&
         user.getUser.booster_role.length > 0
       ) {
         let role = await s.roles.get(user.getUser.booster_role);
@@ -32,6 +33,7 @@ exports.run = async (client, message, args) => {
       }
       if (
         "custom_role" in user.getUser &&
+        user.getUser.custom_role &&
         user.getUser.custom_role.length > 0
       ) {
         let role = await s.roles.get(user.getUser.custom_role);
@@ -72,27 +74,10 @@ exports.run = async (client, message, args) => {
               })
               .then(async collected => {
                 let index = Number(collected.first().content.trim()) - 1;
-                message.channel
-                  .send(
-                    `What colour do you want the role ${roleArray[index].role} to be ?\np.s. please make it a hex code like #fdd1ff !!`
-                  )
-                  .then(m => {
-                    message.channel
-                      .awaitMessages(
-                        res => res.author.id === message.author.id,
-                        {
-                          maxMatches: 1,
-                          time: 120000,
-                          errors: ["time"]
-                        }
-                      )
-                      .then(async collected => {
-                        let roleColour = collected.first().content.trim();
-                        roleArray[index].role.setColor(roleColour).then(() => {
-                          message.channel.send("okay i did it !");
-                        });
-                      });
-                  });
+
+                roleArray[index].role.setColor(args[1].trim()).then(() => {
+                  message.channel.send("okay i did it !");
+                });
               });
           });
         }

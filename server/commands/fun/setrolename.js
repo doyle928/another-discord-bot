@@ -72,27 +72,11 @@ exports.run = async (client, message, args) => {
               })
               .then(async collected => {
                 let index = Number(collected.first().content.trim()) - 1;
-                message.channel
-                  .send(
-                    `What do you want the role ${roleArray[index].role} to be called ?`
-                  )
-                  .then(m => {
-                    message.channel
-                      .awaitMessages(
-                        res => res.author.id === message.author.id,
-                        {
-                          maxMatches: 1,
-                          time: 120000,
-                          errors: ["time"]
-                        }
-                      )
-                      .then(async collected => {
-                        let roleName = collected.first().content.trim();
-                        roleArray[index].role.setName(roleName).then(() => {
-                          message.channel.send("okay i did it !");
-                        });
-                      });
-                  });
+
+                let roleName = message.content.replace(".setrolename", "");
+                roleArray[index].role.setName(roleName.trim()).then(() => {
+                  message.channel.send("okay i did it !");
+                });
               });
           });
         }
