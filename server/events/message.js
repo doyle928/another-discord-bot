@@ -12,6 +12,7 @@ module.exports = async (client, message) => {
   if (
     message.author.id !== "157673412561469440" &&
     message.author.id !== "630573404352937996" &&
+    message.author.id !== "586232973829865495" &&
     message.nonce === null &&
     message.attachments.size <= 0 &&
     !message.author.bot &&
