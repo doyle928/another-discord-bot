@@ -12,8 +12,9 @@ exports.run = async (client, message, args) => {
             }`;
     try {
       user = await request(url, query);
+      console.log(user);
 
-      let str = `What role do you want to change the colour of ? please type the number before the role\n`;
+      let str = `What role do you want to change the colour of ? please type the number before the role  like 1 - or - 2\n`;
       let i = 1;
       let roleArray = [];
       if (
@@ -46,7 +47,11 @@ exports.run = async (client, message, args) => {
         };
         roleArray.push(obj);
       }
-      if ("temp_role" in user.getUser && user.getUser.temp_role.length > 0) {
+      if (
+        "temp_role" in user.getUser &&
+        user.getUser.temp_role &&
+        user.getUser.temp_role.length > 0
+      ) {
         let role = await s.roles.get(user.getUser.temp_role);
         str += `\n${i} : ${role}`;
         i++;

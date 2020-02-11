@@ -46,10 +46,10 @@ exports.run = async (client, message, args) => {
 
                         let url = "https://lulu-discord-bot.herokuapp.com/api";
                         let query = `mutation{
-                                                        setCustomRole(guild_id: "${s.id}", user_id: "${message.author.id}", custom_role: "${role.id}") {
-                                                            guild_id user_id
-                                                        }
-                                                    }`;
+                        setCustomRole(guild_id: "${s.id}", user_id: "${message.author.id}", custom_role: "${role.id}") {
+                            guild_id user_id
+                        }
+                        }`;
                         try {
                           await request(url, query);
                           let memRoles = [];

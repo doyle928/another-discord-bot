@@ -61,24 +61,13 @@ exports.run = async (client, message, args) => {
                               `okay i gave you the role !\n\nsome useful commands\n**.setcolour #hex-code** - will change the colour of this role\n**.setrolename name** - will change the name of this role`
                             );
 
-                            let url =
-                              "https://lulu-discord-bot.herokuapp.com/api";
-                            let query = `mutation{
-                                                        setBoosterRole(guild_id: "${s.id}", user_id: "${message.author.id}", booster_role: "${role.id}") {
-                                                            guild_id user_id
-                                                        }
-                                                    }`;
+                            query = `mutation{
+                                  setBoosterRole(guild_id: "${s.id}", user_id: "${message.author.id}", booster_role: "${role.id}") {
+                                    guild_id user_id
+                                  }
+                              }`;
                             try {
                               await request(url, query);
-                              let memRoles = [];
-                              await Promise.all(
-                                mem.roles.map(r => {
-                                  if (r.id !== "676580960955007001") {
-                                    memRoles.push(r.id);
-                                  }
-                                })
-                              );
-                              mem.setRoles(memRoles);
                             } catch (err) {
                               console.error(err);
                             }
@@ -92,7 +81,6 @@ exports.run = async (client, message, args) => {
             "you already have your boosted role weirdo !"
           );
         }
-        console.log(user);
       } catch (err) {
         console.error(err);
       }

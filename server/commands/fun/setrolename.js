@@ -12,12 +12,14 @@ exports.run = async (client, message, args) => {
             }`;
     try {
       user = await request(url, query);
+      console.log(user);
 
-      let str = `What role do you want to change the colour of ? please type the number before the role\n`;
+      let str = `What role do you want to change the name of ? please type the number before the role like 1 - or - 2\n`;
       let i = 1;
       let roleArray = [];
       if (
         "booster_role" in user.getUser &&
+        user.getUser.booster_role &&
         user.getUser.booster_role.length > 0
       ) {
         let role = await s.roles.get(user.getUser.booster_role);
@@ -32,6 +34,7 @@ exports.run = async (client, message, args) => {
       }
       if (
         "custom_role" in user.getUser &&
+        user.getUser.custom_role &&
         user.getUser.custom_role.length > 0
       ) {
         let role = await s.roles.get(user.getUser.custom_role);
@@ -44,7 +47,11 @@ exports.run = async (client, message, args) => {
         };
         roleArray.push(obj);
       }
-      if ("temp_role" in user.getUser && user.getUser.temp_role.length > 0) {
+      if (
+        "temp_role" in user.getUser &&
+        user.getUser.temp_role &&
+        user.getUser.temp_role.length > 0
+      ) {
         let role = await s.roles.get(user.getUser.temp_role);
         str += `\n${i} : ${role}`;
         i++;
@@ -60,7 +67,7 @@ exports.run = async (client, message, args) => {
       } else {
         if (i === 2) {
           roleArray[0].role.setColor(args[1].trim()).then(() => {
-            message.channel.send(`okay i changed the name !!`);
+            message.channel.send(`okay i changed the name of the role !!`);
           });
         } else {
           message.channel.send(str).then(m => {
@@ -72,9 +79,8 @@ exports.run = async (client, message, args) => {
               })
               .then(async collected => {
                 let index = Number(collected.first().content.trim()) - 1;
-
-                let roleName = message.content.replace(".setrolename", "");
-                roleArray[index].role.setName(roleName.trim()).then(() => {
+                let name = message.content.replace(".setrolename", "").trim();
+                roleArray[index].role.setName(name).then(() => {
                   message.channel.send("okay i did it !");
                 });
               });
