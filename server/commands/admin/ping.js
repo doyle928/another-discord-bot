@@ -5,7 +5,7 @@ exports.run = (client, message) => {
     message.author.send("hey ! don't ping me in here !!");
     setTimeout(() => {
       message.author.send("weirdo");
-      message.author.send("<:scared:658963912099758080>");
+      message.author.send("<:natsukiMad:646210751417286656>");
     }, 800);
   } else {
     message.channel.send("pong");

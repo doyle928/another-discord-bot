@@ -31,7 +31,7 @@ exports.run = async (client, message, args) => {
       const embedPublic = new Discord.RichEmbed()
         .setAuthor("Giveaway Winner")
         .setDescription(
-          `\n🎉 **${winner.user.username}** has won the giveaway !!\n\nPlease use the command **.setwinnerrole** to get your role !`
+          `\n🎉 **${winner.user.username}** has won the giveaway !!\n\nMake sure to send them lots of love and congratulations !`
         )
         .setThumbnail(winner.user.avatarURL)
         .setColor("#f5acba");
@@ -41,7 +41,7 @@ exports.run = async (client, message, args) => {
       const embedDm = new Discord.RichEmbed()
         .setAuthor(`🎉 Congrats 🎉`)
         .setDescription(
-          `You won the giveaway !!\n\nMake sure to let **Lapinou 🐰** know !`
+          `You won the giveaway !!\n\nMake sure to pick out a name and a hex-code for the coulour !\nThen use the command **.setwinnerrole** in here or anywhere in the serveur to get your custom role !`
         )
         .setColor("#f5acba");
 

@@ -15,8 +15,8 @@ exports.run = async (client, message, args) => {
       try {
         boosterRoles = await request(url, query);
         let haveRoleBool = false;
-        for (let i in boosterRoles.getBoosterroles) {
-          if (boosterRoles.getBoosterroles[i].user_id === message.author.id) {
+        for (let i in boosterRoles.getBoosterRoles) {
+          if (boosterRoles.getBoosterRoles[i].user_id === message.author.id) {
             haveRoleBool = true;
           }
         }

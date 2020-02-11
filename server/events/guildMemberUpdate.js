@@ -98,19 +98,19 @@ module.exports = async (client, memberOld, memberNew) => {
             }`;
         try {
           boosterRoles = await request(url, query);
-          for (let i in boosterRoles.getBoosterroles) {
-            if (boosterRoles.getBoosterroles[i].user_id === memberNew.user.id) {
+          for (let i in boosterRoles.getBoosterRoles) {
+            if (boosterRoles.getBoosterRoles[i].user_id === memberNew.user.id) {
               query = `mutation {
                 setBoosterRole(guild_id: "${memberNew.guild.id}", user_id: "${memberNew.user.id}", booster_role: "") {
                   booster_role
                 }
               }`;
               try {
-                let guildRole = await s.roles.get(
-                  boosterRoles.getBoosterroles[i].booster_role
-                );
-                guildRole.delete();
                 await request(url, query);
+                let guildRole = await s.roles.get(
+                  boosterRoles.getBoosterRoles[i].booster_role
+                );
+                await guildRole.delete();
               } catch (err) {
                 console.error(err);
               }
