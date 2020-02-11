@@ -90,22 +90,24 @@ module.exports = async (client, memberOld, memberNew) => {
           `**${memberNew.user.username}** is no longer boosting the serveur !`
         );
         query = `{
-                getBoosterroles {
-                    guild_id user_id role_id
+                getBoosterRoles(guild_id: "${
+                  memberNew.guild.id
+                }", booster: ${true}) {
+                    guild_id user_id booster_role
                 }
             }`;
         try {
           boosterRoles = await request(url, query);
           for (let i in boosterRoles.getBoosterroles) {
             if (boosterRoles.getBoosterroles[i].user_id === memberNew.user.id) {
-              query = `{
-                deleteBoosterroles(role_id: "${boosterRoles.getBoosterroles[i].role_id}") {
-                  role_id
+              query = `mutation {
+                setBoosterRole(guild_id: "${memberNew.guild.id}", user_id: "${memberNew.user.id}", booster_role: "") {
+                  booster_role
                 }
               }`;
               try {
                 let guildRole = await s.roles.get(
-                  boosterRoles.getBoosterroles[i].role_id
+                  boosterRoles.getBoosterroles[i].booster_role
                 );
                 guildRole.delete();
                 await request(url, query);

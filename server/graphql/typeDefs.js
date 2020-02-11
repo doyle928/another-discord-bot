@@ -7,6 +7,8 @@ module.exports = gql`
     join_date: String!
     strikes: Int
     booster: Boolean!
+    booster_role: String
+    custom_role: String
     welcome_points: Int!
     temp_role: String
   }
@@ -47,11 +49,6 @@ module.exports = gql`
     message: String
     date: String
   }
-  type Boosterroles {
-    guild_id: String
-    user_id: String
-    role_id: String
-  }
   type Reactionroles {
     guild_id: String
     channel_id: String
@@ -62,6 +59,7 @@ module.exports = gql`
   type Query {
     getUser(guild_id: String!, user_id: String!): User
     getUsers: [User]
+    getBoosterRoles(guild_id: String, booster: Boolean): [User]
     getCount(guild_id: String!): [Count]
     getCounts: [Count]
     getServers: [Server]
@@ -71,7 +69,6 @@ module.exports = gql`
     getShips(guild_id: String!): [Ship]
     getShip(guild_id: String!, user_id: String!): Ship
     getSchedules: [Schedules]
-    getBoosterroles: [Boosterroles]
     getReactionRoles: [Reactionroles]
   }
   type Mutation {
@@ -91,6 +88,12 @@ module.exports = gql`
       welcome_points: Int
     ): User!
     setTempRole(guild_id: String!, user_id: String!, temp_role: String): User
+    setBoosterRole(
+      guild_id: String
+      user_id: String
+      booster_role: String
+    ): User
+    setCustomRole(guild_id: String, user_id: String!, custom_role: String): User
     addCount(guild_id: String!, members: Int!, timestamp: String!): Count!
     addServer(
       guild_id: String!
@@ -135,12 +138,6 @@ module.exports = gql`
       date: String
     ): Schedules
     deleteSchedules(guild_id: String, message: String, date: String): Schedules
-    addBoosterroles(
-      guild_id: String
-      user_id: String
-      role_id: String
-    ): Boosterroles
-    deleteBoosterroles(role_id: String): Boosterroles
     addReactionRoles(
       guild_id: String
       channel_id: String

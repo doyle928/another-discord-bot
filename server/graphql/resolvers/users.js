@@ -14,7 +14,14 @@ module.exports = {
     getUser: async (_, { guild_id, user_id }) => {
       const user = await User.find(
         { guild_id: guild_id, user_id: user_id },
-        "guild_id user_id join_date strikes booster welcome_points temp_role"
+        "guild_id user_id join_date strikes booster booster_role custom_role welcome_points temp_role"
+      );
+      return user[0];
+    },
+    getBoosterRoles: async (_, { guild_id, booster }) => {
+      const user = await User.find(
+        { guild_id: guild_id, booster: booster },
+        "guild_id user_id booster_role"
       );
       return user[0];
     }
@@ -94,6 +101,38 @@ module.exports = {
         },
         {
           temp_role: temp_role
+        },
+        {
+          new: true
+        }
+      );
+
+      return res;
+    },
+    setBoosterRole: async (_, { guild_id, user_id, booster_role }) => {
+      const res = await User.findOneAndUpdate(
+        {
+          guild_id: guild_id,
+          user_id: user_id
+        },
+        {
+          booster_role: booster_role
+        },
+        {
+          new: true
+        }
+      );
+
+      return res;
+    },
+    setCustomRole: async (_, { guild_id, user_id, custom_role }) => {
+      const res = await User.findOneAndUpdate(
+        {
+          guild_id: guild_id,
+          user_id: user_id
+        },
+        {
+          custom_role: custom_role
         },
         {
           new: true

@@ -6,6 +6,8 @@ const userSchema = new Schema({
   join_date: String,
   strikes: Number,
   booster: Boolean,
+  booster_role: String,
+  custom_role: String,
   welcome_points: Number,
   temp_role: String
 });
