@@ -10,7 +10,7 @@ exports.run = async (client, message, args) => {
 
     let txt = message.author.username.replace(/[^\w\s]/gi, "");
 
-    let ttfPath = path.join(__dirname, "../../fonts/InkFree.ttf");
+    let ttfPath = path.join(__dirname, "../../fonts/Inkfree.ttf");
 
     Canvas.registerFont(ttfPath, { family: "ink" });
     ctx.textAlign = "center";
