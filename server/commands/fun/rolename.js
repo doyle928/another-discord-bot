@@ -65,27 +65,32 @@ exports.run = async (client, message, args) => {
       if (i === 1) {
         return message.channel.send("you do not have any custom roles !");
       } else {
-        if (i === 2) {
-          let name = message.content.replace(".rolename", "").trim();
-          roleArray[0].role.setName(name).then(() => {
-            message.channel.send(`okay i changed the name of the role !!`);
-          });
+        let name = message.content.replace(".rolename", "").trim();
+        if (name.length > 32) {
+          return message.channel.send(
+            `i'm sorry but the name has to be 32 characters or under ! you gave me one that was ${name.length} !`
+          );
         } else {
-          message.channel.send(str).then(m => {
-            message.channel
-              .awaitMessages(res => res.author.id === message.author.id, {
-                maxMatches: 1,
-                time: 120000,
-                errors: ["time"]
-              })
-              .then(async collected => {
-                let index = Number(collected.first().content.trim()) - 1;
-                let name = message.content.replace(".rolename", "").trim();
-                roleArray[index].role.setName(name).then(() => {
-                  message.channel.send("okay i did it !");
+          if (i === 2) {
+            roleArray[0].role.setName(name).then(() => {
+              message.channel.send(`okay i changed the name of the role !!`);
+            });
+          } else {
+            message.channel.send(str).then(m => {
+              message.channel
+                .awaitMessages(res => res.author.id === message.author.id, {
+                  maxMatches: 1,
+                  time: 120000,
+                  errors: ["time"]
+                })
+                .then(async collected => {
+                  let index = Number(collected.first().content.trim()) - 1;
+                  roleArray[index].role.setName(name).then(() => {
+                    message.channel.send("okay i did it !");
+                  });
                 });
-              });
-          });
+            });
+          }
         }
       }
     } catch (err) {
