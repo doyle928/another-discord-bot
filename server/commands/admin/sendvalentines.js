@@ -22,12 +22,15 @@ exports.run = async (client, message) => {
       })
     );
 
-    for (let i = 0; i < memArray.length; i++) {
+    for (let i in memArray) {
       setTimeout(async () => {
-        img = await randFunction(mem.user.username);
+        img = await randFunction(memArray[i].user.username);
         attachment = new Discord.Attachment(img, "valentines.png");
-        if (mem.user.username.replace(/[^\w\s]/gi, "") === mem.user.username) {
-          await mem
+        if (
+          memArray[i].user.username.replace(/[^\w\s]/gi, "") ===
+          memArray[i].user.username
+        ) {
+          await memArray[i]
             .send(
               "hey ! i made something for you ! I hope you like it ! <:softheart:575053165804912652>",
               attachment
@@ -35,12 +38,12 @@ exports.run = async (client, message) => {
             .then(m => console.log(m.content))
             .catch(err => console.error(err));
         } else {
-          await mem
+          await memArray[i]
             .send(
               "hey ! i made something for you ! I hope you like it !\ni tried to get your name right ! it is hard to read all the letters !! <:softheart:575053165804912652>",
               attachment
             )
-            .then(m => console.log(m.content))
+            .then(m => console.log(memArray[i].user.username, m.content))
             .catch(err => console.error(err));
         }
       }, i * 1250);
