@@ -66,7 +66,7 @@ exports.run = async (client, message, args) => {
         return message.channel.send("you do not have any custom roles !");
       } else {
         if (i === 2) {
-          let name = message.content.replace(".setrolename", "").trim();
+          let name = message.content.replace(".rolename", "").trim();
           roleArray[0].role.setName(name).then(() => {
             message.channel.send(`okay i changed the name of the role !!`);
           });
@@ -80,7 +80,7 @@ exports.run = async (client, message, args) => {
               })
               .then(async collected => {
                 let index = Number(collected.first().content.trim()) - 1;
-                let name = message.content.replace(".setrolename", "").trim();
+                let name = message.content.replace(".rolename", "").trim();
                 roleArray[index].role.setName(name).then(() => {
                   message.channel.send("okay i did it !");
                 });

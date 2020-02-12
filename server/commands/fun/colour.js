@@ -14,7 +14,7 @@ exports.run = async (client, message, args) => {
       user = await request(url, query);
       console.log(user);
 
-      let str = `What role do you want to change the name of ? please type the number before the role like 1 - or - 2\n`;
+      let str = `What role do you want to change the colour of ? please type the number before the role like 1 - or - 2\n`;
       let i = 1;
       let roleArray = [];
       if (
@@ -66,9 +66,8 @@ exports.run = async (client, message, args) => {
         return message.channel.send("you do not have any custom roles !");
       } else {
         if (i === 2) {
-          let name = message.content.replace(".setrolename", "").trim();
-          roleArray[0].role.setName(name).then(() => {
-            message.channel.send(`okay i changed the name of the role !!`);
+          roleArray[0].role.setColor(args[1].trim()).then(() => {
+            message.channel.send(`okay i changed the color of the role !!`);
           });
         } else {
           message.channel.send(str).then(m => {
@@ -80,8 +79,8 @@ exports.run = async (client, message, args) => {
               })
               .then(async collected => {
                 let index = Number(collected.first().content.trim()) - 1;
-                let name = message.content.replace(".setrolename", "").trim();
-                roleArray[index].role.setName(name).then(() => {
+
+                roleArray[index].role.setColor(args[1].trim()).then(() => {
                   message.channel.send("okay i did it !");
                 });
               });
