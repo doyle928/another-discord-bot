@@ -15,7 +15,7 @@ exports.run = async (client, message, args) => {
           message.channel
             .awaitMessages(res => res.author.id === message.author.id, {
               maxMatches: 1,
-              time: 120000,
+              time: 180000,
               errors: ["time"]
             })
             .then(async collected => {
@@ -28,7 +28,7 @@ exports.run = async (client, message, args) => {
                   message.channel
                     .awaitMessages(res => res.author.id === message.author.id, {
                       maxMatches: 1,
-                      time: 120000,
+                      time: 180000,
                       errors: ["time"]
                     })
                     .then(async collected => {
@@ -62,11 +62,26 @@ exports.run = async (client, message, args) => {
                           );
                           mem.setRoles(memRoles);
                         } catch (err) {
+                          message.channel.send(
+                            "sorry i was not able to ! make sure to let <@157673412561469440> know !"
+                          );
                           console.error(err);
                         }
                       });
+                    })
+                    .catch(err => {
+                      console.error(err);
+                      message.channel.send(
+                        "sorry but i timed out ! figure out both the colour and the name and i will be here to try again ! <:softheart:575053165804912652>"
+                      );
                     });
                 });
+            })
+            .catch(err => {
+              console.error(err);
+              message.channel.send(
+                "sorry but i timed out ! figure out both the colour and the name and i will be here to try again ! <:softheart:575053165804912652>"
+              );
             });
         });
     }

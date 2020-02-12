@@ -29,7 +29,7 @@ exports.run = async (client, message, args) => {
               message.channel
                 .awaitMessages(res => res.author.id === message.author.id, {
                   maxMatches: 1,
-                  time: 120000,
+                  time: 180000,
                   errors: ["time"]
                 })
                 .then(async collected => {
@@ -44,7 +44,7 @@ exports.run = async (client, message, args) => {
                           res => res.author.id === message.author.id,
                           {
                             maxMatches: 1,
-                            time: 120000,
+                            time: 180000,
                             errors: ["time"]
                           }
                         )
@@ -72,8 +72,20 @@ exports.run = async (client, message, args) => {
                               console.error(err);
                             }
                           });
+                        })
+                        .catch(err => {
+                          console.error(err);
+                          message.channel.send(
+                            "sorry but i timed out ! figure out both the colour and the name and i will be here to try again ! <:softheart:575053165804912652>"
+                          );
                         });
                     });
+                })
+                .catch(err => {
+                  console.error(err);
+                  message.channel.send(
+                    "sorry but i timed out ! figure out both the colour and the name and i will be here to try again ! <:softheart:575053165804912652>"
+                  );
                 });
             });
         } else {
