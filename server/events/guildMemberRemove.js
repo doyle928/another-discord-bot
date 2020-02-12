@@ -28,7 +28,7 @@ module.exports = async (client, member) => {
       );
   } else if (audit.entries.first().action === "MEMBER_BAN_ADD") {
     messageEmbed
-      .setAuthor("Member kicked")
+      .setAuthor("Member banned")
       .setDescription(
         `**${audit.entries.first().executor.username}**#${
           audit.entries.first().executor.discriminator
@@ -44,7 +44,10 @@ module.exports = async (client, member) => {
       );
   }
 
-  messageEmbed.setColor("#ff0000").setThumbnail(member.user.displayAvatarURL);
+  messageEmbed
+    .setColor("#ff0000")
+    .setThumbnail(member.user.displayAvatarURL)
+    .setTimestamp();
 
   if (member.guild.id === "664351758344257537") {
     let c = await client.channels.get("664364035386507274");
