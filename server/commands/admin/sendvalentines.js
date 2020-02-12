@@ -10,11 +10,12 @@ exports.run = async (client, message) => {
     let img = null,
       attachment = null;
 
-    let members = await message.guild.fetchMembers();
-
     await Promise.all(
-      members.map(async mem => {
-        if (mem._roles.includes("559562042907033651")) {
+      message.guild.members.map(async mem => {
+        if (
+          mem._roles.includes("559562042907033651") ||
+          mem._roles.includes("615388463159836672")
+        ) {
           await wait(1250);
           img = await randFunction(mem.user.username);
           attachment = new Discord.Attachment(img, "valentines.png");
