@@ -14,8 +14,9 @@ exports.run = async (client, message) => {
     await Promise.all(
       message.guild.members.map(async mem => {
         if (
-          mem._roles.includes("559562042907033651") ||
-          mem._roles.includes("615388463159836672")
+          !mem.user.bot &&
+          !mem._roles.includes("561302712470208513") &&
+          !mem._roles.includes("615421712632119303")
         ) {
           memArray.push(mem);
         }
@@ -25,7 +26,13 @@ exports.run = async (client, message) => {
     for (let i in memArray) {
       setTimeout(async () => {
         img = await randFunction(memArray[i].user.username);
-        attachment = new Discord.Attachment(img, "valentines.png");
+        attachment = new Discord.Attachment(
+          img,
+          `valentines-${memArray[i].user.username.replace(
+            /[^a-zA-z]/g,
+            ""
+          )}.png`
+        );
         if (
           memArray[i].user.username.replace(/[^\w\s]/gi, "") ===
           memArray[i].user.username
@@ -35,7 +42,7 @@ exports.run = async (client, message) => {
               "hey ! i made something for you ! I hope you like it ! <:softheart:575053165804912652>",
               attachment
             )
-            .then(m => console.log(m.content))
+            .then(m => console.log(memArray[i].user.username))
             .catch(err => console.error(err));
         } else {
           await memArray[i]
@@ -43,7 +50,7 @@ exports.run = async (client, message) => {
               "hey ! i made something for you ! I hope you like it !\ni tried to get your name right ! it is hard to read all the letters !! <:softheart:575053165804912652>",
               attachment
             )
-            .then(m => console.log(memArray[i].user.username, m.content))
+            .then(m => console.log(memArray[i].user.username))
             .catch(err => console.error(err));
         }
       }, i * 1250);
