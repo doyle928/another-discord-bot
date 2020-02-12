@@ -4,43 +4,47 @@ const path = require("path");
 const randomNum = require("../../data/randomNumber");
 
 exports.run = async (client, message) => {
-  const wait = require("util").promisify(setTimeout);
+  //   const wait = require("util").promisify(setTimeout);
 
   if (message.author.id == "157673412561469440") {
     let img = null,
       attachment = null;
 
+    let memArray = [];
     await Promise.all(
       message.guild.members.map(async mem => {
         if (
           mem._roles.includes("559562042907033651") ||
           mem._roles.includes("615388463159836672")
         ) {
-          await wait(1250);
-          img = await randFunction(mem.user.username);
-          attachment = new Discord.Attachment(img, "valentines.png");
-          if (
-            mem.user.username.replace(/[^\w\s]/gi, "") === mem.user.username
-          ) {
-            mem
-              .send(
-                "hey ! i made something for you ! I hope you like it ! <:softheart:575053165804912652>",
-                attachment
-              )
-              .then(m => console.log(m.content))
-              .catch(err => console.error(err));
-          } else {
-            mem
-              .send(
-                "hey ! i made something for you ! I hope you like it !\ni tried to get your name right ! it is hard to read all the letters !! <:softheart:575053165804912652>",
-                attachment
-              )
-              .then(m => console.log(m.content))
-              .catch(err => console.error(err));
-          }
+          memArray.push(mem);
         }
       })
     );
+
+    for (let i = 0; i < memArray.length; i++) {
+      setTimeout(async () => {
+        img = await randFunction(mem.user.username);
+        attachment = new Discord.Attachment(img, "valentines.png");
+        if (mem.user.username.replace(/[^\w\s]/gi, "") === mem.user.username) {
+          await mem
+            .send(
+              "hey ! i made something for you ! I hope you like it ! <:softheart:575053165804912652>",
+              attachment
+            )
+            .then(m => console.log(m.content))
+            .catch(err => console.error(err));
+        } else {
+          await mem
+            .send(
+              "hey ! i made something for you ! I hope you like it !\ni tried to get your name right ! it is hard to read all the letters !! <:softheart:575053165804912652>",
+              attachment
+            )
+            .then(m => console.log(m.content))
+            .catch(err => console.error(err));
+        }
+      }, i * 1250);
+    }
   }
 
   async function randFunction(username) {
