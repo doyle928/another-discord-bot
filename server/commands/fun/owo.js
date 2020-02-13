@@ -40,7 +40,7 @@ exports.run = async (client, message, args) => {
       let excIndex = newMsg.indexOf("!");
       newMsg =
         newMsg.substring(0, excIndex + 1) +
-        " <:owosneaky:652314297644613632> " +
+        " <:owosneaky:677298912436027413> " +
         newMsg.substring(excIndex + 1, newMsg.length);
     }
     return newMsg;
