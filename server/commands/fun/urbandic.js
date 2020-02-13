@@ -24,7 +24,13 @@ exports.run = async (client, message) => {
           "https://cdn.discordapp.com/attachments/660228695730028594/677546966053552147/apple-touch-icon-1734beeaa059fbc5587bddb3001a0963670c6de8767afb6c67d88d856b0c0dad.png"
         )
         .setDescription(
-          `**Top definiton :** ${res[0].definition}\n**Example :** ${res[0].example}`
+          `**Top definiton :** ${res[0].definition.replace(
+            /[^\w\s\.\!\,\*\?\"\'\:\;\=\#\$\&\(\)\t\n\r]/gi,
+            ""
+          )}\n**Example :** ${res[0].example.replace(
+            /[^\w\s\.\!\,\*\?\"\'\:\;\=\#\$\&\(\)\t\n\r]/gi,
+            ""
+          )}`
         )
         .setColor(randColour())
         .setFooter(
