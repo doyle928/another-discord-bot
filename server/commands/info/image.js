@@ -21,6 +21,8 @@ exports.run = async (client, message, args) => {
       message.channel.send("please not so fast please !!");
       message.channel.send("<a:crying:661358360091688980>");
     } else {
+      message.channel.startTyping();
+
       const nightmare = Nightmare({
         show: false
       });
@@ -72,7 +74,9 @@ exports.run = async (client, message, args) => {
                 .replace(".image ", "")
                 .trim()}**`
             );
-            message.channel.send("<:confusedKanna:665372884402962432>");
+            message.channel
+              .send("<:confusedKanna:665372884402962432>")
+              .then(() => message.channel.stopTyping(true));
             talkedRecently.add("image-called");
             setTimeout(() => {
               talkedRecently.delete("image-called");
@@ -96,7 +100,9 @@ exports.run = async (client, message, args) => {
               .setImage(img.src)
               .setFooter(`${img.resolution} | ${format(img.src)}`)
               .setTimestamp();
-            message.channel.send(embed);
+            message.channel
+              .send(embed)
+              .then(() => message.channel.stopTyping(true));
             talkedRecently.add("image-called");
             setTimeout(() => {
               talkedRecently.delete("image-called");
@@ -106,7 +112,9 @@ exports.run = async (client, message, args) => {
         .catch(function(err) {
           console.log(err);
           message.channel.send("i broke something");
-          message.channel.send("<:deadinside:606350795881054216>");
+          message.channel
+            .send("<:deadinside:606350795881054216>")
+            .then(() => message.channel.stopTyping(true));
           talkedRecently.add("image-called");
           setTimeout(() => {
             talkedRecently.delete("image-called");

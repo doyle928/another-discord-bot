@@ -1,6 +1,8 @@
 const Nightmare = require("nightmare");
 
 exports.run = async (client, message, args) => {
+  message.channel.startTyping();
+
   const nightmare = Nightmare();
 
   await nightmare
@@ -27,12 +29,15 @@ exports.run = async (client, message, args) => {
           })
           .end()
           .then(buffer => {
-            message.channel.send({
-              files: [buffer]
-            });
+            message.channel
+              .send({
+                files: [buffer]
+              })
+              .then(() => message.channel.stopTyping(true));
           })
           .catch(function(err) {
             console.log(err);
+            message.channel.stopTyping(true);
           });
       }
 
@@ -40,6 +45,7 @@ exports.run = async (client, message, args) => {
     })
     .catch(function(err) {
       console.log(err);
+      message.channel.stopTyping(true);
     });
 
   function getBounds(selector) {

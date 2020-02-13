@@ -44,45 +44,6 @@ module.exports = async (client, member, guild) => {
   }
   let messageEmbed = new Discord.RichEmbed().setColor("#202225");
 
-  if (blank_avatar) {
-    if (
-      member.user.avatarURL === null ||
-      member.user.displayAvatarURL.indexOf("assets") > -1
-    ) {
-      if (member.guild.id === "559560674246787087") {
-        messageEmbed
-          .setAuthor("Notice")
-          .setDescription(
-            `Thanks for joining **Our Home** !\nUnfortunately we require discord accounts to have an avatar photo, sorry it is just to help keep bots from joining !\n\nYou can get a photo and try again though !!`
-          );
-
-        member.send(messageEmbed).then(() => {
-          member.kick("no avatar photo !!");
-        });
-        return;
-      } else if (member.guild.id === "664351758344257537") {
-        messageEmbed
-          .setAuthor("Notice")
-          .setDescription(
-            `Thanks for joining **Losers Club** !\nUnfortunately we require discord accounts to have an avatar photo, sorry it is just to help keep bots from joining !\n\nYou can get a photo and try again though !!`
-          );
-        member.send(messageEmbed).then(() => {
-          member.kick("no avatar photo !!");
-        });
-        return;
-      } else if (member.guild.id === "634305104693952532") {
-        messageEmbed
-          .setAuthor("Notice")
-          .setDescription(
-            `Thanks for joining **Naughty Things** !\nUnfortunately we require discord accounts to have an avatar photo, sorry it is just to help keep bots from joining !\n\nYou can get a photo and try again though !!`
-          );
-        member.send(messageEmbed).then(() => {
-          member.kick("no avatar photo !!");
-        });
-        return;
-      }
-    }
-  }
   if (join_age) {
     if (
       discordJoinDateDiff._data.days < 7 &&
@@ -94,7 +55,12 @@ module.exports = async (client, member, guild) => {
           .setAuthor("Notice")
           .setDescription(
             `Thanks for joining Our Home !\nUnfortunately we require discord accounts that are 7 days or older.\n\nYour account is was created on ${discordJoinDate} !`
-          );
+          )
+          .setFooter(
+            `${member.guild.name}`,
+            "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
+          )
+          .setTimestamp();
 
         member.send(messageEmbed).then(() => {
           member.kick("account was too young !!");
@@ -105,7 +71,66 @@ module.exports = async (client, member, guild) => {
           .setAuthor("Notice")
           .setDescription(
             `Thanks for joining Losers Club !\nUnfortunately we require discord accounts that are 7 days or older.\n\nYour account is was created on ${discordJoinDate} !`
-          );
+          )
+          .setFooter(
+            `${member.guild.name}`,
+            "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
+          )
+          .setTimestamp();
+        member.send(messageEmbed).then(() => {
+          member.kick("no avatar photo !!");
+        });
+        return;
+      }
+    }
+  }
+  if (blank_avatar) {
+    if (
+      member.user.avatarURL === null ||
+      member.user.displayAvatarURL.indexOf("assets") > -1
+    ) {
+      if (member.guild.id === "559560674246787087") {
+        messageEmbed
+          .setAuthor("Notice")
+          .setDescription(
+            `Thanks for joining **Our Home** !\nUnfortunately we require discord accounts to have an avatar photo, sorry it is just to help keep bots from joining !\n\nYou can get a photo and try again though !!`
+          )
+          .setFooter(
+            `${member.guild.name}`,
+            "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
+          )
+          .setTimestamp();
+
+        member.send(messageEmbed).then(() => {
+          member.kick("no avatar photo !!");
+        });
+        return;
+      } else if (member.guild.id === "664351758344257537") {
+        messageEmbed
+          .setAuthor("Notice")
+          .setDescription(
+            `Thanks for joining **Losers Club** !\nUnfortunately we require discord accounts to have an avatar photo, sorry it is just to help keep bots from joining !\n\nYou can get a photo and try again though !!`
+          )
+          .setFooter(
+            `${member.guild.name}`,
+            "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
+          )
+          .setTimestamp();
+        member.send(messageEmbed).then(() => {
+          member.kick("no avatar photo !!");
+        });
+        return;
+      } else if (member.guild.id === "634305104693952532") {
+        messageEmbed
+          .setAuthor("Notice")
+          .setDescription(
+            `Thanks for joining **Naughty Things** !\nUnfortunately we require discord accounts to have an avatar photo, sorry it is just to help keep bots from joining !\n\nYou can get a photo and try again though !!`
+          )
+          .setFooter(
+            `${member.guild.name}`,
+            "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
+          )
+          .setTimestamp();
         member.send(messageEmbed).then(() => {
           member.kick("no avatar photo !!");
         });
@@ -122,7 +147,12 @@ module.exports = async (client, member, guild) => {
         `**${member.user.username}** joined !\n\n**Account created :** ${discordJoinDate}`
       )
       .setColor("#00ff00")
-      .setThumbnail(member.user.displayAvatarURL);
+      .setThumbnail(member.user.displayAvatarURL)
+      .setFooter(
+        `${member.guild.name}`,
+        "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
+      )
+      .setTimestamp();
 
     member
       .addRole("596016686331723785")
@@ -132,7 +162,12 @@ module.exports = async (client, member, guild) => {
           .setAuthor("New member")
           .setDescription(
             `**${member.user.username}** has joined the server but i failed to give them the welcome to serveur role !`
-          );
+          )
+          .setFooter(
+            `${member.guild.name}`,
+            "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
+          )
+          .setTimestamp();
 
         c.send(messageEmbed);
       });
@@ -173,7 +208,13 @@ module.exports = async (client, member, guild) => {
           .setAuthor("Notice")
           .setDescription(
             `Thanks for joining Losers Club !\nUnfortunately we had a large amount of joins in a few secondes so raid mode was automatically activated ! If you are not a bot you can join again in 30-45 minutes !`
-          );
+          )
+          .setFooter(
+            `${member.guild.name}`,
+            "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
+          )
+          .setTimestamp();
+
         member.send(messageEmbed).then(() => member.kick("raid mode"));
       } else {
         messageEmbed
@@ -182,7 +223,12 @@ module.exports = async (client, member, guild) => {
             `**${member.user.username}** joined !\n\n**Account created :** ${discordJoinDate}`
           )
           .setColor("#00ff00")
-          .setThumbnail(member.user.displayAvatarURL);
+          .setThumbnail(member.user.displayAvatarURL)
+          .setFooter(
+            `${member.guild.name}`,
+            "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
+          )
+          .setTimestamp();
 
         member.guild
           .fetchMember("157673412561469440")
@@ -198,7 +244,12 @@ module.exports = async (client, member, guild) => {
               .setAuthor("New member")
               .setDescription(
                 `**${member.user.username}** has joined the server but i failed to give them the welcome to serveur role !`
-              );
+              )
+              .setFooter(
+                `${member.guild.name}`,
+                "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
+              )
+              .setTimestamp();
 
             c.send(messageEmbed);
           });

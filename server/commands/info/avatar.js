@@ -33,7 +33,12 @@ exports.run = async (client, message, args) => {
       .setTitle(
         `${message.author.username} wanted to see the avatar of ${member.user.username} !!`
       )
-      .setImage(member.user.displayAvatarURL);
+      .setImage(member.user.displayAvatarURL)
+      .setFooter(
+        `${message.guild.name}`,
+        "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
+      )
+      .setTimestamp();
 
     message.channel.send(messageEmbed);
     // setTimeout(() => {

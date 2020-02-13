@@ -102,6 +102,10 @@ exports.run = async (client, message, args) => {
         let messageEmbed = new Discord.RichEmbed()
           .setColor(randomColor())
           .setImage(url)
+          .setFooter(
+            `${message.guild.name}`,
+            "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
+          )
           .setTimestamp();
 
         if (member !== null) {

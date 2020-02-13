@@ -2,6 +2,8 @@ const Nightmare = require("nightmare");
 const Discord = require("discord.js");
 
 exports.run = async (client, message, args) => {
+  message.channel.startTyping();
+
   const nightmare = Nightmare();
   //https://yagpdb.xyz/public/664351758344257537/stats
   await nightmare
@@ -16,13 +18,17 @@ exports.run = async (client, message, args) => {
         .setColor("#202225")
         .setAuthor("Message count")
         .setDescription(`${value} messages in the last 24 hours !`);
-      message.channel.send(messageEmbed);
+      message.channel
+        .send(messageEmbed)
+        .then(() => message.channel.stopTyping(true));
     })
     .end()
     .catch(function(err) {
       console.log(err);
       message.channel.send("i broke something");
-      message.channel.send("<:deadinside:606350795881054216>");
+      message.channel
+        .send("<:deadinside:606350795881054216>")
+        .then(() => message.channel.stopTyping(true));
     });
 
   function getInnerHTML(selector) {

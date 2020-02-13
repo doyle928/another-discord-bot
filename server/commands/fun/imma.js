@@ -13,7 +13,12 @@ exports.run = async (client, message, args) => {
       .setColor("#202225")
       .setImage(
         "https://cdn.discordapp.com/attachments/660228695730028594/666765186975137830/testing.gif"
-      );
+      )
+      .setFooter(
+        `${message.guild.name}`,
+        "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
+      )
+      .setTimestamp();
     message.channel.send(messageEmbed);
   }
 };

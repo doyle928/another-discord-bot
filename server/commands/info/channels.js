@@ -2,6 +2,8 @@ const Discord = require("discord.js");
 const Nightmare = require("nightmare");
 
 exports.run = async (client, message, args) => {
+  message.channel.startTyping();
+
   const nightmare = Nightmare({ width: 1080, height: 800 });
 
   await nightmare
@@ -30,10 +32,13 @@ exports.run = async (client, message, args) => {
               buffer,
               "channels_graph.jpg"
             );
-            message.channel.send(attachment);
+            message.channel
+              .send(attachment)
+              .then(() => message.channel.stopTyping(true));
           })
           .catch(function(err) {
             console.log(err);
+            message.channel.stopTyping(true);
           });
       }
 
@@ -41,6 +46,7 @@ exports.run = async (client, message, args) => {
     })
     .catch(function(err) {
       console.log(err);
+      message.channel.stopTyping(true);
     });
 
   function getBounds(selector) {

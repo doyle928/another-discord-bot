@@ -123,7 +123,11 @@ exports.run = async (client, message, args) => {
           .setColor(randomColor())
           .setImage(url)
           .setTimestamp()
-          .setFooter(showQuery);
+          .setFooter(
+          `${message.guild.name} | ${showQuery}`,
+          "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
+        )
+        .setTimestamp();
 
         if (member !== null) {
           for (let i = 0; i < args.length; i++) {

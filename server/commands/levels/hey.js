@@ -143,6 +143,10 @@ exports.run = async (client, message, args) => {
               .setThumbnail(mem.user.displayAvatarURL)
               .addField("Old Roles", rolesOldString)
               .addField("New Roles", rolesNewString)
+              .setFooter(
+                `${message.guild.name}`,
+                "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
+              )
               .setTimestamp();
 
             channelID.send(messageEmbed);

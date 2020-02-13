@@ -54,7 +54,12 @@ exports.run = async (client, message, args) => {
               message.mentions.members.first().user.displayAvatarURL
             )
             .setDescription(`**Points :** ${res.getUser.welcome_points}`)
-            .setColor(randomColor());
+            .setColor(randomColor())
+            .setFooter(
+              `${message.guild.name}`,
+              "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
+            )
+            .setTimestamp();
           return message.channel.send(embed);
         }
       } catch (err) {

@@ -3,7 +3,12 @@ const Discord = require("discord.js");
 exports.run = async (client, message, args) => {
   const embed = new Discord.RichEmbed()
     .setAuthor("Commands")
-    .setColor("#202225");
+    .setColor("#202225")
+    .setFooter(
+      `Lulu Bot`,
+      "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
+    )
+    .setTimestamp();
   if (message.member.hasPermission("BAN_MEMBERS")) {
     embed.setDescription(
       `**Mod**

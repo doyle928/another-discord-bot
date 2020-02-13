@@ -35,10 +35,14 @@ exports.run = async (client, message, args) => {
 
       if (message.guild.id === "559560674246787087") {
         roleArray.splice(roleArray.indexOf("586122632479375370"), 1);
-        member.setRoles(roleArray);
+        member
+          .setRoles(roleArray)
+          .then(() => message.channel.send("okay i unmuted them !"));
       } else if (message.guild.id === "664351758344257537") {
         roleArray.splice(roleArray.indexOf("664383601248305173"), 1);
-        member.setRoles(roleArray);
+        member
+          .setRoles(roleArray)
+          .then(() => message.channel.send("okay i unmuted them !"));
       }
     }
   }

@@ -146,7 +146,6 @@ module.exports = async client => {
     }
   }
 
-
   const server1 = await client.guilds.get("559560674246787087");
   await server1.channels
     .get("559709338638352405")

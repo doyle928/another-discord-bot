@@ -47,6 +47,10 @@ module.exports = async (client, member) => {
   messageEmbed
     .setColor("#ff0000")
     .setThumbnail(member.user.displayAvatarURL)
+    .setFooter(
+      `${member.guild.name}`,
+      "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
+    )
     .setTimestamp();
 
   if (member.guild.id === "664351758344257537") {

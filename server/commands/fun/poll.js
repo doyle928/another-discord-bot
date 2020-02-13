@@ -244,8 +244,12 @@ exports.run = async (client, message, args) => {
                               message.author.username,
                               message.author.displayAvatarURL
                             )
+                            .setFooter(
+                              `${message.guild.name}`,
+                              "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
+                            )
                             .setTimestamp();
-
+                            
                           const checkEmotes = async () => {
                             for (let i = 0; i < numberOfOptions; i++) {
                               await checkEmoteSingle(pollData[i].emote, i);

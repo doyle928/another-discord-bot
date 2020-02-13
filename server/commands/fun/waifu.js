@@ -14,6 +14,8 @@ exports.run = async (client, message, args) => {
     );
     message.channel.send("<a:crying:661358360091688980>");
   } else {
+    message.channel.startTyping();
+
     const nightmare = Nightmare({
       show: false,
       width: 1080,
@@ -40,8 +42,14 @@ exports.run = async (client, message, args) => {
           )
           .setImage(el)
           .setColor(randColour())
+          .setFooter(
+            `${message.guild.name}`,
+            "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
+          )
           .setTimestamp();
-        message.channel.send(embed);
+        message.channel
+          .send(embed)
+          .then(() => message.channel.stopTyping(true));
         talkedRecently.add("waifu-called");
         setTimeout(() => {
           talkedRecently.delete("waifu-called");
@@ -49,6 +57,7 @@ exports.run = async (client, message, args) => {
       })
       .catch(function(err) {
         console.log(err);
+        message.channel.stopTyping(true);
       });
 
     function getBounds(selector) {

@@ -3,6 +3,8 @@ const Discord = require("discord.js");
 const randomColor = require("../../data/randomColor");
 
 exports.run = async (client, message) => {
+  message.channel.startTyping();
+
   const nightmare = Nightmare({
     show: false
   });
@@ -39,8 +41,15 @@ exports.run = async (client, message) => {
             .setColor(randomColor())
             .setDescription(
               `**Messages :** ${users[user].messages}\n**Experience :** ${users[user].experience}\n**Level :** ${users[user].level}`
-            );
-          return message.channel.send(embed);
+            )
+            .setFooter(
+              `${message.guild.name}`,
+              "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
+            )
+            .setTimestamp();
+          return message.channel
+            .send(embed)
+            .then(() => message.channel.stopTyping(true));
         }
       }
       return message.channel.send(
@@ -50,7 +59,9 @@ exports.run = async (client, message) => {
     .catch(function(err) {
       console.log(err);
       message.channel.send("i broke something");
-      message.channel.send("<:deadinside:606350795881054216>");
+      message.channel
+        .send("<:deadinside:606350795881054216>")
+        .then(() => message.channel.stopTyping(true));
     });
 };
 

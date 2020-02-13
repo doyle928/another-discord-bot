@@ -26,7 +26,12 @@ exports.run = async (client, message, args) => {
       message.channel.send("<:gunKanna_police:606353675560157194> 🚔");
       let messageEmbed = new Discord.RichEmbed()
         .setColor(randomColor())
-        .setImage(imageArray[randomNumber(0, 6)]);
+        .setImage(imageArray[randomNumber(0, 6)])
+        .setFooter(
+          `${message.guild.name}`,
+          "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
+        )
+        .setTimestamp();
 
       message.channel.send(messageEmbed);
     } else {
@@ -40,7 +45,12 @@ exports.run = async (client, message, args) => {
           message.channel.send("<:gunKanna_police:606353675560157194> 🚔");
           let messageEmbed = new Discord.RichEmbed()
             .setColor(randomColor())
-            .setImage(imageArray[randomNumber(0, 6)]);
+            .setImage(imageArray[randomNumber(0, 6)])
+            .setFooter(
+              `${message.guild.name}`,
+              "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
+            )
+            .setTimestamp();
 
           message.channel.send(messageEmbed);
           return;
@@ -54,7 +64,12 @@ exports.run = async (client, message, args) => {
       message.channel.send(`${member}\nFBI open up !!`);
       let messageEmbed = new Discord.RichEmbed()
         .setColor(randomColor())
-        .setImage(imageArray[randomNumber(0, 6)]);
+        .setImage(imageArray[randomNumber(0, 6)])
+        .setFooter(
+          `${message.guild.name}`,
+          "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
+        )
+        .setTimestamp();
 
       message.channel.send(messageEmbed);
     }

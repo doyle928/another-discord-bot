@@ -31,8 +31,12 @@ exports.run = async (client, message, args) => {
             .addField("Colour", `#${Number(r.color).toString(16)}`, true)
             .addField("Hoist", r.hoist, true)
             .addField("Mentionable", r.mentionable, true)
+            .setFooter(
+              `${message.guild.name}`,
+              "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
+            )
             .setTimestamp();
-
+            
           message.channel.send(messageEmbed);
           setTimeout(() => {
             message
