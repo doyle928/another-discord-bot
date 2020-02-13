@@ -4,13 +4,13 @@ exports.run = async (client, message, args) => {
       m.map(async msg => {
         if (msg.content !== message.content) {
           let str = await editText(msg.content);
-          message.channel.send(str);
+          message.channel.send(str.trim());
         }
       });
     });
   } else {
     let msg = await editText(message.content);
-    message.channel.send(msg);
+    message.channel.send(msg.trim());
   }
 
   async function editText(message) {
@@ -19,30 +19,13 @@ exports.run = async (client, message, args) => {
       .replace(".owo", "")
       .replace(/([l])/gi, "w")
       .replace(/([r])/gi, "w")
-      .replace(/(ove)/gi, "uv");
-    if (newMsg.indexOf("n") > -1) {
-      let nIndex = newMsg.indexOf("n");
-      let letterCheck = newMsg.charAt(nIndex + 1);
-      if (
-        letterCheck === "a" ||
-        letterCheck === "e" ||
-        letterCheck === "i" ||
-        letterCheck === "o" ||
-        letterCheck === "u"
-      ) {
-        newMsg =
-          newMsg.substring(0, nIndex + 1) +
-          "y" +
-          newMsg.substring(nIndex + 1, newMsg.length);
-      }
-    }
-    if (newMsg.indexOf("!") > -1) {
-      let excIndex = newMsg.indexOf("!");
-      newMsg =
-        newMsg.substring(0, excIndex + 1) +
-        " <:owosneaky:677298912436027413> " +
-        newMsg.substring(excIndex + 1, newMsg.length);
-    }
+      .replace(/(ove)/gi, "uv")
+      .replace(/(na)/gi, "nya")
+      .replace(/(ne)/gi, "nye")
+      .replace(/(no)/gi, "nyo")
+      .replace(/(nu)/gi, "nyu")
+      .replace(/([!])/gi, "! <:owosneaky:677298912436027413> ");
+
     return newMsg;
   }
 };
