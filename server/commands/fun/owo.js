@@ -3,8 +3,12 @@ exports.run = async (client, message, args) => {
     message.channel.fetchMessages({ limit: 2 }).then(m => {
       m.map(async msg => {
         if (msg.content !== message.content) {
-          let str = await editText(msg.content);
-          message.channel.send(str.trim());
+          if (msg.author.id === "601825955572350976") {
+            message.channel.send("sorry but i am not doing it to myself !");
+          } else {
+            let str = await editText(msg.content);
+            message.channel.send(str.trim());
+          }
         }
       });
     });
