@@ -243,7 +243,7 @@ exports.run = async (client, message, args) => {
                                       name: roleName,
                                       color: roleColour,
                                       hoist: true,
-                                      position: 75
+                                      position: 81
                                     })
                                     .then(async role => {
                                       await message.member.addRole(role.id);
@@ -333,14 +333,14 @@ exports.run = async (client, message, args) => {
                                       name: roleName,
                                       color: roleColour,
                                       hoist: true,
-                                      position: 75
+                                      position: 81
                                     })
                                     .then(async role => {
                                       await message.member.addRole(role.id);
                                       await message.channel.send(
                                         `done ! enjoy your new role !\nyou have ${Number(
                                           user.getUser.welcome_points
-                                        ) - 10000} points left !`
+                                        ) - 50000} points left !`
                                       );
                                       let c = await client.channels.get(
                                         "561372938474094603"

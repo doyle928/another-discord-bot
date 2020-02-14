@@ -54,7 +54,7 @@ exports.run = async (client, message, args) => {
                             name: `${roleName}`,
                             color: `${roleColor}`,
                             hoist: true,
-                            position: 80
+                            position: 81
                           }).then(async role => {
                             await mem.addRole(role.id);
                             await message.channel.send(
