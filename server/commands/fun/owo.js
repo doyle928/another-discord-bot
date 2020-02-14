@@ -28,6 +28,7 @@ exports.run = async (client, message, args) => {
       .replace(/(ne)/gi, "nye")
       .replace(/(no)/gi, "nyo")
       .replace(/(nu)/gi, "nyu")
+      .replace(/([.])/gi, "")
       .replace(/([!])/gi, "! <:owosneaky:677298912436027413> ");
 
     return newMsg;

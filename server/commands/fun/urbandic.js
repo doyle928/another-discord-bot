@@ -25,10 +25,10 @@ exports.run = async (client, message) => {
         )
         .setDescription(
           `**Top definiton :** ${res[0].definition.replace(
-            /[^\w\s\.\!\,\*\?\"\'\:\;\=\#\$\&\(\)\t\n\r]/gi,
+            /[^\w\s\.\!\,\*\?\"\'\:\;\=\#\$\&\(\)\t\n\r\€\£]/gi,
             ""
           )}\n**Example :** ${res[0].example.replace(
-            /[^\w\s\.\!\,\*\?\"\'\:\;\=\#\$\&\(\)\t\n\r]/gi,
+            /[^\w\s\.\!\,\*\?\"\'\:\;\=\#\$\&\(\)\t\n\r\€\£]/gi,
             ""
           )}`
         )
