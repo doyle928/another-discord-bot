@@ -4,10 +4,16 @@ const moment = require("moment");
 const schedule = require("node-schedule");
 
 exports.run = async (client, message, args) => {
-  if (!message.member.hasPermission("BAN_MEMBERS")) {
-    message.channel.send("You don't have the permissions to use this command!");
-    message.channel.send("<:natsukiMad:646210751417286656>");
-  } else {
+  if (
+    message.guild &&
+    (message.member.hasPermission("BAN_MEMBERS") ||
+      message.member._roles.includes("561303174846218398") ||
+      message.member._roles.includes("568204471855743002") ||
+      message.member._roles.includes("568206840551440386") ||
+      message.member._roles.includes("662991865062359085") ||
+      message.member._roles.includes("662991836234776626") ||
+      message.member._roles.includes("663015607230529548"))
+  ) {
     let embed = new Discord.RichEmbed()
       .setAuthor("Reminder help")
       .setDescription(
@@ -97,6 +103,16 @@ exports.run = async (client, message, args) => {
       }
     } else {
       return message.channel.send(embed);
+    }
+  } else {
+    if (!message.guild) {
+      message.channel.send("sorry but i do not do this command in dms !");
+      return message.channel.send("<:natsukiMad:646210751417286656>");
+    } else {
+      message.channel.send(
+        "You don't have the permissions to use this command !"
+      );
+      return message.channel.send("<:natsukiMad:646210751417286656>");
     }
   }
 };

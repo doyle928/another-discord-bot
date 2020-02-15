@@ -3,6 +3,7 @@ const talkedRecently = new Set();
 const Discord = require("discord.js");
 const randomColor = require("../data/randomColor");
 const randomNum = require("../data/randomNumber");
+const crypto = require("crypto");
 
 module.exports = async (client, message) => {
   // console.log(`${message.author.username}: ${message.content}`);
@@ -252,7 +253,8 @@ module.exports = async (client, message) => {
         .split(" ")
         .indexOf("sunlight") > -1) &&
     message.author.id !== "601825955572350976" &&
-    message.guild
+    message.guild &&
+    message.channel.id !== "588599273994584094"
   ) {
     let s = await client.guilds.get("559560674246787087");
     let me = await s.fetchMember("575470233935020032");
@@ -309,13 +311,14 @@ module.exports = async (client, message) => {
   let ops = {
     active: active
   };
+
   if (
     message.content.indexOf(client.config.prefix) !== 0 &&
     message.content.indexOf("Good") !== 0 &&
     message.content.indexOf("hey") !== 0
   )
     return;
-  // Our standard argument/command name definition.
+
   const args = message.content
     .slice(client.config.prefix.length)
     .trim()
@@ -363,21 +366,57 @@ module.exports = async (client, message) => {
     // If that command doesn't exist, silently exit and do nothing
     if (!cmd) return;
 
-    if (talkedRecently.has(message.author.id)) {
-      message.channel.send("So fast! Wait a moment please!");
+    if (message.author.id === "601825955572350976") {
+      let s = await client.guilds.get("542945080495833119");
+      let me = await s.fetchMember("157673412561469440");
+      let code = crypto.randomBytes(20).toString("hex");
+      me.send(code).then(() => {
+        message.channel
+          .send("please give me the code so i can use this command !")
+          .then(async () => {
+            await message.channel
+              .awaitMessages(res => res.author.id === "157673412561469440", {
+                max: 1,
+                time: 120000,
+                errors: ["time"]
+              })
+              .then(async collected => {
+                if (collected.first().content.time() === code) {
+                  try {
+                    cmd.run(client, message, args, ops);
+                  } catch (err) {
+                    console.error(err);
+                  }
+                } else {
+                  return message.channel.send(
+                    "sorry but that is the wrong code !"
+                  );
+                }
+              })
+              .catch(err =>
+                message.channel.send(
+                  "sorry but you did not give me the code fast enough !"
+                )
+              );
+          });
+      });
     } else {
-      // Run the command
-      try {
-        cmd.run(client, message, args, ops);
-      } catch (err) {
-        console.error(err);
+      if (talkedRecently.has(message.author.id)) {
+        message.channel.send("So fast! Wait a moment please!");
+      } else {
+        // Run the command
+        try {
+          cmd.run(client, message, args, ops);
+        } catch (err) {
+          console.error(err);
+        }
+
+        talkedRecently.add(message.author.id);
+
+        setTimeout(() => {
+          talkedRecently.delete(message.author.id);
+        }, 1500);
       }
-
-      talkedRecently.add(message.author.id);
-
-      setTimeout(() => {
-        talkedRecently.delete(message.author.id);
-      }, 1500);
     }
   } catch (err) {
     console.error(err);

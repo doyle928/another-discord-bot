@@ -28,7 +28,6 @@ exports.run = async (client, message, args) => {
       .replace(/(ne)/gi, "nye")
       .replace(/(no)/gi, "nyo")
       .replace(/(nu)/gi, "nyu")
-      .replace(/([.])/gi, ",") //prevent the bot from calling commands
       .replace(/([!])/gi, "! <:owosneaky:677298912436027413> ");
 
     return newMsg;
