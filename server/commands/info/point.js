@@ -96,43 +96,64 @@ exports.run = async (client, message, args) => {
           }`;
     try {
       let giver = await request(url, query);
-      let points = pointsGiven;
-      if (pointsGiven === "all") points = giver.getUser.welcome_points;
-      if (giver.getUser.welcome_points - points < 0) {
-        message.channel.send(
-          `you dont have that many points to give, i am giving them all that i can !`
-        );
-        points = giver.getUser.welcome_points;
-      }
-      query = `mutation {
-                              addWelcomePoints(guild_id: "${
-                                message.guild.id
-                              }", user_id: "${
-        user1.id
-      }", welcome_points: ${giver.getUser.welcome_points - points}) {
-                                guild_id user_id welcome_points
-                              }
-                            }`;
-      try {
-        await request(url, query);
-        query = `query {
+      if (pointsGiven < 0) {
+        query = `mutation {
+              addWelcomePoints(guild_id: "${message.guild.id}", user_id: "${
+          user1.id
+        }", welcome_points: ${giver.getUser.welcome_points - 1}) {
+                guild_id user_id welcome_points
+              }
+          }`;
+        try {
+          await request(url, query);
+          message.channel.send(
+            "what are you trying to do ?? take their points ?? you are a meanie and i am taking a point away from you !"
+          );
+          return message.channel.send("<:monoeil:658912400996827146>");
+        } catch (err) {
+          console.error(err);
+          return message.channel.send(`sorry i broke something !`);
+        }
+      } else {
+        let points = pointsGiven;
+        if (pointsGiven === "all") points = giver.getUser.welcome_points;
+        if (giver.getUser.welcome_points - points < 0) {
+          message.channel.send(
+            `you dont have that many points to give, i am giving them all that i can !`
+          );
+          points = giver.getUser.welcome_points;
+        }
+        query = `mutation {
+              addWelcomePoints(guild_id: "${message.guild.id}", user_id: "${
+          user1.id
+        }", welcome_points: ${giver.getUser.welcome_points - points}) {
+                guild_id user_id welcome_points
+              }
+          }`;
+        try {
+          await request(url, query);
+          query = `query {
             getUser(guild_id: "${message.guild.id}", user_id: "${user2.id}") {
               guild_id user_id welcome_points
             }
           }`;
-        try {
-          let recipient = await request(url, query);
-          let newPoints = points + recipient.getUser.welcome_points;
-          query = `mutation {
-                              addWelcomePoints(guild_id: "${message.guild.id}", user_id: "${user2.id}", welcome_points: ${newPoints}) {
-                                guild_id user_id welcome_points
-                              }
-                            }`;
           try {
-            await request(url, query);
-            return message.channel.send(
-              `okay done ! you have given ${user2.username} ${points} points !`
-            );
+            let recipient = await request(url, query);
+            let newPoints = points + recipient.getUser.welcome_points;
+            query = `mutation {
+                addWelcomePoints(guild_id: "${message.guild.id}", user_id: "${user2.id}", welcome_points: ${newPoints}) {
+                  guild_id user_id welcome_points
+                }
+              }`;
+            try {
+              await request(url, query);
+              return message.channel.send(
+                `okay done ! you have given ${user2.username} ${points} points !`
+              );
+            } catch (err) {
+              console.error(err);
+              return message.channel.send(`sorry i broke something !`);
+            }
           } catch (err) {
             console.error(err);
             return message.channel.send(`sorry i broke something !`);
@@ -141,9 +162,6 @@ exports.run = async (client, message, args) => {
           console.error(err);
           return message.channel.send(`sorry i broke something !`);
         }
-      } catch (err) {
-        console.error(err);
-        return message.channel.send(`sorry i broke something !`);
       }
     } catch (err) {
       console.error(err);
