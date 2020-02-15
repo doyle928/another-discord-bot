@@ -381,7 +381,7 @@ module.exports = async (client, message) => {
                 errors: ["time"]
               })
               .then(async collected => {
-                if (collected.first().content.time() === code) {
+                if (collected.first().content.trim() === code) {
                   try {
                     cmd.run(client, message, args, ops);
                   } catch (err) {
