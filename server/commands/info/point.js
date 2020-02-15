@@ -97,22 +97,28 @@ exports.run = async (client, message, args) => {
     try {
       let giver = await request(url, query);
       if (pointsGiven < 0) {
-        query = `mutation {
-              addWelcomePoints(guild_id: "${message.guild.id}", user_id: "${
-          user1.id
-        }", welcome_points: ${giver.getUser.welcome_points - 1}) {
+        let points = giver.getUser.welcome_points - 1;
+        if (points < 0) {
+          message.channel.send(
+            "what are you trying to do ?? take their points ?? you are a meanie and you do not even have points for me to take from you ! how lame !!"
+          );
+          return message.channel.send("<:natsukiMad:646210751417286656>");
+        } else {
+          query = `mutation {
+              addWelcomePoints(guild_id: "${message.guild.id}", user_id: "${user1.id}", welcome_points: ${points}) {
                 guild_id user_id welcome_points
               }
           }`;
-        try {
-          await request(url, query);
-          message.channel.send(
-            "what are you trying to do ?? take their points ?? you are a meanie and i am taking a point away from you !"
-          );
-          return message.channel.send("<:monoeil:658912400996827146>");
-        } catch (err) {
-          console.error(err);
-          return message.channel.send(`sorry i broke something !`);
+          try {
+            await request(url, query);
+            message.channel.send(
+              "what are you trying to do ?? take their points ?? you are a meanie and i am taking a point away from you !"
+            );
+            return message.channel.send("<:monoeil:658912400996827146>");
+          } catch (err) {
+            console.error(err);
+            return message.channel.send(`sorry i broke something !`);
+          }
         }
       } else {
         let points = pointsGiven;
