@@ -78,7 +78,7 @@ module.exports = async (client, member, guild) => {
           )
           .setTimestamp();
         member.send(messageEmbed).then(() => {
-          member.kick("no avatar photo !!");
+          member.kick("account was too young !!");
         });
         return;
       }
