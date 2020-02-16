@@ -82,17 +82,14 @@ module.exports = async (client, memberOld, memberNew) => {
       user.getUser.booster === true
     ) {
       if (memberNew.guild.id === "559560674246787087") {
-        let s = client.guilds
-          .get("559560674246787087")
-          .channels.get("561372938474094603");
+        let s = await client.guilds.get("559560674246787087");
+        let c = await s.channels.get("561372938474094603");
 
-        s.send(
+        c.send(
           `**${memberNew.user.username}** is no longer boosting the serveur !`
         );
         query = `{
-                getBoosterRoles(guild_id: "${
-                  memberNew.guild.id
-                }", booster: ${true}) {
+                getBoosterRoles(guild_id: "${memberNew.guild.id}", booster: true) {
                     guild_id user_id booster_role
                 }
             }`;
@@ -101,7 +98,7 @@ module.exports = async (client, memberOld, memberNew) => {
           for (let i in boosterRoles.getBoosterRoles) {
             if (boosterRoles.getBoosterRoles[i].user_id === memberNew.user.id) {
               query = `mutation {
-                setBoosterRole(guild_id: "${memberNew.guild.id}", user_id: "${memberNew.user.id}", booster_role: "") {
+                setBoosterRole(guild_id: "${s.id}", user_id: "${memberNew.user.id}", booster_role: "") {
                   booster_role
                 }
               }`;
