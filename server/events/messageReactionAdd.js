@@ -23,7 +23,7 @@ module.exports = async (client, messageReaction, user) => {
     if (
       messageReaction._emoji.name === emoteName &&
       messageReaction.message.id ===
-      reactionRoleHelper.reactionRoleList[i].message_id
+        reactionRoleHelper.reactionRoleList[i].message_id
     ) {
       await addRole(reactionRoleHelper.reactionRoleList[i].role_id);
     }
@@ -413,9 +413,12 @@ module.exports = async (client, messageReaction, user) => {
                             }`;
                             try {
                               let res = await request(url, query);
-                              let points =
-                                res.getUser.welcome_points +
-                                randomNum(150, 250);
+                              let points = res.getUser.welcome_points;
+                              if (randomNum(1, 100) === 100) {
+                                points += 10000;
+                              } else {
+                                points += randomNum(250, 350);
+                              }
                               query = `mutation {
                               addWelcomePoints(guild_id: "${msg.guild.id}", user_id: "${userArray[user]}", welcome_points: ${points}) {
                                 guild_id user_id welcome_points
