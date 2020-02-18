@@ -68,6 +68,7 @@ exports.run = async (client, message, args) => {
                 /([^0-9])/g,
                 ""
               );
+              let emoteName = emoteArray[1];
               let url = `https://cdn.discordapp.com/emojis/${emoteId}`;
               if (m.content === "<a") {
                 url += `.gif`;
@@ -94,7 +95,8 @@ exports.run = async (client, message, args) => {
                   });
               }
             }
-          });
+          })
+          .catch(err => console.error(err));
       } else {
         return message.channel.send(
           `what emote are you trying to add ?? you have to add that with the command !!\n\nE.g.\n**.addemote :emote: emoteName**\n**.addemote http://image-link.com emoteName**`
