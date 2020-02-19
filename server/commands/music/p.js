@@ -42,11 +42,15 @@ exports.run = async (client, message, args) => {
       `✅ Playlist: **${playlist.title}** has been added to the queue!`
     );
   } else {
-    try {
-      var video = await youtube.getVideo(url);
-    } catch (error) {
+    if (url.indexOf("youtu") > -1) {
       try {
-        var videos = await youtube.searchVideos(searchString, 5);
+        var video = await youtube.getVideo(url);
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      try {
+        var videos = await youtube.searchVideos(searchString, 3);
         let index = 0;
         let embed = new Discord.RichEmbed()
           .setAuthor("Song selection", message.author.displayAvatarURL)
@@ -56,12 +60,15 @@ exports.run = async (client, message, args) => {
               .map(video2 => `**${++index} -** ${video2.title}`)
               .join("\n")}`
           )
-          .setFooter(`${message.guild.name}`)
+          .setFooter(
+            `${message.guild.name}`,
+            "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
+          )
           .setTimestamp();
         message.channel.send(embed);
         try {
           var response = await message.channel.awaitMessages(
-            message2 => message2.content > 0 && message2.content < 6,
+            message2 => message2.content > 0 && message2.content < 4,
             {
               maxMatches: 1,
               time: 60000,
