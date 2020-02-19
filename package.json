@@ -19,7 +19,6 @@
     "express": "^4.17.1",
     "express-graphql": "^0.9.0",
     "express-pino-logger": "^4.0.0",
-    "ffmpeg-binaries": "^4.0.0",
     "fs": "0.0.1-security",
     "g-i-s": "^2.1.3",
     "gif-encoder-2": "^1.0.5",
@@ -93,10 +92,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "binary": {
-    "module_name": "Lulu_Bot",
-    "module_path": "./lib/binding/",
-    "host": "https://lulu-discord-bot.herokuapp.com/"
   }
 }
