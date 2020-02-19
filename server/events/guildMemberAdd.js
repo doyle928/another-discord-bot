@@ -85,10 +85,7 @@ module.exports = async (client, member, guild) => {
     }
   }
   if (blank_avatar) {
-    if (
-      member.user.avatarURL === null ||
-      member.user.displayAvatarURL.indexOf("assets") > -1
-    ) {
+    if (member.user.avatarURL === null) {
       if (member.guild.id === "559560674246787087") {
         messageEmbed
           .setAuthor("Notice")
@@ -144,7 +141,7 @@ module.exports = async (client, member, guild) => {
     messageEmbed
       .setAuthor("New member")
       .setDescription(
-        `**${member.user.username}** joined !\n\n**Account created :** ${discordJoinDate}`
+        `**${member.user.username}**#${member.user.discriminator} joined !\n(ID:${member.user.id})\n\n**Account created :** ${discordJoinDate}`
       )
       .setColor("#00ff00")
       .setThumbnail(member.user.displayAvatarURL)
@@ -220,7 +217,7 @@ module.exports = async (client, member, guild) => {
         messageEmbed
           .setAuthor("New member")
           .setDescription(
-            `**${member.user.username}** joined !\n\n**Account created :** ${discordJoinDate}`
+            `**${member.user.username}**#${member.user.discriminator} joined !\n(ID:${member.user.id})\n\n**Account created :** ${discordJoinDate}`
           )
           .setColor("#00ff00")
           .setThumbnail(member.user.displayAvatarURL)
