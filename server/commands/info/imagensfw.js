@@ -30,7 +30,7 @@ exports.run = async (client, message, args) => {
           document.querySelectorAll(".result__thumb-container__image"),
           element =>
             (element = {
-              src: `https:${element.src}`,
+              src: element.src,
               original_source: element.dataset.original,
               resolution: `Résolution: ${element.dataset.naturalwidth} x ${element.dataset.naturalheight}`
             })
