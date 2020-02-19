@@ -9,6 +9,8 @@ exports.run = async (client, message, args) => {
       "there is nothing to stop ! how about you tell me to play something first !"
     );
   serverQueue.songs = [];
+
+  musicHelper.musicQueue.get("message.guild.id").songs = [];
   musicHelper.setMusicQueue(musicHelper.musicQueue);
   serverQueue.connection.dispatcher.end("Stop command has been used!");
   return;

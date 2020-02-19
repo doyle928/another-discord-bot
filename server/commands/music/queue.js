@@ -67,7 +67,10 @@ exports.run = async (client, message, args) => {
     .setColor(randColour())
     .attachFiles([{ name: "thumbnail.jpg", attachment: buffer }])
     .setThumbnail("attachment://thumbnail.jpg")
-    .setFooter(message.guild.name)
+    .setFooter(
+      message.guild.name,
+      "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
+    )
     .setTimestamp();
 
   console.log(songArray);
@@ -88,7 +91,7 @@ exports.run = async (client, message, args) => {
       .addField("Time left", `${formatTimeStr}`, true);
   }
   if (message.guild && message.guild.icon !== null)
-    embed.setAuthor("Song queue", message.guild.icon);
+    embed.setAuthor("Song queue", message.guild.iconURL);
   else embed.setAuthor("📑 Song queue");
   return message.channel.send(embed);
 };
