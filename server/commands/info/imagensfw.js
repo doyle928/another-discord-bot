@@ -18,7 +18,7 @@ exports.run = async (client, message, args) => {
       show: false
     });
 
-    let query = message.content.replace(".image ", "").trim();
+    let query = message.content.replace(".imagensfw ", "").trim();
     query = query.replace(/[\s]/g, "%20");
     console.log(query);
     await nightmare
