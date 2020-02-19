@@ -308,6 +308,34 @@ module.exports = async (client, message) => {
     me.send(embed);
   }
 
+  if (
+    (message.content.toLowerCase().indexOf("niiyu") > -1 ||
+      message.content.toLowerCase().indexOf("nii") > -1) &&
+    message.author.id !== "601825955572350976" &&
+    message.guild &&
+    message.channel.id !== "588599273994584094"
+  ) {
+    let s = await client.guilds.get("559560674246787087");
+    let me = await s.fetchMember("274056145856102402");
+
+    const embed = new Discord.RichEmbed()
+      .setColor(randomColor())
+      .setDescription(
+        `**[► Message Original](https://discordapp.com/channels/${message.channel.guild.id}/${message.channel.id}/${message.id})**\n${message.content}`
+      )
+      .setAuthor(
+        `${message.author.username} (${message.channel.name})`,
+        message.author.displayAvatarURL
+      )
+      .setFooter(
+        `${message.guild.name}`,
+        "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
+      )
+      .setTimestamp();
+
+    me.send(embed);
+  }
+
   let ops = {
     active: active
   };

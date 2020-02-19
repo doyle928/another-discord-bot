@@ -39,7 +39,8 @@ exports.run = async (client, message, args) => {
             document.querySelectorAll(".result__thumb-container__image"),
             element =>
               (element = {
-                src: element.dataset.original,
+                src: `https:${element.src}`,
+                original_source: element.dataset.original,
                 resolution: `Résolution: ${element.dataset.naturalwidth} x ${element.dataset.naturalheight}`
               })
           );
@@ -92,13 +93,13 @@ exports.run = async (client, message, args) => {
                 message.author.displayAvatarURL
               )
               .setColor(randomColor())
-              .setTitle(
-                `Résultat pour la recherche: ${message.content
+              .setDescription(
+                `Résultat pour la recherche: **[${message.content
                   .replace(".image ", "")
-                  .trim()}`
+                  .trim()}](${img.original_source})**`
               )
               .setImage(img.src)
-              .setFooter(`${img.resolution} | ${format(img.src)}`)
+              .setFooter(`${img.resolution} | ${format(img.original_source)}`)
               .setTimestamp();
             message.channel
               .send(embed)
