@@ -94,5 +94,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "binary": {
+    "module_name": "Lulu_Bot",
+    "module_path": "./lib/binding/",
+    "host": "https://lulu-discord-bot.herokuapp.com/"
   }
 }
