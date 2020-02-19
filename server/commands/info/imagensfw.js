@@ -18,7 +18,7 @@ exports.run = async (client, message, args) => {
       show: false
     });
 
-    let query = message.content.replace(".imagensfw ", "").trim();
+    let query = message.content.replace(".imagensfw", "").trim();
     query = query.replace(/[\s]/g, "%20");
     console.log(query);
     await nightmare
@@ -63,7 +63,7 @@ exports.run = async (client, message, args) => {
         if (imgs.length === 0) {
           message.channel.send(
             `sorry but i looked everywhere and could not find anything for **${message.content
-              .replace(".imagensfw  ", "")
+              .replace(".imagensfw", "")
               .trim()}**`
           );
           message.channel
@@ -79,7 +79,7 @@ exports.run = async (client, message, args) => {
             .setColor(randomColor())
             .setDescription(
               `Résultat pour la recherche: **[${message.content
-                .replace(".imagensfw  ", "")
+                .replace(".imagensfw", "")
                 .trim()}](${img.original_source})**`
             )
             .setImage(img.src)
