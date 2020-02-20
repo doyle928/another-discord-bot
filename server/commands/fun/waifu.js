@@ -17,7 +17,7 @@ exports.run = async (client, message) => {
     message.channel.startTyping();
 
     const nightmare = Nightmare({
-      show: true,
+      show: false,
       width: 1080,
       height: 1080
     });
