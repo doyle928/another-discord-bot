@@ -20,11 +20,17 @@ exports.run = async (client, message, args) => {
         message.channel
           .fetchMessage(args[1].replace(/([^0-9])/g, ""))
           .then(async m => {
-            startCanvas(
-              m.attachments.first().width,
-              m.attachments.first().height,
-              m.attachments.first().url
-            );
+            if (m.attachments.first()) {
+              startCanvas(
+                m.attachments.first().width,
+                m.attachments.first().height,
+                m.attachments.first().url
+              );
+            } else {
+              return message.channel.send(
+                "there is no photo with this message silly !"
+              );
+            }
           })
           .catch(() =>
             message.channel.send(
@@ -63,7 +69,7 @@ exports.run = async (client, message, args) => {
     const background = await Canvas.loadImage(buffer);
     ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
 
-    await oilPaintEffect(canvas, ctx, 3, 60);
+    await oilPaintEffect(canvas, ctx, 3, 65);
 
     let img = canvas.toBuffer();
     const attachment = new Discord.Attachment(img, "watercolour.png");
