@@ -313,6 +313,7 @@ module.exports = async (client, message) => {
       message.content.toLowerCase().indexOf("nii") > -1) &&
     message.author.id !== "601825955572350976" &&
     message.guild &&
+    message.guild.id === "559560674246787087" &&
     message.channel.id !== "588599273994584094"
   ) {
     let s = await client.guilds.get("559560674246787087");
