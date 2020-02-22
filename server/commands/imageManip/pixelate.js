@@ -17,7 +17,7 @@ exports.run = async (client, message, args) => {
       message.attachments.first().height,
       pixelSize
     )
-      .timeout(10000)
+      .timeout(100000000)
       .then(obj => {
         startCanvas(obj.buffer, obj.width, obj.height);
       })
@@ -49,7 +49,7 @@ exports.run = async (client, message, args) => {
                 m.attachments.first().height,
                 pixelSize
               )
-                .timeout(10000)
+                .timeout(100000000)
                 .then(obj => {
                   startCanvas(obj.buffer, obj.width, obj.height);
                 })
@@ -88,7 +88,7 @@ exports.run = async (client, message, args) => {
                 m.attachments.first().height,
                 pixelSize
               )
-                .timeout(1)
+                .timeout(10000)
                 .then(obj => {
                   startCanvas(obj.buffer, obj.width, obj.height);
                 })
