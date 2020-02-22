@@ -1,22 +1,32 @@
 const Discord = require("discord.js");
 const Canvas = require("canvas");
-const snekfetch = require("snekfetch");
 const Jimp = require("jimp");
 const sizeOf = require("buffer-image-size");
+const Promise = require("bluebird");
 
 exports.run = async (client, message, args) => {
   message.channel.startTyping();
 
   if (message.attachments.first()) {
     let pixelSize = 3;
-    if (args[1]) pixelSize = Number(args[1]) > 10 ? 10 : Number(args[1]);
+    if (args[1]) pixelSize = Number(args[1]) > 6 ? 6 : Number(args[1]);
     if (args[1]) pixelSize = Number(args[1]) < 1 ? 1 : Number(args[1]);
     pixelImg(
       message.attachments.first().url,
       message.attachments.first().width,
       message.attachments.first().height,
       pixelSize
-    );
+    )
+      .timeout(10000)
+      .then(obj => {
+        startCanvas(obj.buffer, obj.width, obj.height);
+      })
+      .catch(Promise.TimeoutError, e => {
+        console.log("promise took longer than 10 seconds", e);
+        return message.channel
+          .send("sorry but i struggled trying to get the photo !!")
+          .then(() => message.channel.stopTyping(true));
+      });
   } else {
     if (args[1]) {
       if (
@@ -30,7 +40,7 @@ exports.run = async (client, message, args) => {
             if (m.attachments.first()) {
               let pixelSize = 3;
               if (args[2])
-                pixelSize = Number(args[2]) > 10 ? 10 : Number(args[2]);
+                pixelSize = Number(args[2]) > 6 ? 6 : Number(args[2]);
               if (args[2])
                 pixelSize = Number(args[2]) < 1 ? 1 : Number(args[2]);
               pixelImg(
@@ -38,7 +48,17 @@ exports.run = async (client, message, args) => {
                 m.attachments.first().width,
                 m.attachments.first().height,
                 pixelSize
-              );
+              )
+                .timeout(10000)
+                .then(obj => {
+                  startCanvas(obj.buffer, obj.width, obj.height);
+                })
+                .catch(Promise.TimeoutError, e => {
+                  console.log("promise took longer than 10 seconds", e);
+                  return message.channel
+                    .send("sorry but i struggled trying to get the photo !!")
+                    .then(() => message.channel.stopTyping(true));
+                });
             } else {
               return message.channel
                 .send("there is no photo with this message silly !")
@@ -56,9 +76,10 @@ exports.run = async (client, message, args) => {
         await Promise.all(
           messages.map(async m => {
             if (m.attachments.first() && !foundPhoto) {
+              foundPhoto = true;
               let pixelSize = 3;
               if (args[1])
-                pixelSize = Number(args[1]) > 10 ? 10 : Number(args[1]);
+                pixelSize = Number(args[1]) > 6 ? 6 : Number(args[1]);
               if (args[1])
                 pixelSize = Number(args[1]) < 1 ? 1 : Number(args[1]);
               pixelImg(
@@ -66,15 +87,24 @@ exports.run = async (client, message, args) => {
                 m.attachments.first().width,
                 m.attachments.first().height,
                 pixelSize
-              );
-              foundPhoto = true;
+              )
+                .timeout(1)
+                .then(obj => {
+                  startCanvas(obj.buffer, obj.width, obj.height);
+                })
+                .catch(Promise.TimeoutError, e => {
+                  console.log("promise took longer than 10 seconds", e);
+                  message.channel
+                    .send("sorry but i struggled trying to get the photo !!")
+                    .then(() => message.channel.stopTyping(true));
+                });
             }
           })
         );
         if (!foundPhoto) {
           return message.channel
             .send(
-              "sorry but i cannot find any photos before the command ! just a heads up i only look in 2 messages above yours ! you can always give me the message id and use me like **.watercolour 679873905745199146** !!"
+              "sorry but i cannot find any photos before the command ! just a heads up i only look in 2 messages above yours ! you can always give me the message id and use me like **.pixelate 679873905745199146** !!"
             )
             .then(() => message.channel.stopTyping(true));
         }
@@ -91,8 +121,8 @@ exports.run = async (client, message, args) => {
     ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
 
     let img = canvas.toBuffer();
-    const attachment = new Discord.Attachment(img, "watercolour.png");
-    message.channel
+    const attachment = new Discord.Attachment(img, "pixelate.png");
+    return message.channel
       .send(attachment)
       .then(() => message.channel.stopTyping(true));
   }
@@ -101,23 +131,34 @@ exports.run = async (client, message, args) => {
     message.channel.send(
       "this is a big image so give me a seconde please !! <:softheart:575053165804912652>"
     );
-    Jimp.read({
-      url: bufferURL
-    })
-      // Jimp.read(buffer)
-      .then(async image => {
-        if (width >= height) image.resize(600, Jimp.AUTO, Jimp.RESIZE_HERMITE);
-        else image.resize(Jimp.AUTO, 600, Jimp.RESIZE_HERMITE);
-        image.pixelate(pixelSize);
-        let bufferImg = await image.getBufferAsync(Jimp.AUTO);
-        let dimensions = sizeOf(bufferImg);
-        return startCanvas(bufferImg, dimensions.width, dimensions.height);
+    return new Promise((resolve, reject) => {
+      Jimp.read({
+        url: bufferURL
       })
-      .catch(err => {
-        message.channel
-          .send("help i broke something !")
-          .then(() => message.channel.stopTyping(true));
-        return console.error(err);
-      });
+        // Jimp.read(buffer)
+        .then(async image => {
+          if (width > 600 || height > 600) {
+            if (width >= height)
+              image.resize(600, Jimp.AUTO, Jimp.RESIZE_HERMITE);
+            else image.resize(Jimp.AUTO, 600, Jimp.RESIZE_HERMITE);
+          }
+          image.pixelate(pixelSize);
+          let bufferImg = await image.getBufferAsync(Jimp.AUTO);
+          let dimensions = sizeOf(bufferImg);
+          // return startCanvas(bufferImg, dimensions.width, dimensions.height);
+          let obj = {
+            buffer: bufferImg,
+            width: dimensions.width,
+            height: dimensions.height
+          };
+          return resolve(obj);
+        })
+        .catch(err => {
+          message.channel
+            .send("help i broke something !")
+            .then(() => message.channel.stopTyping(true));
+          return console.error(err);
+        });
+    });
   }
 };

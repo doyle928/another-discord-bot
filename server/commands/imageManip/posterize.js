@@ -1,8 +1,8 @@
 const Discord = require("discord.js");
 const Canvas = require("canvas");
-const snekfetch = require("snekfetch");
 const Jimp = require("jimp");
 const sizeOf = require("buffer-image-size");
+const Promise = require("bluebird");
 
 exports.run = async (client, message, args) => {
   message.channel.startTyping();
@@ -16,7 +16,17 @@ exports.run = async (client, message, args) => {
       message.attachments.first().width,
       message.attachments.first().height,
       postSize
-    );
+    )
+      .timeout(10000)
+      .then(obj => {
+        startCanvas(obj.buffer, obj.width, obj.height);
+      })
+      .catch(Promise.TimeoutError, e => {
+        console.log("promise took longer than 10 seconds", e);
+        return message.channel
+          .send("sorry but i struggled trying to get the photo !!")
+          .then(() => message.channel.stopTyping(true));
+      });
   } else {
     if (args[1]) {
       if (
@@ -37,7 +47,17 @@ exports.run = async (client, message, args) => {
                 m.attachments.first().width,
                 m.attachments.first().height,
                 postSize
-              );
+              )
+                .timeout(10000)
+                .then(obj => {
+                  startCanvas(obj.buffer, obj.width, obj.height);
+                })
+                .catch(Promise.TimeoutError, e => {
+                  console.log("promise took longer than 10 seconds", e);
+                  return message.channel
+                    .send("sorry but i struggled trying to get the photo !!")
+                    .then(() => message.channel.stopTyping(true));
+                });
             } else {
               return message.channel
                 .send("there is no photo with this message silly !")
@@ -55,6 +75,7 @@ exports.run = async (client, message, args) => {
         await Promise.all(
           messages.map(async m => {
             if (m.attachments.first() && !foundPhoto) {
+              foundPhoto = true;
               let postSize = 10;
               if (args[1])
                 postSize = Number(args[1]) > 50 ? 50 : Number(args[1]);
@@ -64,15 +85,24 @@ exports.run = async (client, message, args) => {
                 m.attachments.first().width,
                 m.attachments.first().height,
                 postSize
-              );
-              foundPhoto = true;
+              )
+                .timeout(10000)
+                .then(obj => {
+                  startCanvas(obj.buffer, obj.width, obj.height);
+                })
+                .catch(Promise.TimeoutError, e => {
+                  console.log("promise took longer than 10 seconds", e);
+                  message.channel
+                    .send("sorry but i struggled trying to get the photo !!")
+                    .then(() => message.channel.stopTyping(true));
+                });
             }
           })
         );
         if (!foundPhoto) {
           return message.channel
             .send(
-              "sorry but i cannot find any photos before the command ! just a heads up i only look in 2 messages above yours ! you can always give me the message id and use me like **.watercolour 679873905745199146** !!"
+              "sorry but i cannot find any photos before the command ! just a heads up i only look in 2 messages above yours ! you can always give me the message id and use me like **.posterize 679873905745199146** !!"
             )
             .then(() => message.channel.stopTyping(true));
         }
@@ -89,7 +119,7 @@ exports.run = async (client, message, args) => {
     ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
 
     let img = canvas.toBuffer();
-    const attachment = new Discord.Attachment(img, "watercolour.png");
+    const attachment = new Discord.Attachment(img, "posterize.png");
     message.channel
       .send(attachment)
       .then(() => message.channel.stopTyping(true));
