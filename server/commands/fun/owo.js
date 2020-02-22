@@ -28,7 +28,9 @@ exports.run = async (client, message, args) => {
       .replace(/(ne)/gi, "nye")
       .replace(/(no)/gi, "nyo")
       .replace(/(nu)/gi, "nyu")
-      .replace(/([!])/gi, "! <:owosneaky:677298912436027413> ");
+      .replace(/(@everyone)/gi, "") //prevent the obvious
+      .replace(/(@&)/gi, "") //prevent role pings
+      .replace(/([!])/gi, "! <:owosneaky:677298912436027413> "); //prevent pings
 
     return newMsg;
   }

@@ -61,6 +61,10 @@ exports.run = async (client, message, args) => {
               .send("sorry but i cannot find this message in this channel !")
               .then(() => message.channel.stopTyping(true))
           );
+      else
+        return message.channel.send(
+          "sorry but you are supposed to be giving me a message id for the argument !"
+        );
     } else {
       let foundPhoto = false;
       message.channel.fetchMessages({ limit: 3 }).then(async messages => {

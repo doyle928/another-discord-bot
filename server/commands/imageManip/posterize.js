@@ -28,47 +28,46 @@ exports.run = async (client, message, args) => {
           .then(() => message.channel.stopTyping(true));
       });
   } else {
-    if (args[1]) {
-      if (
-        args[1].replace(/([^0-9])/g, "").length === 17 ||
+    if (
+      args[1] &&
+      (args[1].replace(/([^0-9])/g, "").length === 17 ||
         args[1].replace(/([^0-9])/g, "").length === 18 ||
-        args[1].replace(/([^0-9])/g, "").length === 19
-      )
-        message.channel
-          .fetchMessage(args[1].replace(/([^0-9])/g, ""))
-          .then(async m => {
-            if (m.attachments.first()) {
-              let postSize = 10;
-              if (args[2])
-                postSize = Number(args[2]) > 50 ? 50 : Number(args[2]);
-              if (args[2]) postSize = Number(args[2]) < 1 ? 1 : Number(args[2]);
-              pixelImg(
-                m.attachments.first().url,
-                m.attachments.first().width,
-                m.attachments.first().height,
-                postSize
-              )
-                .timeout(10000)
-                .then(obj => {
-                  startCanvas(obj.buffer, obj.width, obj.height);
-                })
-                .catch(Promise.TimeoutError, e => {
-                  console.log("promise took longer than 10 seconds", e);
-                  return message.channel
-                    .send("sorry but i struggled trying to get the photo !!")
-                    .then(() => message.channel.stopTyping(true));
-                });
-            } else {
-              return message.channel
-                .send("there is no photo with this message silly !")
-                .then(() => message.channel.stopTyping(true));
-            }
-          })
-          .catch(() =>
-            message.channel
-              .send("sorry but i cannot find this message in this channel !")
-              .then(() => message.channel.stopTyping(true))
-          );
+        args[1].replace(/([^0-9])/g, "").length === 19)
+    ) {
+      message.channel
+        .fetchMessage(args[1].replace(/([^0-9])/g, ""))
+        .then(async m => {
+          if (m.attachments.first()) {
+            let postSize = 10;
+            if (args[2]) postSize = Number(args[2]) > 50 ? 50 : Number(args[2]);
+            if (args[2]) postSize = Number(args[2]) < 1 ? 1 : Number(args[2]);
+            pixelImg(
+              m.attachments.first().url,
+              m.attachments.first().width,
+              m.attachments.first().height,
+              postSize
+            )
+              .timeout(10000)
+              .then(obj => {
+                startCanvas(obj.buffer, obj.width, obj.height);
+              })
+              .catch(Promise.TimeoutError, e => {
+                console.log("promise took longer than 10 seconds", e);
+                return message.channel
+                  .send("sorry but i struggled trying to get the photo !!")
+                  .then(() => message.channel.stopTyping(true));
+              });
+          } else {
+            return message.channel
+              .send("there is no photo with this message silly !")
+              .then(() => message.channel.stopTyping(true));
+          }
+        })
+        .catch(() =>
+          message.channel
+            .send("sorry but i cannot find this message in this channel !")
+            .then(() => message.channel.stopTyping(true))
+        );
     } else {
       let foundPhoto = false;
       message.channel.fetchMessages({ limit: 3 }).then(async messages => {
