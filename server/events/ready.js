@@ -15,6 +15,27 @@ module.exports = async client => {
 
   let url = "https://lulu-discord-bot.herokuapp.com/api";
 
+  // let query = `query {
+  //                     getServers {
+  //                         guild_id blank_avatar join_age
+  //                     }
+  //                   }`;
+
+  // try {
+  //   let res = await request(url, query);
+  //   for(let i in res.getServers){
+  //     let obj = {};
+  //     obj[res.getServers[i].guild_id] = {
+  //       blank_avatar: res.getServers[i].blank_avatar,
+  //       join_age: res.getServers[i].join_age,
+  //       muted_role: res.getServers[i].muted_role
+  //     };
+  //     serveurMain.add(obj);
+  //   }
+  // } catch (err) {
+  //   console.error(err);
+  // }
+
   let query = `query {
                       getSchedules {
                           guild_id channel_id user_id dm_user message date

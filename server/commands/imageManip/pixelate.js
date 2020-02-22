@@ -63,11 +63,11 @@ exports.run = async (client, message, args) => {
               .then(() => message.channel.stopTyping(true));
           }
         })
-        .catch(() =>
-          message.channel
+        .catch(() => {
+          return message.channel
             .send("sorry but i cannot find this message in this channel !")
-            .then(() => message.channel.stopTyping(true))
-        );
+            .then(() => message.channel.stopTyping(true));
+        });
     } else {
       let foundPhoto = false;
       message.channel.fetchMessages({ limit: 3 }).then(async messages => {
@@ -92,7 +92,7 @@ exports.run = async (client, message, args) => {
                 })
                 .catch(Promise.TimeoutError, e => {
                   console.log("promise took longer than 10 seconds", e);
-                  message.channel
+                  return message.channel
                     .send("sorry but i struggled trying to get the photo !!")
                     .then(() => message.channel.stopTyping(true));
                 });
@@ -126,15 +126,15 @@ exports.run = async (client, message, args) => {
   }
 
   function pixelImg(bufferURL, width, height, pixelSize) {
-    message.channel.send(
-      "this is a big image so give me a seconde please !! <:softheart:575053165804912652>"
-    );
     return new Promise((resolve, reject) => {
       Jimp.read({
         url: bufferURL
       })
         // Jimp.read(buffer)
         .then(async image => {
+          message.channel.send(
+            "this is a big image so give me a seconde please !! <:softheart:575053165804912652>"
+          );
           if (width > 600 || height > 600) {
             if (width >= height)
               image.resize(600, Jimp.AUTO, Jimp.RESIZE_HERMITE);

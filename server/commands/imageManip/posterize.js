@@ -63,11 +63,11 @@ exports.run = async (client, message, args) => {
               .then(() => message.channel.stopTyping(true));
           }
         })
-        .catch(() =>
-          message.channel
+        .catch(() => {
+          return message.channel
             .send("sorry but i cannot find this message in this channel !")
-            .then(() => message.channel.stopTyping(true))
-        );
+            .then(() => message.channel.stopTyping(true));
+        });
     } else {
       let foundPhoto = false;
       message.channel.fetchMessages({ limit: 3 }).then(async messages => {
@@ -91,7 +91,7 @@ exports.run = async (client, message, args) => {
                 })
                 .catch(Promise.TimeoutError, e => {
                   console.log("promise took longer than 10 seconds", e);
-                  message.channel
+                  return message.channel
                     .send("sorry but i struggled trying to get the photo !!")
                     .then(() => message.channel.stopTyping(true));
                 });
@@ -125,16 +125,19 @@ exports.run = async (client, message, args) => {
   }
 
   function pixelImg(bufferURL, width, height, postSize) {
-    message.channel.send(
-      "this is a big image so give me a seconde please !! <:softheart:575053165804912652>"
-    );
     Jimp.read({
       url: bufferURL
     })
       // Jimp.read(buffer)
       .then(async image => {
-        if (width >= height) image.resize(600, Jimp.AUTO, Jimp.RESIZE_HERMITE);
-        else image.resize(Jimp.AUTO, 600, Jimp.RESIZE_HERMITE);
+        if (width > 600 || height > 600) {
+          message.channel.send(
+            "this is a big image so give me a seconde please !! <:softheart:575053165804912652>"
+          );
+          if (width >= height)
+            image.resize(600, Jimp.AUTO, Jimp.RESIZE_HERMITE);
+          else image.resize(Jimp.AUTO, 600, Jimp.RESIZE_HERMITE);
+        }
         image.posterize(postSize);
         let bufferImg = await image.getBufferAsync(Jimp.AUTO);
         let dimensions = sizeOf(bufferImg);

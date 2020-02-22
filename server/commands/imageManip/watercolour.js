@@ -36,11 +36,11 @@ exports.run = async (client, message, args) => {
                 .then(() => message.channel.stopTyping(true));
             }
           })
-          .catch(() =>
-            message.channel
+          .catch(() => {
+            return message.channel
               .send("sorry but i cannot find this message in this channel !")
-              .then(() => message.channel.stopTyping(true))
-          );
+              .then(() => message.channel.stopTyping(true));
+          });
     } else {
       let foundPhoto = false;
       message.channel

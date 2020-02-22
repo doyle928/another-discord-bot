@@ -218,22 +218,30 @@ exports.run = async (client, message, args) => {
                     .send(`so you want to by the 1 month role for 10.000 !\nwhat do you want the name of it to be ??`)
                     .then(() => {
                       message.channel
-                        .awaitMessages(res => res.author.id === message.author.id, {
-                          maxMatches: 1,
-                          time: 120000,
-                          errors: ["time"]
-                        })
+                        .awaitMessages(
+                          res => res.author.id === message.author.id,
+                          {
+                            maxMatches: 1,
+                            time: 120000,
+                            errors: ["time"]
+                          }
+                        )
                         .then(async collected => {
                           let roleName = collected.first().content;
                           message.channel
-                            .send(`what colour do you want it to be ?\ni prefer hex values like #fdd1ff !!`)
+                            .send(
+                              `what colour do you want it to be ?\ni prefer hex values like #fdd1ff !!`
+                            )
                             .then(() => {
                               message.channel
-                                .awaitMessages(res => res.author.id === message.author.id, {
-                                  maxMatches: 1,
-                                  time: 60000,
-                                  errors: ["time"]
-                                })
+                                .awaitMessages(
+                                  res => res.author.id === message.author.id,
+                                  {
+                                    maxMatches: 1,
+                                    time: 120000,
+                                    errors: ["time"]
+                                  }
+                                )
                                 .then(async collected => {
                                   let roleColour = collected
                                     .first()
@@ -247,14 +255,37 @@ exports.run = async (client, message, args) => {
                                     })
                                     .then(async role => {
                                       await message.member.addRole(role.id);
-                                      await message.channel.send(`done ! enjoy your new role !\nyou have ${Number(user.getUser.welcome_points) - 10000} points left now !`);
-                                      let c = await client.channels.get("561372938474094603");
+                                      await message.channel.send(
+                                        `done ! enjoy your new role !\nyou have ${Number(
+                                          user.getUser.welcome_points
+                                        ) - 10000} points left now !`
+                                      );
+                                      let c = await client.channels.get(
+                                        "561372938474094603"
+                                      );
                                       let embed = new Discord.RichEmbed()
-                                        .setDescription(`**${message.author.username}** just bought a **1 month** custom role !\n\n**Role :** ${role}`)
-                                        .setColor(randomColor());
+                                        .setAuthor("Rôle acheté")
+                                        .setDescription(
+                                          `**${message.author.username}**#${message.author.discriminator} just bought a **1 month** custom role !\n\n**Role :** ${role}`
+                                        )
+                                        .setThumbnail(
+                                          message.author.displayAvatarURL
+                                        )
+                                        .setColor(randomColor())
+                                        .setFooter(
+                                          `${message.guild.name}`,
+                                          "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
+                                        )
+                                        .setTimestamp();
                                       c.send(embed);
                                       query = `mutation {
-                                      addWelcomePoints(guild_id: "${message.guild.id}", user_id: "${message.author.id}", welcome_points: ${Number(user.getUser.welcome_points) - 10000}) {
+                                      addWelcomePoints(guild_id: "${
+                                        message.guild.id
+                                      }", user_id: "${
+                                        message.author.id
+                                      }", welcome_points: ${Number(
+                                        user.getUser.welcome_points
+                                      ) - 10000}) {
                                         guild_id user_id welcome_points
                                       }
                                     }`;
@@ -266,7 +297,13 @@ exports.run = async (client, message, args) => {
                                           .toDate();
 
                                         query = `mutation {
-                                          addSchedules(guild_id: "${message.guild.id}", user_id: "${message.author.id}", message: "roleremove ${role.id}", date: "${moment(newDateObj)}") {
+                                          addSchedules(guild_id: "${
+                                            message.guild.id
+                                          }", user_id: "${
+                                          message.author.id
+                                        }", message: "roleremove ${
+                                          role.id
+                                        }", date: "${moment(newDateObj)}") {
                                           message
                                           }
                                           }`;
@@ -279,15 +316,23 @@ exports.run = async (client, message, args) => {
                                           }`;
                                           try {
                                             await request(url, query);
-                                            schedule.scheduleJob(newDateObj, async () => {
-                                              let roleArray = message.member._roles;
-                                              for (let i in roleArray) {
-                                                if (roleArray[i] === role.id) {
-                                                  roleArray.splice(i, 1);
-                                                  message.member.setRoles(roleArray);
+                                            schedule.scheduleJob(
+                                              newDateObj,
+                                              async () => {
+                                                let roleArray =
+                                                  message.member._roles;
+                                                for (let i in roleArray) {
+                                                  if (
+                                                    roleArray[i] === role.id
+                                                  ) {
+                                                    roleArray.splice(i, 1);
+                                                    message.member.setRoles(
+                                                      roleArray
+                                                    );
+                                                  }
                                                 }
                                               }
-                                            });
+                                            );
                                           } catch (err) {
                                             console.error(err);
                                           }
@@ -299,8 +344,18 @@ exports.run = async (client, message, args) => {
                                       }
                                     })
                                     .catch(console.error);
+                                })
+                                .catch(() => {
+                                  return message.channel.send(
+                                    "sorry but i timed out !! you can always try again with the same command !"
+                                  );
                                 });
                             });
+                        })
+                        .catch(() => {
+                          return message.channel.send(
+                            "sorry but i timed out !! you can always try again with the same command !"
+                          );
                         });
                     });
                 }
@@ -309,21 +364,30 @@ exports.run = async (client, message, args) => {
                   message.channel.send(`so you want to by the permanent role for 50.000 !\nwhat do you want the name of it to be ??`)
                     .then(() => {
                       message.channel
-                        .awaitMessages(res => res.author.id === message.author.id, {
-                          maxMatches: 1,
-                          time: 60000,
-                          errors: ["time"]
-                        })
+                        .awaitMessages(
+                          res => res.author.id === message.author.id,
+                          {
+                            maxMatches: 1,
+                            time: 60000,
+                            errors: ["time"]
+                          }
+                        )
                         .then(async collected => {
                           let roleName = collected.first().content;
-                          message.channel.send(`what colour do you want it to be ?\ni prefer hex values like #fdd1ff !!`)
+                          message.channel
+                            .send(
+                              `what colour do you want it to be ?\ni prefer hex values like #fdd1ff !!`
+                            )
                             .then(() => {
                               message.channel
-                                .awaitMessages(res => res.author.id === message.author.id, {
-                                  maxMatches: 1,
-                                  time: 60000,
-                                  errors: ["time"]
-                                })
+                                .awaitMessages(
+                                  res => res.author.id === message.author.id,
+                                  {
+                                    maxMatches: 1,
+                                    time: 60000,
+                                    errors: ["time"]
+                                  }
+                                )
                                 .then(async collected => {
                                   let roleColour = collected
                                     .first()
@@ -346,14 +410,29 @@ exports.run = async (client, message, args) => {
                                         "561372938474094603"
                                       );
                                       let embed = new Discord.RichEmbed()
+                                        .setAuthor("Rôle acheté")
                                         .setDescription(
-                                          `**${message.author.username}** just bought a **permanent** custom role !\n\n**Role :** ${role}`
+                                          `**${message.author.username}**#${message.author.discriminator} just bought a **permanent** custom role !\n\n**Role :** ${role}`
                                         )
-                                        .setColor(randomColor());
+                                        .setThumbnail(
+                                          message.author.displayAvatarURL
+                                        )
+                                        .setColor(randomColor())
+                                        .setFooter(
+                                          `${message.guild.name}`,
+                                          "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
+                                        )
+                                        .setTimestamp();
                                       c.send(embed);
 
                                       query = `mutation {
-                                        addWelcomePoints(guild_id: "${message.guild.id}", user_id: "${message.author.id}", welcome_points: ${Number(user.getUser.welcome_points) - 50000}) {
+                                        addWelcomePoints(guild_id: "${
+                                          message.guild.id
+                                        }", user_id: "${
+                                        message.author.id
+                                      }", welcome_points: ${Number(
+                                        user.getUser.welcome_points
+                                      ) - 50000}) {
                                         guild_id user_id welcome_points
                                         }
                                         }`;
@@ -364,8 +443,18 @@ exports.run = async (client, message, args) => {
                                       }
                                     })
                                     .catch(console.error);
+                                })
+                                .catch(() => {
+                                  return message.channel.send(
+                                    "sorry but i timed out !! you can always try again with the same command !"
+                                  );
                                 });
                             });
+                        })
+                        .catch(() => {
+                          return message.channel.send(
+                            "sorry but i timed out !! you can always try again with the same command !"
+                          );
                         });
                     });
                 } else {

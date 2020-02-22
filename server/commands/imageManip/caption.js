@@ -147,9 +147,6 @@ exports.run = async (client, message, args) => {
   }
 
   function resize(bufferURL, width, height) {
-    message.channel.send(
-      "this is a big image so give me a seconde please !! <:softheart:575053165804912652>"
-    );
     return new Promise((resolve, reject) => {
       Jimp.read({
         url: bufferURL
@@ -158,6 +155,9 @@ exports.run = async (client, message, args) => {
         // Jimp.read(buffer)
         .then(async image => {
           if (width > 600 || height > 600) {
+            message.channel.send(
+              "this is a big image so give me a seconde please !! <:softheart:575053165804912652>"
+            );
             if (width >= height)
               image.resize(600, Jimp.AUTO, Jimp.RESIZE_HERMITE);
             else image.resize(Jimp.AUTO, 600, Jimp.RESIZE_HERMITE);

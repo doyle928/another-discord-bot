@@ -31,7 +31,7 @@ fs.readdir("./commands/admin/", (err, files) => {
     if (!file.endsWith(".js")) return;
     let props = require(`./commands/admin/${file}`);
     let commandName = file.split(".")[0];
-    console.log(`Attempting to load command ${commandName}`);
+    console.log(`Attempting to load command admin - ${commandName}`);
     client.commands.set(commandName, props);
   });
 });
@@ -42,7 +42,7 @@ fs.readdir("./commands/fun/", (err, files) => {
     if (!file.endsWith(".js")) return;
     let props = require(`./commands/fun/${file}`);
     let commandName = file.split(".")[0];
-    console.log(`Attempting to load command ${commandName}`);
+    console.log(`Attempting to load command fun - ${commandName}`);
     client.commands.set(commandName, props);
   });
 });
@@ -53,7 +53,7 @@ fs.readdir("./commands/info/", (err, files) => {
     if (!file.endsWith(".js")) return;
     let props = require(`./commands/info/${file}`);
     let commandName = file.split(".")[0];
-    console.log(`Attempting to load command ${commandName}`);
+    console.log(`Attempting to load command info - ${commandName}`);
     client.commands.set(commandName, props);
   });
 });
@@ -64,7 +64,29 @@ fs.readdir("./commands/imageManip/", (err, files) => {
     if (!file.endsWith(".js")) return;
     let props = require(`./commands/imageManip/${file}`);
     let commandName = file.split(".")[0];
-    console.log(`Attempting to load command ${commandName}`);
+    console.log(`Attempting to load command imageManip - ${commandName}`);
+    client.commands.set(commandName, props);
+  });
+});
+
+fs.readdir("./commands/webscraper/", (err, files) => {
+  if (err) return console.error(err);
+  files.forEach(file => {
+    if (!file.endsWith(".js")) return;
+    let props = require(`./commands/webscraper/${file}`);
+    let commandName = file.split(".")[0];
+    console.log(`Attempting to load command webscraper - ${commandName}`);
+    client.commands.set(commandName, props);
+  });
+});
+
+fs.readdir("./commands/me/", (err, files) => {
+  if (err) return console.error(err);
+  files.forEach(file => {
+    if (!file.endsWith(".js")) return;
+    let props = require(`./commands/me/${file}`);
+    let commandName = file.split(".")[0];
+    console.log(`Attempting to load command me - ${commandName}`);
     client.commands.set(commandName, props);
   });
 });
@@ -86,7 +108,7 @@ fs.readdir("./commands/levels/", (err, files) => {
     if (!file.endsWith(".js")) return;
     let props = require(`./commands/levels/${file}`);
     let commandName = file.split(".")[0];
-    console.log(`Attempting to load command ${commandName}`);
+    console.log(`Attempting to load command levels - ${commandName}`);
     client.commands.set(commandName, props);
   });
 });

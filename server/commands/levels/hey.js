@@ -122,6 +122,13 @@ exports.run = async (client, message, args) => {
             let mem = null;
             await member.setRoles(memberUpdatedRolesArray);
             await waitFor(1000);
+            if (level === 5) {
+              member
+                .send(
+                  "hey ! good job reaching level 5 ! you can now get the nsfw role in the #📑roles channel !"
+                )
+                .catch(err => console.error(err));
+            }
 
             mem = await message.guild.fetchMember(member.id);
             mem.roles.map(r => memberRolesArrayNew.push(r));
@@ -151,7 +158,7 @@ exports.run = async (client, message, args) => {
 
             channelID.send(messageEmbed);
           } catch {
-            channelID.send("I failed changing roles for a user");
+            channelID.send(`I failed changing roles for ${mem}`);
             channelID.send("<:deadinside:606350795881054216>");
           }
         }
