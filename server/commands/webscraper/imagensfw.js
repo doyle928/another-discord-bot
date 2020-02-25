@@ -20,7 +20,6 @@ exports.run = async (client, message, args) => {
 
     let query = message.content.replace(".imagensfw", "").trim();
     query = query.replace(/[\s]/g, "%20");
-    console.log(query);
     await nightmare
       .goto(`https://www.qwant.com/?q=${query}&t=images&s=0`)
       .wait(".results-column")
@@ -59,7 +58,6 @@ exports.run = async (client, message, args) => {
           }
         };
 
-        console.log(imgs);
         if (imgs.length === 0) {
           message.channel.send(
             `sorry but i looked everywhere and could not find anything for **${message.content
@@ -91,7 +89,7 @@ exports.run = async (client, message, args) => {
         }
       })
       .catch(function(err) {
-        console.log(err);
+        console.error(err);
         message.channel.send("i broke something");
         message.channel
           .send("<:deadinside:606350795881054216>")

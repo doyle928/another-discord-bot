@@ -21,7 +21,6 @@ exports.run = async (client, message, args) => {
     ctx.strokeStyle = "#000000";
 
     let txtWidth = ctx.measureText(txt).width;
-    console.log(txtWidth);
 
     let reqPath = path.join(__dirname, "../../images/my-heart.png");
     const background = await Canvas.loadImage(reqPath);

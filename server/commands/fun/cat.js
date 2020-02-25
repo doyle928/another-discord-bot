@@ -63,7 +63,7 @@ exports.run = async (client, message, args) => {
               }, 5000);
             })
             .catch(function(err) {
-              console.log(err);
+              console.error(err);
               message.channel.stopTyping(true);
             });
         }
@@ -71,7 +71,7 @@ exports.run = async (client, message, args) => {
         getScreenshot(rects);
       })
       .catch(function(err) {
-        console.log(err);
+        console.error(err);
       });
 
     async function getBounds(selector) {

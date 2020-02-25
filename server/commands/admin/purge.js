@@ -17,10 +17,12 @@ exports.run = async (client, message, args) => {
         })
         .then(messages => {
           let msgs = messages.array().slice(0, limit);
+          let msgArray = [];
           while (x < limit) {
-            msgs[x].delete();
+            msgArray.push(msgs[x].id);
             x++;
           }
+          msgArray.deleteBulk(msgArray);
           message.channel.send(`Deleted ${messages.size} messages`);
           message.channel.send("<:SataniaThumbsUp:575052610063695873>");
         })

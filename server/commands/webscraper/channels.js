@@ -37,7 +37,7 @@ exports.run = async (client, message, args) => {
               .then(() => message.channel.stopTyping(true));
           })
           .catch(function(err) {
-            console.log(err);
+            console.error(err);
             message.channel.stopTyping(true);
           });
       }
@@ -45,19 +45,17 @@ exports.run = async (client, message, args) => {
       getScreenshot(rects);
     })
     .catch(function(err) {
-      console.log(err);
+      console.error(err);
       message.channel.stopTyping(true);
     });
 
   function getBounds(selector) {
     var element = document.getElementById(selector);
-    console.log(element);
     if (element) {
       var obj = {};
       const r = Math.round;
 
       var rect = element.getBoundingClientRect();
-      console.log(rect);
       obj = {
         x: r(rect.left),
         y: r(rect.top),
@@ -65,7 +63,6 @@ exports.run = async (client, message, args) => {
         height: r(rect.height)
       };
 
-      console.log("Element found: ", obj);
       return obj;
     }
     return null;

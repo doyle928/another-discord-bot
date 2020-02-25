@@ -9,6 +9,5 @@ let reactionRoleHelper = (module.exports = {
       message_id: messageId
     };
     reactionRoleHelper.reactionRoleList.push(reactionRoleObj);
-    console.log(reactionRoleObj, reactionRoleHelper.reactionRoleList);
   }
 });

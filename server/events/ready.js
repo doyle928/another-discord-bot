@@ -3,6 +3,7 @@ const schedule = require("node-schedule");
 const { request } = require("graphql-request");
 const moment = require("moment");
 const reactionRoleHelper = require("../data/reactionRoleHelper");
+const serverMain = require("../data/serverMain");
 
 module.exports = async client => {
   console.log("started");
@@ -15,28 +16,22 @@ module.exports = async client => {
 
   let url = "https://lulu-discord-bot.herokuapp.com/api";
 
-  // let query = `query {
-  //                     getServers {
-  //                         guild_id blank_avatar join_age
-  //                     }
-  //                   }`;
-
-  // try {
-  //   let res = await request(url, query);
-  //   for(let i in res.getServers){
-  //     let obj = {};
-  //     obj[res.getServers[i].guild_id] = {
-  //       blank_avatar: res.getServers[i].blank_avatar,
-  //       join_age: res.getServers[i].join_age,
-  //       muted_role: res.getServers[i].muted_role
-  //     };
-  //     serveurMain.add(obj);
-  //   }
-  // } catch (err) {
-  //   console.error(err);
-  // }
-
   let query = `query {
+                      getServers {
+                          guild_id muted_role mod_channel raid_mode raid_mode_active blank_avatar join_age new_member_roles
+                      }
+                    }`;
+  try {
+    let res = await request(url, query);
+    for (let i in res.getServers) {
+      serverMain.set(res.getServers[i].guild_id, res.getServers[i]);
+    }
+    console.log(serverMain);
+  } catch (err) {
+    console.error(err);
+  }
+
+  query = `query {
                       getSchedules {
                           guild_id channel_id user_id dm_user message date
                       }

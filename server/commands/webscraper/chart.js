@@ -36,7 +36,7 @@ exports.run = async (client, message, args) => {
               .then(() => message.channel.stopTyping(true));
           })
           .catch(function(err) {
-            console.log(err);
+            console.error(err);
             message.channel.stopTyping(true);
           });
       }
@@ -44,7 +44,7 @@ exports.run = async (client, message, args) => {
       getScreenshot(rects, 0);
     })
     .catch(function(err) {
-      console.log(err);
+      console.error(err);
       message.channel.stopTyping(true);
     });
 
@@ -62,8 +62,6 @@ exports.run = async (client, message, args) => {
           height: r(rect.height)
         });
       }
-      console.log("Elements found: ", arr.length);
-      console.log(arr);
       return arr;
     }
     return null;

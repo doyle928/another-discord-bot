@@ -129,7 +129,7 @@ exports.run = async (client, message, args) => {
 
         async function logResults(error, results) {
           if (error) {
-            console.log(error);
+            console.error(error);
             message.channel.send("i was not able to ");
             message.channel.send("<:deadinside:606350795881054216>");
 

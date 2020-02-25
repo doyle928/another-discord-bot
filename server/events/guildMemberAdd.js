@@ -1,7 +1,8 @@
 const { request } = require("graphql-request");
 const moment = require("moment");
 const Discord = require("discord.js");
-const addedRecently = new Set();
+const raidMode = new Map();
+const serverMain = require("../data/serverMain");
 
 function checkMembers(guild) {
   let memberCount = 0;
@@ -11,7 +12,25 @@ function checkMembers(guild) {
   return memberCount;
 }
 
-module.exports = async (client, member, guild) => {
+module.exports = async (client, member) => {
+  let server = serverMain.get(member.guild.id);
+
+    let url = "https://lulu-discord-bot.herokuapp.com/api";
+
+  let query = `mutation {
+            addCount (guild_id: "${member.guild.id}", members: ${checkMembers(
+    member.guild
+  )}, timestamp: "${Date.now()}") {
+              guild_id members timestamp
+            }
+          }`;
+
+  try {
+    await request(url, query);
+  } catch (err) {
+    console.error(err);
+  }
+
   let discordJoinDateDiff = moment.duration(
     moment(new Date().toISOString()).diff(
       moment(new Date(member.user.createdTimestamp).toISOString())
@@ -22,247 +41,200 @@ module.exports = async (client, member, guild) => {
     new Date(member.user.createdTimestamp).toISOString()
   ).format("D MMM YYYY [à] H:mm");
 
-  let blank_avatar = false,
-    join_age = false;
-  let url = "https://lulu-discord-bot.herokuapp.com/api";
-
-  let query = `query {
-      getServers {
-        guild_id blank_avatar join_age
-      }
-    }`;
-  try {
-    let res = await request(url, query);
-    res.getServers.map(async s => {
-      if (s.guild_id === member.guild.id) {
-        blank_avatar = s.blank_avatar;
-        join_age = s.join_age;
-      }
-    });
-  } catch (err) {
-    console.error(err);
-  }
   let messageEmbed = new Discord.RichEmbed().setColor("#202225");
 
-  if (join_age) {
+  if (server.join_age) {
     if (
       discordJoinDateDiff._data.days < 7 &&
       discordJoinDateDiff._data.months < 1 &&
       discordJoinDateDiff._data.years < 1
     ) {
-      if (member.guild.id === "559560674246787087") {
-        messageEmbed
-          .setAuthor("Notice")
-          .setDescription(
-            `Thanks for joining Our Home !\nUnfortunately we require discord accounts that are 7 days or older.\n\nYour account is was created on ${discordJoinDate} !`
-          )
-          .setFooter(
-            `${member.guild.name}`,
-            "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
-          )
-          .setTimestamp();
-
-        member.send(messageEmbed).then(() => {
-          member.kick("account was too young !!");
-        });
-        return;
-      } else if (member.guild.id === "664351758344257537") {
-        messageEmbed
-          .setAuthor("Notice")
-          .setDescription(
-            `Thanks for joining Losers Club !\nUnfortunately we require discord accounts that are 7 days or older.\n\nYour account is was created on ${discordJoinDate} !`
-          )
-          .setFooter(
-            `${member.guild.name}`,
-            "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
-          )
-          .setTimestamp();
-        member.send(messageEmbed).then(() => {
-          member.kick("account was too young !!");
-        });
-        return;
-      }
-    }
-  }
-  if (blank_avatar) {
-    if (member.user.avatarURL === null) {
-      if (member.guild.id === "559560674246787087") {
-        messageEmbed
-          .setAuthor("Notice")
-          .setDescription(
-            `Thanks for joining **Our Home** !\nUnfortunately we require discord accounts to have an avatar photo, sorry it is just to help keep bots from joining !\n\nYou can get a photo and try again though !!`
-          )
-          .setFooter(
-            `${member.guild.name}`,
-            "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
-          )
-          .setTimestamp();
-
-        member.send(messageEmbed).then(() => {
-          member.kick("no avatar photo !!");
-        });
-        return;
-      } else if (member.guild.id === "664351758344257537") {
-        messageEmbed
-          .setAuthor("Notice")
-          .setDescription(
-            `Thanks for joining **Losers Club** !\nUnfortunately we require discord accounts to have an avatar photo, sorry it is just to help keep bots from joining !\n\nYou can get a photo and try again though !!`
-          )
-          .setFooter(
-            `${member.guild.name}`,
-            "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
-          )
-          .setTimestamp();
-        member.send(messageEmbed).then(() => {
-          member.kick("no avatar photo !!");
-        });
-        return;
-      } else if (member.guild.id === "634305104693952532") {
-        messageEmbed
-          .setAuthor("Notice")
-          .setDescription(
-            `Thanks for joining **Naughty Things** !\nUnfortunately we require discord accounts to have an avatar photo, sorry it is just to help keep bots from joining !\n\nYou can get a photo and try again though !!`
-          )
-          .setFooter(
-            `${member.guild.name}`,
-            "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
-          )
-          .setTimestamp();
-        member.send(messageEmbed).then(() => {
-          member.kick("no avatar photo !!");
-        });
-        return;
-      }
-    }
-  }
-
-  if (member.guild.id === "559560674246787087") {
-    let c = await member.guild.channels.get("561372938474094603");
-    messageEmbed
-      .setAuthor("New member")
-      .setDescription(
-        `**${member.user.username}**#${member.user.discriminator} joined !\n(ID:${member.user.id})\n\n**Account created :** ${discordJoinDate}`
-      )
-      .setColor("#00ff00")
-      .setThumbnail(member.user.displayAvatarURL)
-      .setFooter(
-        `${member.guild.name}`,
-        "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
-      )
-      .setTimestamp();
-
-    member
-      .addRole("596016686331723785")
-      .then(() => c.send(messageEmbed))
-      .catch(() => {
-        messageEmbed
-          .setAuthor("New member")
-          .setDescription(
-            `**${member.user.username}** has joined the server but i failed to give them the welcome to serveur role !`
-          )
-          .setFooter(
-            `${member.guild.name}`,
-            "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
-          )
-          .setTimestamp();
-
-        c.send(messageEmbed);
-      });
-    member.addRole("585353865575137281");
-    member.addRole("592647213411336193");
-  } else if (member.guild.id === "664351758344257537") {
-    let c = await member.guild.channels.get("664364035386507274");
-
-    if (addedRecently.has("raid-mode-on")) {
-      member.addRole("664383601248305173");
       messageEmbed
         .setAuthor("Notice")
         .setDescription(
-          `Thanks for joining Losers Club !\nUnfortunately we had a large amount of joins in a few secondes so raid mode was automatically activated ! If you are not a bot you can join again in 30-45 minutes !`
-        );
-      member.send(messageEmbed).then(() => member.kick("raid mode"));
+          `Thanks for joining **${member.guild.name}** !\nUnfortunately we require discord accounts to have an avatar photo, sorry it is just to help keep bots from joining !\n\nYou can get a photo and try again though !!`
+        )
+        .setFooter(
+          `${member.guild.name}`,
+          "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
+        )
+        .setTimestamp();
+
+      member.send(messageEmbed).then(() => {
+        member.kick("no avatar photo !!");
+      });
+      return;
+    }
+  }
+  if (server.blank_avatar) {
+    if (member.user.avatarURL === null) {
+      messageEmbed
+        .setAuthor("Notice")
+        .setDescription(
+          `Thanks for joining **${member.guild.name}** !\nUnfortunately we require discord accounts to have an avatar photo, sorry it is just to help keep bots from joining !\n\nYou can get a photo and try again though !!`
+        )
+        .setFooter(
+          `${member.guild.name}`,
+          "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
+        )
+        .setTimestamp();
+
+      member.send(messageEmbed).then(() => {
+        member.kick("no avatar photo !!");
+      });
+      return;
+    }
+  }
+
+  messageEmbed
+    .setAuthor("New member")
+    .setDescription(
+      `**${member.user.username}**#${member.user.discriminator} joined !\n(ID:${member.user.id})\n\n**Account created :** ${discordJoinDate}`
+    )
+    .setColor("#00ff00")
+    .setThumbnail(member.user.displayAvatarURL)
+    .setFooter(
+      `${member.guild.name}`,
+      "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
+    )
+    .setTimestamp();
+
+  let c = await member.guild.channels.get(server.mod_channel);
+
+  if (server.new_member_roles && server.new_member_roles.length > 0) {
+    let currentRoles = member._roles;
+
+    for (let i in server.new_member_roles) {
+      currentRoles.push(server.new_member_roles[i]);
+    }
+
+    member.setRoles(currentRoles).catch(async err => {
+      let str = "";
+      for (let i in server.new_member_roles) {
+        let role = await member.guild.roles.get(server.new_member_roles[i]);
+        str += ` ${role}`;
+      }
+      messageEmbed.setDescription(
+        `**${member.user.username}**#${member.user.discriminator} has joined the server but i failed to give them the roles : ${str} !`
+      );
+    });
+  }
+
+  if (server.raid_mode) {
+    if (server.raid_mode_active) {
+      if (server.muted_role) member.addRole(server.muted_role);
+      messageEmbed
+        .setAuthor("Notice")
+        .setDescription(
+          `Thanks for joining **${member.guild.name}** !\n\nUnfortunately we had a large amount of joins in a few secondes so raid mode was automatically activated ! If you are not a bot you can join again in 30-45 minutes !`
+        )
+        .setColor("#ff0000");
+      if (member.guild.icon) messageEmbed.setThumbnail(member.guild.iconURL);
+
+      member
+        .send(messageEmbed)
+        .then(() => member.send("kicked")) //member.kick("raid mode")
+        .catch(err => console.error(err));
     } else {
-      if (addedRecently.has("raid-mode-check")) {
-        if (!addedRecently.has("sent-raid-msg")) {
-          messageEmbed
-            .setAuthor("Raid mode")
-            .setDescription(`Raid mode is turned on for 20 minutes`);
-          c.send(messageEmbed);
+      if (raidMode.has(member.guild.id)) {
+        server.raid_mode_active = true;
 
-          addedRecently.add("sent-raid-msg");
-          addedRecently.add("raid-mode-on");
-          if (addedRecently.has("raid-mode-check")) {
-            addedRecently.delete("raid-mode-check");
-          }
-
-          setTimeout(() => {
-            addedRecently.delete("sent-raid-msg");
-            addedRecently.delete("raid-mode-on");
-          }, 1200000);
-        }
-        member.addRole("664383601248305173");
         messageEmbed
           .setAuthor("Notice")
           .setDescription(
-            `Thanks for joining Losers Club !\nUnfortunately we had a large amount of joins in a few secondes so raid mode was automatically activated ! If you are not a bot you can join again in 30-45 minutes !`
+            `Thanks for joining **${member.guild.name}** !\n\nUnfortunately we had a large amount of joins in a few secondes so raid mode was automatically activated ! If you are not a bot you can join again in 30-45 minutes !`
           )
-          .setFooter(
-            `${member.guild.name}`,
-            "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
-          )
-          .setTimestamp();
-
-        member.send(messageEmbed).then(() => member.kick("raid mode"));
-      } else {
-        messageEmbed
-          .setAuthor("New member")
-          .setDescription(
-            `**${member.user.username}**#${member.user.discriminator} joined !\n(ID:${member.user.id})\n\n**Account created :** ${discordJoinDate}`
-          )
-          .setColor("#00ff00")
-          .setThumbnail(member.user.displayAvatarURL)
-          .setFooter(
-            `${member.guild.name}`,
-            "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
-          )
-          .setTimestamp();
-
-        member.guild
-          .fetchMember("157673412561469440")
-          .then(m =>
-            m.send(`**${member.user.username}** joined Losers Club !`)
-          );
+          .setColor("#ff0000");
+        if (member.guild.icon) messageEmbed.setThumbnail(member.guild.iconURL);
 
         member
-          .addRole("664383363901030400")
-          .then(() => c.send(messageEmbed))
-          .catch(() => {
-            messageEmbed
-              .setAuthor("New member")
+          .send(messageEmbed)
+          .then(() => member.send("kicked")) //member.kick("raid mode")
+          .catch(err => console.error(err));
+
+        raidMode
+          .get(member.guild.id)
+          .member.send(messageEmbed)
+          .then(() =>
+            raidMode.get(member.guild.id).member.send("first member kicked")
+          ) //member.kick("raid mode")
+          .catch(err => console.error(err));
+
+        if (!raidMode.get(member.guild.id).active) {
+          raidMode.get(member.guild.id).active = true;
+
+          query = `mutation {
+            setRaidModeActive(guild_id: "${
+              member.guild.id
+            }", raid_mode_active: ${true}){
+                    guild_id
+                }
+          }`;
+          try {
+            await request(url, query);
+            let raidMessage = new Discord.RichEmbed()
+              .setAuthor("Raid mode active")
               .setDescription(
-                `**${member.user.username}** has joined the server but i failed to give them the welcome to serveur role !`
+                "I automatically activated raid mode due to the amount of recent join attempts\n\nI will automatically turn it off in 20 minutes"
               )
+              .setColor("#ff0000")
               .setFooter(
                 `${member.guild.name}`,
                 "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
               )
               .setTimestamp();
-
-            c.send(messageEmbed);
-          });
-        addedRecently.add("raid-mode-check");
-        setTimeout(() => {
-          if (addedRecently.has("raid-mode-check")) {
-            addedRecently.delete("raid-mode-check");
+            if (c) c.send(raidMessage);
+          } catch (err) {
+            console.error(err);
           }
-        }, 15000);
+          setTimeout(async () => {
+            raidMode.delete(member.guild.id);
+            server.raid_mode_active = false;
+
+            query = `mutation {
+            setRaidModeActive(guild_id: "${
+              member.guild.id
+            }", raid_mode_active: ${false}){
+                    guild_id
+                }
+          }`;
+
+            try {
+              await request(url, query);
+              raidMessage = new Discord.RichEmbed()
+                .setAuthor("Raid mode stopped")
+                .setDescription("I automatically deactivated raid mode")
+                .setColor("#00ff00")
+                .setFooter(
+                  `${member.guild.name}`,
+                  "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
+                )
+                .setTimestamp();
+              if (c) c.send(raidMessage);
+            } catch (err) {
+              console.error(err);
+            }
+          }, 1200000);
+        }
+      } else {
+        if (c) c.send(messageEmbed);
+        raidMode.set(member.guild.id, {
+          member: member,
+          active: false
+        });
+        setTimeout(() => {
+          if (!raidMode.get(member.guild.id).active)
+            raidMode.delete(member.guild.id);
+        }, 10000);
       }
     }
+  } else {
+    if (c) c.send(messageEmbed);
   }
 
   query = `query {
             getUser(guild_id: "${member.guild.id}", user_id: "${member.user.id}") {
-              guild_id user_id 
+              guild_id user_id
             }
           }`;
 
@@ -285,20 +257,6 @@ module.exports = async (client, member, guild) => {
         console.error(err);
       }
     }
-  } catch (err) {
-    console.error(err);
-  }
-
-  query = `mutation {
-            addCount (guild_id: "${member.guild.id}", members: ${checkMembers(
-    member.guild
-  )}, timestamp: "${Date.now()}") {
-              guild_id members timestamp
-            }
-          }`;
-
-  try {
-    await request(url, query);
   } catch (err) {
     console.error(err);
   }

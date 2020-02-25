@@ -8,7 +8,6 @@ module.exports = async (client, messageReaction, user) => {
     if (emoteName.indexOf("<") > -1) {
       emoteName = emoteName.split(":")[1];
     }
-    console.log(emoteName);
     if (
       messageReaction._emoji.name === emoteName &&
       messageReaction.message.id ===
@@ -43,7 +42,6 @@ module.exports = async (client, messageReaction, user) => {
       const star = /^\⭐\s([0-9]{1,3})\s\|\s([0-9]{17,20})/.exec(
         stars.embeds[0].footer.text
       );
-      console.log(star[1]);
       const foundStar = stars.embeds[0];
       const image =
         messageReaction.message.attachments.array().length > 0 &&

@@ -8,7 +8,6 @@ exports.run = async (client, message, args) => {
   const waitFor = ms => new Promise(r => setTimeout(r, ms));
 
   if (message.guild.id === "664351758344257537") {
-    console.log("hey command called");
     let member = null;
 
     let level = parseInt(args[9]);
@@ -19,7 +18,6 @@ exports.run = async (client, message, args) => {
       memberRolesArrayNew = [];
 
     function changeLevelArray(memberRolesLevelsRemovedArray, levelInt) {
-      console.log("changeLevelArray()");
       return _.concat(
         memberRolesLevelsRemovedArray,
         levelRoles.losersClub[levelInt + 1]
@@ -27,7 +25,6 @@ exports.run = async (client, message, args) => {
     }
 
     function checkLevelChange() {
-      console.log("checkLevelChange()");
 
       member.roles.map(r => memberRolesIdArray.push(r.id));
 
@@ -102,9 +99,7 @@ exports.run = async (client, message, args) => {
     }
 
     async function changeLevel(member) {
-      console.log("changeLevel()");
       if (member) {
-        console.log(defaults.losersClub);
         let channelID = await message.guild.channels.get(
           defaults.losersClub.mod
         );

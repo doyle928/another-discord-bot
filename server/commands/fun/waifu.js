@@ -63,7 +63,7 @@ exports.run = async (client, message) => {
               }, 5000);
             })
             .catch(function(err) {
-              console.log(err);
+              console.error(err);
               message.channel.stopTyping(true);
             });
         }
@@ -72,7 +72,7 @@ exports.run = async (client, message) => {
       })
 
       .catch(function(err) {
-        console.log(err);
+        console.error(err);
         message.channel.stopTyping(true);
       });
 

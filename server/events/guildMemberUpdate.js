@@ -23,7 +23,6 @@ module.exports = async (client, memberOld, memberNew) => {
             }`;
     try {
       user = await request(url, query);
-      console.log(user);
     } catch (err) {
       console.error(err);
     }
@@ -67,8 +66,7 @@ module.exports = async (client, memberOld, memberNew) => {
                 }
             }`;
       try {
-        let res = await request(url, query);
-        console.log(res);
+        await request(url, query);
       } catch (err) {
         console.error(err);
       }

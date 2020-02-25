@@ -4,7 +4,6 @@ exports.run = async (client, message, args) => {
   let s = await client.guilds.get("559560674246787087");
 
   if (s.members.has(message.author.id)) {
-    console.log("here");
     let mem = await s.fetchMember(message.author.id);
     if (mem._roles.includes("676621473196277768")) {
       message.channel

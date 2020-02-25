@@ -25,7 +25,6 @@ exports.run = async (client, message, args) => {
     ctx.shadowBlur = 4;
 
     let txtWidth = ctx.measureText(txt).width;
-    console.log(txtWidth);
 
     let reqPath = path.join(__dirname, "../../images/cake.png");
     const background = await Canvas.loadImage(reqPath);

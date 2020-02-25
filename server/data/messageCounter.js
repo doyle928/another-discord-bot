@@ -20,8 +20,7 @@ let messageCounter = (module.exports = {
                 }
             }`;
     try {
-      let res = await request(url, query);
-      console.log(res);
+      await request(url, query);
     } catch (err) {
       query = `mutation {
                 addMessage(guild_id: "${guild_id}", channel_id: "${channel_id}", channel_name: "${channel_name}", message_count: 1, day: "${day}") {
@@ -29,8 +28,7 @@ let messageCounter = (module.exports = {
                 }
             }`;
       try {
-        let res = await request(url, query);
-        console.log(res);
+        await request(url, query);
       } catch (err) {
         console.error(err);
       }
@@ -48,8 +46,7 @@ let messageCounter = (module.exports = {
                 }
             }`;
     try {
-      let res = await request(url, query);
-      console.log(res);
+      await request(url, query);
     } catch (err) {
       console.error(err);
     }
@@ -64,7 +61,6 @@ let messageCounter = (module.exports = {
             }`;
       try {
         let res = await request(url, query);
-        console.log(res);
 
         query = `mutation{
                 updateMessage(guild_id: "${guild_id}", channel_id: "${channel_id}", channel_name: "${channel_name}", message_count: ${parseInt(
@@ -74,8 +70,7 @@ let messageCounter = (module.exports = {
                 }
             }`;
         try {
-          res = await request(url, query);
-          console.log(res);
+          await request(url, query);
         } catch (err) {
           console.error(err);
         }

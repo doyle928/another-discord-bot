@@ -18,9 +18,14 @@ module.exports = gql`
     timestamp: String!
   }
   type Server {
-    guild_id: String!
+    guild_id: String
+    muted_role: String
+    mod_channel: String
+    raid_mode: Boolean
+    raid_mode_active: Boolean
     blank_avatar: Boolean
     join_age: Boolean
+    new_member_roles: [String]
   }
   type Default {
     guild_id: String!
@@ -96,12 +101,22 @@ module.exports = gql`
     setCustomRole(guild_id: String, user_id: String!, custom_role: String): User
     addCount(guild_id: String!, members: Int!, timestamp: String!): Count!
     addServer(
-      guild_id: String!
-      blank_avatar: Boolean!
-      join_age: Boolean!
+      guild_id: String
+      muted_role: String
+      mod_channel: String
+      raid_mode: Boolean
+      raid_mode_active: Boolean
+      blank_avatar: Boolean
+      join_age: Boolean
+      new_member_roles: [String]
     ): Server!
     setJoinAge(guild_id: String!, join_age: Boolean): Server
     setBlankAvatar(guild_id: String!, blank_avatar: Boolean): Server
+    setMutedRole(guild_id: String!, muted_role: String): Server
+    setRaidMode(guild_id: String!, raid_mode: Boolean): Server
+    setRaidModeActive(guild_id: String!, raid_mode_active: Boolean): Server
+    setNewMemberRoles(guild_id: String!, new_member_roles: [String]): Server
+    setModChannel(guild_id: String!, mod_channel: String): Server
     setDefault(
       guild_id: String!
       channel_id: String!

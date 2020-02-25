@@ -7,7 +7,6 @@ module.exports = {
         { guild_id: guild_id },
         "user_id ship_id timestamp"
       );
-      console.log("resolver", ships);
       return ships;
     },
     getShip: async (_, { guild_id, user_id }) => {
@@ -15,7 +14,6 @@ module.exports = {
         { guild_id: guild_id, user_id: user_id },
         "user_id ship_id timestamp"
       );
-      console.log("resolver", ship[0]);
       return ship[0];
     }
   },
@@ -30,7 +28,6 @@ module.exports = {
       try {
         //  Create the new user
         const res = await newShip.save();
-        console.log(res);
 
         return res;
       } catch (err) {
@@ -43,7 +40,6 @@ module.exports = {
         user_id: user_id
       });
 
-      console.log("resolver", res);
       return res;
     }
   }

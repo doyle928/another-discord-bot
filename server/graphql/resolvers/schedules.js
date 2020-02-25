@@ -28,7 +28,6 @@ module.exports = {
       try {
         //  Create the new user
         const res = await newSchedules.save();
-        console.log(res);
 
         return res;
       } catch (err) {
@@ -42,7 +41,6 @@ module.exports = {
         date: date
       });
 
-      console.log("resolver", res);
       return res;
     }
   }

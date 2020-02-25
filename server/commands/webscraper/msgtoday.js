@@ -12,7 +12,6 @@ exports.run = async (client, message, args) => {
     .wait(1000)
     .evaluate(getInnerHTML, "messages-24h")
     .then(value => {
-      console.log(`${value} messages in the last 24 hours !!`);
       // message.channel.send(`${value} messages in the last 24 hours !!`);
       let messageEmbed = new Discord.RichEmbed()
         .setColor("#202225")
@@ -24,7 +23,7 @@ exports.run = async (client, message, args) => {
     })
     .end()
     .catch(function(err) {
-      console.log(err);
+      console.error(err);
       message.channel.send("i broke something");
       message.channel
         .send("<:deadinside:606350795881054216>")

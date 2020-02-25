@@ -12,7 +12,6 @@ exports.run = async (client, message, args) => {
             }`;
     try {
       user = await request(url, query);
-      console.log(user);
 
       let str = `What role do you want to change the colour of ? please type the number before the role  like 1 - or - 2\n`;
       let i = 1;

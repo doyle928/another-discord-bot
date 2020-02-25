@@ -57,7 +57,7 @@ exports.run = async (client, message) => {
       );
     })
     .catch(function(err) {
-      console.log(err);
+      console.error(err);
       message.channel.send("i broke something");
       message.channel
         .send("<:deadinside:606350795881054216>")

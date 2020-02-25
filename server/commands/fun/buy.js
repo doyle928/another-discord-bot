@@ -106,7 +106,7 @@ exports.run = async (client, message, args) => {
                                 }
                               }
                             } catch (err) {
-                              console.log(err);
+                              console.error(err);
                             }
                           } else if (
                             collected.first().content.toLowerCase() === "no" ||

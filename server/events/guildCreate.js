@@ -1,13 +1,16 @@
 const { request } = require("graphql-request");
 const _ = require("lodash");
+const serverMain = require("../data/serverMain");
 
 module.exports = async (client, guild) => {
   let url = "https://lulu-discord-bot.herokuapp.com/api";
 
   let members = await guild.fetchMembers();
   let boosterRoleID = null;
+  let mutedRoleID = null;
   guild.roles.map(r => {
     if (r.name === "Nitro Booster") boosterRoleID = r.id;
+    else if (r.name.toLowerCase() === "muted") mutedRoleID = r.id;
   });
 
   members.members.map(async mem => {
@@ -28,21 +31,33 @@ module.exports = async (client, guild) => {
             }
           }`;
     try {
-      let res = await request(url, query);
+      await request(url, query);
     } catch (err) {
       console.error(err);
     }
   });
 
+  mutedRoleID = mutedRoleID ? `${mutedRoleID.toString}` : null;
+
   let query = `mutation {
             addServer(guild_id: "${
               guild.id
-            }", blank_avatar: ${false}, join_age: ${false}) {
+            }", blank_avatar: ${false}, join_age: ${false}, muted_role: ${mutedRoleID}, mod_channel: ${null}, raid_mode: ${false}, raid_mode_active: ${false}, new_member_roles: ${null}) {
               guild_id
             }
           }`;
   try {
-    let res = await request(url, query);
+    await request(url, query);
+    serverMain.set(guild.id, {
+      guild_id: guild.id,
+      muted_role: mutedRoleID,
+      mod_channel: null,
+      raid_mode: false,
+      raid_mode_active: false,
+      blank_avatar: false,
+      join_age: false,
+      new_member_roles: null
+    });
   } catch (err) {
     console.error(err);
   }

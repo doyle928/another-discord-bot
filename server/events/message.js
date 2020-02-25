@@ -384,9 +384,6 @@ module.exports = async (client, message) => {
   ) {
     command = "hey";
   }
-  console.log(
-    `message.author: ${message.author.username} | command: ${command} | args: ${args}`
-  );
 
   try {
     // Grab the command data from the client.commands Enmap

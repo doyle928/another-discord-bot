@@ -132,7 +132,6 @@ module.exports = async (client, messageReaction, user) => {
     });
   } else if (messageReaction._emoji.name === "check") {
     if (messageReaction.message.id === "662982653074472960") {
-      console.log("checked rules");
       let memberRolesIdArray = [];
       let mem = await messageReaction.message.guild.fetchMember(user.id);
       if (mem) {
@@ -454,7 +453,6 @@ module.exports = async (client, messageReaction, user) => {
           .catch(err => console.error(err));
       }
     } else if (messageReaction.message.id === "664398194431754242") {
-      console.log("checked rules");
       let memberRolesIdArray = [];
       let mem = await messageReaction.message.guild.fetchMember(user.id);
       if (mem) {
@@ -566,7 +564,6 @@ module.exports = async (client, messageReaction, user) => {
                 } catch (err) {
                   console.error(err);
                 }
-                console.log(res);
               } catch (err) {
                 console.error(err);
               }
@@ -634,7 +631,6 @@ module.exports = async (client, messageReaction, user) => {
                   } catch (err) {
                     console.error(error);
                   }
-                  console.log(res);
                 } catch (err) {
                   console.error(err);
                 }
