@@ -4,10 +4,9 @@ const Discord = require("discord.js");
 const serverMain = require("../data/serverMain");
 
 module.exports = async (client, message) => {
-  if (message.guild) {
+  if (message.guild && message.channel.type === "text") {
     let server = serverMain.get(message.guild.id);
-
-    if (server.message_log) {
+    if (server && "message_log" in server && server.message_log) {
       let messageEmbed = new Discord.RichEmbed()
         .setColor("#ff0000")
         .setAuthor("Message deleted")

@@ -20,7 +20,7 @@ module.exports = async (client, message) => {
         .get(message.guild.id)
         .users.find(id => id.user_id === message.author.id);
 
-      if (server) {
+      if (server && user) {
         if ("mention_limit" in server && server.mention_limit) {
           let mentionArray = message.content
             .replace(/([\s])/g, "")
@@ -96,7 +96,7 @@ module.exports = async (client, message) => {
           "dup_limit" in server &&
           server.dup_limit
         ) {
-          if (user && "last_message" in user && "dup_count" in user) {
+          if ("last_message" in user && "dup_count" in user) {
             if (user.last_message === message.content.toLowerCase()) {
               user.dup_count++;
               if (user.dup_count > server.dup_limit) {

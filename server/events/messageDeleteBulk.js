@@ -3,42 +3,47 @@ const serverMain = require("../data/serverMain");
 
 module.exports = async (client, messages) => {
   let base = messages.first();
+  if (base.channel.guild && base.channel.type === "text") {
+    let server = serverMain.get(base.channel.guild.id);
+    if (server && "message_log" in server && server.message_log) {
+      let c = await base.channel.guild.channels.get(server.message_log);
 
-  let server = serverMain.get(base.channel.guild.id);
+      if (c) {
+        let str = `-- Deleted Messages | #${base.channel.name} (${base.channel.id}) | ${base.channel.guild.name} (${base.channel.guild.id}) --\r\n`;
 
-  let c = await base.channel.guild.channels.get(server.message_log);
+        await Promise.all(
+          messages.map(msg => {
+            str += `\r\n[${msg.createdAt}] ${msg.author.username}#${msg.author.discriminator} (${msg.author.id}) : ${msg.content}\r\n`;
+          })
+        );
 
-  if (c) {
-    let str = `-- Deleted Messages | #${base.channel.name} (${base.channel.id}) | ${base.channel.guild.name} (${base.channel.guild.id}) --\r\n`;
+        let strBuffer = Buffer.from(str);
 
-    await Promise.all(
-      messages.map(msg => {
-        str += `\r\n[${msg.createdAt}] ${msg.author.username}#${msg.author.discriminator} (${msg.author.id}) : ${msg.content}\r\n`;
-      })
-    );
-
-    let strBuffer = Buffer.from(str);
-
-    let attachment = new Discord.Attachment(strBuffer, "DeletedMessages.txt");
-    let textLogChan = await client.channels.get("681758675588874240");
-    textLogChan.send(attachment).then(m => {
-      let webURL = `https://txt.discord.website/?txt=681758675588874240/${
-        m.attachments.first().id
-      }/DeletedMessages`;
-      let downloadURL = `${m.attachments.first().url}`;
-      let embed = new Discord.RichEmbed()
-        .setColor("#ff0000")
-        .setAuthor("Messages deleted in bulk")
-        .setDescription(
-          `🚮 **${messages.size}** messages were deleted from ${base.channel}\n\n[📄 View](${webURL}) | [📥 Download](${downloadURL})\n`
-        )
-        .setFooter(
-          `${base.channel.guild.name}`,
-          "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
-        )
-        .setTimestamp();
-      c.send(embed);
-    });
+        let attachment = new Discord.Attachment(
+          strBuffer,
+          "DeletedMessages.txt"
+        );
+        let textLogChan = await client.channels.get("681758675588874240");
+        textLogChan.send(attachment).then(m => {
+          let webURL = `https://txt.discord.website/?txt=681758675588874240/${
+            m.attachments.first().id
+          }/DeletedMessages`;
+          let downloadURL = `${m.attachments.first().url}`;
+          let embed = new Discord.RichEmbed()
+            .setColor("#ff0000")
+            .setAuthor("Messages deleted in bulk")
+            .setDescription(
+              `🚮 **${messages.size}** messages were deleted from ${base.channel}\n\n[📄 View](${webURL}) | [📥 Download](${downloadURL})\n`
+            )
+            .setFooter(
+              `${base.channel.guild.name}`,
+              "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
+            )
+            .setTimestamp();
+          c.send(embed);
+        });
+      }
+    }
   }
 };
 
