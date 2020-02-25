@@ -121,6 +121,22 @@ module.exports = {
         }
       );
       return res;
+    },
+    setMessageLog: async (_, { guild_id, message_log }) => {
+      const res = await Server.findOneAndUpdate(
+        {
+          guild_id: guild_id
+        },
+        {
+          message_log: message_log
+        },
+        {
+          new: true
+        }
+      );
+      console.log(res.data);
+
+      return res;
     }
   }
 };

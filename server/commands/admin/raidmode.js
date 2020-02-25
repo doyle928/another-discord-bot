@@ -33,6 +33,10 @@ exports.run = async (client, message, args) => {
                 "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
               )
               .setTimestamp();
+
+            if (member.guild.icon)
+              raidMessage.setThumbnail(member.guild.iconURL);
+
             if (c) c.send(raidMessage);
             else message.channel.send(raidMessage);
           } else {
@@ -57,6 +61,10 @@ exports.run = async (client, message, args) => {
                 "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
               )
               .setTimestamp();
+
+            if (member.guild.icon)
+              raidMessage.setThumbnail(member.guild.iconURL);
+
             if (c) c.send(raidMessage);
             else message.channel.send(raidMessage);
           } else {

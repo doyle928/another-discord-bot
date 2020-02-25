@@ -413,7 +413,7 @@ module.exports = async (client, messageReaction, user) => {
                             try {
                               let res = await request(url, query);
                               let points = res.getUser.welcome_points;
-                              if (randomNum(1, 100) === 100) {
+                              if (randomNum(1, 200) === 1) {
                                 points += 10000;
                               } else {
                                 points += randomNum(250, 350);

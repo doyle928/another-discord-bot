@@ -1,57 +1,94 @@
 const Discord = require("discord.js");
-// const deletedRecently = new Set();
-// const snekfetch = require("snekfetch");
 const serverMain = require("../data/serverMain");
 
-module.exports = async (client, message) => {
-  if (message.guild) {
-    let server = serverMain.get(message.guild.id);
+module.exports = async (client, messages) => {
+  let base = messages.first();
 
-    if (server.message_log) {
-      let messageEmbed = new Discord.RichEmbed()
+  let server = serverMain.get(base.channel.guild.id);
+
+  let c = await base.channel.guild.channels.get(server.message_log);
+
+  if (c) {
+    let str = `-- Deleted Messages | #${base.channel.name} (${base.channel.id}) | ${base.channel.guild.name} (${base.channel.guild.id}) --\r\n`;
+
+    await Promise.all(
+      messages.map(msg => {
+        str += `\r\n[${msg.createdAt}] ${msg.author.username}#${msg.author.discriminator} (${msg.author.id}) : ${msg.content}\r\n`;
+      })
+    );
+
+    let strBuffer = Buffer.from(str);
+
+    let attachment = new Discord.Attachment(strBuffer, "DeletedMessages.txt");
+    let textLogChan = await client.channels.get("681758675588874240");
+    textLogChan.send(attachment).then(m => {
+      let webURL = `https://txt.discord.website/?txt=681758675588874240/${
+        m.attachments.first().id
+      }/DeletedMessages`;
+      let downloadURL = `${m.attachments.first().url}`;
+      let embed = new Discord.RichEmbed()
         .setColor("#ff0000")
-        .setAuthor("Message deleted")
+        .setAuthor("Messages deleted in bulk")
+        .setDescription(
+          `🚮 **${messages.size}** messages were deleted from ${base.channel}\n\n[📄 View](${webURL}) | [📥 Download](${downloadURL})\n`
+        )
         .setFooter(
-          `${message.guild.name}`,
+          `${base.channel.guild.name}`,
           "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
         )
         .setTimestamp();
-      let c = await message.guild.channels.get(server.message_log);
-      if (c) {
-        if (
-          message.content === "" &&
-          message.embeds.length > 0 &&
-          message.embeds[0].url !== undefined
-        ) {
-          let str = "";
-          if (message.embeds[0].author) {
-            if (
-              "name" in message.embeds[0].author &&
-              message.embeds[0].author.name
-            )
-              str += `\n**Author :** ${message.embeds[0].author.name}`;
-          }
-          if (message.embeds[0].title)
-            str += `\n**Title :** ${message.embeds[0].title}`;
-          if (message.embeds[0].description)
-            str += `\n**Description :** ${message.embeds[0].description}`;
-          if (message.embeds[0].url)
-            str += `\n**URL :** ${message.embeds[0].url}`;
-
-          messageEmbed.setDescription(
-            `❌ **${message.author.username}**#${message.author.discriminator} (ID:${message.author.id}) deleted an embed message in ${message.channel}\n${str}`
-          );
-          c.send(messageEmbed);
-        } else if (message.content.length > 0) {
-          messageEmbed.setDescription(
-            `❌ **${message.author.username}**#${message.author.discriminator} (ID:${message.author.id}) deleted a message in ${message.channel}\n\n**Message :** ${message.content}`
-          );
-          c.send(messageEmbed);
-        }
-      }
-    }
+      c.send(embed);
+    });
   }
 };
+
+// if (message.guild) {
+//     let server = serverMain.get(message.guild.id);
+
+//     if (server.message_log) {
+//         let messageEmbed = new Discord.RichEmbed()
+//             .setColor("#ff0000")
+//             .setAuthor("Message deleted")
+//             .setFooter(
+//                 `${message.guild.name}`,
+//                 "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
+//             )
+//             .setTimestamp();
+//         let c = await message.guild.channels.get("664363921196580874");
+
+//         if (
+//             message.content === "" &&
+//             message.embeds.length > 0 &&
+//             message.embeds[0].url !== undefined
+//         ) {
+//             let str = "";
+//             if (message.embeds[0].author) {
+//                 if (
+//                     "name" in message.embeds[0].author &&
+//                     message.embeds[0].author.name
+//                 )
+//                     str += `\n**Author :** ${message.embeds[0].author.name}`;
+//             }
+//             if (message.embeds[0].title)
+//                 str += `\n**Title :** ${message.embeds[0].title}`;
+//             if (message.embeds[0].description)
+//                 str += `\n**Description :** ${message.embeds[0].description}`;
+//             if (message.embeds[0].url)
+//                 str += `\n**URL :** ${message.embeds[0].url}`;
+
+//             messageEmbed.setDescription(
+//                 `❌**${message.author.username}**#${message.author.discriminator} (ID:${message.author.id}) deleted an embed message in ${message.channel}\n${str}`
+//             );
+//             c.send(messageEmbed);
+//         } else if (message.content.length > 0) {
+//             messageEmbed.setDescription(
+//                 `❌**${message.author.username}**#${message.author.discriminator} (ID:${message.author.id}) deleted a message in ${message.channel}\n\n**Content :** ${message.content}`
+//             );
+//             c.send(messageEmbed);
+//         }
+//     }
+// }
+// };
 
 // else if (message.guild && message.guild.id === "559560674246787087") {
 //   let audit = await message.guild.fetchAuditLogs();

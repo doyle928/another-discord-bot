@@ -15,7 +15,7 @@ function checkMembers(guild) {
 module.exports = async (client, member) => {
   let server = serverMain.get(member.guild.id);
 
-    let url = "https://lulu-discord-bot.herokuapp.com/api";
+  let url = "https://lulu-discord-bot.herokuapp.com/api";
 
   let query = `mutation {
             addCount (guild_id: "${member.guild.id}", members: ${checkMembers(
@@ -60,6 +60,8 @@ module.exports = async (client, member) => {
         )
         .setTimestamp();
 
+      if (member.guild.icon) messageEmbed.setThumbnail(member.guild.iconURL);
+
       member.send(messageEmbed).then(() => {
         member.kick("no avatar photo !!");
       });
@@ -78,6 +80,8 @@ module.exports = async (client, member) => {
           "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
         )
         .setTimestamp();
+
+      if (member.guild.icon) messageEmbed.setThumbnail(member.guild.iconURL);
 
       member.send(messageEmbed).then(() => {
         member.kick("no avatar photo !!");
@@ -183,6 +187,9 @@ module.exports = async (client, member) => {
                 "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
               )
               .setTimestamp();
+            if (member.guild.icon)
+              raidMessage.setThumbnail(member.guild.iconURL);
+
             if (c) c.send(raidMessage);
           } catch (err) {
             console.error(err);
@@ -210,6 +217,10 @@ module.exports = async (client, member) => {
                   "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
                 )
                 .setTimestamp();
+
+              if (member.guild.icon)
+                raidMessage.setThumbnail(member.guild.iconURL);
+                
               if (c) c.send(raidMessage);
             } catch (err) {
               console.error(err);

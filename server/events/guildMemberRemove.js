@@ -40,7 +40,7 @@ module.exports = async (client, member) => {
     messageEmbed
       .setAuthor("Member left")
       .setDescription(
-        `**${member.user.username}**#${member.user.discriminator} (ID:${member.user.id}) just left`
+        `**${member.user.username}**#${member.user.discriminator} just left :(\n(ID:${member.user.id})`
       );
   }
 
