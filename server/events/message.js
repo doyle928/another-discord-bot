@@ -15,216 +15,219 @@ module.exports = async (client, message) => {
   if (message.guild && message.channel.type === "text") {
     if (!message.member.hasPermission("BAN_MEMBERS")) {
       let server = serverMain.get(message.guild.id);
+      if (server) {
+        if ("mention_limit" in server && server.mention_limit) {
+          let mentionArray = message.content
+            .replace(/([\s])/g, "")
+            .split(/(<@.\d{15,20}>)/g);
 
-      if (server.mention_limit) {
-        let mentionArray = message.content
-          .replace(/([\s])/g, "")
-          .split(/(<@.\d{15,20}>)/g);
-
-        for (let i in mentionArray) {
-          if (mentionArray[i].indexOf("<") === -1) {
-            mentionArray.splice(i, 1);
-            i--;
+          for (let i in mentionArray) {
+            if (mentionArray[i].indexOf("<") === -1) {
+              mentionArray.splice(i, 1);
+              i--;
+            }
           }
-        }
 
-        if (mentionArray.length > server.mention_amount) {
-          message
-            .delete(225)
-            .then(() => {
-              warnFunc(`too many mentions in message`);
-            })
-            .catch(err => console.error(err));
-        }
-      }
-      if (server.emote_limit) {
-        let emoteArray = message.content
-          .replace(/([\s])/g, "")
-          .split(/(<:.|<a:.)/g);
-
-        for (let i in emoteArray) {
-          if (emoteArray[i].indexOf("<") === -1) {
-            emoteArray.splice(i, 1);
-            i--;
-          }
-        }
-
-        if (emoteArray.length > server.emote_amount) {
-          message
-            .delete(225)
-            .then(() => {
-              // warnFunc(`too many emoted in message`);
-            })
-            .catch(err => console.error(err));
-        }
-      }
-      if (server.everyone_warn) {
-        if (
-          message.mentions &&
-          "everyone" in message.mentions &&
-          message.mentions.everyone
-        ) {
-          message
-            .delete(225)
-            .then(() => {
-              warnFunc(`@everyone ping`);
-            })
-            .catch(err => console.error(err));
-        }
-      }
-
-      function warnMod(reason, oldWarn, newWarn) {
-        let warnEmbed = new Discord.RichEmbed()
-          .setAuthor("❌ Member warned")
-          .setColor("#202225")
-          .setDescription(
-            `**Lulu Bot !**#5997 has warned **${message.author.username}**#${message.author.discriminator} [${oldWarn} → ${newWarn}]\n(ID:${message.author.id})\n\n**Reason :** ${reason}`
-          )
-          .setFooter(
-            `${message.guild.name}`,
-            "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
-          )
-          .setTimestamp();
-
-        if (message.author.avatarURL)
-          warnEmbed.setThumbnail(message.author.avatarURL);
-
-        return warnEmbed;
-      }
-
-      function warnUser(reason) {
-        let warningMsg = new Discord.RichEmbed()
-          .setColor("#202225")
-          .setDescription(`**Reason :** ${reason}`)
-          .setFooter(
-            `${message.guild.name}`,
-            "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
-          )
-          .setTimestamp();
-
-        if (message.author.avatarURL)
-          warningMsg.setAuthor(
-            `${message.author.username}#${message.author.discriminator} has been warned`,
-            message.author.avatarURL
-          );
-        else
-          warningMsg.setAuthor(
-            `${message.author.username}#${message.author.discriminator} has been warned`
-          );
-
-        return warningMsg;
-      }
-
-      function mutedWarning(reason, oldWarn, newWarn) {
-        let warningMsg = new Discord.RichEmbed()
-          .setAuthor("❌ Member muted for 1 hour")
-          .setColor("#202225")
-          .setDescription(
-            `**Lulu Bot !**#5997 has warned **${message.author.username}**#${message.author.discriminator} [${oldWarn} → ${newWarn}]\n(ID:${message.author.id})\n\n**Reason :** ${reason}`
-          )
-          .setFooter(
-            `${message.guild.name}`,
-            "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
-          )
-          .setTimestamp();
-
-        if (message.author.avatarURL)
-          warningMsg.setThumbnail(message.author.avatarURL);
-
-        return warningMsg;
-      }
-
-      async function warnFunc(reason) {
-        let user = userMain
-          .get(message.guild.id)
-          .users.find(id => id.user_id === message.author.id);
-
-        let currentStrikes = user.strikes;
-
-        let strikesAdding = 1;
-
-        currentStrikes += strikesAdding;
-
-        let c = await client.channels.get(server.mod_channel);
-
-        if (currentStrikes === 5) {
-          let check = await addToDatabase(currentStrikes);
-          if (check) {
-            member
-              .ban(`5 warnings (${reason})`)
+          if (mentionArray.length > server.mention_amount) {
+            message
+              .delete(225)
+              .then(() => {
+                warnFunc(`too many mentions in message`);
+              })
               .catch(err => console.error(err));
+          }
+        }
+        if ("emote_limit" in server && server.emote_limit) {
+          let emoteArray = message.content
+            .replace(/([\s])/g, "")
+            .split(/(<:.|<a:.)/g);
 
-            user.strikes = currentStrikes;
+          for (let i in emoteArray) {
+            if (emoteArray[i].indexOf("<") === -1) {
+              emoteArray.splice(i, 1);
+              i--;
+            }
           }
-        } else if (currentStrikes === 4) {
-          let check = await addToDatabase(currentStrikes);
-          if (check) {
-            member
-              .kick(`4 warnings (${reason})`)
+
+          if (emoteArray.length > server.emote_amount) {
+            message
+              .delete(225)
+              .then(() => {
+                // warnFunc(`too many emoted in message`);
+              })
               .catch(err => console.error(err));
-            user.strikes = currentStrikes;
           }
-        } else if (currentStrikes === 3) {
-          let check = await addToDatabase(currentStrikes);
-          if (check) {
-            if (server.muted_role) {
-              message.member
-                .addRole(server.muted_role)
-                .then(() => {
-                  message.author.send(warnUser(reason));
-                  if (c)
-                    c.send(mutedWarning(reason, user.strikes, currentStrikes));
-                  let date = new Date();
-                  let newDateObj = moment(date)
-                    .add(1, "h")
-                    .toDate();
-                  schedule.scheduleJob(newDateObj, async () => {
-                    let memRoles = message.member._roles;
-                    if (memRoles.includes(server.muted_role)) {
-                      memRoles.splice(memRoles.indexOf(server.muted_role), 1);
-                      message.member
-                        .setRoles(memRoles)
-                        .then(() => {
-                          if (c)
-                            c.send(
-                              `**${message.author.username}**#${message.author.discriminator} has been unmuted due to the 1 hour being up`
-                            );
-                        })
-                        .catch(err => console.error(err));
-                    }
-                  });
-                })
+        }
+        if ("everyone_warn" in server && server.everyone_warn) {
+          if (
+            message.mentions &&
+            "everyone" in message.mentions &&
+            message.mentions.everyone
+          ) {
+            message
+              .delete(225)
+              .then(() => {
+                warnFunc(`@everyone ping`);
+              })
+              .catch(err => console.error(err));
+          }
+        }
+
+        function warnMod(reason, oldWarn, newWarn) {
+          let warnEmbed = new Discord.RichEmbed()
+            .setAuthor("❌ Member warned")
+            .setColor("#202225")
+            .setDescription(
+              `**Lulu Bot !**#5997 has warned **${message.author.username}**#${message.author.discriminator} [${oldWarn} → ${newWarn}]\n(ID:${message.author.id})\n\n**Reason :** ${reason}`
+            )
+            .setFooter(
+              `${message.guild.name}`,
+              "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
+            )
+            .setTimestamp();
+
+          if (message.author.avatarURL)
+            warnEmbed.setThumbnail(message.author.avatarURL);
+
+          return warnEmbed;
+        }
+
+        function warnUser(reason) {
+          let warningMsg = new Discord.RichEmbed()
+            .setColor("#202225")
+            .setDescription(`**Reason :** ${reason}`)
+            .setFooter(
+              `${message.guild.name}`,
+              "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
+            )
+            .setTimestamp();
+
+          if (message.author.avatarURL)
+            warningMsg.setAuthor(
+              `${message.author.username}#${message.author.discriminator} has been warned`,
+              message.author.avatarURL
+            );
+          else
+            warningMsg.setAuthor(
+              `${message.author.username}#${message.author.discriminator} has been warned`
+            );
+
+          return warningMsg;
+        }
+
+        function mutedWarning(reason, oldWarn, newWarn) {
+          let warningMsg = new Discord.RichEmbed()
+            .setAuthor("❌ Member muted for 1 hour")
+            .setColor("#202225")
+            .setDescription(
+              `**Lulu Bot !**#5997 has warned **${message.author.username}**#${message.author.discriminator} [${oldWarn} → ${newWarn}]\n(ID:${message.author.id})\n\n**Reason :** ${reason}`
+            )
+            .setFooter(
+              `${message.guild.name}`,
+              "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
+            )
+            .setTimestamp();
+
+          if (message.author.avatarURL)
+            warningMsg.setThumbnail(message.author.avatarURL);
+
+          return warningMsg;
+        }
+
+        async function warnFunc(reason) {
+          let user = userMain
+            .get(message.guild.id)
+            .users.find(id => id.user_id === message.author.id);
+
+          let currentStrikes = user.strikes;
+
+          let strikesAdding = 1;
+
+          currentStrikes += strikesAdding;
+
+          let c = await client.channels.get(server.mod_channel);
+
+          if (currentStrikes === 5) {
+            let check = await addToDatabase(currentStrikes);
+            if (check) {
+              member
+                .ban(`5 warnings (${reason})`)
                 .catch(err => console.error(err));
-            } else if (c)
-              c.send(
-                `**${member.user.username}**#${member.user.discriminator} has 3 warnings but i was unable to mute them because i dont know what your muted role is !\nplease use the command **.setmutedrole** !!`
-              );
-            user.strikes = currentStrikes;
-          }
-        } else {
-          let check = await addToDatabase(currentStrikes);
-          if (check) {
-            message.author.send(warnUser(reason));
-            if (c) c.send(warnMod(reason, user.strikes, currentStrikes));
-            user.strikes = currentStrikes;
+
+              user.strikes = currentStrikes;
+            }
+          } else if (currentStrikes === 4) {
+            let check = await addToDatabase(currentStrikes);
+            if (check) {
+              member
+                .kick(`4 warnings (${reason})`)
+                .catch(err => console.error(err));
+              user.strikes = currentStrikes;
+            }
+          } else if (currentStrikes === 3) {
+            let check = await addToDatabase(currentStrikes);
+            if (check) {
+              if (server.muted_role) {
+                message.member
+                  .addRole(server.muted_role)
+                  .then(() => {
+                    message.author.send(warnUser(reason));
+                    if (c)
+                      c.send(
+                        mutedWarning(reason, user.strikes, currentStrikes)
+                      );
+                    let date = new Date();
+                    let newDateObj = moment(date)
+                      .add(1, "h")
+                      .toDate();
+                    schedule.scheduleJob(newDateObj, async () => {
+                      let memRoles = message.member._roles;
+                      if (memRoles.includes(server.muted_role)) {
+                        memRoles.splice(memRoles.indexOf(server.muted_role), 1);
+                        message.member
+                          .setRoles(memRoles)
+                          .then(() => {
+                            if (c)
+                              c.send(
+                                `**${message.author.username}**#${message.author.discriminator} has been unmuted due to the 1 hour being up`
+                              );
+                          })
+                          .catch(err => console.error(err));
+                      }
+                    });
+                  })
+                  .catch(err => console.error(err));
+              } else if (c)
+                c.send(
+                  `**${member.user.username}**#${member.user.discriminator} has 3 warnings but i was unable to mute them because i dont know what your muted role is !\nplease use the command **.setmutedrole** !!`
+                );
+              user.strikes = currentStrikes;
+            }
+          } else {
+            let check = await addToDatabase(currentStrikes);
+            if (check) {
+              message.author.send(warnUser(reason));
+              if (c) c.send(warnMod(reason, user.strikes, currentStrikes));
+              user.strikes = currentStrikes;
+            }
           }
         }
-      }
 
-      async function addToDatabase(strikes) {
-        let url = "http://localhost:8080/api";
+        async function addToDatabase(strikes) {
+          let url = "https://lulu-discord-bot.herokuapp.com/api";
 
-        let query = `mutation{
+          let query = `mutation{
                 addStrike(guild_id: "${message.guild.id}", user_id: "${message.author.id}", strikes: ${strikes}) {
                     strikes
                 }
             }`;
-        try {
-          res = await request(url, query);
-          return true;
-        } catch (err) {
-          console.error(err);
-          return false;
+          try {
+            res = await request(url, query);
+            return true;
+          } catch (err) {
+            console.error(err);
+            return false;
+          }
         }
       }
     }
