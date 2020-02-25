@@ -212,6 +212,51 @@ module.exports = {
       );
 
       return res;
+    },
+    setAntiReferral: async (_, { guild_id, anti_referral }) => {
+      const res = await Server.findOneAndUpdate(
+        {
+          guild_id: guild_id
+        },
+        {
+          anti_referral: anti_referral
+        },
+        {
+          new: true
+        }
+      );
+
+      return res;
+    },
+    setDupWatch: async (_, { guild_id, dup_watch }) => {
+      const res = await Server.findOneAndUpdate(
+        {
+          guild_id: guild_id
+        },
+        {
+          dup_watch: dup_watch
+        },
+        {
+          new: true
+        }
+      );
+
+      return res;
+    },
+    setDupLimit: async (_, { guild_id, dup_limit }) => {
+      const res = await Server.findOneAndUpdate(
+        {
+          guild_id: guild_id
+        },
+        {
+          dup_limit: dup_limit
+        },
+        {
+          new: true
+        }
+      );
+
+      return res;
     }
   }
 };

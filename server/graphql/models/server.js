@@ -14,7 +14,10 @@ const serverSchema = new Schema({
   mention_amount: Number,
   emote_limit: Boolean,
   emote_amount: Number,
-  everyone_warn: Boolean
+  everyone_warn: Boolean,
+  anti_referral: Boolean,
+  dup_watch: Boolean,
+  dup_limit: Number
 });
 
 module.exports = model("Server", serverSchema);

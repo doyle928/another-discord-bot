@@ -32,6 +32,9 @@ module.exports = gql`
     emote_limit: Boolean
     emote_amount: Int
     everyone_warn: Boolean
+    anti_referral: Boolean
+    dup_watch: Boolean
+    dup_limit: Int
   }
   type Default {
     guild_id: String!
@@ -123,6 +126,9 @@ module.exports = gql`
       emote_limit: Boolean
       emote_amount: Int
       everyone_warn: Boolean
+      anti_referral: Boolean
+      dup_watch: Boolean
+      dup_limit: Int
     ): Server!
     setJoinAge(guild_id: String!, join_age: Boolean): Server
     setBlankAvatar(guild_id: String!, blank_avatar: Boolean): Server
@@ -137,6 +143,9 @@ module.exports = gql`
     setEmoteLimit(guild_id: String!, emote_limit: Boolean): Server
     setEmoteAmount(guild_id: String!, emote_amount: Int): Server
     setEveryoneWarn(guild_id: String!, everyone_warn: Boolean): Server
+    setAntiReferral(guild_id: String!, anti_referral: Boolean): Server
+    setDupWatch(guild_id: String!, dup_watch: Boolean): Server
+    setDupLimit(guild_id: String!, dup_limit: Int): Server
 
     setDefault(
       guild_id: String!

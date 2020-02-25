@@ -15,6 +15,11 @@ module.exports = async (client, message) => {
   if (message.guild && message.channel.type === "text") {
     if (!message.member.hasPermission("BAN_MEMBERS")) {
       let server = serverMain.get(message.guild.id);
+
+      let user = userMain
+        .get(message.guild.id)
+        .users.find(id => id.user_id === message.author.id);
+
       if (server) {
         if ("mention_limit" in server && server.mention_limit) {
           let mentionArray = message.content
@@ -67,9 +72,48 @@ module.exports = async (client, message) => {
             message
               .delete(225)
               .then(() => {
-                warnFunc(`@everyone ping`);
+                warnFunc(`@everyone\@here ping`);
               })
               .catch(err => console.error(err));
+          }
+        }
+        if ("anti_referral" in server && server.anti_referral) {
+          let found = message.content
+            .toLowerCase()
+            .match(/(https:\/\/discord.gg\/.......)/gi);
+          if (found) {
+            message
+              .delete(225)
+              .then(() => {
+                warnFunc(`referral link`);
+              })
+              .catch(err => console.error(err));
+          }
+        }
+        if (
+          "dup_watch" in server &&
+          server.dup_watch &&
+          "dup_limit" in server &&
+          server.dup_limit
+        ) {
+          if (user && "last_message" in user && "dup_count" in user) {
+            if (user.last_message === message.content.toLowerCase()) {
+              user.dup_count++;
+              if (user.dup_count > server.dup_limit) {
+                message
+                  .delete(225)
+                  .then(() => {
+                    warnFunc(`duplicate messages`);
+                  })
+                  .catch(err => console.error(err));
+              }
+            } else {
+              user.last_message = message.content.toLowerCase();
+              user.dup_count = 0;
+            }
+          } else {
+            user.last_message = message.content.toLowerCase();
+            user.dup_count = 0;
           }
         }
 
@@ -135,10 +179,6 @@ module.exports = async (client, message) => {
         }
 
         async function warnFunc(reason) {
-          let user = userMain
-            .get(message.guild.id)
-            .users.find(id => id.user_id === message.author.id);
-
           let currentStrikes = user.strikes;
 
           let strikesAdding = 1;
