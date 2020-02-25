@@ -482,8 +482,97 @@ module.exports = async (client, messageReaction, user) => {
                     .get("664351758344257537")
                     .channels.get("664363153802657792");
                   c.send(
-                    `Thank you for joining ${mem} ! <:softheart:575053165804912652>\nyou can get roles in ${rolesC} and make sure to do an intro in ${introC} !`
-                  );
+                    `Thank you for joining ${mem} ! <:softheart:575053165804912652>\nyou can get roles in ${rolesC} and make sure to do an intro in ${introC} !\n<@&681781904051273740>`
+                  )
+                    .then(msg => {
+                      const filter = m =>
+                        m.content
+                          .toLowerCase()
+                          .replace(/([^a-z])/g, "")
+                          .indexOf("hi") >= 0 ||
+                        m.content
+                          .toLowerCase()
+                          .replace(/([^a-z])/g, "")
+                          .indexOf("hello") >= 0 ||
+                        m.content
+                          .toLowerCase()
+                          .replace(/([^a-z])/g, "")
+                          .indexOf("howareyou") >= 0 ||
+                        m.content
+                          .toLowerCase()
+                          .replace(/([^a-z])/g, "")
+                          .indexOf("howareu") >= 0 ||
+                        m.content
+                          .toLowerCase()
+                          .replace(/([^a-z])/g, "")
+                          .indexOf("welcome") >= 0 ||
+                        m.content
+                          .toLowerCase()
+                          .replace(/([^a-z])/g, "")
+                          .indexOf("bienvenue") >= 0 ||
+                        m.content
+                          .toLowerCase()
+                          .replace(/([^a-z])/g, "")
+                          .indexOf("yo") >= 0 ||
+                        m.content
+                          .toLowerCase()
+                          .replace(/([^a-z])/g, "")
+                          .indexOf("hey") >= 0 ||
+                        m.content
+                          .toLowerCase()
+                          .replace(/([^a-z])/g, "")
+                          .indexOf("hai") >= 0 ||
+                        m.content
+                          .toLowerCase()
+                          .replace(/([^a-z])/g, "")
+                          .indexOf("hail") >= 0 ||
+                        m.content
+                          .toLowerCase()
+                          .replace(/([^a-z])/g, "")
+                          .indexOf("nicetomeetyou") >= 0;
+                      const collector = msg.channel.createMessageCollector(
+                        filter,
+                        { time: 120000 }
+                      );
+                      let userArray = [];
+                      collector.on("collect", m => {
+                        if (!userArray.includes(m.author.id))
+                          userArray.push(m.author.id);
+                      });
+                      collector.on("end", async collected => {
+                        let url = "https://lulu-discord-bot.herokuapp.com/api";
+
+                        for (let user in userArray) {
+                          let query = `query {
+                              getUser(guild_id: "${msg.guild.id}", user_id: "${userArray[user]}") {
+                                guild_id user_id welcome_points
+                              }
+                            }`;
+                          try {
+                            let res = await request(url, query);
+                            let points = res.getUser.welcome_points;
+                            if (randomNum(1, 200) === 1) {
+                              points += 10000;
+                            } else {
+                              points += randomNum(250, 350);
+                            }
+                            query = `mutation {
+                              addWelcomePoints(guild_id: "${msg.guild.id}", user_id: "${userArray[user]}", welcome_points: ${points}) {
+                                guild_id user_id welcome_points
+                              }
+                            }`;
+                            try {
+                              await request(url, query);
+                            } catch (err) {
+                              console.error(err);
+                            }
+                          } catch (err) {
+                            console.error(err);
+                          }
+                        }
+                      });
+                    })
+                    .catch(err => console.error(err));
                 })
                 .catch(err => {
                   console.error(err);
@@ -1206,6 +1295,8 @@ module.exports = async (client, messageReaction, user) => {
       //vc role
       if (messageReaction._emoji.name === "🎙️") {
         await addRole("664372929982627850");
+      } else if (messageReaction._emoji.name === "👋") {
+        await addRole("681781904051273740");
       }
     } else if (messageReaction.message.id === "664781943019143172") {
       //vc role
