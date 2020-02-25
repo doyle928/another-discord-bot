@@ -4,18 +4,22 @@ const { request } = require("graphql-request");
 const moment = require("moment");
 const reactionRoleHelper = require("../data/reactionRoleHelper");
 const serverMain = require("../data/serverMain");
+const userMain = require("../data/userMain");
 
 module.exports = async client => {
   console.log("started");
 
+  //---------------- status --------------------------------------------------------------------------------------------------------
   client.user.setStatus("idle");
 
   client.user.setActivity("mon fils stp pas touche", {
     type: 3
   });
+  //---------------- status --------------------------------------------------------------------------------------------------------
 
   let url = "https://lulu-discord-bot.herokuapp.com/api";
 
+  //---------------- servers --------------------------------------------------------------------------------------------------------
   let query = `query {
                       getServers {
                           guild_id muted_role mod_channel raid_mode raid_mode_active blank_avatar join_age new_member_roles message_log
@@ -30,7 +34,31 @@ module.exports = async client => {
   } catch (err) {
     console.error(err);
   }
-
+  //---------------- servers --------------------------------------------------------------------------------------------------------
+  //---------------- users --------------------------------------------------------------------------------------------------------
+  query = `query {
+                      getUsers {
+                          guild_id user_id join_date strikes booster welcome_points
+                      }
+                    }`;
+  try {
+    let res = await request(url, query);
+    serverMain.forEach(s => {
+      userMain.set(s.guild_id, { users: [] });
+    });
+    for (let i in res.getUsers) {
+      serverMain.forEach(s => {
+        if (res.getUsers[i].guild_id === s.guild_id) {
+          let serverUsers = userMain.get(s.guild_id);
+          serverUsers.users.push(res.getUsers[i]);
+        }
+      });
+    }
+  } catch (err) {
+    console.error(err);
+  }
+  //---------------- servers --------------------------------------------------------------------------------------------------------
+  //---------------- schdules --------------------------------------------------------------------------------------------------------
   query = `query {
                       getSchedules {
                           guild_id channel_id user_id dm_user message date
@@ -98,7 +126,8 @@ module.exports = async client => {
   } catch (err) {
     console.error(err);
   }
-
+  //---------------- schdules --------------------------------------------------------------------------------------------------------
+  //---------------- reaction roles --------------------------------------------------------------------------------------------------------
   query = `query {
       getReactionRoles {
         guild_id channel_id role_id emote message_id
@@ -161,7 +190,8 @@ module.exports = async client => {
       console.error(err);
     }
   }
-
+  //---------------- reaction roles --------------------------------------------------------------------------------------------------------
+  //---------------- fetch reaction roles + react --------------------------------------------------------------------------------------------------------
   const server1 = await client.guilds.get("559560674246787087");
   await server1.channels
     .get("559709338638352405")
@@ -380,4 +410,5 @@ module.exports = async client => {
         await msg.react("🔞");
       }
     });
+  //---------------- fetch reaction roles + react --------------------------------------------------------------------------------------------------------
 };

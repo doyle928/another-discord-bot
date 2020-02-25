@@ -27,6 +27,11 @@ module.exports = gql`
     join_age: Boolean
     new_member_roles: [String]
     message_log: String
+    mention_limit: Boolean
+    mention_amount: Int
+    emote_limit: Boolean
+    emote_amount: Int
+    everyone_warn: Boolean
   }
   type Default {
     guild_id: String!
@@ -100,7 +105,9 @@ module.exports = gql`
       booster_role: String
     ): User
     setCustomRole(guild_id: String, user_id: String!, custom_role: String): User
+
     addCount(guild_id: String!, members: Int!, timestamp: String!): Count!
+
     addServer(
       guild_id: String!
       muted_role: String
@@ -111,6 +118,11 @@ module.exports = gql`
       join_age: Boolean!
       new_member_roles: [String]
       message_log: String
+      mention_limit: Boolean
+      mention_amount: Int
+      emote_limit: Boolean
+      emote_amount: Int
+      everyone_warn: Boolean
     ): Server!
     setJoinAge(guild_id: String!, join_age: Boolean): Server
     setBlankAvatar(guild_id: String!, blank_avatar: Boolean): Server
@@ -120,12 +132,19 @@ module.exports = gql`
     setNewMemberRoles(guild_id: String!, new_member_roles: [String]): Server
     setModChannel(guild_id: String!, mod_channel: String): Server
     setMessageLog(guild_id: String!, message_log: String): Server
+    setMentionLimit(guild_id: String!, mention_limit: Boolean): Server
+    setMentionAmount(guild_id: String!, mention_amount: Int): Server
+    setEmoteLimit(guild_id: String!, emote_limit: Boolean): Server
+    setEmoteAmount(guild_id: String!, emote_amount: Int): Server
+    setEveryoneWarn(guild_id: String!, everyone_warn: Boolean): Server
+
     setDefault(
       guild_id: String!
       channel_id: String!
       mod_channel_id: String!
       user_id: String!
     ): Default
+
     addMessage(
       guild_id: String!
       channel_id: String!
@@ -140,6 +159,7 @@ module.exports = gql`
       message_count: Int
       day: String!
     ): Message!
+
     addShip(
       guild_id: String
       user_id: String
@@ -147,6 +167,7 @@ module.exports = gql`
       timestamp: String
     ): Ship
     deleteShip(guild_id: String, user_id: String): Ship
+
     addSchedules(
       guild_id: String
       channel_id: String
@@ -156,6 +177,7 @@ module.exports = gql`
       date: String
     ): Schedules
     deleteSchedules(guild_id: String, message: String, date: String): Schedules
+
     addReactionRoles(
       guild_id: String
       channel_id: String

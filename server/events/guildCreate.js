@@ -42,7 +42,7 @@ module.exports = async (client, guild) => {
   let query = `mutation {
             addServer(guild_id: "${
               guild.id
-            }", blank_avatar: ${false}, join_age: ${false}, muted_role: ${mutedRoleID}, mod_channel: ${null}, raid_mode: ${false}, raid_mode_active: ${false}, new_member_roles: ${null}, message_log: ${null}) {
+            }", blank_avatar: ${false}, join_age: ${false}, muted_role: ${mutedRoleID}, mod_channel: ${null}, raid_mode: ${false}, raid_mode_active: ${false}, new_member_roles: ${null}, message_log: ${null}, mention_limit: ${false}, mention_amount: ${5}, emote_limit: ${false}, emote_amount: ${5}, everyone_warn: ${false})) {
               guild_id
             }
           }`;
@@ -56,8 +56,11 @@ module.exports = async (client, guild) => {
       raid_mode_active: false,
       blank_avatar: false,
       join_age: false,
-      new_member_roles: null,
-      message_log: null
+      mention_limit: false,
+      mention_amount: 5,
+      emote_limit: false,
+      emote_amount: 5,
+      everyone_warn: false
     });
   } catch (err) {
     console.error(err);

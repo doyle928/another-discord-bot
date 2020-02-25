@@ -137,6 +137,81 @@ module.exports = {
       console.log(res.data);
 
       return res;
+    },
+    setMentionLimit: async (_, { guild_id, mention_limit }) => {
+      const res = await Server.findOneAndUpdate(
+        {
+          guild_id: guild_id
+        },
+        {
+          mention_limit: mention_limit
+        },
+        {
+          new: true
+        }
+      );
+
+      return res;
+    },
+    setMentionAmount: async (_, { guild_id, mention_amount }) => {
+      const res = await Server.findOneAndUpdate(
+        {
+          guild_id: guild_id
+        },
+        {
+          mention_amount: mention_amount
+        },
+        {
+          new: true
+        }
+      );
+
+      return res;
+    },
+    setEmoteLimit: async (_, { guild_id, emote_limit }) => {
+      const res = await Server.findOneAndUpdate(
+        {
+          guild_id: guild_id
+        },
+        {
+          emote_limit: emote_limit
+        },
+        {
+          new: true
+        }
+      );
+
+      return res;
+    },
+    setEmoteAmount: async (_, { guild_id, emote_amount }) => {
+      const res = await Server.findOneAndUpdate(
+        {
+          guild_id: guild_id
+        },
+        {
+          emote_amount: emote_amount
+        },
+        {
+          new: true
+        }
+      );
+
+      return res;
+    },
+    setEveryoneWarn: async (_, { guild_id, everyone_warn }) => {
+      const res = await Server.findOneAndUpdate(
+        {
+          guild_id: guild_id
+        },
+        {
+          everyone_warn: everyone_warn
+        },
+        {
+          new: true
+        }
+      );
+
+      return res;
     }
   }
 };

@@ -1,303 +1,268 @@
 const Discord = require("discord.js");
 const { request } = require("graphql-request");
 const defaults = require("../../data/defaults");
+const userMain = require("../../data/userMain");
+const serverMain = require("../../data/serverMain");
+const schedule = require("node-schedule");
+const moment = require("moment");
 
 exports.run = async (client, message, args) => {
   let url = "https://lulu-discord-bot.herokuapp.com/api";
 
-  if (
-    !message.member.hasPermission("BAN_MEMBERS") &&
-    message.guild.id === "559560674246787087"
-  ) {
-    if (message.author.id === "137935136036487168") {
-      let messageEmbed = new Discord.RichEmbed().setColor("#fe6860");
-      let channelID = await message.guild.channels.get(defaults.mod);
-      let argsInt = 1;
-      let strikes = 1;
+  if (!message.member.hasPermission("BAN_MEMBERS")) {
+    message.channel.send(
+      `How dare you ${message.author.username} !! You don't have the permissions to use this command!`
+    );
+    message.channel.send("<:natsukiMad:646210751417286656>");
+  } else {
+    args.shift();
 
-      if (args[1] === "remove") {
-        strikes = -1;
-        argsInt = 2;
-        if (args[2].length === 1) {
-          strikes = -parseInt(args[2]);
-          if (isNaN(strikes)) {
-            message.channel.send(
-              `Excuse me ${message.author}! where you put "**${args[2]}**", it should be a number not whatever you put there!`
+    let member = null;
+
+    if (!message.mentions.members.first()) {
+      for (let i in args) {
+        if (
+          args[i].replace(/([^0-9])/g, "").length >= 17 &&
+          args[i].replace(/([^0-9])/g, "").length <= 20
+        ) {
+          if (message.guild.members.has(args[i].replace(/([^0-9])/g, ""))) {
+            member = message.guild.members.get(
+              args[i].replace(/([^0-9])/g, "")
             );
-            message.channel.send("<:natsukiMad:646210751417286656>");
-
-            return;
-          }
-          argsInt = 3;
-        }
-      }
-      let member = null;
-
-      if (!message.mentions.members.first()) {
-        let id = args[argsInt].replace(/([<>@,#!&])/g, "");
-        try {
-          member = await message.guild.fetchMember(id);
-        } catch {
-          message.channel.send("I don't think this member exists in the guild");
-          message.channel.send("<:kanna_confused:607077674099277828>");
-          return;
-        }
-      } else {
-        member =
-          message.mentions.members.first() ||
-          message.guild.members.get(args[argsInt]);
-      }
-
-      let query = `{
-                getUser(guild_id: "${message.guild.id}", user_id: "${member.id}") {
-                    strikes
-                }
-            }`;
-      try {
-        let res = await request(url, query);
-        let currentStrikes = parseInt(res.getUser.strikes);
-        if (currentStrikes > 2) {
-          currentStrikes = 2;
-        } else if (currentStrikes < 0) {
-          currentStrikes = 0;
-        }
-        if (currentStrikes === 0 && args[1] === "remove") {
-          message.channel.send(
-            `Excuse me ${message.author}! ${member.user.tag} has 0 strikes, what are you doing!?`
-          );
-          message.channel.send("<:natsukiMad:646210751417286656>");
-        } else {
-          if (args[1] === "remove") {
-            strikes = -1;
-
-            if (args[2].length === 1) {
-              strikes = -parseInt(args[2]);
-            }
+            args.splice(i, 1);
+            i--;
           } else {
-            if (args[2].length === 1) {
-              strikes = parseInt(args[2]);
-            }
+            message.channel.send(
+              "sorry but i cannot find any users with this id !"
+            );
+            return message.channel.send("<:kanna_confused:607077674099277828>");
           }
         }
-        let addedStrikes = currentStrikes + strikes;
-        if (addedStrikes > 2) {
-          addedStrikes = 2;
-        } else if (addedStrikes < 0) {
-          addedStrikes = 0;
-        }
+      }
+    } else {
+      member = message.mentions.members.first();
+      for (let i in args) {
+        if (args[i].indexOf(message.mentions.members.first().user.id) > -1)
+          args.splice(i, 1);
+      }
+    }
 
+    if (member) {
+      let user = userMain
+        .get(message.guild.id)
+        .users.find(id => id.user_id === member.user.id);
+      let server = serverMain.get(message.guild.id);
+      if (user) {
+        let currentStrikes = user.strikes;
+
+        let strikesAdding = 1;
+
+        currentStrikes += strikesAdding;
+
+        let c = await client.channels.get(server.mod_channel);
+
+        if (currentStrikes > 5) {
+          return message.channel.send(
+            "they already have 5 warnings ! that is the max !!"
+          );
+        } else if (currentStrikes === 5) {
+          let check = await addToDatabase(currentStrikes);
+          if (check) {
+            member
+              .ban(
+                `5 warnings (Last warning by: **${message.author.username}**#${message.author.discriminator})`
+              )
+              .catch(() =>
+                message.channel.send("please give me banning permissions !!")
+              );
+            user.strikes = currentStrikes;
+          } else {
+            return message.channel.send(
+              "sorry but i failed to give them a strike !"
+            );
+          }
+        } else if (currentStrikes === 4) {
+          let check = await addToDatabase(currentStrikes);
+          if (check) {
+            member
+              .kick(
+                `4 warnings (Last warning by: **${message.author.username}**#${message.author.discriminator})`
+              )
+              .catch(() =>
+                message.channel.send("please give me kicking permissions !!")
+              );
+            user.strikes = currentStrikes;
+          } else {
+            return message.channel.send(
+              "sorry but i failed to give them a strike !"
+            );
+          }
+        } else if (currentStrikes === 3) {
+          let check = await addToDatabase(currentStrikes);
+          if (check) {
+            if (server.muted_role) {
+              member
+                .addRole(server.muted_role)
+                .then(() => {
+                  if (c) c.send(mutedWarning(user.strikes, currentStrikes));
+                  let date = new Date();
+                  let newDateObj = moment(date)
+                    .add(1, "h")
+                    .toDate();
+                  schedule.scheduleJob(newDateObj, async () => {
+                    let memRoles = member._roles;
+                    if (memRoles.includes(server.muted_role)) {
+                      memRoles.splice(memRoles.indexOf(server.muted_role), 1);
+                      member
+                        .setRoles(memRoles)
+                        .then(() => {
+                          if (c)
+                            c.send(
+                              `**${member.user.username}**#${member.user.discriminator} has been unmuted due to the 1 hour being up`
+                            );
+                        })
+                        .catch(() =>
+                          message.channel.send(
+                            "please give me modify role permissions !!"
+                          )
+                        );
+                    }
+                  });
+                })
+                .catch(() =>
+                  message.channel.send(
+                    "please give me modify role permissions !!"
+                  )
+                );
+            } else if (c)
+              c.send(
+                `**${member.user.username}**#${member.user.discriminator} has 3 warnings but i was unable to mute them because i dont know what your muted role is !\nplease use the command **.setmutedrole** !!`
+              );
+            user.strikes = currentStrikes;
+          } else {
+            return message.channel.send(
+              "sorry but i failed to give them a strike !"
+            );
+          }
+        } else {
+          let check = await addToDatabase(currentStrikes);
+          if (check) {
+            message.channel.send(warningEmbed());
+            if (c) c.send(modWarningmsg(user.strikes, currentStrikes));
+            user.strikes = currentStrikes;
+          } else {
+            return message.channel.send(
+              "sorry but i failed to give them a strike !"
+            );
+          }
+        }
+      }
+
+      async function addToDatabase(strikes) {
         query = `mutation{
-                addStrike(guild_id: "${message.guild.id}", user_id: "${member.id}", strikes: ${addedStrikes}) {
+                addStrike(guild_id: "${message.guild.id}", user_id: "${member.user.id}", strikes: ${strikes}) {
                     strikes
                 }
             }`;
         try {
           res = await request(url, query);
-
-          if (addedStrikes === 2) {
-            member
-              .addRole("586122632479375370")
-              .then(() => {
-                messageEmbed
-                  .setTitle(
-                    `${member.user.tag} has been muted by ${message.author.tag}`
-                  )
-                  .addField("Reason", "too many strikes");
-                channelID.send(messageEmbed);
-
-                message.channel.send(
-                  `Strike given to ${member.user}! you now have ${addedStrikes} strikes!\nyou have been muted !`
-                );
-                message.channel.send("<:nicoSIPP:606364812561219594>");
-              })
-              .catch(error => {
-                message.channel.send(
-                  `Sorry ${message.author} the user has 2 strikes but I was unable to mute them`
-                );
-                message.channel.send("<:deadinside:606350795881054216>");
-                console.error(error);
-              });
-          } else if (
-            currentStrikes === 2 &&
-            addedStrikes < 2 &&
-            args[1] === "remove"
-          ) {
-            member
-              .removeRole("586122632479375370")
-              .then(() => {
-                messageEmbed
-                  .setTitle(
-                    `${member.user.tag} has been unmuted by ${message.author.tag}`
-                  )
-                  .addField("Reason", "less than two strikes");
-                channelID.send(messageEmbed);
-              })
-              .catch(error => {
-                message.channel.send(
-                  `Sorry ${message.author} the user has under 2 strikes but I was unable to unmute them`
-                );
-                message.channel.send("<:deadinside:606350795881054216>");
-                console.error(error);
-              });
-            message.channel.send(
-              `${-strikes} strikes removed from ${
-                member.user
-              }! you now have ${addedStrikes} strikes!`
-            );
-            message.channel.send("<:SataniaThumbsUp:575052610063695873>");
-          } else {
-            if (args[1] === "remove") {
-              message.channel.send(
-                `${-strikes} strikes removed from ${
-                  member.user
-                }! you now have ${addedStrikes} strikes!`
-              );
-              message.channel.send("<:SataniaThumbsUp:575052610063695873>");
-
-              messageEmbed.setTitle(
-                `${message.author.tag} has removed a strike from ${member.user.tag}`
-              );
-              channelID.send(messageEmbed);
-            } else {
-              message.channel.send(
-                `Strike given to ${member.user}! you now have ${addedStrikes} strikes!\nwatch your self buckaroo!`
-              );
-              message.channel.send("<:nicoSIPP:606364812561219594>");
-
-              messageEmbed.setTitle(
-                `${member.user.tag} has been given a strike by ${message.author.tag}`
-              );
-              channelID.send(messageEmbed);
-            }
-          }
+          return true;
         } catch (err) {
           console.error(err);
+          return false;
         }
-      } catch (err) {
-        console.error(err);
       }
-    } else {
-      message.channel.send(
-        `How dare you ${message.author.username} !! You don't have the permissions to use this command!`
-      );
-      message.channel.send("<:natsukiMad:646210751417286656>");
-    }
-  } else {
-    let argsInt = 1;
-    let strikes = 1;
 
-    if (args[1] === "remove") {
-      strikes = -1;
-      argsInt = 2;
-      if (args[2].length === 1) {
-        strikes = -parseInt(args[2]);
-        if (isNaN(strikes)) {
-          message.channel.send(
-            `Excuse me ${message.author}! where you put "**${args[2]}**", it should be a number not whatever you put there!`
+      function warningEmbed() {
+        let warningMsg = new Discord.RichEmbed()
+          .setColor("#202225")
+          .setFooter(
+            `${message.guild.name}`,
+            "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
+          )
+          .setTimestamp();
+
+        if (args.length > 0) {
+          let reason = args.join(" ").trim();
+          if (reason.length > 0)
+            warningMsg.setDescription(`**Reason :** ${reason}`);
+          else warningMsg.setDescription(`**Reason :** - no reason provided -`);
+        } else warningMsg.setDescription(`**Reason :** - no reason provided -`);
+
+        if (member.avatarURL)
+          warningMsg.setAuthor(
+            `${member.user.username}#${member.user.discriminator} has been warned`,
+            member.avatarURL
           );
-          message.channel.send("<:natsukiMad:646210751417286656>");
+        else
+          warningMsg.setAuthor(
+            `${member.user.username}#${member.user.discriminator} has been warned`
+          );
 
-          return;
-        }
-        argsInt = 3;
+        return warningMsg;
       }
-    }
-    let member = null;
 
-    if (!message.mentions.members.first()) {
-      let id = args[argsInt].replace(/([<>@,#!&])/g, "");
-      try {
-        member = await message.guild.fetchMember(id);
-      } catch {
-        message.channel.send("I don't think this member exists in the guild");
-        message.channel.send("<:kanna_confused:607077674099277828>");
-      }
-    } else {
-      member =
-        message.mentions.members.first() ||
-        message.guild.members.get(args[argsInt]);
-    }
+      function mutedWarning(oldWarn, newWarn) {
+        let warningMsg = new Discord.RichEmbed()
+          .setAuthor("❌ Member muted for 1 hour")
+          .setColor("#202225")
+          .setFooter(
+            `${message.guild.name}`,
+            "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
+          )
+          .setTimestamp();
 
-    let query = `{
-                getUser(guild_id: "${message.guild.id}", user_id: "${member.id}") {
-                    strikes
-                }
-            }`;
-    try {
-      let res = await request(url, query);
-      let currentStrikes = parseInt(res.getUser.strikes);
-      if (currentStrikes === 0 && args[1] === "remove") {
-        message.channel.send(
-          `Excuse me ${message.author}! ${member.user.tag} has 0 strikes, what are you doing!?`
-        );
-        message.channel.send("<:natsukiMad:646210751417286656>");
-      } else {
-        if (currentStrikes + strikes >= 5) {
-          member
-            .ban("too many strikes")
-            .then(() => {
-              let messageEmbed = new Discord.RichEmbed()
-                .setColor("#fe6860")
-                .setTitle(
-                  `${member.user.tag} has been banned by ${message.author.tag}`
-                )
-                .addField("Reason", "too many strikes");
-              message.channel.send(messageEmbed);
-            })
-            .catch(error => {
-              message.channel.send(
-                `Sorry ${message.author} the user has 5 strikes but I was unable to ban them`
-              );
-              message.channel.send("<:deadinside:606350795881054216>");
-              console.error(error);
-            });
-        } else {
-          if (currentStrikes + strikes < 0) {
-            strikes = 0;
-          }
-          if (parseInt(args[2])) {
-            if (currentStrikes < parseInt(args[2])) {
-              currentStrikes = 0;
-              strikes = 0;
-            }
-          }
-          query = `mutation{
-                addStrike(guild_id: "${message.guild.id}", user_id: "${
-            member.id
-          }", strikes: ${currentStrikes + strikes}) {
-                    strikes
-                }
-            }`;
-          try {
-            res = await request(url, query);
-            if (args[1] === "remove") {
-              strikes = -1;
-              if (args[2].length === 1) {
-                strikes = -parseInt(args[2]);
-              }
-              message.channel.send(
-                `${-strikes} strikes removed from ${
-                  member.user
-                }! you now have ${
-                  currentStrikes + strikes < 0 ? 0 : currentStrikes + strikes
-                } strikes!`
-              );
-              message.channel.send("<:SataniaThumbsUp:575052610063695873>");
-            } else {
-              message.channel.send(
-                `Strike given to ${member.user}! you now have ${
-                  currentStrikes + strikes < 0 ? 0 : currentStrikes + strikes
-                } strikes!\nwatch your self buckaroo!`
-              );
-              message.channel.send("<:nicoSIPP:606364812561219594>");
-            }
-          } catch (err) {
-            console.error(err);
-          }
-        }
+        if (args.length > 0) {
+          let reason = args.join(" ").trim();
+          if (reason.length > 0)
+            warningMsg.setDescription(
+              `**${message.author.username}**#${message.author.discriminator} has warned **${member.user.username}**#${member.user.discriminator} [${oldWarn} → ${newWarn}]\n(ID:${member.user.id})\n\n**Reason :** ${reason}`
+            );
+          else
+            warningMsg.setDescription(
+              `**${message.author.username}**#${message.author.discriminator} has warned **${member.user.username}**#${member.user.discriminator} [${oldWarn} → ${newWarn}]\n(ID:${member.user.id})\n\n**Reason :** - no reason provided -`
+            );
+        } else
+          warningMsg.setDescription(
+            `**${message.author.username}**#${message.author.discriminator} has warned **${member.user.username}**#${member.user.discriminator} [${oldWarn} → ${newWarn}]\n(ID:${member.user.id})\n\n**Reason :** - no reason provided -`
+          );
+
+        if (member.user.avatarURL)
+          warningMsg.setThumbnail(member.user.avatarURL);
+
+        return warningMsg;
       }
-    } catch (err) {
-      console.error(err);
+
+      function modWarningmsg(oldWarn, newWarn) {
+        let warningMsg = new Discord.RichEmbed()
+          .setAuthor("❌ Member warned")
+          .setColor("#202225")
+          .setFooter(
+            `${message.guild.name}`,
+            "https://cdn.discordapp.com/avatars/601825955572350976/67cca6c8e018ae7f447e6f0e41cbfd3c.png?size=2048"
+          )
+          .setTimestamp();
+
+        if (args.length > 0) {
+          let reason = args.join(" ").trim();
+          if (reason.length > 0)
+            warningMsg.setDescription(
+              `**${message.author.username}**#${message.author.discriminator} has warned **${member.user.username}**#${member.user.discriminator} [${oldWarn} → ${newWarn}]\n(ID:${member.user.id})\n\n**Reason :** ${reason}`
+            );
+          else
+            warningMsg.setDescription(
+              `**${message.author.username}**#${message.author.discriminator} has warned **${member.user.username}**#${member.user.discriminator} [${oldWarn} → ${newWarn}]\n(ID:${member.user.id})\n\n**Reason :** - no reason provided -`
+            );
+        } else
+          warningMsg.setDescription(
+            `**${message.author.username}**#${message.author.discriminator} has warned **${member.user.username}**#${member.user.discriminator} [${oldWarn} → ${newWarn}]\n(ID:${member.user.id})\n\n**Reason :** - no reason provided -`
+          );
+
+        if (member.user.avatarURL)
+          warningMsg.setThumbnail(member.user.avatarURL);
+
+        return warningMsg;
+      }
     }
   }
 };
