@@ -22,7 +22,7 @@ module.exports = async client => {
   //---------------- servers --------------------------------------------------------------------------------------------------------
   let query = `query {
                       getServers {
-                          guild_id muted_role mod_channel raid_mode raid_mode_active blank_avatar join_age new_member_roles message_log
+                          guild_id muted_role mod_channel raid_mode raid_mode_active blank_avatar join_age new_member_roles message_log mention_limit mention_amount emote_limit emote_amount everyone_warn
                       }
                     }`;
   try {
