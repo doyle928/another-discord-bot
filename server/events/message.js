@@ -134,7 +134,7 @@ module.exports = async (client, message) => {
           if (message.embeds.length === 0) {
             if ("last_message" in user && "dup_count" in user) {
               if (
-                (message.attachments.size > 1 &&
+                (message.attachments.size > 0 &&
                   user.last_message ===
                     `${message.attachments.first().filename} | ${
                       message.attachments.first().filesize
@@ -151,7 +151,7 @@ module.exports = async (client, message) => {
                     .catch(err => console.error(err));
                 }
               } else {
-                if (message.attachments.size > 1) {
+                if (message.attachments.size > 0) {
                   user.last_message = `${
                     message.attachments.first().filename
                   } | ${message.attachments.first().filesize}`;
@@ -162,7 +162,7 @@ module.exports = async (client, message) => {
                 }
               }
             } else {
-              if (message.attachments.size > 1) {
+              if (message.attachments.size > 0) {
                 user.last_message = `${
                   message.attachments.first().filename
                 } | ${message.attachments.first().filesize}`;
@@ -274,6 +274,7 @@ module.exports = async (client, message) => {
                       c.send(
                         mutedWarning(reason, user.strikes, currentStrikes)
                       );
+                    user.strikes = currentStrikes;
                     let date = new Date();
                     let newDateObj = moment(date)
                       .add(1, "h")
@@ -294,12 +295,17 @@ module.exports = async (client, message) => {
                       }
                     });
                   })
-                  .catch(err => console.error(err));
-              } else if (c)
-                c.send(
-                  `**${message.author.username}**#${message.author.discriminator} has 3 warnings but i was unable to mute them because i dont know what your muted role is !\nplease use the command **.setmutedrole** !!`
-                );
-              user.strikes = currentStrikes;
+                  .catch(err => {
+                    console.error(err);
+                    user.strikes = currentStrikes;
+                  });
+              } else {
+                if (c)
+                  c.send(
+                    `**${message.author.username}**#${message.author.discriminator} has 3 warnings but i was unable to mute them because i dont know what your muted role is !\nplease use the command **.setmutedrole** !!`
+                  );
+                user.strikes = currentStrikes;
+              }
             }
           } else {
             let check = await addToDatabase(currentStrikes);
