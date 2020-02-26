@@ -416,7 +416,7 @@ module.exports = async (client, messageReaction, user) => {
                               if (randomNum(1, 200) === 1) {
                                 points += 10000;
                               } else {
-                                points += randomNum(250, 350);
+                                points += randomNum(200, 300);
                               }
                               query = `mutation {
                               addWelcomePoints(guild_id: "${msg.guild.id}", user_id: "${userArray[user]}", welcome_points: ${points}) {
@@ -554,7 +554,7 @@ module.exports = async (client, messageReaction, user) => {
                             if (randomNum(1, 200) === 1) {
                               points += 10000;
                             } else {
-                              points += randomNum(250, 350);
+                              points += randomNum(200, 300);
                             }
                             query = `mutation {
                               addWelcomePoints(guild_id: "${msg.guild.id}", user_id: "${userArray[user]}", welcome_points: ${points}) {
