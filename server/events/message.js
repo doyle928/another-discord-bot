@@ -144,11 +144,11 @@ module.exports = async (client, message) => {
               }
             } else {
               user.last_message = message.content.toLowerCase();
-              user.dup_count = 0;
+              user.dup_count = 1;
             }
           } else {
             user.last_message = message.content.toLowerCase();
-            user.dup_count = 0;
+            user.dup_count = 1;
           }
         }
 

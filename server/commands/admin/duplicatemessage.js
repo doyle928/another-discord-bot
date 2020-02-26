@@ -14,7 +14,7 @@ exports.run = async (client, message, args) => {
           let check = await setLimit(num);
           if (check)
             return message.channel.send(
-              `message duplicates  will now be limited to ${num} duplicates !`
+              `message duplicates will now be limited to ${num} duplicates !`
             );
           else return message.channel.send("sorry i broke something !!");
         } else {
@@ -30,7 +30,7 @@ exports.run = async (client, message, args) => {
     } else {
       if (server.dup_watch === false) {
         message.channel.send(
-          `message duplicates limiting is now active ! messages are limited to ${server.dup_limit} duplicates ! you can change this amount with **.duplicatemessage 0-9**`
+          `message duplicates limiting is now active ! messages are limited to ${server.dup_limit} duplicates ! every duplicate message after this amount i will give the user a warning ! you can change this amount with **.duplicatemessage 0-9**`
         );
       } else {
         message.channel.send("message duplicates limiting is now off !");
