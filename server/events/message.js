@@ -131,24 +131,47 @@ module.exports = async (client, message) => {
           "dup_limit" in server &&
           server.dup_limit
         ) {
-          if ("last_message" in user && "dup_count" in user) {
-            if (user.last_message === message.content.toLowerCase()) {
-              user.dup_count++;
-              if (user.dup_count > server.dup_limit) {
-                message
-                  .delete(225)
-                  .then(() => {
-                    warnFunc(`duplicate messages`);
-                  })
-                  .catch(err => console.error(err));
+          if (message.embeds.length === 0) {
+            if ("last_message" in user && "dup_count" in user) {
+              if (
+                (message.attachments.size > 1 &&
+                  user.last_message ===
+                    `${message.attachments.first().filename} | ${
+                      message.attachments.first().filesize
+                    }`) ||
+                user.last_message === message.content.toLowerCase()
+              ) {
+                user.dup_count++;
+                if (user.dup_count > server.dup_limit) {
+                  message
+                    .delete(225)
+                    .then(() => {
+                      warnFunc(`duplicate messages`);
+                    })
+                    .catch(err => console.error(err));
+                }
+              } else {
+                if (message.attachments.size > 1) {
+                  user.last_message = `${
+                    message.attachments.first().filename
+                  } | ${message.attachments.first().filesize}`;
+                  user.dup_count = 1;
+                } else {
+                  user.last_message = message.content.toLowerCase();
+                  user.dup_count = 1;
+                }
               }
             } else {
-              user.last_message = message.content.toLowerCase();
-              user.dup_count = 1;
+              if (message.attachments.size > 1) {
+                user.last_message = `${
+                  message.attachments.first().filename
+                } | ${message.attachments.first().filesize}`;
+                user.dup_count = 1;
+              } else {
+                user.last_message = message.content.toLowerCase();
+                user.dup_count = 1;
+              }
             }
-          } else {
-            user.last_message = message.content.toLowerCase();
-            user.dup_count = 1;
           }
         }
 
