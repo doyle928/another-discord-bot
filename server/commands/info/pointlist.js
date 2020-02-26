@@ -34,10 +34,11 @@ exports.run = async (client, message, args) => {
             name = memArray[j].username;
           }
         }
-        welcomePointsArray.push({
-          username: name,
-          welcome_points: res.getUsers[i].welcome_points
-        });
+        if (name.length > 0)
+          welcomePointsArray.push({
+            username: name,
+            welcome_points: res.getUsers[i].welcome_points
+          });
       }
     }
     welcomePointsArray = await _.orderBy(
