@@ -52,7 +52,7 @@ module.exports = async (client, member) => {
       messageEmbed
         .setAuthor("Notice")
         .setDescription(
-          `Thanks for joining **${member.guild.name}** !\nUnfortunately we require discord accounts to have an avatar photo, sorry it is just to help keep bots from joining !\n\nYou can get a photo and try again though !!`
+          `Thanks for joining **${member.guild.name}** !\n\nUnfortunately we require discord accounts to be at least 7 days old, sorry it is just to help keep bots from joining !\n\nYour account was created on ${discordJoinDate}`
         )
         .setFooter(
           `${member.guild.name}`,
@@ -63,7 +63,7 @@ module.exports = async (client, member) => {
       if (member.guild.icon) messageEmbed.setThumbnail(member.guild.iconURL);
 
       member.send(messageEmbed).then(() => {
-        member.kick("no avatar photo !!");
+        member.kick("account too young !!");
       });
       return;
     }
@@ -73,7 +73,7 @@ module.exports = async (client, member) => {
       messageEmbed
         .setAuthor("Notice")
         .setDescription(
-          `Thanks for joining **${member.guild.name}** !\nUnfortunately we require discord accounts to have an avatar photo, sorry it is just to help keep bots from joining !\n\nYou can get a photo and try again though !!`
+          `Thanks for joining **${member.guild.name}** !\n\nUnfortunately we require discord accounts to have an avatar photo, sorry it is just to help keep bots from joining !\n\nYou can get a photo and try again though !!`
         )
         .setFooter(
           `${member.guild.name}`,
@@ -220,7 +220,7 @@ module.exports = async (client, member) => {
 
               if (member.guild.icon)
                 raidMessage.setThumbnail(member.guild.iconURL);
-                
+
               if (c) c.send(raidMessage);
             } catch (err) {
               console.error(err);
