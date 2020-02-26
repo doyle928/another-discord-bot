@@ -13,7 +13,7 @@ const moment = require("moment");
 module.exports = async (client, message) => {
   //---------------- mention/emote/everyone limits --------------------------------------------------------------------------------------------------------
   if (message.guild && message.channel.type === "text") {
-    if (!message.member.hasPermission("BAN_MEMBERS")) {
+    if (!message.member.hasPermission("BAN_MEMBERS") && !message.author.bot) {
       let server = serverMain.get(message.guild.id);
 
       let user = userMain
@@ -274,7 +274,7 @@ module.exports = async (client, message) => {
                   .catch(err => console.error(err));
               } else if (c)
                 c.send(
-                  `**${member.user.username}**#${member.user.discriminator} has 3 warnings but i was unable to mute them because i dont know what your muted role is !\nplease use the command **.setmutedrole** !!`
+                  `**${message.author.username}**#${message.author.discriminator} has 3 warnings but i was unable to mute them because i dont know what your muted role is !\nplease use the command **.setmutedrole** !!`
                 );
               user.strikes = currentStrikes;
             }
