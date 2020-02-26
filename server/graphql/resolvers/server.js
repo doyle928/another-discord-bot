@@ -228,6 +228,21 @@ module.exports = {
 
       return res;
     },
+    setAntiInvite: async (_, { guild_id, anti_invite }) => {
+      const res = await Server.findOneAndUpdate(
+        {
+          guild_id: guild_id
+        },
+        {
+          anti_invite: anti_invite
+        },
+        {
+          new: true
+        }
+      );
+
+      return res;
+    },
     setDupWatch: async (_, { guild_id, dup_watch }) => {
       const res = await Server.findOneAndUpdate(
         {

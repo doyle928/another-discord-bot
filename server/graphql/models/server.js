@@ -16,6 +16,7 @@ const serverSchema = new Schema({
   emote_amount: Number,
   everyone_warn: Boolean,
   anti_referral: Boolean,
+  anti_invite: Boolean,
   dup_watch: Boolean,
   dup_limit: Number
 });

@@ -33,6 +33,7 @@ module.exports = gql`
     emote_amount: Int
     everyone_warn: Boolean
     anti_referral: Boolean
+    anti_invite: Boolean
     dup_watch: Boolean
     dup_limit: Int
   }
@@ -127,6 +128,7 @@ module.exports = gql`
       emote_amount: Int
       everyone_warn: Boolean
       anti_referral: Boolean
+      anti_invite: Boolean
       dup_watch: Boolean
       dup_limit: Int
     ): Server!
@@ -144,6 +146,7 @@ module.exports = gql`
     setEmoteAmount(guild_id: String!, emote_amount: Int): Server
     setEveryoneWarn(guild_id: String!, everyone_warn: Boolean): Server
     setAntiReferral(guild_id: String!, anti_referral: Boolean): Server
+    setAntiInvite(guild_id: String!, anti_invite: Boolean): Server
     setDupWatch(guild_id: String!, dup_watch: Boolean): Server
     setDupLimit(guild_id: String!, dup_limit: Int): Server
 

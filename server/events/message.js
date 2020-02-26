@@ -77,7 +77,7 @@ module.exports = async (client, message) => {
               .catch(err => console.error(err));
           }
         }
-        if ("anti_referral" in server && server.anti_referral) {
+        if ("anti_invite" in server && server.anti_invite) {
           let found = message.content
             .toLowerCase()
             .match(/(https:\/\/discord.gg\/.......)/gi);
@@ -85,9 +85,44 @@ module.exports = async (client, message) => {
             message
               .delete(225)
               .then(() => {
-                warnFunc(`referral link`);
+                warnFunc(`invite link`);
               })
               .catch(err => console.error(err));
+          }
+        }
+        if ("anti_referral" in server && server.anti_referral) {
+          let args = message.content.split(/(\s)/g);
+
+          let isLink = false;
+          let link = null;
+
+          for (let i in args) {
+            if (isValidURL(args[i])) {
+              isLink = true;
+              link = args[i];
+              break;
+            }
+          }
+
+          if (isLink && link) {
+            let foundAffliate = link
+              .toLowerCase()
+              .match(/(ref=|ref_=|aff=|rid=|refid=)/gi);
+            if (foundAffliate) {
+              message
+                .delete(225)
+                .then(() => {
+                  warnFunc(`invite link`);
+                })
+                .catch(err => console.error(err));
+            }
+          }
+
+          function isValidURL(string) {
+            let res = string.match(
+              /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g
+            );
+            return res !== null;
           }
         }
         if (
