@@ -189,10 +189,10 @@ exports.run = async (client, message, args) => {
           else warningMsg.setDescription(`**Reason :** - no reason provided -`);
         } else warningMsg.setDescription(`**Reason :** - no reason provided -`);
 
-        if (member.avatarURL)
+        if (member.user.avatarURL)
           warningMsg.setAuthor(
             `${member.user.username}#${member.user.discriminator} has been warned`,
-            member.avatarURL
+            member.user.avatarURL
           );
         else
           warningMsg.setAuthor(
