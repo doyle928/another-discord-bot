@@ -165,7 +165,7 @@ exports.run = async (client, message, args) => {
             .setColor("#fe6860")
             .setAuthor("❌ Member banned")
             .setDescription(
-              `**${message.author.username}**#${message.author.discriminator} has been banned **${user.username}**#${user.discriminator} (ID:${user.id})\n\n**Reason :** ${reason}\n`
+              `**${message.author.username}**#${message.author.discriminator} has banned **${user.username}**#${user.discriminator} (ID:${user.id})\n\n**Reason :** ${reason}\n`
             )
             .setFooter(
               `${message.guild.name}`,
