@@ -8,13 +8,13 @@ exports.run = async (client, message, args) => {
     let url = "https://lulu-discord-bot.herokuapp.com/api";
 
     if (args[1]) {
-      if (server.dup_watch) {
+      if (server.mention_limit) {
         let num = Number(args[1]);
         if (num && num >= 0 && num < 10) {
           let check = await setLimit(num);
           if (check)
             return message.channel.send(
-              `message duplicates will now be limited to ${num} duplicates !`
+              `messages will now be limited to ${num} mentions !`
             );
           else return message.channel.send("sorry i broke something !!");
         } else {
@@ -24,28 +24,28 @@ exports.run = async (client, message, args) => {
         }
       } else {
         return message.channel.send(
-          "you need to activate this module with **.duplicatemessage**"
+          "you need to activate this module with **.mentionlimit**"
         );
       }
     } else {
-      if (server.dup_watch === false) {
+      if (server.mention_limit === false) {
         message.channel.send(
-          `message duplicates limiting is now active ! messages are limited to ${server.dup_limit} duplicates ! every duplicate message after this amount i will give the user a warning ! you can change this amount with **.duplicatemessage 0-9**`
+          `mentions limiting is now active ! messages are limited to ${server.mention_amount} mentions ! you can change this amount with **.antimention 0-9**`
         );
       } else {
-        message.channel.send("message duplicates limiting is now off !");
+        message.channel.send("mention limiting is now off !");
       }
 
       let query = `mutation{
-                setDupWatch(guild_id: "${
+                setMentionLimit(guild_id: "${
                   message.guild.id
-                }", dup_watch: ${!server.dup_watch}){
+                }", mention_limit: ${!server.mention_limit}){
                     guild_id
                 }
             }`;
       try {
         await request(url, query);
-        server.dup_watch = !server.dup_watch;
+        server.mention_limit = !server.mention_limit;
       } catch (err) {
         console.error(err);
       }
@@ -53,13 +53,13 @@ exports.run = async (client, message, args) => {
 
     async function setLimit(num) {
       let query = `mutation{
-                setDupLimit(guild_id: "${message.guild.id}", dup_limit: ${num}){
+                setMentionAmount(guild_id: "${message.guild.id}", mention_amount: ${num}){
                     guild_id
                 }
             }`;
       try {
         await request(url, query);
-        server.dup_limit = num;
+        server.mention_amount = num;
         return true;
       } catch (err) {
         console.error(err);

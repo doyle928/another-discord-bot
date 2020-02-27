@@ -8,13 +8,13 @@ exports.run = async (client, message, args) => {
     let url = "https://lulu-discord-bot.herokuapp.com/api";
 
     if (args[1]) {
-      if (server.mention_limit) {
+      if (server.emote_limit) {
         let num = Number(args[1]);
         if (num && num >= 0 && num < 10) {
           let check = await setLimit(num);
           if (check)
             return message.channel.send(
-              `messages will now be limited to ${num} mentions !`
+              `messages will now be limited to ${num} emotes !`
             );
           else return message.channel.send("sorry i broke something !!");
         } else {
@@ -24,28 +24,28 @@ exports.run = async (client, message, args) => {
         }
       } else {
         return message.channel.send(
-          "you need to activate this module with **.mentionlimit**"
+          "you need to activate this module with **.emotelimit**"
         );
       }
     } else {
-      if (server.mention_limit === false) {
+      if (server.emote_limit === false) {
         message.channel.send(
-          `mentions limiting is now active ! messages are limited to ${server.mention_amount} mentions ! you can change this amount with **.mentionlimit 0-9**`
+          `emote limiting is now active ! messages are limited to ${server.emote_amount} emotes ! you can change this amount with **.antiemote 0-9**`
         );
       } else {
-        message.channel.send("mention limiting is now off !");
+        message.channel.send("emote limiting is now off !");
       }
 
       let query = `mutation{
-                setMentionLimit(guild_id: "${
+                setEmoteLimit(guild_id: "${
                   message.guild.id
-                }", mention_limit: ${!server.mention_limit}){
+                }", emote_limit: ${!server.emote_limit}){
                     guild_id
                 }
             }`;
       try {
         await request(url, query);
-        server.mention_limit = !server.mention_limit;
+        server.emote_limit = !server.emote_limit;
       } catch (err) {
         console.error(err);
       }
@@ -53,13 +53,13 @@ exports.run = async (client, message, args) => {
 
     async function setLimit(num) {
       let query = `mutation{
-                setMentionAmount(guild_id: "${message.guild.id}", mention_amount: ${num}){
+                setEmoteAmount(guild_id: "${message.guild.id}", emote_amount: ${num}){
                     guild_id
                 }
             }`;
       try {
         await request(url, query);
-        server.mention_amount = num;
+        server.emote_amount = num;
         return true;
       } catch (err) {
         console.error(err);

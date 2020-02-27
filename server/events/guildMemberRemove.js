@@ -18,7 +18,7 @@ module.exports = async (client, member) => {
 
   if (audit.entries.first().action === "MEMBER_KICK") {
     messageEmbed
-      .setAuthor("Member kicked")
+      .setAuthor("❌ Member kicked")
       .setDescription(
         `**${audit.entries.first().executor.username}**#${
           audit.entries.first().executor.discriminator
@@ -28,7 +28,7 @@ module.exports = async (client, member) => {
       );
   } else if (audit.entries.first().action === "MEMBER_BAN_ADD") {
     messageEmbed
-      .setAuthor("Member banned")
+      .setAuthor("❌ Member banned")
       .setDescription(
         `**${audit.entries.first().executor.username}**#${
           audit.entries.first().executor.discriminator

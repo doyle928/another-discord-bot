@@ -114,7 +114,7 @@ exports.run = async (client, message, args) => {
     let embed = new Discord.RichEmbed()
       .setAuthor("New member roles help")
       .setDescription(
-        "Use the command **.setnewmemberroles** followed by the role id, role mention, or exact role names (can one be 1 word long)"
+        "Use the command **.joineroles** followed by the role id, role mention, or exact role names (can one be 1 word long)"
       )
       .setColor("#202225")
       .addField(

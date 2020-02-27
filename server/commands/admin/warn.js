@@ -105,6 +105,7 @@ exports.run = async (client, message, args) => {
                 .addRole(server.muted_role)
                 .then(() => {
                   if (c) c.send(mutedWarning(user.strikes, currentStrikes));
+                  user.strikes = currentStrikes;
                   let date = new Date();
                   let newDateObj = moment(date)
                     .add(1, "h")
@@ -121,24 +122,28 @@ exports.run = async (client, message, args) => {
                               `**${member.user.username}**#${member.user.discriminator} has been unmuted due to the 1 hour being up`
                             );
                         })
-                        .catch(() =>
+                        .catch(() => {
                           message.channel.send(
                             "please give me modify role permissions !!"
-                          )
-                        );
+                          );
+                          user.strikes = currentStrikes;
+                        });
                     }
                   });
                 })
-                .catch(() =>
+                .catch(() => {
                   message.channel.send(
                     "please give me modify role permissions !!"
-                  )
+                  );
+                  user.strikes = currentStrikes;
+                });
+            } else {
+              if (c)
+                c.send(
+                  `**${member.user.username}**#${member.user.discriminator} has 3 warnings but i was unable to mute them because i dont know what your muted role is !\nplease use the command **.setmutedrole** !!`
                 );
-            } else if (c)
-              c.send(
-                `**${member.user.username}**#${member.user.discriminator} has 3 warnings but i was unable to mute them because i dont know what your muted role is !\nplease use the command **.setmutedrole** !!`
-              );
-            user.strikes = currentStrikes;
+              user.strikes = currentStrikes;
+            }
           } else {
             return message.channel.send(
               "sorry but i failed to give them a strike !"

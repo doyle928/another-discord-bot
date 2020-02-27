@@ -9,10 +9,10 @@ exports.run = async (client, message, args) => {
 
     if (server.everyone_warn === false) {
       message.channel.send(
-        `will warn everyone that tries to do an @ everyone ping`
+        `will warn everyone that tries to do an @/everyone ping`
       );
     } else {
-      message.channel.send("not watching @ everyone pings");
+      message.channel.send("not watching @/everyone pings");
     }
 
     let query = `mutation{

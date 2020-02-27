@@ -8,13 +8,13 @@ exports.run = async (client, message, args) => {
     let url = "https://lulu-discord-bot.herokuapp.com/api";
 
     if (args[1]) {
-      if (server.emote_limit) {
+      if (server.dup_watch) {
         let num = Number(args[1]);
         if (num && num >= 0 && num < 10) {
           let check = await setLimit(num);
           if (check)
             return message.channel.send(
-              `messages will now be limited to ${num} emotes !`
+              `message duplicates will now be limited to ${num} duplicates !`
             );
           else return message.channel.send("sorry i broke something !!");
         } else {
@@ -24,28 +24,28 @@ exports.run = async (client, message, args) => {
         }
       } else {
         return message.channel.send(
-          "you need to activate this module with **.emotelimit**"
+          "you need to activate this module with **.duplicatemessage**"
         );
       }
     } else {
-      if (server.emote_limit === false) {
+      if (server.dup_watch === false) {
         message.channel.send(
-          `emote limiting is now active ! messages are limited to ${server.emote_amount} emotes ! you can change this amount with **.emotelimit 0-9**`
+          `message duplicates limiting is now active ! messages are limited to ${server.dup_limit} duplicates ! every duplicate message after this amount i will give the user a warning ! you can change this amount with **.antiduplicate 0-9**`
         );
       } else {
-        message.channel.send("emote limiting is now off !");
+        message.channel.send("message duplicates limiting is now off !");
       }
 
       let query = `mutation{
-                setEmoteLimit(guild_id: "${
+                setDupWatch(guild_id: "${
                   message.guild.id
-                }", emote_limit: ${!server.emote_limit}){
+                }", dup_watch: ${!server.dup_watch}){
                     guild_id
                 }
             }`;
       try {
         await request(url, query);
-        server.emote_limit = !server.emote_limit;
+        server.dup_watch = !server.dup_watch;
       } catch (err) {
         console.error(err);
       }
@@ -53,13 +53,13 @@ exports.run = async (client, message, args) => {
 
     async function setLimit(num) {
       let query = `mutation{
-                setEmoteAmount(guild_id: "${message.guild.id}", emote_amount: ${num}){
+                setDupLimit(guild_id: "${message.guild.id}", dup_limit: ${num}){
                     guild_id
                 }
             }`;
       try {
         await request(url, query);
-        server.emote_amount = num;
+        server.dup_limit = num;
         return true;
       } catch (err) {
         console.error(err);

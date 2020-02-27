@@ -15,6 +15,7 @@ const moment = require("moment");
 const reactionRoleHelper = require("../data/reactionRoleHelper");
 
 module.exports = async (client, messageReaction, user) => {
+  //---------------- database react roles ---------------------------------------------------------------------------------------------------
   for (let i in reactionRoleHelper.reactionRoleList) {
     let emoteName = reactionRoleHelper.reactionRoleList[i].emote;
     if (emoteName.indexOf("<") > -1) {
@@ -28,7 +29,8 @@ module.exports = async (client, messageReaction, user) => {
       await addRole(reactionRoleHelper.reactionRoleList[i].role_id);
     }
   }
-
+  //---------------- database react roles ---------------------------------------------------------------------------------------------------
+  //---------------- star board -------------------------------------------------------------------------------------------------------------
   if (messageReaction._emoji.name === "⭐") {
     if (messageReaction.message.author.id === user.id) {
       let oriMsg = await messageReaction.message.channel.fetchMessage(
@@ -130,7 +132,11 @@ module.exports = async (client, messageReaction, user) => {
         }
       }
     });
-  } else if (messageReaction._emoji.name === "check") {
+  }
+  //---------------- star board -------------------------------------------------------------------------------------------------------------
+  //---------------- rules react ------------------------------------------------------------------------------------------------------------
+  else if (messageReaction._emoji.name === "check") {
+    //---------------- rules react (our home) -----------------------------------------------------------------------------------------------
     if (messageReaction.message.id === "662982653074472960") {
       let memberRolesIdArray = [];
       let mem = await messageReaction.message.guild.fetchMember(user.id);
@@ -452,7 +458,10 @@ module.exports = async (client, messageReaction, user) => {
           )
           .catch(err => console.error(err));
       }
-    } else if (messageReaction.message.id === "664398194431754242") {
+    }
+    //---------------- rules react (our home) -----------------------------------------------------------------------------------------------
+    //---------------- rules react (losers club) --------------------------------------------------------------------------------------------
+    else if (messageReaction.message.id === "664398194431754242") {
       let memberRolesIdArray = [];
       let mem = await messageReaction.message.guild.fetchMember(user.id);
       if (mem) {
@@ -592,7 +601,11 @@ module.exports = async (client, messageReaction, user) => {
           .catch(err => console.error(err));
       }
     }
-  } else if (messageReaction._emoji.name === "softheart") {
+    //---------------- rules react (losers club) --------------------------------------------------------------------------------------------
+  }
+  //---------------- rules react ------------------------------------------------------------------------------------------------------------
+  //---------------- shipping ---------------------------------------------------------------------------------------------------------------
+  else if (messageReaction._emoji.name === "softheart") {
     messageShipId.messageIds.map(msg => {
       if (messageReaction.message.id === msg.message_id) {
         messageReaction.message.reactions.map(async r => {
@@ -729,7 +742,11 @@ module.exports = async (client, messageReaction, user) => {
         });
       }
     });
-  } else if (messageReaction._emoji.name === "➡️") {
+  }
+  //---------------- shipping ---------------------------------------------------------------------------------------------------------------
+  //---------------- info lists -------------------------------------------------------------------------------------------------------------
+  else if (messageReaction._emoji.name === "➡️") {
+    //---------------- info lists (member list) ---------------------------------------------------------------------------------------------
     if (
       user.id !== "601825955572350976" &&
       memberListHelper.memberList.length > 0 &&
@@ -777,7 +794,10 @@ module.exports = async (client, messageReaction, user) => {
         messageReaction.message.edit(newEmb);
         memberListHelper.changePage(1);
       }
-    } else if (
+    }
+    //---------------- info lists (member list) ---------------------------------------------------------------------------------------------
+    //---------------- info lists (welcome points list) -------------------------------------------------------------------------------------
+    else if (
       user.id !== "601825955572350976" &&
       welcomePointListHelper.welcomePointsArray.length > 0 &&
       messageReaction.message.id ===
@@ -826,7 +846,9 @@ module.exports = async (client, messageReaction, user) => {
         welcomePointListHelper.changePage(1);
       }
     }
+    //---------------- info lists (member list) ---------------------------------------------------------------------------------------------
   } else if (messageReaction._emoji.name === "⬅️") {
+    //---------------- info lists (member list) ---------------------------------------------------------------------------------------------
     if (
       user.id !== "601825955572350976" &&
       memberListHelper.memberList.length > 0 &&
@@ -871,7 +893,10 @@ module.exports = async (client, messageReaction, user) => {
         messageReaction.message.edit(newEmb);
         memberListHelper.changePage(-1);
       }
-    } else if (
+    }
+    //---------------- info lists (member list) ---------------------------------------------------------------------------------------------
+    //---------------- info lists (welcome points list) -------------------------------------------------------------------------------------
+    else if (
       user.id !== "601825955572350976" &&
       welcomePointListHelper.welcomePointsArray.length > 0 &&
       messageReaction.message.id ===
@@ -916,7 +941,12 @@ module.exports = async (client, messageReaction, user) => {
         welcomePointListHelper.changePage(-1);
       }
     }
-  } else if (user.id !== "601825955572350976") {
+    //---------------- info lists (welcome points list) -------------------------------------------------------------------------------------
+  }
+  //---------------- info lists -------------------------------------------------------------------------------------------------------------
+  //---------------- react roles ------------------------------------------------------------------------------------------------------------
+  else if (user.id !== "601825955572350976") {
+    //---------------- react roles (our home) -----------------------------------------------------------------------------------------------
     if (messageReaction.message.id === "663887669939535903") {
       //age roles
       let removeArray = [
@@ -1112,7 +1142,8 @@ module.exports = async (client, messageReaction, user) => {
         await addRole("672789435875590144");
       }
     }
-    //--------------------------------------------------- losers club below
+    //---------------- react roles (our home) -----------------------------------------------------------------------------------------------
+    //---------------- react roles (losers club ---------------------------------------------------------------------------------------------
     else if (messageReaction.message.id === "664779018481958943") {
       //age roles losers club
       let removeArray = [
@@ -1327,8 +1358,10 @@ module.exports = async (client, messageReaction, user) => {
         }
       }
     }
+    //---------------- react roles (losers club ---------------------------------------------------------------------------------------------
   }
-
+  //---------------- react roles ------------------------------------------------------------------------------------------------------------
+  //---------------- star board image check -------------------------------------------------------------------------------------------------
   function extension(messageReaction, attachment) {
     const imageLink = attachment.split(".");
     const typeOfImage = imageLink[imageLink.length - 1];
@@ -1336,7 +1369,8 @@ module.exports = async (client, messageReaction, user) => {
     if (!image) return "";
     return attachment;
   }
-
+  //---------------- star board image check -------------------------------------------------------------------------------------------------
+  //---------------- shipping canvas --------------------------------------------------------------------------------------------------------
   async function makeCanvasImage(avatarURL1, avatarURL2, username1, username2) {
     const canvas = Canvas.createCanvas(450, 259);
 
@@ -1385,7 +1419,8 @@ module.exports = async (client, messageReaction, user) => {
 
     return canvas.toBuffer();
   }
-
+  //---------------- shipping canvas --------------------------------------------------------------------------------------------------------
+  //---------------- canvas for losers club welcome message ---------------------------------------------------------------------------------
   async function canvasLosersClubWelcome(name, avatarURL) {
     const canvas = Canvas.createCanvas(950, 350);
 
@@ -1436,7 +1471,8 @@ module.exports = async (client, messageReaction, user) => {
 
     return canvas.toBuffer();
   }
-
+  //---------------- canvas for losers club welcome message ---------------------------------------------------------------------------------
+  //---------------- remove reactions for star board and react roles ------------------------------------------------------------------------
   async function removeReaction(base, messageId, emoteName) {
     let oriMsg = await messageReaction.message.channel.fetchMessage(messageId);
     await oriMsg.reactions.map(r => {
@@ -1448,7 +1484,8 @@ module.exports = async (client, messageReaction, user) => {
     });
     return;
   }
-
+  //---------------- remove reactions for star board and react roles ------------------------------------------------------------------------
+  //---------------- react roles add and remove roles ---------------------------------------------------------------------------------------
   async function addRoleRemoveOthers(removeArray, roleToAdd) {
     let memberRolesIdArray = [];
     let mem = await messageReaction.message.guild.fetchMember(user.id);
@@ -1480,8 +1517,11 @@ module.exports = async (client, messageReaction, user) => {
       return await mem.addRole(roleToAdd);
     }
   }
+  //---------------- react roles add and remove roles ---------------------------------------------------------------------------------------
+  //---------------- formatting dates for lists ---------------------------------------------------------------------------------------------
   function formatDate(date) {
     moment.locale("fr");
     return moment(new Date(Number(date)).toISOString()).format("D MMM YYYY");
   }
+  //---------------- formatting dates for lists ---------------------------------------------------------------------------------------------
 };

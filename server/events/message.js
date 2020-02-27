@@ -11,7 +11,7 @@ const schedule = require("node-schedule");
 const moment = require("moment");
 
 module.exports = async (client, message) => {
-  //---------------- mention/emote/everyone limits --------------------------------------------------------------------------------------------------------
+  //---------------- automod modules --------------------------------------------------------------------------------------------------------
   if (message.guild && message.channel.type === "text") {
     if (!message.member.hasPermission("BAN_MEMBERS") && !message.author.bot) {
       let server = serverMain.get(message.guild.id);
@@ -336,7 +336,7 @@ module.exports = async (client, message) => {
       }
     }
   }
-  //---------------- mention/emote/everyone limits --------------------------------------------------------------------------------------------------------
+  //---------------- automod modules --------------------------------------------------------------------------------------------------------
   //---------------- userbot detection --------------------------------------------------------------------------------------------------------
   if (
     message.author.id !== "157673412561469440" &&

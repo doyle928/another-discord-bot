@@ -91,6 +91,17 @@ fs.readdir("./commands/me/", (err, files) => {
   });
 });
 
+fs.readdir("./commands/automod/", (err, files) => {
+  if (err) return console.error(err);
+  files.forEach(file => {
+    if (!file.endsWith(".js")) return;
+    let props = require(`./commands/automod/${file}`);
+    let commandName = file.split(".")[0];
+    console.log(`Attempting to load command automod - ${commandName}`);
+    client.commands.set(commandName, props);
+  });
+});
+
 // fs.readdir("./commands/music/", (err, files) => {
 //   if (err) return console.error(err);
 //   files.forEach(file => {
