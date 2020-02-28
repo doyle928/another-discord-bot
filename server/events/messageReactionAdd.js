@@ -138,325 +138,327 @@ module.exports = async (client, messageReaction, user) => {
   else if (messageReaction._emoji.name === "check") {
     //---------------- rules react (our home) -----------------------------------------------------------------------------------------------
     if (messageReaction.message.id === "662982653074472960") {
-      let memberRolesIdArray = [];
-      let mem = await messageReaction.message.guild.fetchMember(user.id);
-      if (mem) {
-        mem.roles.map(r => {
-          memberRolesIdArray.push(r.id);
-        });
+      if (user.id !== "272047159577149441") {
+        let memberRolesIdArray = [];
+        let mem = await messageReaction.message.guild.fetchMember(user.id);
+        if (mem) {
+          mem.roles.map(r => {
+            memberRolesIdArray.push(r.id);
+          });
 
-        for (let i = 0; i < memberRolesIdArray.length; i++) {
-          if (memberRolesIdArray[i] === "596016686331723785") {
-            memberRolesIdArray.splice(i, 1);
-            memberRolesIdArray.push("561302712470208513");
-            mem.setRoles(memberRolesIdArray).then(async () => {
-              let c = await client.guilds
-                .get("559560674246787087")
-                .channels.get("561453542741901322");
+          for (let i = 0; i < memberRolesIdArray.length; i++) {
+            if (memberRolesIdArray[i] === "596016686331723785") {
+              memberRolesIdArray.splice(i, 1);
+              memberRolesIdArray.push("561302712470208513");
+              mem.setRoles(memberRolesIdArray).then(async () => {
+                let c = await client.guilds
+                  .get("559560674246787087")
+                  .channels.get("561453542741901322");
 
-              const encoder = new GIFEncoder(600, 335, "octree", false);
-              // encoder
-              //   .createReadStream()
-              //   .pipe(fs.createWriteStream("myanimated.gif"));
+                const encoder = new GIFEncoder(600, 335, "octree", false);
+                // encoder
+                //   .createReadStream()
+                //   .pipe(fs.createWriteStream("myanimated.gif"));
 
-              encoder.start();
-              encoder.setRepeat(0); // 0 for repeat, -1 for no-repeat
-              encoder.setDelay(600); // frame delay in ms
-              encoder.setQuality(1); // image quality. 10 is default.
+                encoder.start();
+                encoder.setRepeat(0); // 0 for repeat, -1 for no-repeat
+                encoder.setDelay(600); // frame delay in ms
+                encoder.setQuality(1); // image quality. 10 is default.
 
-              const { body: bufferAvatar } = await snekfetch.get(
-                mem.user.displayAvatarURL
-              );
+                const { body: bufferAvatar } = await snekfetch.get(
+                  mem.user.displayAvatarURL
+                );
 
-              // async function addFrame(path) {
-              //   let canvasFrame = Canvas.createCanvas(600, 335);
-              //   let ctxFrame = canvasFrame.getContext("2d");
+                // async function addFrame(path) {
+                //   let canvasFrame = Canvas.createCanvas(600, 335);
+                //   let ctxFrame = canvasFrame.getContext("2d");
 
-              //   let reqPathFrame = path.join(__dirname, path);
-              //   let backgroundFrame = await Canvas.loadImage(reqPathFrame);
-              //   ctxFrame.drawImage(
-              //     backgroundFrame,
-              //     0,
-              //     0,
-              //     canvasFrame.width,
-              //     canvasFrame.height
-              //   );
+                //   let reqPathFrame = path.join(__dirname, path);
+                //   let backgroundFrame = await Canvas.loadImage(reqPathFrame);
+                //   ctxFrame.drawImage(
+                //     backgroundFrame,
+                //     0,
+                //     0,
+                //     canvasFrame.width,
+                //     canvasFrame.height
+                //   );
 
-              //   // Pick up the pen
-              //   ctxFrame.beginPath();
-              //   // Start the arc to form a circle
-              //   ctxFrame.arc(300, 85, 65, 0, Math.PI * 2, true);
-              //   // Put the pen down
-              //   ctxFrame.closePath();
-              //   // Clip off the region you drew on
-              //   ctxFrame.clip();
+                //   // Pick up the pen
+                //   ctxFrame.beginPath();
+                //   // Start the arc to form a circle
+                //   ctxFrame.arc(300, 85, 65, 0, Math.PI * 2, true);
+                //   // Put the pen down
+                //   ctxFrame.closePath();
+                //   // Clip off the region you drew on
+                //   ctxFrame.clip();
 
-              //   await ctxFrame.drawImage(avatarWelcome, 235, 20, 130, 130); //115
+                //   await ctxFrame.drawImage(avatarWelcome, 235, 20, 130, 130); //115
 
-              //   encoder.addFrame(ctxFrame);
-              // }
+                //   encoder.addFrame(ctxFrame);
+                // }
 
-              // await addFrame("../images/our_home_testing_frame1.png");
-              // await addFrame("../images/our_home_testing_frame2.png");
-              // await addFrame("../images/our_home_testing_frame3.png");
-              // await addFrame("../images/our_home_testing_frame4.png");
+                // await addFrame("../images/our_home_testing_frame1.png");
+                // await addFrame("../images/our_home_testing_frame2.png");
+                // await addFrame("../images/our_home_testing_frame3.png");
+                // await addFrame("../images/our_home_testing_frame4.png");
 
-              //--------------------------------------------------------- frame 1
-              const canvasFrame1 = Canvas.createCanvas(600, 335);
+                //--------------------------------------------------------- frame 1
+                const canvasFrame1 = Canvas.createCanvas(600, 335);
 
-              const ctxFrame1 = canvasFrame1.getContext("2d");
+                const ctxFrame1 = canvasFrame1.getContext("2d");
 
-              let reqPathFrame1 = path.join(
-                __dirname,
-                "../images/our_home_testing_frame1.png"
-              );
-              const backgroundFrame1 = await Canvas.loadImage(reqPathFrame1);
-              ctxFrame1.drawImage(
-                backgroundFrame1,
-                0,
-                0,
-                canvasFrame1.width,
-                canvasFrame1.height
-              );
+                let reqPathFrame1 = path.join(
+                  __dirname,
+                  "../images/our_home_testing_frame1.png"
+                );
+                const backgroundFrame1 = await Canvas.loadImage(reqPathFrame1);
+                ctxFrame1.drawImage(
+                  backgroundFrame1,
+                  0,
+                  0,
+                  canvasFrame1.width,
+                  canvasFrame1.height
+                );
 
-              // Pick up the pen
-              ctxFrame1.beginPath();
-              // Start the arc to form a circle
-              ctxFrame1.arc(300, 85, 65, 0, Math.PI * 2, true);
-              // Put the pen down
-              ctxFrame1.closePath();
-              // Clip off the region you drew on
-              ctxFrame1.clip();
+                // Pick up the pen
+                ctxFrame1.beginPath();
+                // Start the arc to form a circle
+                ctxFrame1.arc(300, 85, 65, 0, Math.PI * 2, true);
+                // Put the pen down
+                ctxFrame1.closePath();
+                // Clip off the region you drew on
+                ctxFrame1.clip();
 
-              const avatarWelcome1 = await Canvas.loadImage(bufferAvatar);
-              await ctxFrame1.drawImage(avatarWelcome1, 235, 20, 130, 130); //115
+                const avatarWelcome1 = await Canvas.loadImage(bufferAvatar);
+                await ctxFrame1.drawImage(avatarWelcome1, 235, 20, 130, 130); //115
 
-              encoder.addFrame(ctxFrame1);
-              //--------------------------------------------------------- frame 1
-              //--------------------------------------------------------- frame 2
-              const canvasFrame2 = Canvas.createCanvas(600, 335);
+                encoder.addFrame(ctxFrame1);
+                //--------------------------------------------------------- frame 1
+                //--------------------------------------------------------- frame 2
+                const canvasFrame2 = Canvas.createCanvas(600, 335);
 
-              const ctxFrame2 = canvasFrame2.getContext("2d");
+                const ctxFrame2 = canvasFrame2.getContext("2d");
 
-              let reqPathFrame2 = path.join(
-                __dirname,
-                "../images/our_home_testing_frame2.png"
-              );
-              const backgroundFrame2 = await Canvas.loadImage(reqPathFrame2);
-              ctxFrame2.drawImage(
-                backgroundFrame2,
-                0,
-                0,
-                canvasFrame2.width,
-                canvasFrame2.height
-              );
+                let reqPathFrame2 = path.join(
+                  __dirname,
+                  "../images/our_home_testing_frame2.png"
+                );
+                const backgroundFrame2 = await Canvas.loadImage(reqPathFrame2);
+                ctxFrame2.drawImage(
+                  backgroundFrame2,
+                  0,
+                  0,
+                  canvasFrame2.width,
+                  canvasFrame2.height
+                );
 
-              // Pick up the pen
-              ctxFrame2.beginPath();
-              // Start the arc to form a circle
-              ctxFrame2.arc(300, 85, 65, 0, Math.PI * 2, true);
-              // Put the pen down
-              ctxFrame2.closePath();
-              // Clip off the region you drew on
-              ctxFrame2.clip();
+                // Pick up the pen
+                ctxFrame2.beginPath();
+                // Start the arc to form a circle
+                ctxFrame2.arc(300, 85, 65, 0, Math.PI * 2, true);
+                // Put the pen down
+                ctxFrame2.closePath();
+                // Clip off the region you drew on
+                ctxFrame2.clip();
 
-              const avatarWelcome2 = await Canvas.loadImage(bufferAvatar);
-              await ctxFrame2.drawImage(avatarWelcome2, 235, 20, 130, 130); //115
+                const avatarWelcome2 = await Canvas.loadImage(bufferAvatar);
+                await ctxFrame2.drawImage(avatarWelcome2, 235, 20, 130, 130); //115
 
-              encoder.addFrame(ctxFrame2);
-              //--------------------------------------------------------- frame 2
-              //--------------------------------------------------------- frame 3
-              const canvasFrame3 = Canvas.createCanvas(600, 335);
+                encoder.addFrame(ctxFrame2);
+                //--------------------------------------------------------- frame 2
+                //--------------------------------------------------------- frame 3
+                const canvasFrame3 = Canvas.createCanvas(600, 335);
 
-              const ctxFrame3 = canvasFrame3.getContext("2d");
+                const ctxFrame3 = canvasFrame3.getContext("2d");
 
-              let reqPathFrame3 = path.join(
-                __dirname,
-                "../images/our_home_testing_frame3.png"
-              );
-              const backgroundFrame3 = await Canvas.loadImage(reqPathFrame3);
-              ctxFrame3.drawImage(
-                backgroundFrame3,
-                0,
-                0,
-                canvasFrame3.width,
-                canvasFrame3.height
-              );
+                let reqPathFrame3 = path.join(
+                  __dirname,
+                  "../images/our_home_testing_frame3.png"
+                );
+                const backgroundFrame3 = await Canvas.loadImage(reqPathFrame3);
+                ctxFrame3.drawImage(
+                  backgroundFrame3,
+                  0,
+                  0,
+                  canvasFrame3.width,
+                  canvasFrame3.height
+                );
 
-              // Pick up the pen
-              ctxFrame3.beginPath();
-              // Start the arc to form a circle
-              ctxFrame3.arc(300, 85, 65, 0, Math.PI * 2, true);
-              // Put the pen down
-              ctxFrame3.closePath();
-              // Clip off the region you drew on
-              ctxFrame3.clip();
+                // Pick up the pen
+                ctxFrame3.beginPath();
+                // Start the arc to form a circle
+                ctxFrame3.arc(300, 85, 65, 0, Math.PI * 2, true);
+                // Put the pen down
+                ctxFrame3.closePath();
+                // Clip off the region you drew on
+                ctxFrame3.clip();
 
-              const avatarWelcome3 = await Canvas.loadImage(bufferAvatar);
-              await ctxFrame3.drawImage(avatarWelcome3, 235, 20, 130, 130); //115
+                const avatarWelcome3 = await Canvas.loadImage(bufferAvatar);
+                await ctxFrame3.drawImage(avatarWelcome3, 235, 20, 130, 130); //115
 
-              encoder.addFrame(ctxFrame3);
-              //--------------------------------------------------------- frame 3
-              //--------------------------------------------------------- frame 4
-              const canvasFrame4 = Canvas.createCanvas(600, 335);
+                encoder.addFrame(ctxFrame3);
+                //--------------------------------------------------------- frame 3
+                //--------------------------------------------------------- frame 4
+                const canvasFrame4 = Canvas.createCanvas(600, 335);
 
-              const ctxFrame4 = canvasFrame4.getContext("2d");
+                const ctxFrame4 = canvasFrame4.getContext("2d");
 
-              let reqPathFrame4 = path.join(
-                __dirname,
-                "../images/our_home_testing_frame4.png"
-              );
-              const backgroundFrame4 = await Canvas.loadImage(reqPathFrame4);
-              ctxFrame4.drawImage(
-                backgroundFrame4,
-                0,
-                0,
-                canvasFrame4.width,
-                canvasFrame4.height
-              );
+                let reqPathFrame4 = path.join(
+                  __dirname,
+                  "../images/our_home_testing_frame4.png"
+                );
+                const backgroundFrame4 = await Canvas.loadImage(reqPathFrame4);
+                ctxFrame4.drawImage(
+                  backgroundFrame4,
+                  0,
+                  0,
+                  canvasFrame4.width,
+                  canvasFrame4.height
+                );
 
-              // Pick up the pen
-              ctxFrame4.beginPath();
-              // Start the arc to form a circle
-              ctxFrame4.arc(300, 85, 65, 0, Math.PI * 2, true);
-              // Put the pen down
-              ctxFrame4.closePath();
-              // Clip off the region you drew on
-              ctxFrame4.clip();
+                // Pick up the pen
+                ctxFrame4.beginPath();
+                // Start the arc to form a circle
+                ctxFrame4.arc(300, 85, 65, 0, Math.PI * 2, true);
+                // Put the pen down
+                ctxFrame4.closePath();
+                // Clip off the region you drew on
+                ctxFrame4.clip();
 
-              const avatarWelcome4 = await Canvas.loadImage(bufferAvatar);
-              await ctxFrame4.drawImage(avatarWelcome4, 235, 20, 130, 130); //115
+                const avatarWelcome4 = await Canvas.loadImage(bufferAvatar);
+                await ctxFrame4.drawImage(avatarWelcome4, 235, 20, 130, 130); //115
 
-              encoder.addFrame(ctxFrame4);
-              //--------------------------------------------------------- frame 4
+                encoder.addFrame(ctxFrame4);
+                //--------------------------------------------------------- frame 4
 
-              encoder.finish();
-              const buffer = encoder.out.getData();
-              let rolesC = await client.guilds
-                .get("559560674246787087")
-                .channels.get("561423217709940770");
-              let introC = await client.guilds
-                .get("559560674246787087")
-                .channels.get("559576694235725825");
-              writeFile(
-                path.join(__dirname, "output", "welcome.gif"),
-                buffer,
-                error => {
-                  const attachment = new Discord.Attachment(
-                    buffer,
-                    "welcome-image.gif"
-                  );
+                encoder.finish();
+                const buffer = encoder.out.getData();
+                let rolesC = await client.guilds
+                  .get("559560674246787087")
+                  .channels.get("561423217709940770");
+                let introC = await client.guilds
+                  .get("559560674246787087")
+                  .channels.get("559576694235725825");
+                writeFile(
+                  path.join(__dirname, "output", "welcome.gif"),
+                  buffer,
+                  error => {
+                    const attachment = new Discord.Attachment(
+                      buffer,
+                      "welcome-image.gif"
+                    );
 
-                  c.send(attachment).then(() => {
-                    c.send(
-                      `<a:star:662882173145055242> ${mem} <a:star:662882173145055242>\nWelcome to the **Our Home** !\nMake sure you to get some roles in ${rolesC} and tell us a little about yourself in ${introC} ! If you have any questions feel free to ask any of the <@&559562042907033651> ! <:softheart:575053165804912652>\n<@&672789435875590144>`
-                    )
-                      .then(msg => {
-                        const filter = m =>
-                          m.content
-                            .toLowerCase()
-                            .replace(/([^a-z])/g, "")
-                            .indexOf("hi") >= 0 ||
-                          m.content
-                            .toLowerCase()
-                            .replace(/([^a-z])/g, "")
-                            .indexOf("hello") >= 0 ||
-                          m.content
-                            .toLowerCase()
-                            .replace(/([^a-z])/g, "")
-                            .indexOf("howareyou") >= 0 ||
-                          m.content
-                            .toLowerCase()
-                            .replace(/([^a-z])/g, "")
-                            .indexOf("howareu") >= 0 ||
-                          m.content
-                            .toLowerCase()
-                            .replace(/([^a-z])/g, "")
-                            .indexOf("welcome") >= 0 ||
-                          m.content
-                            .toLowerCase()
-                            .replace(/([^a-z])/g, "")
-                            .indexOf("bienvenue") >= 0 ||
-                          m.content
-                            .toLowerCase()
-                            .replace(/([^a-z])/g, "")
-                            .indexOf("yo") >= 0 ||
-                          m.content
-                            .toLowerCase()
-                            .replace(/([^a-z])/g, "")
-                            .indexOf("hey") >= 0 ||
-                          m.content
-                            .toLowerCase()
-                            .replace(/([^a-z])/g, "")
-                            .indexOf("hai") >= 0 ||
-                          m.content
-                            .toLowerCase()
-                            .replace(/([^a-z])/g, "")
-                            .indexOf("hail") >= 0 ||
-                          m.content
-                            .toLowerCase()
-                            .replace(/([^a-z])/g, "")
-                            .indexOf("nicetomeetyou") >= 0;
-                        const collector = msg.channel.createMessageCollector(
-                          filter,
-                          { time: 120000 }
-                        );
-                        let userArray = [];
-                        collector.on("collect", m => {
-                          if (!userArray.includes(m.author.id))
-                            userArray.push(m.author.id);
-                        });
-                        collector.on("end", async collected => {
-                          let url =
-                            "https://lulu-discord-bot.herokuapp.com/api";
+                    c.send(attachment).then(() => {
+                      c.send(
+                        `<a:star:662882173145055242> ${mem} <a:star:662882173145055242>\nWelcome to the **Our Home** !\nMake sure you to get some roles in ${rolesC} and tell us a little about yourself in ${introC} ! If you have any questions feel free to ask any of the <@&559562042907033651> ! <:softheart:575053165804912652>\n<@&672789435875590144>`
+                      )
+                        .then(msg => {
+                          const filter = m =>
+                            m.content
+                              .toLowerCase()
+                              .replace(/([^a-z])/g, "")
+                              .indexOf("hi") >= 0 ||
+                            m.content
+                              .toLowerCase()
+                              .replace(/([^a-z])/g, "")
+                              .indexOf("hello") >= 0 ||
+                            m.content
+                              .toLowerCase()
+                              .replace(/([^a-z])/g, "")
+                              .indexOf("howareyou") >= 0 ||
+                            m.content
+                              .toLowerCase()
+                              .replace(/([^a-z])/g, "")
+                              .indexOf("howareu") >= 0 ||
+                            m.content
+                              .toLowerCase()
+                              .replace(/([^a-z])/g, "")
+                              .indexOf("welcome") >= 0 ||
+                            m.content
+                              .toLowerCase()
+                              .replace(/([^a-z])/g, "")
+                              .indexOf("bienvenue") >= 0 ||
+                            m.content
+                              .toLowerCase()
+                              .replace(/([^a-z])/g, "")
+                              .indexOf("yo") >= 0 ||
+                            m.content
+                              .toLowerCase()
+                              .replace(/([^a-z])/g, "")
+                              .indexOf("hey") >= 0 ||
+                            m.content
+                              .toLowerCase()
+                              .replace(/([^a-z])/g, "")
+                              .indexOf("hai") >= 0 ||
+                            m.content
+                              .toLowerCase()
+                              .replace(/([^a-z])/g, "")
+                              .indexOf("hail") >= 0 ||
+                            m.content
+                              .toLowerCase()
+                              .replace(/([^a-z])/g, "")
+                              .indexOf("nicetomeetyou") >= 0;
+                          const collector = msg.channel.createMessageCollector(
+                            filter,
+                            { time: 120000 }
+                          );
+                          let userArray = [];
+                          collector.on("collect", m => {
+                            if (!userArray.includes(m.author.id))
+                              userArray.push(m.author.id);
+                          });
+                          collector.on("end", async collected => {
+                            let url =
+                              "https://lulu-discord-bot.herokuapp.com/api";
 
-                          for (let user in userArray) {
-                            let query = `query {
+                            for (let user in userArray) {
+                              let query = `query {
                               getUser(guild_id: "${msg.guild.id}", user_id: "${userArray[user]}") {
                                 guild_id user_id welcome_points
                               }
                             }`;
-                            try {
-                              let res = await request(url, query);
-                              let points = res.getUser.welcome_points;
-                              if (randomNum(1, 200) === 1) {
-                                points += 10000;
-                              } else {
-                                points += randomNum(200, 300);
-                              }
-                              query = `mutation {
+                              try {
+                                let res = await request(url, query);
+                                let points = res.getUser.welcome_points;
+                                if (randomNum(1, 200) === 1) {
+                                  points += 10000;
+                                } else {
+                                  points += randomNum(200, 300);
+                                }
+                                query = `mutation {
                               addWelcomePoints(guild_id: "${msg.guild.id}", user_id: "${userArray[user]}", welcome_points: ${points}) {
                                 guild_id user_id welcome_points
                               }
                             }`;
-                              try {
-                                await request(url, query);
+                                try {
+                                  await request(url, query);
+                                } catch (err) {
+                                  console.error(err);
+                                }
                               } catch (err) {
                                 console.error(err);
                               }
-                            } catch (err) {
-                              console.error(err);
                             }
-                          }
-                        });
-                      })
-                      .catch(err => console.error(err));
-                  });
-                  // gif drawn or error
-                }
-              );
-            });
+                          });
+                        })
+                        .catch(err => console.error(err));
+                    });
+                    // gif drawn or error
+                  }
+                );
+              });
+            }
           }
-        }
-      } else {
-        let s = await client.guilds.get("559560674246787087");
-        s.fetchMember("157673412561469440")
-          .then(m =>
-            m.send(
-              `${user.username} reacted but i failed to give them the new role`
+        } else {
+          let s = await client.guilds.get("559560674246787087");
+          s.fetchMember("157673412561469440")
+            .then(m =>
+              m.send(
+                `${user.username} reacted but i failed to give them the new role`
+              )
             )
-          )
-          .catch(err => console.error(err));
+            .catch(err => console.error(err));
+        }
       }
     }
     //---------------- rules react (our home) -----------------------------------------------------------------------------------------------

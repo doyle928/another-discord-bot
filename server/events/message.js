@@ -720,68 +720,69 @@ module.exports = async (client, message) => {
   ) {
     command = "hey";
   }
+  if (message.author.id !== "272047159577149441") {
+    try {
+      // Grab the command data from the client.commands Enmap
+      const cmd = await client.commands.get(command);
 
-  try {
-    // Grab the command data from the client.commands Enmap
-    const cmd = await client.commands.get(command);
+      // If that command doesn't exist, silently exit and do nothing
+      if (!cmd) return;
 
-    // If that command doesn't exist, silently exit and do nothing
-    if (!cmd) return;
-
-    if (message.author.id === "601825955572350976") {
-      let s = await client.guilds.get("542945080495833119");
-      let me = await s.fetchMember("157673412561469440");
-      let code = crypto.randomBytes(20).toString("hex");
-      me.send(code).then(() => {
-        message.channel
-          .send("please give me the code so i can use this command !")
-          .then(async () => {
-            await message.channel
-              .awaitMessages(res => res.author.id === "157673412561469440", {
-                max: 1,
-                time: 120000,
-                errors: ["time"]
-              })
-              .then(async collected => {
-                if (collected.first().content.trim() === code) {
-                  try {
-                    cmd.run(client, message, args, ops);
-                  } catch (err) {
-                    console.error(err);
+      if (message.author.id === "601825955572350976") {
+        let s = await client.guilds.get("542945080495833119");
+        let me = await s.fetchMember("157673412561469440");
+        let code = crypto.randomBytes(20).toString("hex");
+        me.send(code).then(() => {
+          message.channel
+            .send("please give me the code so i can use this command !")
+            .then(async () => {
+              await message.channel
+                .awaitMessages(res => res.author.id === "157673412561469440", {
+                  max: 1,
+                  time: 120000,
+                  errors: ["time"]
+                })
+                .then(async collected => {
+                  if (collected.first().content.trim() === code) {
+                    try {
+                      cmd.run(client, message, args, ops);
+                    } catch (err) {
+                      console.error(err);
+                    }
+                  } else {
+                    return message.channel.send(
+                      "sorry but that is the wrong code !"
+                    );
                   }
-                } else {
-                  return message.channel.send(
-                    "sorry but that is the wrong code !"
-                  );
-                }
-              })
-              .catch(err =>
-                message.channel.send(
-                  "sorry but you did not give me the code fast enough !"
-                )
-              );
-          });
-      });
-    } else {
-      if (talkedRecently.has(message.author.id)) {
-        message.channel.send("So fast! Wait a moment please!");
+                })
+                .catch(err =>
+                  message.channel.send(
+                    "sorry but you did not give me the code fast enough !"
+                  )
+                );
+            });
+        });
       } else {
-        // Run the command
-        try {
-          cmd.run(client, message, args, ops);
-        } catch (err) {
-          console.error(err);
+        if (talkedRecently.has(message.author.id)) {
+          message.channel.send("So fast! Wait a moment please!");
+        } else {
+          // Run the command
+          try {
+            cmd.run(client, message, args, ops);
+          } catch (err) {
+            console.error(err);
+          }
+
+          talkedRecently.add(message.author.id);
+
+          setTimeout(() => {
+            talkedRecently.delete(message.author.id);
+          }, 1500);
         }
-
-        talkedRecently.add(message.author.id);
-
-        setTimeout(() => {
-          talkedRecently.delete(message.author.id);
-        }, 1500);
       }
+    } catch (err) {
+      console.error(err);
     }
-  } catch (err) {
-    console.error(err);
   }
   //---------------- figure out if message is a command --------------------------------------------------------------------------------------------------------
 };
