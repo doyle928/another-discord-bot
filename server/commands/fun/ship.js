@@ -96,7 +96,7 @@ exports.run = async (client, message, args) => {
       }
       let query = `{
             getShip(guild_id: "${message.guild.id}", user_id: "${
-        message.mentions.members.first().id
+        message.mentions.members.first().user.id
       }") {
               user_id ship_id timestamp
             }
