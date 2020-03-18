@@ -150,6 +150,9 @@ module.exports = async (client, message) => {
                     })
                     .catch(err => console.error(err));
                 }
+                setTimeout(() => {
+                  if (user.dup_count > 1) user.dup_count--;
+                }, 300000);
               } else {
                 if (message.attachments.size > 0) {
                   user.last_message = `${
