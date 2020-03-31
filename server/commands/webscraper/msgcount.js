@@ -10,38 +10,39 @@ exports.run = async (client, message, args) => {
     .goto(`https://yagpdb.xyz/public/${message.guild.id}/stats`)
     .wait("#chart-message-counts")
     .wait(1103)
-    .scrollTo(1503, 0)
-    .evaluate(getBounds, "chart-message-counts")
-    .then(function(rects) {
+    .evaluate(getBounds, "#chart-message-counts")
+    .then(async rects => {
       console.log(rects);
+      nightmare
+        .scrollTo(rects.top + rects.height + 60 - 800, 0)
+        .evaluate(getBounds, "#chart-message-counts")
+        .then(async rects => {
+          function getScreenshot(rect) {
+            nightmare
+              .screenshot({
+                x: rect.left,
+                y: 800 - 60 - rect.height + 4,
+                width: rect.width,
+                height: rect.height - 8
+              })
+              .end()
+              .then(buffer => {
+                const attachment = new Discord.Attachment(
+                  buffer,
+                  "channels_graph.jpg"
+                );
+                message.channel
+                  .send(attachment)
+                  .then(() => message.channel.stopTyping(true));
+              })
+              .catch(function(err) {
+                console.error(err);
+                message.channel.stopTyping(true);
+              });
+          }
 
-      function getScreenshot(rects) {
-        nightmare
-          //   .scrollTo(380, 0)
-          .wait(2000)
-          .screenshot({
-            //109 is height of the top element which remains
-            x: 320,
-            y: 315,
-            width: 720,
-            height: 433
-          })
-          .end()
-          .then(buffer => {
-            const attachment = new Discord.Attachment(
-              buffer,
-              "channels_graph.jpg"
-            );
-            message.channel
-              .send(attachment)
-              .then(() => message.channel.stopTyping(true));
-          })
-          .catch(function(err) {
-            console.error(err);
-          });
-      }
-
-      getScreenshot(rects);
+          getScreenshot(rects);
+        });
     })
     .catch(function(err) {
       console.error(err);
@@ -49,21 +50,16 @@ exports.run = async (client, message, args) => {
     });
 
   function getBounds(selector) {
-    var element = document.getElementById(selector);
-    if (element) {
-      var obj = {};
-      const r = Math.round;
+    let el = document
+      .querySelector(selector)
+      .parentElement.parentElement.parentElement.getBoundingClientRect();
 
-      var rect = element.getBoundingClientRect();
-      obj = {
-        x: r(rect.left),
-        y: r(rect.top),
-        width: r(rect.width),
-        height: r(rect.height)
-      };
-
-      return obj;
-    }
-    return null;
+    let obj = {
+      top: el.top,
+      left: el.left + 15,
+      width: el.width - 30,
+      height: el.height
+    };
+    return obj;
   }
 };
