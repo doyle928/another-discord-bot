@@ -29,7 +29,7 @@
     "graphql-request": "^1.8.2",
     "http": "0.0.0",
     "jimp": "^0.9.3",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "moment": "^2.24.0",
     "mongodb": "^3.4.1",
     "mongoose": "^5.8.4",
