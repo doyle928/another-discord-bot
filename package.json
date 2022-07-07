@@ -30,7 +30,7 @@
     "http": "0.0.0",
     "jimp": "^0.9.3",
     "lodash": "^4.17.15",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "mongodb": "^3.4.1",
     "mongoose": "^5.8.4",
     "nightmare": "^3.0.2",
